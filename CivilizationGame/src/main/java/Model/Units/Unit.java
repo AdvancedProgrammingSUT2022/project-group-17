@@ -10,6 +10,7 @@ public class Unit {
     protected int range;
     protected int movement;
     protected int cost;
+    protected int XP;
     //Fixme
     protected static boolean isTechnologicallyAvailable = false;
     //TODO how to know if the user has the specific resource
@@ -24,6 +25,7 @@ public class Unit {
         this.movement = movement;
         this.cost = cost;
         this.resource = resource;
+        this.XP = 0;
     }
 
     public String getName() {
@@ -60,5 +62,13 @@ public class Unit {
 
     public Resource getResource() {
         return resource;
+    }
+
+    public int getXP() {
+        return XP;
+    }
+
+    public void changeXP(int amount){
+        this.XP -= amount;
     }
 }

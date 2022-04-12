@@ -10,18 +10,16 @@ public class Land {
     protected int cost;
     //TODO
     protected Unit[] units = new Unit[2]; //units[0] => jangi  units[1] => gheire jangi
-    protected boolean isAvailable;
-    protected int X;
-    protected int Y;
+    protected boolean isBuyable;
+    protected boolean isWalkable;
 
-    public Land(Building building, int movementCost, int cost, Unit[] units, boolean isAvailable, int x, int y) {
+    public Land(Building building, int movementCost, int cost, Unit[] units, boolean isBuyable, boolean isWalkable) {
         this.building = building;
         this.movementCost = movementCost;
         this.cost = cost;
         this.units = units;
-        this.isAvailable = isAvailable;
-        X = x;
-        Y = y;
+        this.isBuyable = isBuyable;
+        this.isWalkable = isWalkable;
     }
 
     public Building getBuilding() {
@@ -40,15 +38,11 @@ public class Land {
         return units;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean isBuyable() {
+        return isBuyable;
     }
 
-    public int getX() {
-        return X;
-    }
-
-    public int getY() {
-        return Y;
+    public boolean isWalkable() {
+        return isWalkable;
     }
 }
