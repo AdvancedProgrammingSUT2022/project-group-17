@@ -8,7 +8,6 @@ public class Building {
     //FixMe does making a parents field static impact the child's field in any unwanted way
     protected static boolean isTechnologicallyAvailable = false;
 
-
     public Building(String name, int cost, int maintenance){
         this.name = name;
         this.cost = cost;

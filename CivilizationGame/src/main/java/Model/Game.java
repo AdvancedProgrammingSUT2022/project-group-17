@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Technologies.Technology;
 import Model.Users.User;
 
 import java.util.ArrayList;
@@ -8,6 +9,9 @@ public class Game {
 
     private static ArrayList<User> users = new ArrayList<>();
     private static User currentUser;
+    private static int turn = 0;
+
+    private static ArrayList<String> allTechnologies = new ArrayList<>();
 
     public static ArrayList<User> getUsers() {
         return users;
