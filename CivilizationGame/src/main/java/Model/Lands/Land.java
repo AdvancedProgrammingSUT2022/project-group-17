@@ -1,29 +1,33 @@
 package Model.Lands;
 
 import Model.Buildings.Building;
+import Model.Improvement;
+import Model.LandFeature;
 import Model.Units.Unit;
 
 public class Land {
 
-    protected Building building;
+    protected Improvement improvement;
     protected int movementCost;
     protected int cost;
     //TODO
     protected Unit[] units = new Unit[2]; //units[0] => jangi  units[1] => gheire jangi
     protected boolean isBuyable;
     protected boolean isWalkable;
+    protected LandFeature landFeature;
 
-    public Land(Building building, int movementCost, int cost, Unit[] units, boolean isBuyable, boolean isWalkable) {
-        this.building = building;
+    public Land(Improvement improvement, int movementCost, int cost, Unit[] units, boolean isBuyable, boolean isWalkable) {
+        this.improvement = improvement;
         this.movementCost = movementCost;
         this.cost = cost;
         this.units = units;
         this.isBuyable = isBuyable;
         this.isWalkable = isWalkable;
+        landFeature = null;
     }
 
-    public Building getBuilding() {
-        return building;
+    public Improvement getImprovement() {
+        return improvement;
     }
 
     public int getMovementCost() {

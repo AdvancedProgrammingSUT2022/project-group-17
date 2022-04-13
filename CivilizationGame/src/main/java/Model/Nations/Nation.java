@@ -1,9 +1,8 @@
 package Model.Nations;
 
-import Model.Buildings.Building;
 import Model.City;
 import Model.Technologies.Technology;
-import Resources.Resource;
+import Model.Resources.Resource;
 
 import java.util.ArrayList;
 
@@ -14,8 +13,8 @@ public class Nation {
     protected City capital;
     protected ArrayList<Resource> resources = new ArrayList<>();
     protected ArrayList<Technology> technologies = new ArrayList<>();
-    protected ArrayList<Building> buildings = new ArrayList<>();
-
+    protected ArrayList<Nation> friends = new ArrayList<>();
+    protected ArrayList<Nation> enemies = new ArrayList<>();
 
     public Nation (String name, String leaderName, City capital){
         this.name = name;
@@ -55,7 +54,4 @@ public class Nation {
         return technologies;
     }
 
-    public ArrayList<Building> getBuildings() {
-        return buildings;
-    }
 }

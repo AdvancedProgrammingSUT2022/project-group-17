@@ -1,6 +1,6 @@
 package Model.Units;
 
-import Resources.Resource;
+import Model.Resources.Resource;
 
 public class Unit {
     protected String name;
