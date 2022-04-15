@@ -1,6 +1,4 @@
-package Model;
-
-import Model.Resources.Resource;
+package Model.Resources;
 
 public class Currency extends Resource {
     private int growthRate;

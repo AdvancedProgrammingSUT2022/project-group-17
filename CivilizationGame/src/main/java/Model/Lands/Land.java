@@ -8,13 +8,13 @@ import Model.Units.Unit;
 public class Land {
 
     protected Improvement improvement;
+    protected LandFeature landFeature;
     protected int movementCost;
     protected int cost;
     //TODO
     protected Unit[] units = new Unit[2]; //units[0] => jangi  units[1] => gheire jangi
     protected boolean isBuyable;
     protected boolean isWalkable;
-    protected LandFeature landFeature;
 
     public Land(Improvement improvement, int movementCost, int cost, Unit[] units, boolean isBuyable, boolean isWalkable) {
         this.improvement = improvement;
