@@ -5,9 +5,9 @@ import Model.Resources.Resource;
 public class Unit {
     protected String name;
     protected int hp;
-    protected int combatStrength;
-    protected int rangedStrength;
-    protected int range;
+//    protected int combatStrength;
+//    protected int rangedStrength;
+//    protected int range;
     protected int movement;
     protected int cost;
     protected int XP;
@@ -16,12 +16,9 @@ public class Unit {
     //TODO how to know if the user has the specific resource
     protected Resource resource;
 
-    public Unit(String name, int hp, int combatStrength, int rangedStrength, int range, int movement, int cost, Resource resource) {
+    public Unit(String name, int hp, int movement, int cost, Resource resource) {
         this.name = name;
         this.hp = hp;
-        this.combatStrength = combatStrength;
-        this.rangedStrength = rangedStrength;
-        this.range = range;
         this.movement = movement;
         this.cost = cost;
         this.resource = resource;
@@ -36,17 +33,17 @@ public class Unit {
         return hp;
     }
 
-    public int getCombatStrength() {
-        return combatStrength;
-    }
-
-    public int getRangedStrength() {
-        return rangedStrength;
-    }
-
-    public int getRange() {
-        return range;
-    }
+//    public int getCombatStrength() {
+//        return combatStrength;
+//    }
+//
+//    public int getRangedStrength() {
+//        return rangedStrength;
+//    }
+//
+//    public int getRange() {
+//        return range;
+//    }
 
     public int getMovement() {
         return movement;

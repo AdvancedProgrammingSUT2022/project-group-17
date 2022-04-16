@@ -17,9 +17,10 @@ public class Main {
         menus[2] = new GameMenu();
         menus[3] = new ProfileMenu();
 
-        String currentMenu = Menu.getMenuName();
-        while (!currentMenu.equals("EXIT")){
+        String currentMenu;
+        do {
+            currentMenu = Menu.getMenuName();
             menus[menuNumbers.get(currentMenu)].run();
-        }
+        } while(!currentMenu.equals("EXIT"));
     }
 }
