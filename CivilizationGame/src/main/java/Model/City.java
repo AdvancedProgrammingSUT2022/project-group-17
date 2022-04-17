@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Buildings.Building;
+import Model.Improvements.Improvement;
 import Model.Lands.Land;
 import Model.Units.Unit;
 

@@ -1,9 +1,10 @@
 package Model.Lands;
 
-import Model.Buildings.Building;
-import Model.Improvement;
-import Model.LandFeature;
-import Model.Units.Unit;
+import Model.Improvements.Improvement;
+import Model.LandFeatures.LandFeature;
+import Model.Units.CivilizedUnit;
+import Model.Units.CloseCombatUnit;
+import Model.Units.RangedCombatUnit;
 
 public class Land {
 
@@ -12,15 +13,16 @@ public class Land {
     protected int movementCost;
     protected int cost;
     //TODO
-    protected Unit[] units = new Unit[2]; //units[0] => jangi  units[1] => gheire jangi
+    protected CivilizedUnit civilizedUnit = null;
+    protected CloseCombatUnit closeCombatUnit = null;
+    protected RangedCombatUnit rangedCombatUnit = null;
     protected boolean isBuyable;
     protected boolean isWalkable;
 
-    public Land(Improvement improvement, int movementCost, int cost, Unit[] units, boolean isBuyable, boolean isWalkable) {
+    public Land(Improvement improvement, int movementCost, int cost, boolean isBuyable, boolean isWalkable) {
         this.improvement = improvement;
         this.movementCost = movementCost;
         this.cost = cost;
-        this.units = units;
         this.isBuyable = isBuyable;
         this.isWalkable = isWalkable;
         landFeature = null;
@@ -36,10 +38,6 @@ public class Land {
 
     public int getCost() {
         return cost;
-    }
-
-    public Unit[] getUnits() {
-        return units;
     }
 
     public boolean isBuyable() {

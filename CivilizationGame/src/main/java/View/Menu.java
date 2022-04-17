@@ -7,9 +7,7 @@ public class Menu {
 
     }
 
-    public static String getMenuName() {
-                return menuName;
-        }
+    public static String getMenuName() { return menuName;}
 
     public static void setMenuName(String menuName) {
                 Menu.menuName = menuName;

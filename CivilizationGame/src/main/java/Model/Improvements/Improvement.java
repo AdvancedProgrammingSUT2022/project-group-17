@@ -1,4 +1,4 @@
-package Model;
+package Model.Improvements;
 
 public class Improvement {
     protected String name;

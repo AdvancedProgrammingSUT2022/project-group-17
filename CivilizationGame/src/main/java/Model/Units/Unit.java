@@ -5,9 +5,6 @@ import Model.Resources.Resource;
 public class Unit {
     protected String name;
     protected int hp;
-//    protected int combatStrength;
-//    protected int rangedStrength;
-//    protected int range;
     protected int movement;
     protected int cost;
     protected int XP;
@@ -33,18 +30,6 @@ public class Unit {
         return hp;
     }
 
-//    public int getCombatStrength() {
-//        return combatStrength;
-//    }
-//
-//    public int getRangedStrength() {
-//        return rangedStrength;
-//    }
-//
-//    public int getRange() {
-//        return range;
-//    }
-
     public int getMovement() {
         return movement;
     }
@@ -67,5 +52,9 @@ public class Unit {
 
     public void changeXP(int amount){
         this.XP -= amount;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }

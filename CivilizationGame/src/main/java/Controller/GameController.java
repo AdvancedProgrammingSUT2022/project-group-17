@@ -181,4 +181,18 @@ public class GameController extends Controller{
     public void mapMove(Matcher matcher) {
 
     }
+
+    //From here on is different
+
+    public void attackUnit(Unit underAttackUnit){
+
+    }
+
+    public void attackCity(City underAttackCity){
+
+    }
+
+
+
+
 }
