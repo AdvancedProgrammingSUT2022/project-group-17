@@ -1,13 +1,15 @@
 package Controller;
 
+import Enums.Consts;
 import Model.City;
+import Model.Lands.Land;
 import Model.Units.Unit;
 
 import java.util.regex.Matcher;
 
 public class GameController extends Controller{
-    private Unit selectedUnit;
-    private City selectedCity;
+    protected Unit selectedUnit;
+    protected City selectedCity;
 
 
     public void showResearches() {
@@ -54,9 +56,6 @@ public class GameController extends Controller{
 
     }
 
-
-
-
     public void selectCombatUnit(Matcher matcher) {
 
     }
@@ -69,111 +68,6 @@ public class GameController extends Controller{
 
     }
 
-
-
-
-    public void unitMoveTo(Matcher matcher) {
-
-    }
-
-    public void unitSleep() {
-
-    }
-
-    public void unitAlert() {
-
-    }
-
-    public void unitFortify() {
-
-    }
-
-    public void unitFortifyHeal() {
-
-    }
-
-    public void unitGarrison() {
-
-    }
-
-    public void unitSetup() {
-
-    }
-
-    public void unitAttack(Matcher matcher) {
-
-    }
-
-    public void unitFoundCity() {
-
-    }
-
-    public void unitCancelMission() {
-
-    }
-
-    public void unitWake() {
-
-    }
-
-    public void unitDelete() {
-
-    }
-
-    public void unitBuildRoad() {
-
-    }
-
-    public void unitBuildRailroad() {
-
-    }
-
-    public void unitBuildFarm() {
-
-    }
-
-    public void unitBuildMine() {
-
-    }
-
-    public void unitBuildTradingPost() {
-
-    }
-
-    public void unitBuildLumbermill() {
-
-    }
-
-    public void unitBuildPasture() {
-
-    }
-
-    public void unitBuildCamp() {
-
-    }
-
-    public void unitBuildPlantation() {
-
-    }
-
-    public void unitBuildQuarry() {
-
-    }
-
-    public void unitRemoveJungle() {
-
-    }
-
-    public void unitRemoveRoute() {
-
-    }
-
-    public void unitRepair() {
-
-    }
-
-
-
     public void mapShow(Matcher matcher) {
 
     }
@@ -182,15 +76,14 @@ public class GameController extends Controller{
 
     }
 
-    //From here on is different
-
-    public void attackUnit(Unit underAttackUnit){
+    public void nextTurn(){
 
     }
 
-    public void attackCity(City underAttackCity){
+    public void saveGame(){
 
     }
+
 
 
 

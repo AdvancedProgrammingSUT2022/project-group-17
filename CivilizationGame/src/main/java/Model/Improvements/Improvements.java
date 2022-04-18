@@ -5,7 +5,7 @@ public enum Improvements {
 
     Improvement improvement;
 
-    Improvements(String name){
-        this.improvement = new Improvement(name);
+    Improvements(String name, int turns){
+        this.improvement = new Improvement(name, turns);
     }
 }

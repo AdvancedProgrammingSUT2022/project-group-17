@@ -3,9 +3,12 @@ package Model.Improvements;
 public class Improvement {
     protected String name;
     protected static boolean isTechnologicallyAvailable;
+    protected boolean hasCitizen;
+    protected int turns;
 
-    public Improvement(String name) {
+    public Improvement(String name, int turns) {
         this.name = name;
+        this.turns = turns;
     }
 
     public String getName() {
@@ -17,4 +20,12 @@ public class Improvement {
     }
 
     public void applyEffect(){}
+
+    public boolean isHasCitizen() {
+        return hasCitizen;
+    }
+
+    public void setHasCitizen(boolean hasCitizen) {
+        this.hasCitizen = hasCitizen;
+    }
 }

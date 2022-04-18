@@ -1,6 +1,7 @@
 package Model.Nations;
 
 import Model.City;
+import Model.Resources.Currency;
 import Model.Technologies.Technology;
 import Model.Resources.Resource;
 
@@ -15,11 +16,13 @@ public class Nation {
     protected ArrayList<Technology> technologies = new ArrayList<>();
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
+    protected Currency[] currencies = new Currency[5];
 
-    public Nation (String name, String leaderName, City capital){
+    public Nation (String name, String leaderName, City capital, Currency[] currencies){
         this.name = name;
         this.leaderName = leaderName;
         this.capital = capital;
+        this.currencies = currencies;
         cities.add(capital);
 
 
