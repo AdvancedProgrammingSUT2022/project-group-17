@@ -1,5 +1,6 @@
 package Model.Lands;
 
+import Model.City;
 import Model.Improvements.Improvement;
 import Model.LandFeatures.LandFeature;
 import Model.Units.CivilizedUnit;
@@ -13,19 +14,26 @@ public class Land {
     protected int movementCost;
     protected int cost;
     //TODO
+    protected City ownerCity = null;
     protected CivilizedUnit civilizedUnit = null;
     protected CloseCombatUnit closeCombatUnit = null;
     protected RangedCombatUnit rangedCombatUnit = null;
     protected boolean isBuyable;
     protected boolean isWalkable;
+    protected int goldGrowth;
+    protected int productionGrowth;
+    protected int foodGrowth;
 
-    public Land(Improvement improvement, int movementCost, int cost, boolean isBuyable, boolean isWalkable) {
+    public Land(Improvement improvement, int movementCost, int cost, boolean isBuyable, boolean isWalkable, int goldGrowth, int productionGrowth, int foodGrowth) {
         this.improvement = improvement;
         this.movementCost = movementCost;
         this.cost = cost;
         this.isBuyable = isBuyable;
         this.isWalkable = isWalkable;
         landFeature = null;
+        this.goldGrowth = goldGrowth;
+        this.productionGrowth = productionGrowth;
+        this.foodGrowth = foodGrowth;
     }
 
     public Improvement getImprovement() {
@@ -46,5 +54,9 @@ public class Land {
 
     public boolean isWalkable() {
         return isWalkable;
+    }
+
+    public void setOwnerCity(City ownerCity) {
+        this.ownerCity = ownerCity;
     }
 }

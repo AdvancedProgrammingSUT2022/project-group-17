@@ -3,6 +3,7 @@ package Model;
 import Model.Buildings.Building;
 import Model.Improvements.Improvement;
 import Model.Lands.Land;
+import Model.Units.CloseCombatUnit;
 import Model.Units.Unit;
 
 import java.util.ArrayList;
@@ -11,10 +12,17 @@ public class City {
 
     protected ArrayList<Land> lands = new ArrayList<>();
     protected int citizens;
+    protected int HP;
+    protected int combatStrength;
+    protected int rangedStrength;
+    protected int level;
     protected ArrayList<Building> buildings = new ArrayList<>();
     protected ArrayList<Improvement> improvements = new ArrayList<>();
     protected Building inProgressBuilding;
     protected Unit inProgressUnit;
+    protected CloseCombatUnit garrison;
+    protected int visibility;
+    protected boolean[] hasRiver = new boolean[6];
 
     public ArrayList<Land> getLands() {
         return lands;
@@ -58,5 +66,29 @@ public class City {
 
     public ArrayList<Improvement> getImprovements() {
         return improvements;
+    }
+
+    public int getVisibility() {
+        return visibility;
+    }
+
+    public boolean[] getHasRiver() {
+        return hasRiver;
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public int getCombatStrength() {
+        return combatStrength;
+    }
+
+    public int getRangedStrength() {
+        return rangedStrength;
+    }
+
+    public CloseCombatUnit getGarrison() {
+        return garrison;
     }
 }

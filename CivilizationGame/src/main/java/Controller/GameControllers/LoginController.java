@@ -1,8 +1,10 @@
-package Controller;
+package Controller.GameControllers;
+
+import Controller.Controller;
 
 import java.util.regex.Matcher;
 
-public class LoginController extends Controller{
+public class LoginController extends Controller {
 
     public void createUser(Matcher matcher) {
 

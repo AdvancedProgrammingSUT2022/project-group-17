@@ -8,8 +8,8 @@ public enum RangedCombatUnits {
     private RangedCombatUnit rangedCombatUnit;
 
     RangedCombatUnits(String name, int hp, int movement, int cost, Resource resource, int combatStrength,
-                      int rangedStrength, int range) {
+                      int rangedStrength, int range, boolean isSiege) {
         this.rangedCombatUnit = new RangedCombatUnit(name, hp, movement, cost, resource, combatStrength,
-                rangedStrength, range);
+                rangedStrength, range, isSiege);
     }
 }

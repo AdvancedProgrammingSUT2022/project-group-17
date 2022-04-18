@@ -1,6 +1,7 @@
 package Model;
 
-import Model.Technologies.Technology;
+import Enums.Consts;
+import Model.Lands.Land;
 import Model.Users.User;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Game {
     private static User currentUser;
     private static int turn = 0;
     private static ArrayList<String> allTechnologies = new ArrayList<>();
+    public static Land[][] map = new Land[Consts.MAP_SIZE.amount][Consts.MAP_SIZE.amount];
 
     public static ArrayList<User> getUsers() {
         return users;
@@ -27,6 +29,5 @@ public class Game {
     public static void addUser(User user){
         Game.users.add(user);
     }
-
 
 }

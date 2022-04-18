@@ -8,7 +8,7 @@ public enum CivilizedUnits {
 
     private CivilizedUnit civilizedUnit;
 
-    CivilizedUnits(String name, int hp, int movement, int cost, Resource resource) {
-        this.civilizedUnit = new CivilizedUnit(name, hp, movement, cost, resource);
+    CivilizedUnits(String name, int hp, int movement, int cost, Resource resource, int turns) {
+        this.civilizedUnit = new CivilizedUnit(name, hp, movement, cost, resource, turns);
     }
 }
