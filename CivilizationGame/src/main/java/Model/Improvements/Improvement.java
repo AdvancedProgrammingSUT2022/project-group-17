@@ -1,19 +1,19 @@
 package Model.Improvements;
 
 public class Improvement {
-    protected String name;
+//    protected String name;
     protected static boolean isTechnologicallyAvailable;
     protected boolean hasCitizen;
-    protected int turns;
+//    protected int turns;
+    public ImprovementType improvementType;
 
-    public Improvement(String name, int turns) {
-        this.name = name;
-        this.turns = turns;
+    public Improvement(ImprovementType improvementType) {
+        this.improvementType = improvementType;
     }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
 
     public static boolean isIsTechnologicallyAvailable() {
         return isTechnologicallyAvailable;
