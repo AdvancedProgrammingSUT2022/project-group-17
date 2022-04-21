@@ -12,6 +12,6 @@ public enum MainCommands {
     }
 
     public static Matcher getMatcher(String input, MainCommands mainCommands) {
-        return Pattern.compile(input).matcher(mainCommands.regex);
+        return Pattern.compile(mainCommands.regex).matcher(input);
     }
 }

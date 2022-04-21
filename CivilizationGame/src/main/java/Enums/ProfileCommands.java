@@ -12,6 +12,6 @@ public enum ProfileCommands {
     }
 
     public static Matcher getMatcher(String input, ProfileCommands profileCommands) {
-        return Pattern.compile(input).matcher(profileCommands.regex);
+        return Pattern.compile(profileCommands.regex).matcher(input);
     }
 }

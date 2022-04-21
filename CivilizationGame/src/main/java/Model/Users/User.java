@@ -10,12 +10,23 @@ public class User {
     private int score;
     private Nation nation;
 
-    public User(String username, String password, String nickname, Nation nation){
+    public User(String username, String password, String nickname){
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.nation = nation;
         this.score = 0;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getUsername() {
@@ -36,5 +47,11 @@ public class User {
 
     public Nation getNation() {
         return nation;
+    }
+
+    @Override
+    //you can change this as you wish
+    public String toString() {
+        return nickname + " : " + score;
     }
 }
