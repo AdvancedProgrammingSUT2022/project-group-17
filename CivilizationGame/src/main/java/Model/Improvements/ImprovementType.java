@@ -6,10 +6,10 @@ public enum ImprovementType {
 
 
     public String name;
-    public int turns;
+    public int initialTurns;
 
-    ImprovementType(String name, int turns){
+    ImprovementType(String name, int initialTurns){
         this.name = name;
-        this.turns = turns;
+        this.initialTurns = initialTurns;
     }
 }

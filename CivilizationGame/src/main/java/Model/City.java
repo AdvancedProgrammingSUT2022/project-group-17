@@ -36,42 +36,6 @@ public class City {
         return buildings;
     }
 
-    public void addBuilding(Building building){
-        buildings.add(building);
-    }
-
-    public void addLand(Land land){
-        lands.add(land);
-    }
-
-    public void addCitizens(int amount){
-        this.citizens += amount;
-    }
-
-    public Building getInProgressBuilding() {
-        return inProgressBuilding;
-    }
-
-    public Unit getInProgressUnit() {
-        return inProgressUnit;
-    }
-
-    public void setInProgressBuilding(Building inProgressBuilding) {
-        this.inProgressBuilding = inProgressBuilding;
-    }
-
-    public void setInProgressUnit(Unit inProgressUnit) {
-        this.inProgressUnit = inProgressUnit;
-    }
-
-    public ArrayList<Improvement> getImprovements() {
-        return improvements;
-    }
-
-    public int getVisibility() {
-        return visibility;
-    }
-
     public boolean[] getHasRiver() {
         return hasRiver;
     }
@@ -91,4 +55,45 @@ public class City {
     public CloseCombatUnit getGarrison() {
         return garrison;
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public Building getInProgressBuilding() {
+        return inProgressBuilding;
+    }
+
+    public ArrayList<Improvement> getImprovements() {
+        return improvements;
+    }
+
+    public void addBuilding(Building building){
+        buildings.add(building);
+    }
+
+    public void addLand(Land land){
+        lands.add(land);
+    }
+
+    public void addCitizens(int amount){
+        this.citizens += amount;
+    }
+
+    public Unit getInProgressUnit() {
+        return inProgressUnit;
+    }
+
+    public void setInProgressBuilding(Building inProgressBuilding) {
+        this.inProgressBuilding = inProgressBuilding;
+    }
+
+    public void setInProgressUnit(Unit inProgressUnit) {
+        this.inProgressUnit = inProgressUnit;
+    }
+
+    public int getVisibility() {
+        return visibility;
+    }
+
 }

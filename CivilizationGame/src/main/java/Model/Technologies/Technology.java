@@ -7,39 +7,24 @@ import java.util.ArrayList;
 
 public class Technology {
 
-    protected Technology father;
+
     protected boolean isAvailable;
-    protected String name;
-    protected ArrayList<Building> buildings = new ArrayList<>();
-    protected ArrayList<Improvement> improvements = new ArrayList<>();
-    //
+    protected TechnologyType technologyType;
 
-
-    public Technology(Technology father, boolean isAvailable, String name, ArrayList<Building> buildings, ArrayList<Improvement> improvements) {
-        this.father = father;
-        this.isAvailable = isAvailable;
-        this.name = name;
-        this.buildings = buildings;
-        this.improvements = improvements;
-    }
-
-    public Technology getFather() {
-        return father;
+    public Technology(TechnologyType technologyType) {
+        this.isAvailable = false;
+        this.technologyType = technologyType;
     }
 
     public boolean isAvailable() {
         return isAvailable;
     }
 
-    public String getName() {
-        return name;
+    public TechnologyType getTechnologyType() {
+        return technologyType;
     }
 
-    public ArrayList<Building> getBuildings() {
-        return buildings;
-    }
-
-    public ArrayList<Improvement> getImprovements() {
-        return improvements;
+    public void makeAvailable() {
+        isAvailable = true;
     }
 }

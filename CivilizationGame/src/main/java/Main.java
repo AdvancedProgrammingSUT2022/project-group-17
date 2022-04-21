@@ -1,5 +1,3 @@
-import Model.Improvements.Improvement;
-import Model.Improvements.ImprovementType;
 import View.*;
 
 import java.util.HashMap;
@@ -25,10 +23,6 @@ public class Main {
             menus[menuNumbers.get(currentMenu)].run();
         } while(!currentMenu.equals("EXIT"));
 
-
-        Improvement farm123 = new Improvement(ImprovementType.Farm);
-        Improvement farm321 = new Improvement(ImprovementType.Farm);
-        System.out.println(farm123.improvementType);
     }
 
 
