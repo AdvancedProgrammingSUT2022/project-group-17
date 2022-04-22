@@ -21,6 +21,7 @@ public class City {
     protected Building inProgressBuilding;
     protected Unit inProgressUnit;
     protected CloseCombatUnit garrison;
+    //TODO take these to Land
     protected int visibility;
     protected boolean[] hasRiver = new boolean[6];
 

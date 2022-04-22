@@ -5,6 +5,7 @@ import Model.Lands.Land;
 import Model.Users.User;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Game {
 

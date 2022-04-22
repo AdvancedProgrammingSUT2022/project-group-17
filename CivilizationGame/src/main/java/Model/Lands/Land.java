@@ -13,7 +13,7 @@ public class Land {
     protected LandFeature landFeature;
     protected int movementCost;
     protected int cost;
-    //TODO
+    //TODO fog of war
     protected City ownerCity = null;
     protected CivilizedUnit civilizedUnit = null;
     protected CloseCombatUnit closeCombatUnit = null;
