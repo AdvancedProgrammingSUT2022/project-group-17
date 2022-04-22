@@ -7,7 +7,7 @@ public enum LoginCommands {
     createUser("user create -((?:u|n|p) \\S+) -((?:u|n|p) \\S+) -((?:u|n|p) \\S+)"),
     loginUser("user login -((?:u|p) \\S+) -((?:u|p) \\S+)"),
     listOfUsers("info registered users"),
-    exit("exit"),
+    exit("menu exit"),
     //just in case we need such thing
     // strong password must contain (upperCase & lowerCase) alphabet and number and at least 8 char
     strongPassword("(?=.*[0-9].*)(?=.*[a-z].*)(?=.*[A-Z].*).{8,}");

@@ -4,8 +4,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainCommands {
-    ;//TODO fill enums
-    private String regex;
+    menuEnter("menu enter (?<menuName>.+)"),
+    exit("menu exit"),
+    scoreBoard("info score board"),
+    logout("logout"),
+    playGame("play game (--player[1-9]+ \\S+ )+(--player[1-9]+ \\S+)");
+
+    private final String regex;
 
     MainCommands(String regex) {
         this.regex = regex;

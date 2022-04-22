@@ -4,7 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands {
-    ;//TODO fill enums
+    cheatIncreaseGold("increase --gold (?<amount>\\d+)"),
+    cheatIncreaseTurn("increase --turn (?<amount>\\d+)"),
+    cheatIncreaseFood("increase --food (?<amount>\\d+)"),
+    cheatIncreaseProduction("increase --production (?<amount>\\d+)");
+    //TODO fill enums
     private final String regex;
 
     GameCommands(String regex) {

@@ -4,8 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ProfileCommands {
-    ;//TODO fill enums
-    private String regex;
+    changePassword("profile change -((?:o|n)p \\S+) -((?:o|n)p \\S+)"),
+    changeNickname("profile change -n (?<nickName>\\S+)"),
+    infoProfile("info profile"),
+    removeAccount("remove account -p (?<password>\\S+)"),
+    exit("menu exit");
+    private final String regex;
 
     ProfileCommands(String regex) {
         this.regex = regex;

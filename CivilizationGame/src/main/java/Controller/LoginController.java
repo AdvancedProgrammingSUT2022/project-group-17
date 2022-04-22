@@ -2,10 +2,7 @@ package Controller;
 
 import Model.Game;
 import Model.Users.User;
-import com.google.gson.Gson;
-
-import java.io.FileWriter;
-import java.io.IOException;
+import View.Menu;
 import java.util.regex.Matcher;
 
 public class LoginController extends Controller{
@@ -43,6 +40,8 @@ public class LoginController extends Controller{
     }
 
     public String loginUser(Matcher matcher) {
+        if (Game.getCurrentUser() != null) return ("please logout in main menu first!");
+
         String userName = null;
         String password = null;
         for (int i = 1; i < 3; i++) {
@@ -60,7 +59,7 @@ public class LoginController extends Controller{
         }
         if ((userName == null) || (password == null))
             return ("you must enter both of username and password fields");
-        System.out.println(userName + " " + password);
+
         User user = Game.getUserByName(userName);
 
         if (user == null){
@@ -72,7 +71,8 @@ public class LoginController extends Controller{
         }
 
         Game.setCurrentUser(user);
-        return ("welcome " + user.getNickname() + " !");
+        Menu.setMenuName("MainMenu");
+        return ("welcome " + user.getNickname() + "!");
     }
 
 }
