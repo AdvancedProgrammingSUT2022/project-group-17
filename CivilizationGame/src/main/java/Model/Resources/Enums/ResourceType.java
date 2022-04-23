@@ -3,10 +3,15 @@ package Model.Resources.Enums;
 import Model.Resources.Resource;
 
 public enum ResourceType {
-    ; //TODO fill enums
+    Banana("Banana", )
+    ;
     public String name;
+    public CurrencyType currency;
+    public int amount;
 
-    ResourceType(String name) {
+    ResourceType(String name, CurrencyType currency, int amount) {
         this.name = name;
+        this.currency = currency;
+        this.amount = amount;
     }
 }
