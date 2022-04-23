@@ -1,7 +1,9 @@
 package Model.Improvements;
 
 public enum ImprovementType {
-    Farm("farm", 5);
+    Farm("farm", 5),
+
+    ;
 
 
 
