@@ -1,5 +1,6 @@
-package Controller;
+package Controller.GameControllers;
 
+import Controller.Controller;
 import Enums.Consts;
 import Model.City;
 import Model.Lands.Land;
@@ -7,7 +8,7 @@ import Model.Units.Unit;
 
 import java.util.regex.Matcher;
 
-public class GameController extends Controller{
+public class GameController extends Controller {
     protected Unit selectedUnit;
     protected City selectedCity;
 
@@ -77,7 +78,7 @@ public class GameController extends Controller{
     }
 
     public void nextTurn(){
-
+        // remember to check if a unit has multi-turn movement then it won't wait for command.
     }
 
     public void saveGame(){

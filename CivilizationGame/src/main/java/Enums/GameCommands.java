@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands {
-    ;//TODO fill enums
+    UNIT_MOVE_TO("unit move to -i (?<i>-?\\d+) -j (?<j>-?\\d+)");//TODO fill enums
     private String regex;
 
     GameCommands(String regex) {

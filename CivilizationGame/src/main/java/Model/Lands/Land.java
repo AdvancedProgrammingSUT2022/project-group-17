@@ -11,7 +11,7 @@ public class Land {
 
     protected Improvement improvement;
     protected LandFeature landFeature;
-    protected int movementCost;
+    protected int MP;
     protected int cost;
     //TODO
     protected City ownerCity = null;
@@ -23,10 +23,11 @@ public class Land {
     protected int goldGrowth;
     protected int productionGrowth;
     protected int foodGrowth;
+    protected boolean isAPartOfpath = false;
 
     public Land(Improvement improvement, int movementCost, int cost, boolean isBuyable, boolean isWalkable, int goldGrowth, int productionGrowth, int foodGrowth) {
         this.improvement = improvement;
-        this.movementCost = movementCost;
+        this.MP = movementCost;
         this.cost = cost;
         this.isBuyable = isBuyable;
         this.isWalkable = isWalkable;
@@ -40,8 +41,8 @@ public class Land {
         return improvement;
     }
 
-    public int getMovementCost() {
-        return movementCost;
+    public int getMP() {
+        return MP;
     }
 
     public int getCost() {
@@ -56,7 +57,15 @@ public class Land {
         return isWalkable;
     }
 
+    public boolean isAPartOfpath() {
+        return isAPartOfpath;
+    }
+
     public void setOwnerCity(City ownerCity) {
         this.ownerCity = ownerCity;
+    }
+
+    public void setAPartOfpath(boolean APartOfpath) {
+        isAPartOfpath = APartOfpath;
     }
 }

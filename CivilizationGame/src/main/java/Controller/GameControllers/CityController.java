@@ -1,6 +1,5 @@
 package Controller.GameControllers;
 
-import Controller.GameController;
 import Model.City;
 
 import java.util.regex.Matcher;
