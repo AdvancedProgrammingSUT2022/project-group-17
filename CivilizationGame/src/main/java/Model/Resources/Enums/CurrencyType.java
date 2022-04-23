@@ -3,7 +3,7 @@ package Model.Resources.Enums;
 import Model.Resources.Currency;
 
 public enum CurrencyType {
-    Gold("Gold"),
+    Coin("Coin"),
     Food("Food"),
     Production("Production"),
     Science("Science"),
