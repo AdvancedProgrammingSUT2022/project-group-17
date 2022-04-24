@@ -10,11 +10,22 @@ public enum CivilizedUnitType {
     SETTLER("Settler", 89, 2, null, null, 0, 10),
     WORKER("Worker", 70, 2, null, null, 0, 10);
 
-    private CivilizedUnit civilizedUnit;
+    public String name;
+    public int cost;
+    public int MP;
+    public ResourceType resourceType;
+    public TechnologyType technologyType;
+    public int turns;
+    public int hp;
 
-    CivilizedUnitType(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                      int turns, int hp) {
-        this.civilizedUnit = new CivilizedUnit(name, cost, MP, resourceType, technologyType, turns, hp);
+    CivilizedUnitType(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType, int turns, int hp) {
+        this.name = name;
+        this.cost = cost;
+        this.MP = MP;
+        this.resourceType = resourceType;
+        this.technologyType = technologyType;
+        this.turns = turns;
+        this.hp = hp;
     }
 }
 

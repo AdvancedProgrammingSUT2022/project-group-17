@@ -20,12 +20,30 @@ public enum RangedCombatUnitType {
     ARTILLERY("Artillery", 420, 16, 32, 3, 2, null,
             TechnologyType.Dynamite, 0, 10, true);
 
-    private RangedCombatUnit rangedCombatUnit;
+    public String name;
+    public int cost;
+    public int combatStrength;
+    public int rangedStrength;
+    public int range;
+    public int MP;
+    public ResourceType resourceType;
+    public TechnologyType technologyType;
+    public int turns;
+    public int hp;
+    public boolean isSiege;
 
     RangedCombatUnitType(String name, int cost, int combatStrength, int rangedStrength, int range, int MP,
-                         ResourceType resourceType, TechnologyType technologyType, int turns, int hp,
-                         boolean isSiege) {
-        this.rangedCombatUnit = new RangedCombatUnit(name, cost, combatStrength,
-                rangedStrength, range, MP, resourceType, technologyType, turns, hp, isSiege);
+                         ResourceType resourceType, TechnologyType technologyType, int turns, int hp, boolean isSiege) {
+        this.name = name;
+        this.cost = cost;
+        this.combatStrength = combatStrength;
+        this.rangedStrength = rangedStrength;
+        this.range = range;
+        this.MP = MP;
+        this.resourceType = resourceType;
+        this.technologyType = technologyType;
+        this.turns = turns;
+        this.hp = hp;
+        this.isSiege = isSiege;
     }
 }

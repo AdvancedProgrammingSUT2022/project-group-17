@@ -15,10 +15,7 @@ public class Unit {
     protected int turns;
     protected int XP;
     protected boolean isWaitingForCommand;
-    //Fixme
-    protected static boolean isTechnologicallyAvailable = false;
     protected TechnologyType technologyType;
-    //TODO how to know if the user has the specific resource
     protected ResourceType resourceType;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
@@ -51,10 +48,6 @@ public class Unit {
 
     public int getCost() {
         return cost;
-    }
-
-    public static boolean isIsTechnologicallyAvailable() {
-        return isTechnologicallyAvailable;
     }
 
     public ResourceType getResourceType() {

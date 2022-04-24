@@ -38,11 +38,23 @@ public enum CloseCombatUnitType {
     TANK("Tank", 450, 50, 4, null, TechnologyType.Combustion,
             0, 10);
 
-    private CloseCombatUnit closeCombatUnit;
+    public String name;
+    public int cost;
+    public int combatStrength;
+    public int MP;
+    public ResourceType resourceType;
+    public TechnologyType technologyType;
+    public int turns;
+    public int hp;
 
-    CloseCombatUnitType(String name, int cost, int combatStrength, int MP, ResourceType resourceType, TechnologyType technologyType,
-                        int turns, int hp) {
-        this.closeCombatUnit = new CloseCombatUnit(name, cost, combatStrength, MP, resourceType, technologyType, turns,
-                hp);
+    CloseCombatUnitType(String name, int cost, int combatStrength, int MP, ResourceType resourceType, TechnologyType technologyType, int turns, int hp) {
+        this.name = name;
+        this.cost = cost;
+        this.combatStrength = combatStrength;
+        this.MP = MP;
+        this.resourceType = resourceType;
+        this.technologyType = technologyType;
+        this.turns = turns;
+        this.hp = hp;
     }
 }
