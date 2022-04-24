@@ -12,7 +12,7 @@ public enum LandType {
     Plain("Plain", 1, 1, 0, -33, 1, null, null, true),
     Snow("Snow", 0, 0, 0, -33, 1, null, null, true),
     Tundra("Tundra", 1, 0, 0, -33, 1, null, null, true),
-    
+
 
 
     ;
