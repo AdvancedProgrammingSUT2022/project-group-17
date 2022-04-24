@@ -1,15 +1,19 @@
 package Model.Units;
 
+import Model.Resources.Enums.ResourceType;
 import Model.Resources.Resource;
+import Model.Technologies.Technology;
+import Model.Technologies.TechnologyType;
 
-public class RangedCombatUnit extends CombatUnit{
+public class RangedCombatUnit extends CombatUnit {
     protected int rangedStrength;
     protected int range;
     protected boolean isSiege;
 
-    public RangedCombatUnit(String name, int hp, int movement, int cost, Resource resource, int combatStrength,
-                            int rangedStrength, int range, boolean isSiege, int turns) {
-        super(name, hp, movement, cost, resource, turns, combatStrength);
+    public RangedCombatUnit(String name, int cost, int combatStrength, int rangedStrength, int range, int MP,
+                            ResourceType resourceType, TechnologyType technologyType, int turns, int hp,
+                            boolean isSiege) {
+        super(name, cost, combatStrength, MP, resourceType, technologyType, turns, hp);
         this.rangedStrength = rangedStrength;
         this.range = range;
         this.isSiege = isSiege;

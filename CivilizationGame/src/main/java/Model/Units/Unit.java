@@ -1,6 +1,9 @@
 package Model.Units;
 
+import Model.Resources.Enums.ResourceType;
 import Model.Resources.Resource;
+import Model.Technologies.Technology;
+import Model.Technologies.TechnologyType;
 
 public class Unit {
     protected String name;
@@ -14,17 +17,20 @@ public class Unit {
     protected boolean isWaitingForCommand;
     //Fixme
     protected static boolean isTechnologicallyAvailable = false;
+    protected TechnologyType technologyType;
     //TODO how to know if the user has the specific resource
-    protected Resource resource;
+    protected ResourceType resourceType;
 
-    public Unit(String name, int hp, int movement, int cost, Resource resource, int turns) {
+    public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
+                int turns, int hp) {
         this.name = name;
-        this.hp = hp;
-        this.MP = movement;
         this.cost = cost;
-        this.resource = resource;
-        this.XP = 0;
+        this.MP = MP;
+        this.resourceType = resourceType;
+        this.technologyType = technologyType;
         this.turns = turns;
+        this.hp = hp;
+        this.XP = 0;
     }
 
     public String getName() {
@@ -51,8 +57,8 @@ public class Unit {
         return isTechnologicallyAvailable;
     }
 
-    public Resource getResource() {
-        return resource;
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
     public int getXP() {
@@ -75,7 +81,7 @@ public class Unit {
         this.j = j;
     }
 
-    public void changeXP(int amount){
+    public void changeXP(int amount) {
         this.XP -= amount;
     }
 
