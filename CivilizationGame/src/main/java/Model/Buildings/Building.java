@@ -2,30 +2,26 @@ package Model.Buildings;
 
 public class Building {
 
-    protected String name;
-    protected int cost;
-    protected int maintenance;
     protected int turns;
+    protected BuildingType buildingType;
     //FixMe does making a parents field static impact the child's field in any unwanted way
     protected static boolean isTechnologicallyAvailable = false;
 
-    public Building(String name, int cost, int maintenance, int turns){
-        this.name = name;
-        this.cost = cost;
-        this.maintenance = maintenance;
-        this.turns = turns;
+    public Building(BuildingType buildingType){
+        this.turns = buildingType.initialTurns;
+        this.buildingType = buildingType;
     }
 
-    public String getName() {
-        return name;
+    public BuildingType getBuildingType() {
+        return buildingType;
     }
 
-    public int getCost() {
-        return cost;
+    public int getTurns() {
+        return turns;
     }
 
-    public int getMaintenance() {
-        return maintenance;
+    public static boolean isIsTechnologicallyAvailable() {
+        return isTechnologicallyAvailable;
     }
 
     public static boolean isAvailable() {

@@ -1,31 +1,13 @@
 package Model.LandFeatures;
 
 public class LandFeature {
-    protected String name;
-    protected int goldGrowth;
-    protected int productionGrowth;
-    protected int foodGrowth;
+    protected LandFeatureType landFeatureType;
 
-    public LandFeature(String name, int goldGrowth, int productionGrowth, int foodGrowth) {
-        this.name = name;
-        this.goldGrowth = goldGrowth;
-        this.productionGrowth = productionGrowth;
-        this.foodGrowth = foodGrowth;
+    public LandFeature(LandFeatureType landFeatureType) {
+        this.landFeatureType = landFeatureType;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getGoldGrowth() {
-        return goldGrowth;
-    }
-
-    public int getProductionGrowth() {
-        return productionGrowth;
-    }
-
-    public int getFoodGrowth() {
-        return foodGrowth;
+    public LandFeatureType getLandFeatureType() {
+        return landFeatureType;
     }
 }

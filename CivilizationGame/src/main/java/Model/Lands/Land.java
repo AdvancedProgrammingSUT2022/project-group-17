@@ -3,45 +3,67 @@ package Model.Lands;
 import Model.City;
 import Model.Improvements.Improvement;
 import Model.LandFeatures.LandFeature;
+import Model.Resources.Resource;
 import Model.Units.CivilizedUnit;
 import Model.Units.CloseCombatUnit;
 import Model.Units.RangedCombatUnit;
+
+import java.util.ArrayList;
 
 public class Land {
 
     protected Improvement improvement;
     protected LandFeature landFeature;
-    protected int movementCost;
     protected int cost;
-    //TODO fog of war
     protected City ownerCity = null;
     protected CivilizedUnit civilizedUnit = null;
     protected CloseCombatUnit closeCombatUnit = null;
     protected RangedCombatUnit rangedCombatUnit = null;
     protected boolean isBuyable;
     protected boolean isWalkable;
-    protected int goldGrowth;
-    protected int productionGrowth;
-    protected int foodGrowth;
+    protected LandType landType;
+    protected int visibility;
+    protected ArrayList<Resource> resources;
 
-    public Land(Improvement improvement, int movementCost, int cost, boolean isBuyable, boolean isWalkable, int goldGrowth, int productionGrowth, int foodGrowth) {
-        this.improvement = improvement;
-        this.movementCost = movementCost;
+    public Land(LandType landType, int cost, boolean isBuyable, boolean isWalkable) {
+        this.landType = landType;
         this.cost = cost;
         this.isBuyable = isBuyable;
         this.isWalkable = isWalkable;
-        landFeature = null;
-        this.goldGrowth = goldGrowth;
-        this.productionGrowth = productionGrowth;
-        this.foodGrowth = foodGrowth;
+        this.landFeature = null;
+        this.improvement = null;
     }
 
     public Improvement getImprovement() {
         return improvement;
     }
 
-    public int getMovementCost() {
-        return movementCost;
+    public LandFeature getLandFeature() {
+        return landFeature;
+    }
+
+    public City getOwnerCity() {
+        return ownerCity;
+    }
+
+    public CivilizedUnit getCivilizedUnit() {
+        return civilizedUnit;
+    }
+
+    public CloseCombatUnit getCloseCombatUnit() {
+        return closeCombatUnit;
+    }
+
+    public RangedCombatUnit getRangedCombatUnit() {
+        return rangedCombatUnit;
+    }
+
+    public LandType getLandType() {
+        return landType;
+    }
+
+    public int getVisibility() {
+        return visibility;
     }
 
     public int getCost() {

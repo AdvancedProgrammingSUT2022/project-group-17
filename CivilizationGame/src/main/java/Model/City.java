@@ -21,9 +21,6 @@ public class City {
     protected Building inProgressBuilding;
     protected Unit inProgressUnit;
     protected CloseCombatUnit garrison;
-    //TODO take these to Land
-    protected int visibility;
-    protected boolean[] hasRiver = new boolean[6];
 
     public ArrayList<Land> getLands() {
         return lands;
@@ -35,46 +32,6 @@ public class City {
 
     public ArrayList<Building> getBuildings() {
         return buildings;
-    }
-
-    public void addBuilding(Building building){
-        buildings.add(building);
-    }
-
-    public void addLand(Land land){
-        lands.add(land);
-    }
-
-    public void addCitizens(int amount){
-        this.citizens += amount;
-    }
-
-    public Building getInProgressBuilding() {
-        return inProgressBuilding;
-    }
-
-    public Unit getInProgressUnit() {
-        return inProgressUnit;
-    }
-
-    public void setInProgressBuilding(Building inProgressBuilding) {
-        this.inProgressBuilding = inProgressBuilding;
-    }
-
-    public void setInProgressUnit(Unit inProgressUnit) {
-        this.inProgressUnit = inProgressUnit;
-    }
-
-    public ArrayList<Improvement> getImprovements() {
-        return improvements;
-    }
-
-    public int getVisibility() {
-        return visibility;
-    }
-
-    public boolean[] getHasRiver() {
-        return hasRiver;
     }
 
     public int getHP() {
@@ -92,4 +49,41 @@ public class City {
     public CloseCombatUnit getGarrison() {
         return garrison;
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public Building getInProgressBuilding() {
+        return inProgressBuilding;
+    }
+
+    public ArrayList<Improvement> getImprovements() {
+        return improvements;
+    }
+
+    public void addBuilding(Building building){
+        buildings.add(building);
+    }
+
+    public void addLand(Land land){
+        lands.add(land);
+    }
+
+    public void addCitizens(int amount){
+        this.citizens += amount;
+    }
+
+    public Unit getInProgressUnit() {
+        return inProgressUnit;
+    }
+
+    public void setInProgressBuilding(Building inProgressBuilding) {
+        this.inProgressBuilding = inProgressBuilding;
+    }
+
+    public void setInProgressUnit(Unit inProgressUnit) {
+        this.inProgressUnit = inProgressUnit;
+    }
+
 }

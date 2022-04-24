@@ -8,8 +8,8 @@ import Model.Resources.Resource;
 import java.util.ArrayList;
 
 public class Nation {
-    protected String name;
-    protected String leaderName;
+
+
     protected ArrayList<City> cities = new ArrayList<>();
     protected City capital;
     protected ArrayList<Resource> resources = new ArrayList<>();
@@ -17,10 +17,10 @@ public class Nation {
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
     protected Currency[] currencies = new Currency[5];
+    protected NationType nationType;
 
-    public Nation (String name, String leaderName, City capital, Currency[] currencies){
-        this.name = name;
-        this.leaderName = leaderName;
+    public Nation (NationType nationType, City capital, Currency[] currencies){
+        this.nationType = nationType;
         this.capital = capital;
         this.currencies = currencies;
         cities.add(capital);
@@ -33,12 +33,20 @@ public class Nation {
         //buildings
     }
 
-    public String getName() {
-        return name;
+    public ArrayList<Nation> getFriends() {
+        return friends;
     }
 
-    public String getLeaderName() {
-        return leaderName;
+    public ArrayList<Nation> getEnemies() {
+        return enemies;
+    }
+
+    public Currency[] getCurrencies() {
+        return currencies;
+    }
+
+    public NationType getNationType() {
+        return nationType;
     }
 
     public ArrayList<City> getCities() {

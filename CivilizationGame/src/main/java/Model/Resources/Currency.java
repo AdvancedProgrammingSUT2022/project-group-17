@@ -1,23 +1,35 @@
 package Model.Resources;
 
-public class Currency extends Resource {
-    private int growthRate;
+import Model.Resources.Enums.CurrencyType;
+import Model.Resources.Enums.ResourceType;
 
-    public Currency(String name, int balance, int growthRate){
-        super(name, balance);
-        this.growthRate = growthRate;
+public class Currency {
+    protected int balance;
+    protected int growthRate;
+    protected CurrencyType currencyType;
+
+    public Currency(CurrencyType currencyType){
+        this.currencyType = currencyType;
+        this.balance = 0;
     }
 
     public int getGrowthRate() {
         return growthRate;
     }
 
+    public int getBalance() {
+        return balance;
+    }
+
+    public CurrencyType getCurrencyType() {
+        return currencyType;
+    }
+
     public void setGrowthRate(int growthRate) {
         this.growthRate = growthRate;
     }
 
-    public void addGrowthRate (int amount){
-        this.balance += this.growthRate;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
-
 }

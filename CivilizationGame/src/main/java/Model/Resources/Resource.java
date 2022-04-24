@@ -1,16 +1,18 @@
 package Model.Resources;
 
-public class Resource {
-    protected String name;
-    protected int balance;
+import Model.Resources.Enums.ResourceType;
 
-    public Resource(String name, int balance){
-        this.name = name;
-        this.balance = balance;
+public class Resource {
+    protected int balance;
+    protected ResourceType resourceType;
+
+    public Resource(ResourceType resourceType){
+        this.resourceType = resourceType;
+        this.balance = 0;
     }
 
-    public String getName() {
-        return name;
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
     public int getBalance() {
