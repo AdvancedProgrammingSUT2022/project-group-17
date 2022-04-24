@@ -1,6 +1,5 @@
 package View;
 
-<<<<<<< HEAD
 import Controller.LoginController;
 import Enums.LoginCommands;
 import Model.Game;
@@ -11,10 +10,6 @@ import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu {
     private final LoginController loginController = new LoginController();
-=======
-public class LoginMenu extends Menu{
-    private LoginController loginController = new LoginController();
->>>>>>> Logic/unitMovement
 
     @Override
     public void run(Scanner scanner) {

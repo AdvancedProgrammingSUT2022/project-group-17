@@ -4,14 +4,32 @@ import Model.LandFeatures.LandFeatureType;
 import Model.Resources.Enums.ResourceType;
 
 public enum LandType {
-    Desert("Desert", 0, 0, 0, -33, 1, null, null, true),
-    GrassLand("GrassLand", 2, 0, 0, -33, 1, null, null, true),
-    Hill("Hill", 0, 2, 0, 25, 2, null, null, true),
+    Desert("Desert", 0, 0, 0, -33, 1,
+            new LandFeatureType[]{LandFeatureType.Oasis, LandFeatureType.Watershed},
+            new ResourceType[]{ResourceType.Iron, ResourceType.Gold, ResourceType.Silver, ResourceType.Jewel,
+                    ResourceType.Marble, ResourceType.Cotton, ResourceType.Fumigation, ResourceType.Sheep}, true),
+    GrassLand("GrassLand", 2, 0, 0, -33, 1,
+            new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.Swamp},
+            new ResourceType[]{ResourceType.Iron, ResourceType.Horse, ResourceType.Coal, ResourceType.Cow,
+                    ResourceType.Gold, ResourceType.Jewel, ResourceType.Marble, ResourceType.Cotton,
+                    ResourceType.Sheep}, true),
+    Hill("Hill", 0, 2, 0, 25, 2,
+            new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.LushJungle},
+            new ResourceType[]{ResourceType.Iron, ResourceType.Coal, ResourceType.Deer, ResourceType.Gold,
+                    ResourceType.Silver, ResourceType.Jewel, ResourceType.Marble, ResourceType.Sheep}, true),
     Mountain("Mountain", 0, 0, 0, 25, 1000, null, null, false),
     Ocean("Ocean", 0, 0, 0, 25, 1000, null, null, false),
-    Plain("Plain", 1, 1, 0, -33, 1, null, null, true),
-    Snow("Snow", 0, 0, 0, -33, 1, null, null, true),
-    Tundra("Tundra", 1, 0, 0, -33, 1, null, null, true),
+    Plain("Plain", 1, 1, 0, -33, 1,
+            new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.LushJungle},
+            new ResourceType[]{ResourceType.Iron, ResourceType.Horse, ResourceType.Coal, ResourceType.Wheat,
+                    ResourceType.Gold, ResourceType.Jewel, ResourceType.Marble, ResourceType.Tusk, ResourceType.Cotton,
+                    ResourceType.Fumigation, ResourceType.Sheep}, true),
+    Snow("Snow", 0, 0, 0, -33, 1, null,
+            new ResourceType[]{ResourceType.Iron}, true),
+    Tundra("Tundra", 1, 0, 0, -33, 1,
+            new LandFeatureType[]{LandFeatureType.Jungle}, new ResourceType[]{ResourceType.Iron, ResourceType.Horse,
+            ResourceType.Deer, ResourceType.Silver, ResourceType.Silver, ResourceType.Jewel, ResourceType.Marble,
+            ResourceType.Fur}, true),
 
 
 
