@@ -1,8 +1,8 @@
-import Model.LandFeatures.LandFeature;
-import Model.LandFeatures.LandFeatureType;
+import Model.Game;
 import View.*;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
 
@@ -13,19 +13,20 @@ public class Main {
         menuNumbers.put("GameMenu",2);
         menuNumbers.put("ProfileMenu",3);
 
-        Menu[] menus = new Menu[3];
+        Menu[] menus = new Menu[4];
         menus[0] = new LoginMenu();
         menus[1] = new MainMenu();
         menus[2] = new GameMenu();
         menus[3] = new ProfileMenu();
 
-        String currentMenu;
-        do {
+        String currentMenu = "LoginMenu";
+        Scanner scanner = new Scanner(System.in);
+
+        while (!currentMenu.equals("EXIT")) {
+            menus[menuNumbers.get(currentMenu)].run(scanner);
             currentMenu = Menu.getMenuName();
-            menus[menuNumbers.get(currentMenu)].run();
-        } while(!currentMenu.equals("EXIT"));
-
-
+        }
+        Game.saveUserListToDatabase();
     }
 
 

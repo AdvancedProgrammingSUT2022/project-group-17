@@ -9,7 +9,7 @@ public class RangedCombatUnit extends Unit{
     protected boolean isSiege;
 
     public RangedCombatUnit(String name, int hp, int movement, int cost, Resource resource, int combatStrength,
-                            int rangedStrength, int range, boolean isSiege, int turns) {
+                            int rangedStrength, int range, boolean isSiege) {
         super(name, hp, movement, cost, resource, turns);
         this.combatStrength = combatStrength;
         this.rangedStrength = rangedStrength;

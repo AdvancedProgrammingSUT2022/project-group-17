@@ -1,9 +1,11 @@
 package View;
 
-public class Menu {
-    protected static String menuName;
+import java.util.Scanner;
 
-    public void run(){
+public class Menu {
+    protected static String menuName = "LoginMenu";
+
+    public void run(Scanner scanner){
 
     }
 
