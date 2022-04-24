@@ -1,7 +1,5 @@
 package View;
 
-import Controller.GameControllers.LoginController;
-
 public class LoginMenu extends Menu{
     private LoginController loginController = new LoginController();
 

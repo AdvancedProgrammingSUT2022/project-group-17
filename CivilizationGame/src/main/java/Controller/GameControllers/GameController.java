@@ -3,6 +3,7 @@ package Controller.GameControllers;
 import Controller.Controller;
 import Enums.Consts;
 import Model.City;
+import Model.Game;
 import Model.Lands.Land;
 import Model.Units.Unit;
 
@@ -58,11 +59,23 @@ public class GameController extends Controller {
     }
 
     public void selectCombatUnit(Matcher matcher) {
+        int selectedLandI = Integer.parseInt(matcher.group("i"));
+        int selectedLandJ = Integer.parseInt(matcher.group("j"));
 
+        if(Game.map[selectedLandI][selectedLandJ].getCloseCombatUnit() != null)
+            selectedUnit = Game.map[selectedLandI][selectedLandJ].getCloseCombatUnit();
+        else if(Game.map[selectedLandI][selectedLandJ].getRangedCombatUnit() != null)
+            selectedUnit = Game.map[selectedLandI][selectedLandJ].getRangedCombatUnit();
+        else System.out.println("There is no combat unit here!");
     }
 
     public void selectCivilizedUnit(Matcher matcher) {
+        int selectedLandI = Integer.parseInt(matcher.group("i"));
+        int selectedLandJ = Integer.parseInt(matcher.group("j"));
 
+        if(Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null)
+            selectedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
+        else System.out.println("There is no civilized unit here!");
     }
 
     public void selectCity(Matcher matcher) {

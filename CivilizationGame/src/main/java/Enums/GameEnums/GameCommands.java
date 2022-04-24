@@ -1,10 +1,11 @@
-package Enums;
+package Enums.GameEnums;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands {
-    UNIT_MOVE_TO("unit move to -i (?<i>-?\\d+) -j (?<j>-?\\d+)");//TODO fill enums
+    SELECT_COMBAT_UNIT("select combat unit on -i (?<i>\\d+) -j (?<j>\\d+)") ,
+    SELECT_CIVILIZED_UNIT("select civilized unit on -i (?<i>\\d+) -j (?<j>\\d+)"); //TODO fill enums
     private String regex;
 
     GameCommands(String regex) {

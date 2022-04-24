@@ -1,10 +1,8 @@
 package Controller.GameControllers;
 
 import Model.Game;
-import Model.Lands.Land;
 
 import java.util.regex.Matcher;
-import java.lang.Math;
 
 public class UnitController extends GameController {
 
@@ -35,29 +33,29 @@ public class UnitController extends GameController {
         int tmpPathCost;
 
         if(currentI == destI && currentJ == destJ) return pathCost;
-        if(Game.map.get(currentI).get(currentJ) == null) return 1000;
+        if(Game.map[currentI][currentJ] == null) return 1000;
 
-        Game.map.get(currentI).get(currentJ).setAPartOfpath(true);
+        Game.map[currentI][currentJ].setAPartOfPath(true);
 
-        if(Game.map.get(currentI + 1).get(currentJ) != null)
+        if(Game.map[currentI + 1][currentJ] != null)
             if((tmpPathCost =findEasiestPath(destI, destJ,
-                    pathCost + Game.map.get(currentI + 1).get(currentJ).getMP(), minPathCost)) < minPathCost)
+                    pathCost + Game.map[currentI + 1][currentJ].getMP(), minPathCost)) < minPathCost)
                 minPathCost = tmpPathCost;
-        if(Game.map.get(currentI - 1).get(currentJ) != null)
+        if(Game.map[currentI - 1][currentJ] != null)
             findEasiestPath(destI, destJ,
-                    pathCost + Game.map.get(currentI - 1).get(currentJ).getMP(), minPathCost);
-        if(Game.map.get(currentI).get(currentJ + 1) != null)
+                    pathCost + Game.map[currentI - 1][currentJ].getMP(), minPathCost);
+        if(Game.map[currentI][currentJ + 1] != null)
             findEasiestPath(destI, destJ,
-                    pathCost + Game.map.get(currentI).get(currentJ + 1).getMP(), minPathCost);
-        if(Game.map.get(currentI).get(currentJ - 1) != null)
+                    pathCost + Game.map[currentI][currentJ + 1].getMP(), minPathCost);
+        if(Game.map[currentI][currentJ - 1] != null)
             findEasiestPath(destI, destJ,
-                    pathCost + Game.map.get(currentI).get(currentJ - 1).getMP(), minPathCost);
-        if(Game.map.get(currentI + 1).get(currentJ + 1) != null)
+                    pathCost + Game.map[currentI][currentJ - 1].getMP(), minPathCost);
+        if(Game.map[currentI + 1][currentJ + 1] != null)
             findEasiestPath(destI, destJ,
-                    pathCost + Game.map.get(currentI + 1).get(currentJ + 1).getMP(), minPathCost);
-        if(Game.map.get(currentI - 1).get(currentJ - 1) != null)
+                    pathCost + Game.map[currentI + 1][currentJ + 1].getMP(), minPathCost);
+        if(Game.map[currentI - 1][currentJ - 1] != null)
             findEasiestPath(destI, destJ,
-                    pathCost + Game.map.get(currentI - 1).get(currentJ - 1).getMP(), minPathCost);
+                    pathCost + Game.map[currentI - 1][currentJ - 1].getMP(), minPathCost);
 
 
 

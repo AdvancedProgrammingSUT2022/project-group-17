@@ -23,7 +23,7 @@ public class Land {
     protected int goldGrowth;
     protected int productionGrowth;
     protected int foodGrowth;
-    protected boolean isAPartOfpath = false;
+    protected boolean isAPartOfPath = false;
 
     public Land(Improvement improvement, int movementCost, int cost, boolean isBuyable, boolean isWalkable, int goldGrowth, int productionGrowth, int foodGrowth) {
         this.improvement = improvement;
@@ -49,6 +49,18 @@ public class Land {
         return cost;
     }
 
+    public CivilizedUnit getCivilizedUnit() {
+        return civilizedUnit;
+    }
+
+    public CloseCombatUnit getCloseCombatUnit() {
+        return closeCombatUnit;
+    }
+
+    public RangedCombatUnit getRangedCombatUnit() {
+        return rangedCombatUnit;
+    }
+
     public boolean isBuyable() {
         return isBuyable;
     }
@@ -57,15 +69,15 @@ public class Land {
         return isWalkable;
     }
 
-    public boolean isAPartOfpath() {
-        return isAPartOfpath;
+    public boolean isAPartOfPath() {
+        return isAPartOfPath;
     }
 
     public void setOwnerCity(City ownerCity) {
         this.ownerCity = ownerCity;
     }
 
-    public void setAPartOfpath(boolean APartOfpath) {
-        isAPartOfpath = APartOfpath;
+    public void setAPartOfPath(boolean APartOfPath) {
+        isAPartOfPath = APartOfPath;
     }
 }

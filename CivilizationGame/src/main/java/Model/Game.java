@@ -13,7 +13,7 @@ public class Game {
     private static User currentUser;
     private static int turn = 0;
     private static ArrayList<String> allTechnologies = new ArrayList<>();
-    public static HashMap<Integer, HashMap<Integer, Land>> map = new HashMap<>();
+    public static Land[][] map = new Land[100][100];
 
     public static ArrayList<User> getUsers() {
         return users;
