@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 
 public class Game {
 
@@ -20,7 +20,7 @@ public class Game {
     private static User currentUser;
     private static int turn = 0;
     private static ArrayList<String> allTechnologies = new ArrayList<>();
-    public static Land[][] map = new Land[Consts.MAP_SIZE.amount][Consts.MAP_SIZE.amount];
+    public static Land[][] map = new Land[100][100];
 
     public static User getUserByName(String username){
         for (User user : users) {

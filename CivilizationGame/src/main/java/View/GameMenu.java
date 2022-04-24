@@ -1,6 +1,6 @@
 package View;
 
-import Controller.GameController;
+import Controller.GameControllers.GameController;
 
 import java.util.Scanner;
 

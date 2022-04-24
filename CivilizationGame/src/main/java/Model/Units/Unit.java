@@ -4,11 +4,14 @@ import Model.Resources.Resource;
 
 public class Unit {
     protected String name;
+    protected int i;
+    protected int j;
     protected int hp;
-    protected int movement;
+    protected int MP;
     protected int cost;
     protected int turns;
     protected int XP;
+    protected boolean isWaitingForCommand;
     //Fixme
     protected static boolean isTechnologicallyAvailable = false;
     //TODO how to know if the user has the specific resource
@@ -17,7 +20,7 @@ public class Unit {
     public Unit(String name, int hp, int movement, int cost, Resource resource, int turns) {
         this.name = name;
         this.hp = hp;
-        this.movement = movement;
+        this.MP = movement;
         this.cost = cost;
         this.resource = resource;
         this.XP = 0;
@@ -28,12 +31,16 @@ public class Unit {
         return name;
     }
 
-    public int getHp() {
-        return hp;
+    public int getI() {
+        return i;
     }
 
-    public int getMovement() {
-        return movement;
+    public int getJ() {
+        return j;
+    }
+
+    public int getHp() {
+        return hp;
     }
 
     public int getCost() {
@@ -52,8 +59,28 @@ public class Unit {
         return XP;
     }
 
+    public boolean isWaitingForCommand() {
+        return isWaitingForCommand;
+    }
+
+    public int getMP() {
+        return MP;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public void setJ(int j) {
+        this.j = j;
+    }
+
     public void changeXP(int amount){
         this.XP -= amount;
+    }
+
+    public void changeMP(int amount) {
+        this.MP -= amount;
     }
 
     public void setHp(int hp) {

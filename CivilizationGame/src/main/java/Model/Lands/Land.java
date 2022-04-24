@@ -14,6 +14,7 @@ public class Land {
 
     protected Improvement improvement;
     protected LandFeature landFeature;
+    protected int MP;
     protected int cost;
     protected City ownerCity = null;
     protected CivilizedUnit civilizedUnit = null;
@@ -21,6 +22,10 @@ public class Land {
     protected RangedCombatUnit rangedCombatUnit = null;
     protected boolean isBuyable;
     protected boolean isWalkable;
+    protected int goldGrowth;
+    protected int productionGrowth;
+    protected int foodGrowth;
+    protected boolean isAPartOfPath = false;
     protected LandType landType;
     protected int visibility;
     protected ArrayList<Resource> resources;
@@ -66,6 +71,10 @@ public class Land {
         return visibility;
     }
 
+    public int getMP() {
+        return MP;
+    }
+
     public int getCost() {
         return cost;
     }
@@ -78,7 +87,15 @@ public class Land {
         return isWalkable;
     }
 
+    public boolean isAPartOfPath() {
+        return isAPartOfPath;
+    }
+
     public void setOwnerCity(City ownerCity) {
         this.ownerCity = ownerCity;
+    }
+
+    public void setAPartOfPath(boolean APartOfPath) {
+        isAPartOfPath = APartOfPath;
     }
 }
