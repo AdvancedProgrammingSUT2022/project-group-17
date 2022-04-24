@@ -4,18 +4,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands {
-<<<<<<< HEAD:CivilizationGame/src/main/java/Enums/GameCommands.java
     cheatIncreaseGold("increase --gold (?<amount>\\d+)"),
     cheatIncreaseTurn("increase --turn (?<amount>\\d+)"),
     cheatIncreaseFood("increase --food (?<amount>\\d+)"),
-    cheatIncreaseProduction("increase --production (?<amount>\\d+)");
-    //TODO fill enums
-    private final String regex;
-=======
+    cheatIncreaseProduction("increase --production (?<amount>\\d+)"),
     SELECT_COMBAT_UNIT("select combat unit on -i (?<i>\\d+) -j (?<j>\\d+)") ,
-    SELECT_CIVILIZED_UNIT("select civilized unit on -i (?<i>\\d+) -j (?<j>\\d+)"); //TODO fill enums
-    private String regex;
->>>>>>> Logic/unitMovement:CivilizationGame/src/main/java/Enums/GameEnums/GameCommands.java
+    SELECT_CIVILIZED_UNIT("select civilized unit on -i (?<i>\\d+) -j (?<j>\\d+)");
+
+    private final String regex;
 
     GameCommands(String regex) {
         this.regex = regex;

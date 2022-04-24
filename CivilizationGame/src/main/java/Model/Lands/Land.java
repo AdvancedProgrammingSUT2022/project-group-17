@@ -6,6 +6,7 @@ import Model.LandFeatures.LandFeature;
 import Model.Resources.Resource;
 import Model.Units.CivilizedUnit;
 import Model.Units.CloseCombatUnit;
+import Model.Units.CombatUnit;
 import Model.Units.RangedCombatUnit;
 
 import java.util.ArrayList;
@@ -14,85 +15,114 @@ public class Land {
 
     protected Improvement improvement;
     protected LandFeature landFeature;
-    protected int MP;
     protected int cost;
     protected City ownerCity = null;
     protected CivilizedUnit civilizedUnit = null;
-    protected CloseCombatUnit closeCombatUnit = null;
-    protected RangedCombatUnit rangedCombatUnit = null;
+    protected CombatUnit combatUnit = null;
     protected boolean isBuyable;
-    protected boolean isWalkable;
-    protected int goldGrowth;
-    protected int productionGrowth;
-    protected int foodGrowth;
     protected boolean isAPartOfPath = false;
     protected LandType landType;
     protected int visibility;
-    protected ArrayList<Resource> resources;
+    // 0 -> fog of war
+    // 1 -> shadow (unknown)
+    // 2 -> visible (shown)
+    protected boolean[] hasRiver = new boolean[6];
+    protected Resource resource;
 
-    public Land(LandType landType, int cost, boolean isBuyable, boolean isWalkable) {
+    public Land(LandType landType, int cost) {
         this.landType = landType;
         this.cost = cost;
-        this.isBuyable = isBuyable;
-        this.isWalkable = isWalkable;
         this.landFeature = null;
         this.improvement = null;
-    }
-
-    public Improvement getImprovement() {
-        return improvement;
-    }
-
-    public LandFeature getLandFeature() {
-        return landFeature;
-    }
-
-    public City getOwnerCity() {
-        return ownerCity;
+        this.visibility = 0;
     }
 
     public CivilizedUnit getCivilizedUnit() {
         return civilizedUnit;
     }
 
-    public CloseCombatUnit getCloseCombatUnit() {
-        return closeCombatUnit;
-    }
-
-    public RangedCombatUnit getRangedCombatUnit() {
-        return rangedCombatUnit;
-    }
-
-    public LandType getLandType() {
-        return landType;
-    }
-
-    public int getVisibility() {
-        return visibility;
-    }
-
     public int getMP() {
-        return MP;
+        return landType.movementCost;
     }
 
     public int getCost() {
         return cost;
     }
 
-    public boolean isBuyable() {
-        return isBuyable;
+    public Improvement getImprovement() {
+        return improvement;
     }
 
-    public boolean isWalkable() {
-        return isWalkable;
+    public void setRiver(int index,boolean value){
+        this.hasRiver[index] = value;
+    }
+
+    public void setImprovement(Improvement improvement) {
+        this.improvement = improvement;
+    }
+
+    public LandFeature getLandFeature() {
+        return landFeature;
+    }
+
+    public void setLandFeature(LandFeature landFeature) {
+        this.landFeature = landFeature;
+    }
+
+    public City getOwnerCity() {
+        return ownerCity;
+    }
+
+    public void setOwnerCity(City ownerCity) {
+        this.ownerCity = ownerCity;
+    }
+
+    public void setCivilizedUnit(CivilizedUnit civilizedUnit) {
+        this.civilizedUnit = civilizedUnit;
+    }
+
+    public CombatUnit getCombatUnit() {
+        return combatUnit;
+    }
+
+    public void setCombatUnit(CombatUnit combatUnit) {
+        this.combatUnit = combatUnit;
     }
 
     public boolean isAPartOfPath() {
         return isAPartOfPath;
     }
 
-    public void setOwnerCity(City ownerCity) {
-        this.ownerCity = ownerCity;
+    public LandType getLandType() {
+        return landType;
+    }
+
+    public void setLandType(LandType landType) {
+        this.landType = landType;
+    }
+
+    public int getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(int visibility) {
+        this.visibility = visibility;
+    }
+
+    public boolean[] getHasRiver() {
+        return hasRiver;
+    }
+
+    public void setHasRiver(boolean[] hasRiver) {
+        this.hasRiver = hasRiver;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public void setAPartOfPath(boolean APartOfPath) {
