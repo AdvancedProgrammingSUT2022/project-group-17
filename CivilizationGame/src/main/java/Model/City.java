@@ -21,8 +21,6 @@ public class City {
     protected Building inProgressBuilding;
     protected Unit inProgressUnit;
     protected CloseCombatUnit garrison;
-    protected int visibility;
-    protected boolean[] hasRiver = new boolean[6];
 
     public ArrayList<Land> getLands() {
         return lands;
@@ -34,10 +32,6 @@ public class City {
 
     public ArrayList<Building> getBuildings() {
         return buildings;
-    }
-
-    public boolean[] getHasRiver() {
-        return hasRiver;
     }
 
     public int getHP() {
@@ -90,10 +84,6 @@ public class City {
 
     public void setInProgressUnit(Unit inProgressUnit) {
         this.inProgressUnit = inProgressUnit;
-    }
-
-    public int getVisibility() {
-        return visibility;
     }
 
 }

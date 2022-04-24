@@ -3,9 +3,12 @@ package Model.Lands;
 import Model.City;
 import Model.Improvements.Improvement;
 import Model.LandFeatures.LandFeature;
+import Model.Resources.Resource;
 import Model.Units.CivilizedUnit;
 import Model.Units.CloseCombatUnit;
 import Model.Units.RangedCombatUnit;
+
+import java.util.ArrayList;
 
 public class Land {
 
@@ -19,6 +22,8 @@ public class Land {
     protected boolean isBuyable;
     protected boolean isWalkable;
     protected LandType landType;
+    protected int visibility;
+    protected ArrayList<Resource> resources;
 
     public Land(LandType landType, int cost, boolean isBuyable, boolean isWalkable) {
         this.landType = landType;
@@ -55,6 +60,10 @@ public class Land {
 
     public LandType getLandType() {
         return landType;
+    }
+
+    public int getVisibility() {
+        return visibility;
     }
 
     public int getCost() {
