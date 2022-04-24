@@ -1,3 +1,5 @@
+import Model.LandFeatures.LandFeature;
+import Model.LandFeatures.LandFeatureType;
 import View.*;
 
 import java.util.HashMap;
@@ -22,6 +24,7 @@ public class Main {
             currentMenu = Menu.getMenuName();
             menus[menuNumbers.get(currentMenu)].run();
         } while(!currentMenu.equals("EXIT"));
+
 
     }
 
