@@ -13,7 +13,7 @@ import Enums.Consts;
 
 public class LandController extends Controller {
 
-    public void printMap(Land[][] map){
+    public static void printMap(Land[][] map){
         int column = 5;
         int row = 10;
 
@@ -27,19 +27,20 @@ public class LandController extends Controller {
 
                     String[] combatUnitChar = new String[2];
                     combatUnitChar[0] = (map[k][j*2].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2].getCombatUnit().getName().substring(0,1)+ ConsoleColors.RESET);
-                    combatUnitChar[1] = (map[k][j*2+1].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2+1].getCombatUnit().getName().substring(0,1)+ ConsoleColors.RESET);
-
+                    if (k != 0)
+                        combatUnitChar[1] = (map[k-1][j*2+1].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k-1][j*2+1].getCombatUnit().getName().substring(0,1)+ ConsoleColors.RESET);
                     String[] civilizedUnitChar = new String[2];
                     civilizedUnitChar[0] = (map[k][j*2].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2].getCivilizedUnit().getName().substring(0,1)+ ConsoleColors.RESET);
-                    civilizedUnitChar[1] = (map[k][j*2+1].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2+1].getCivilizedUnit().getName().substring(0,1)+ ConsoleColors.RESET);
-
+                    if (k != 0)
+                        civilizedUnitChar[1] = (map[k-1][j*2+1].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k-1][j*2+1].getCivilizedUnit().getName().substring(0,1)+ ConsoleColors.RESET);
                     String[] combatUnitOwnerChar = new String[2];
                     combatUnitOwnerChar[0] = (map[k][j*2].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2].getCombatUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
-                    combatUnitOwnerChar[1] = (map[k][j*2+1].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2+1].getCombatUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
-
+                    if (k != 0)
+                        combatUnitOwnerChar[1] = (map[k-1][j*2+1].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k-1][j*2+1].getCombatUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
                     String[] civilizedUnitOwnerChar = new String[2];
                     civilizedUnitOwnerChar[0] = (map[k][j*2].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2].getCivilizedUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
-                    civilizedUnitOwnerChar[1] = (map[k][j*2+1].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2+1].getCivilizedUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
+                    if (k != 0)
+                        civilizedUnitOwnerChar[1] = (map[k-1][j*2+1].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k-1][j*2+1].getCivilizedUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
 
                     String[] ownerString = new String[2];
                     ownerString[0] = ConsoleColors.PURPLE_BOLD_BRIGHT + (map[k][j*2].getOwnerCity() == null ? "N/A" : map[k][j*2].getOwnerCity().getOwnerNation().getNationType().name.substring(0,3)) + ConsoleColors.RESET;
@@ -72,7 +73,7 @@ public class LandController extends Controller {
                             if (j == column-1 || k == 0)
                                 System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "," + ConsoleColors.RESET + resourceChar[0] + " " + borderChar[1] + "       ");
                             else
-                                System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "," + ConsoleColors.RESET +resourceChar[0] + " " + borderChar[1] + "  " + civilizedUnitChar[1] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + civilizedUnitOwnerChar[1] + " ");
+                                System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "," + ConsoleColors.RESET +resourceChar[0] + " " + borderChar[1] + "  " + combatUnitChar[1] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + combatUnitOwnerChar[1] + " ");
                             break;
                         case 2:
                             if (j == column - 1) {
@@ -106,7 +107,7 @@ public class LandController extends Controller {
         }
     }
 
-    public void printNeighbors(Pair coordinate){
+    public static void printNeighbors(Pair coordinate){
         System.out.printf("(%d,%d) : ",coordinate.x,coordinate.y);
         if (coordinate.y % 2 == 0){
             System.out.printf("(%d,%d)",coordinate.x-1,coordinate.y-1);

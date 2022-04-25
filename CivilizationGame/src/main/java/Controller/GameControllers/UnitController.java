@@ -26,15 +26,37 @@ public class UnitController extends GameController {
         }
     }
 
-    private void unitGoToDest(Pair dest){
+    public void unitGoToNeighbor(Matcher matcher){
+        int destX = Integer.parseInt(matcher.group("x"));
+        int destY = Integer.parseInt(matcher.group("y"));
+        Pair dest = new Pair(destX, destY);
+
+        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
+
+        Pair neighbor = new Pair(destX, destY);
+
+        Game.map[neighbor.x][neighbor.y].setCombatUnit(selectedUnit);
+        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
+        selectedUnit.setLocation(neighbor);
+
+        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
+
+
+    }
+
+    public void unitGoToDest(Matcher matcher){
+        int destX = Integer.parseInt(matcher.group("x"));
+        int destY = Integer.parseInt(matcher.group("y"));
+        Pair dest = new Pair(destX, destY);
+
+        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
         main: while (!selectedUnit.getLocation().equals(dest)){
             Pair neighbors[] = new Pair[6];
             for (int i = 0; i < 6; i++)
                 neighbors[i] = LandController.getNeighborIndex(selectedUnit.getLocation(), i);
 
             for (int i = 0; i < 6; i++) {
-                if (Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedUnit.getMP() &&
-                        LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null){
+                if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedUnit.getMP() && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null){
                     if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedUnit.getLocation().x - dest.x) &&
                             Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedUnit.getLocation().y - dest.y)){
 
@@ -68,6 +90,8 @@ public class UnitController extends GameController {
 
             break;
         }
+
+        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
     }
 
     private int findEasiestPath(Pair dest, int pathCost, int minPathCost) {

@@ -31,7 +31,13 @@ public class Main {
 //        }
 //        Game.saveUserListToDatabase();
 
-        new LandController().printMap(Game.map);
+        String cmd = "";
+        GameMenu gameMenu = new GameMenu();
+        Scanner scanner = new Scanner(System.in);
+        while(!Menu.getMenuName().equals("exit")){
+            LandController.printMap(Game.map);
+            gameMenu.run(scanner);
+        }
 
     }
 

@@ -4,10 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands {
-    CHEAT_PUT_UNIT("put unit on -i (?<i>\\d+) -j (?<j>\\d+) --unitName(?<unitName>\\S+)"),
+    CHEAT_PUT_UNIT("put unit on -i (?<x>\\d+) -j (?<y>\\d+) --unitName(?<unitName>\\S+)"),
     SHOW_MAP("SHOW_MAP"),
     MENU_EXIT("menu exit"),
-    SELECT_COMBAT_UNIT("select combat unit on -((?:i|j) \\d+) -((?:i|j) \\d+)"),
+    SELECT_COMBAT_UNIT("select combat unit on -i (?<x>\\d+) -j (?<y>\\d+)"),
     SELECT_CIVILIZED_UNIT("select civilized unit on -((?:i|j) \\d+) -((?:i|j) \\d+)"),
     CHEAT_INCREASE_GOLD("increase --gold (?<amount>\\d+)"),
     CHEAT_INCREASE_TURN("increase --turn (?<amount>\\d+)"),
