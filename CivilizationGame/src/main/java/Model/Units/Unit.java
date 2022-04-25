@@ -96,4 +96,8 @@ public class Unit {
     public void setTurns(int turns) {
         this.turns = turns;
     }
+
+    public void setWaitingForCommand(boolean waitingForCommand) {
+        isWaitingForCommand = waitingForCommand;
+    }
 }

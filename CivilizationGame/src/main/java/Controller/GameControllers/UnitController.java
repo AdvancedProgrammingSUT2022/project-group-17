@@ -15,6 +15,7 @@ public class UnitController extends GameController {
             selectedUnit.setI(destI);
             selectedUnit.setJ(destJ);
             selectedUnit.changeMP(minPathCost);
+            selectedUnit.setWaitingForCommand(false);
             //TODO set isAPartOfPath of all Lands zero
         } else if(minPathCost < 1000) {
             unitMultiTurnMoveTo();
