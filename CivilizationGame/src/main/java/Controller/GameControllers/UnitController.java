@@ -62,6 +62,7 @@ public class UnitController extends GameController {
 
                         Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
                         selectedUnit.setLocation(neighbors[i]);
+                        selectedUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
                         Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
                         continue main;
                     }
@@ -71,6 +72,7 @@ public class UnitController extends GameController {
 
                         Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
                         selectedUnit.setLocation(neighbors[i]);
+                        selectedUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
                         Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
                         continue main;
                     }
@@ -81,10 +83,12 @@ public class UnitController extends GameController {
 
                         Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
                         selectedUnit.setLocation(neighbors[i]);
+                        selectedUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
                         Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
                         continue main;
                     }
-                }
+                }else if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() > selectedUnit.getMP())
+                    System.out.println("Kam dari dadash");
 
             }
 

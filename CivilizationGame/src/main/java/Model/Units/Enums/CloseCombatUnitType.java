@@ -11,8 +11,7 @@ public enum CloseCombatUnitType {
             0, 10),
     SWORDS_MAN("Swords Man", 80, 11, 2, ResourceType.Iron, TechnologyType.IronWorking,
             0, 10),
-    //fixme fix knight mp
-    KNIGHT("Knight", 150, 18, 10, ResourceType.Horse, TechnologyType.Chivalry,
+    KNIGHT("Knight", 150, 18, 3, ResourceType.Horse, TechnologyType.Chivalry,
             0, 10),
     LONG_SWORDS_MAN("Long Swords Man", 150, 18, 3, ResourceType.Iron, TechnologyType.Steel,
             0, 10),
