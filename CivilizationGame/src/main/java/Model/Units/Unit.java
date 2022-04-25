@@ -1,4 +1,5 @@
 package Model.Units;
+import Model.Pair;
 import Model.Resources.Enums.ResourceType;
 import Model.Nations.Nation;
 import Model.Technologies.TechnologyType;
@@ -6,8 +7,7 @@ import Model.Technologies.TechnologyType;
 public class Unit {
     protected Nation ownerNation;
     protected String name;
-    protected int i;
-    protected int j;
+    protected Pair location;
     protected int hp;
     protected int MP;
     protected int cost;
@@ -42,12 +42,8 @@ public class Unit {
         return name;
     }
 
-    public int getI() {
-        return i;
-    }
-
-    public int getJ() {
-        return j;
+    public Pair getLocation() {
+        return location;
     }
 
     public int getHp() {
@@ -74,14 +70,9 @@ public class Unit {
         return MP;
     }
 
-    public void setI(int i) {
-        this.i = i;
+    public void setLocation(Pair location) {
+        this.location = location;
     }
-
-    public void setJ(int j) {
-        this.j = j;
-    }
-
     public void changeXP(int amount) {
         this.XP -= amount;
     }
@@ -96,5 +87,9 @@ public class Unit {
 
     public void setTurns(int turns) {
         this.turns = turns;
+    }
+
+    public void setWaitingForCommand(boolean waitingForCommand) {
+        isWaitingForCommand = waitingForCommand;
     }
 }

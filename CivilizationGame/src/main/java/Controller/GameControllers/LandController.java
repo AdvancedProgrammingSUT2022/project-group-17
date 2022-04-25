@@ -116,7 +116,7 @@ public class LandController extends Controller {
         }
     }
 
-    public Pair getNeighborIndex(Pair coordinate, int position){
+    public static Pair getNeighborIndex(Pair coordinate, int position){
         if (coordinate.y % 2 == 0){
             switch (position){
                 case 0:
@@ -151,7 +151,7 @@ public class LandController extends Controller {
         return null;
     }
 
-    public Land[][] mapInitializer(){
+    public static Land[][] mapInitializer(){
         Land[][] map = new Land[10][10];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
         for (int i = 0; i < 10; i++) {
@@ -199,7 +199,7 @@ public class LandController extends Controller {
         return map;
     }
 
-    public boolean isPairValid(Pair pair){
+    public static boolean isPairValid(Pair pair){
         return pair.x >= 0 && pair.y >= 0 && pair.x < Consts.MAP_SIZE.amount.x && pair.y < Consts.MAP_SIZE.amount.y;
     }
 }

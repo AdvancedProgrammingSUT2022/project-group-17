@@ -8,4 +8,8 @@ public class Pair {
         this.x = x;
         this.y = y;
     }
+
+    public boolean equals(Pair pair) {
+        return this.x == pair.x && this.y == pair.y;
+    }
 }

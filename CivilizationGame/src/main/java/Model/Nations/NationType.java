@@ -4,8 +4,8 @@ import Model.City;
 import Model.Resources.Currency;
 
 public enum NationType {
-    AMIR("amirKingdom","amirHossein");
-
+    AMIR("amirKingdom","amirHossein"),
+    IRAN("Iran", "Dariush");
     public String name;
     public String leaderName;
 

@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.GameControllers.LandController;
 import Enums.Consts;
 import Model.Lands.Land;
 import Model.Users.User;
@@ -20,7 +21,7 @@ public class Game {
     private static User currentUser;
     private static int turn = 0;
     private static ArrayList<String> allTechnologies = new ArrayList<>();
-    public static Land[][] map = new Land[100][100];
+    public static Land[][] map = LandController.mapInitializer();
 
     public static User getUserByName(String username){
         for (User user : users) {
