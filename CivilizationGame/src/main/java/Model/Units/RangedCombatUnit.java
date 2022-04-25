@@ -1,19 +1,15 @@
 package Model.Units;
-
-import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
-import Model.Technologies.TechnologyType;
+import Model.Nations.Nation;
 import Model.Units.Enums.RangedCombatUnitType;
 
 public class RangedCombatUnit extends CombatUnit {
     protected int rangedStrength;
     protected RangedCombatUnitType rangedCombatUnitType;
 
-    public RangedCombatUnit(RangedCombatUnitType rangedCombatUnitType) {
+    public RangedCombatUnit(RangedCombatUnitType rangedCombatUnitType,Nation ownerNation) {
         super(rangedCombatUnitType.name, rangedCombatUnitType.cost, rangedCombatUnitType.combatStrength, rangedCombatUnitType.MP,
                 rangedCombatUnitType.resourceType, rangedCombatUnitType.technologyType, rangedCombatUnitType.turns,
-                rangedCombatUnitType.hp);
+                rangedCombatUnitType.hp,ownerNation);
         this.rangedStrength = rangedCombatUnitType.rangedStrength;
     }
 

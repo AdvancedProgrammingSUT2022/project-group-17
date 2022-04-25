@@ -62,10 +62,8 @@ public class GameController extends Controller {
         int selectedLandI = Integer.parseInt(matcher.group("i"));
         int selectedLandJ = Integer.parseInt(matcher.group("j"));
 
-        if(Game.map[selectedLandI][selectedLandJ].getCloseCombatUnit() != null)
-            selectedUnit = Game.map[selectedLandI][selectedLandJ].getCloseCombatUnit();
-        else if(Game.map[selectedLandI][selectedLandJ].getRangedCombatUnit() != null)
-            selectedUnit = Game.map[selectedLandI][selectedLandJ].getRangedCombatUnit();
+        if(Game.map[selectedLandI][selectedLandJ].getCombatUnit() != null)
+            selectedUnit = Game.map[selectedLandI][selectedLandJ].getCombatUnit();
         else System.out.println("There is no combat unit here!");
     }
 

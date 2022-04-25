@@ -1,11 +1,10 @@
 package Model.Units;
-
 import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
+import Model.Nations.Nation;
 import Model.Technologies.TechnologyType;
 
 public class Unit {
+    protected Nation ownerNation;
     protected String name;
     protected int i;
     protected int j;
@@ -19,7 +18,8 @@ public class Unit {
     protected ResourceType resourceType;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                int turns, int hp) {
+                int turns, int hp,Nation ownerNation) {
+        this.ownerNation = ownerNation;
         this.name = name;
         this.cost = cost;
         this.MP = MP;
@@ -28,6 +28,14 @@ public class Unit {
         this.turns = turns;
         this.hp = hp;
         this.XP = 0;
+    }
+
+    public Nation getOwnerNation() {
+        return ownerNation;
+    }
+
+    public void setOwnerNation(Nation ownerNation) {
+        this.ownerNation = ownerNation;
     }
 
     public String getName() {

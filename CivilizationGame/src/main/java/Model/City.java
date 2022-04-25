@@ -3,13 +3,14 @@ package Model;
 import Model.Buildings.Building;
 import Model.Improvements.Improvement;
 import Model.Lands.Land;
+import Model.Nations.Nation;
 import Model.Units.CloseCombatUnit;
 import Model.Units.Unit;
 
 import java.util.ArrayList;
 
 public class City {
-
+    protected Nation ownerNation;
     protected ArrayList<Land> lands = new ArrayList<>();
     protected int citizens;
     protected int HP;
@@ -21,6 +22,23 @@ public class City {
     protected Building inProgressBuilding;
     protected Unit inProgressUnit;
     protected CloseCombatUnit garrison;
+
+    public City(Nation ownerNation){
+        this.citizens = 3;
+        this.HP = 100;
+        this.combatStrength = 20;
+        this.rangedStrength = 10;
+        this.level = 1;
+        this.ownerNation = ownerNation;
+    }
+
+    public Nation getOwnerNation() {
+        return ownerNation;
+    }
+
+    public void setOwnerNation(Nation ownerNation) {
+        this.ownerNation = ownerNation;
+    }
 
     public ArrayList<Land> getLands() {
         return lands;

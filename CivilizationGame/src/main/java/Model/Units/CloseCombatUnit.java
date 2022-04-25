@@ -1,20 +1,18 @@
 package Model.Units;
-
 import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
-import Model.Technologies.TechnologyType;
+import Model.Nations.Nation;
 import Model.Units.Enums.CloseCombatUnitType;
 
 public class CloseCombatUnit extends CombatUnit {
 
     private CloseCombatUnitType closeCombatUnitType;
 
-    public CloseCombatUnit(CloseCombatUnitType closeCombatUnitType) {
+    public CloseCombatUnit(CloseCombatUnitType closeCombatUnitType,Nation ownerNation) {
         super(closeCombatUnitType.name, closeCombatUnitType.cost, closeCombatUnitType.combatStrength, closeCombatUnitType.MP,
                 closeCombatUnitType.resourceType, closeCombatUnitType.technologyType, closeCombatUnitType.turns,
-                closeCombatUnitType.hp);
+                closeCombatUnitType.hp,ownerNation);
         this.closeCombatUnitType = closeCombatUnitType;
+
     }
 
     public int getCombatStrength() {

@@ -1,12 +1,14 @@
 package Enums;
 
+import Model.Pair;
+
 public enum Consts {
 
-    MAP_SIZE(30);
+    MAP_SIZE(new Pair(10,10));
 
-    public int amount;
+    public final Pair amount;
 
-    Consts(int amount){
+    Consts(Pair amount){
         this.amount = amount;
     }
 }
