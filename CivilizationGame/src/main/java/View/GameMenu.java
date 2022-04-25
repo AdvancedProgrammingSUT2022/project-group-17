@@ -31,7 +31,7 @@ public class GameMenu extends Menu{
         } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_COMBAT_UNIT)).matches()){
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_MOVE_TO)).matches()){
-            
+
         }
     }
 }
