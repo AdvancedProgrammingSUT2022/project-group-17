@@ -19,10 +19,10 @@ public class Nation {
     protected Currency[] currencies = new Currency[5];
     protected NationType nationType;
 
-    public Nation (NationType nationType, City capital, Currency[] currencies){
+    public Nation (NationType nationType/*, City capital, Currency[] currencies*/){
         this.nationType = nationType;
-        this.capital = capital;
-        this.currencies = currencies;
+//        this.capital = capital;
+//        this.currencies = currencies;
         cities.add(capital);
 
 

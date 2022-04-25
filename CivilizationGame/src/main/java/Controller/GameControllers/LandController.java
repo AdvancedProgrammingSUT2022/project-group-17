@@ -70,7 +70,6 @@ public class LandController extends Controller {
                                 System.out.print(borderChar[5] + " " + ownerString[0] + " " + improvementString[0] + "  " + borderChar[1]);
                             } else
                                 System.out.print(borderChar[5] + " " + ownerString[0] + " " + improvementString[0] + "  " + borderChar[1] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0]);
-//                            System.out.print(borderChar[5] + "          " + borderChar[1] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0]);
                             break;
                         case 3:
                             if (j == column-1 || k == row-1)
@@ -89,7 +88,6 @@ public class LandController extends Controller {
                                 System.out.print("  " + borderChar[4] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[2] + "        ");
                             else
                                 System.out.print("  " + borderChar[4] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[2] + " " + ownerString[1] + " " + improvementString[1]);
-//                            System.out.print("  " + borderChar[4] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[2] + "        ");
 
                             break;
                     }

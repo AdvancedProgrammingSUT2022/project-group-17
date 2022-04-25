@@ -9,7 +9,9 @@ public enum GameCommands {
     cheatIncreaseFood("increase --food (?<amount>\\d+)"),
     cheatIncreaseProduction("increase --production (?<amount>\\d+)"),
     SELECT_COMBAT_UNIT("select combat unit on -i (?<i>\\d+) -j (?<j>\\d+)") ,
-    SELECT_CIVILIZED_UNIT("select civilized unit on -i (?<i>\\d+) -j (?<j>\\d+)");
+    SELECT_CIVILIZED_UNIT("select civilized unit on -i (?<i>\\d+) -j (?<j>\\d+)"),
+    CHEAT_PUT_UNIT("put unit on -i (?<i>\\d+) -j (?<j>\\d+) --unitName(?<unitName>\\S+)"),
+    MENU_EXIT("menu exit");
 
     private final String regex;
 
