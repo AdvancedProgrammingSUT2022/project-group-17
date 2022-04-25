@@ -10,28 +10,34 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        HashMap<String, Integer> menuNumbers = new HashMap<>();
-        menuNumbers.put("LoginMenu",0);
-        menuNumbers.put("MainMenu",1);
-        menuNumbers.put("GameMenu",2);
-        menuNumbers.put("ProfileMenu",3);
+//        HashMap<String, Integer> menuNumbers = new HashMap<>();
+//        menuNumbers.put("LoginMenu",0);
+//        menuNumbers.put("MainMenu",1);
+//        menuNumbers.put("GameMenu",2);
+//        menuNumbers.put("ProfileMenu",3);
+//
+//        Menu[] menus = new Menu[4];
+//        menus[0] = new LoginMenu();
+//        menus[1] = new MainMenu();
+//        menus[2] = new GameMenu();
+//        menus[3] = new ProfileMenu();
+//
+//        String currentMenu = "LoginMenu";
+//        Scanner scanner = new Scanner(System.in);
+//
+//        while (!currentMenu.equals("EXIT")) {
+//            menus[menuNumbers.get(currentMenu)].run(scanner);
+//            currentMenu = Menu.getMenuName();
+//        }
+//        Game.saveUserListToDatabase();
 
-        Menu[] menus = new Menu[4];
-        menus[0] = new LoginMenu();
-        menus[1] = new MainMenu();
-        menus[2] = new GameMenu();
-        menus[3] = new ProfileMenu();
-
-        String currentMenu = "LoginMenu";
+        String cmd = "";
+        GameMenu gameMenu = new GameMenu();
         Scanner scanner = new Scanner(System.in);
-
-        while (!currentMenu.equals("EXIT")) {
-            menus[menuNumbers.get(currentMenu)].run(scanner);
-            currentMenu = Menu.getMenuName();
+        while(!Menu.getMenuName().equals("exit")){
+            LandController.printMap(Game.map);
+            gameMenu.run(scanner);
         }
-        Game.saveUserListToDatabase();
-
-        new LandController().printMap(Game.map);
 
     }
 
