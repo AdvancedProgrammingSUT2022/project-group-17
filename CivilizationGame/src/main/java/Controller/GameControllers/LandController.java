@@ -73,7 +73,7 @@ public class LandController extends Controller {
                             if (j == column-1 || k == 0)
                                 System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "," + ConsoleColors.RESET + resourceChar[0] + " " + borderChar[1] + "       ");
                             else
-                                System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "," + ConsoleColors.RESET +resourceChar[0] + " " + borderChar[1] + "  " + combatUnitChar[1] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + combatUnitOwnerChar[1] + " ");
+                                System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "," + ConsoleColors.RESET +resourceChar[0] + " " + borderChar[1] + "  " + civilizedUnitChar[1] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + civilizedUnitOwnerChar[1] + " ");
                             break;
                         case 2:
                             if (j == column - 1) {
@@ -162,10 +162,10 @@ public class LandController extends Controller {
     }
 
     public static Land[][] mapInitializer(){
-        Land[][] map = new Land[10][10];
+        Land[][] map = new Land[12][12];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
 
                 LandType landtype = switch (random.nextInt(8)) {
                     case 0 -> LandType.GrassLand;
@@ -182,19 +182,25 @@ public class LandController extends Controller {
             }
         }
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
                 ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
                 LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
                 int randomInt;
+
                 if (landFeatureTypes != null && landFeatureTypes.length != 0){
-                    if ((randomInt = random.nextInt(landFeatureTypes.length)) % 4 == 0)
+                    if (random.nextInt(landFeatureTypes.length) % 2 == 0){
+                        randomInt = random.nextInt(landFeatureTypes.length);
                         map[i][j].setLandFeature(new LandFeature(landFeatureTypes[randomInt]));
+                    }
                 }
 
-                if (availableResources != null && availableResources.length != 0)
-                    if ((randomInt = random.nextInt(availableResources.length)) % 3 == 0)
+                if (availableResources != null && availableResources.length != 0){
+                    if (random.nextInt(availableResources.length) % 3 == 0){
+                        randomInt = random.nextInt(availableResources.length);
                         map[i][j].setResource(new Resource(availableResources[randomInt]));
+                    }
+                }
 
                 for (int k = 0; k < 6; k++) {
                     if (random.nextInt()%15 == 0){
@@ -210,6 +216,8 @@ public class LandController extends Controller {
     }
 
     public static boolean isPairValid(Pair pair){
+        if (pair == null)
+            return false;
         return pair.x >= 0 && pair.y >= 0 && pair.x < Consts.MAP_SIZE.amount.x && pair.y < Consts.MAP_SIZE.amount.y;
     }
 }
