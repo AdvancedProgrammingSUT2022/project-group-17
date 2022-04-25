@@ -1,8 +1,10 @@
 package Model.Units;
 
+import Model.Nations.Nation;
 import Model.Resources.Resource;
 
 public class Unit {
+    protected Nation ownerNation;
     protected String name;
     protected int i;
     protected int j;
@@ -17,7 +19,8 @@ public class Unit {
     //TODO how to know if the user has the specific resource
     protected Resource resource;
 
-    public Unit(String name, int hp, int movement, int cost, Resource resource, int turns) {
+    public Unit(Nation ownerNation,String name, int hp, int movement, int cost, Resource resource, int turns) {
+        this.ownerNation = ownerNation;
         this.name = name;
         this.hp = hp;
         this.MP = movement;
@@ -25,6 +28,14 @@ public class Unit {
         this.resource = resource;
         this.XP = 0;
         this.turns = turns;
+    }
+
+    public Nation getOwnerNation() {
+        return ownerNation;
+    }
+
+    public void setOwnerNation(Nation ownerNation) {
+        this.ownerNation = ownerNation;
     }
 
     public String getName() {

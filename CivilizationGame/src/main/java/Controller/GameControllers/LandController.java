@@ -1,5 +1,6 @@
 package Controller.GameControllers;
 import Controller.Controller;
+import Model.ConsoleColors;
 import Model.LandFeatures.LandFeature;
 import Model.LandFeatures.LandFeatureType;
 import Model.Lands.Land;
@@ -19,35 +20,77 @@ public class LandController extends Controller {
         for (int k = 0; k < row; k++) {
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < column; j++) {
+                    String[] resourceChar = new String[2];
+                    resourceChar[0] =  (map[k][j*2].getResource() == null ? " " : ConsoleColors.GREEN_BOLD_BRIGHT + map[k][j*2].getResource().getResourceType().name.substring(0,1) + ConsoleColors.RESET);
+                    resourceChar[1] =  (map[k][j*2+1].getResource() == null ? " " : ConsoleColors.GREEN_BOLD_BRIGHT + map[k][j*2+1].getResource().getResourceType().name.substring(0,1)+ ConsoleColors.RESET);
+                    String[] combatUnitChar = new String[2];
+                    combatUnitChar[0] = (map[k][j*2].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2].getCombatUnit().getName().substring(0,1)+ ConsoleColors.RESET);
+                    combatUnitChar[1] = (map[k][j*2+1].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2+1].getCombatUnit().getName().substring(0,1)+ ConsoleColors.RESET);
+                    String[] civilizedUnitChar = new String[2];
+                    civilizedUnitChar[0] = (map[k][j*2].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2].getCivilizedUnit().getName().substring(0,1)+ ConsoleColors.RESET);
+                    civilizedUnitChar[1] = (map[k][j*2+1].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2+1].getCivilizedUnit().getName().substring(0,1)+ ConsoleColors.RESET);
+                    String[] combatUnitOwnerChar = new String[2];
+                    combatUnitOwnerChar[0] = (map[k][j*2].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2].getCombatUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
+                    combatUnitOwnerChar[1] = (map[k][j*2+1].getCombatUnit() == null ? " " : ConsoleColors.RED_BOLD_BRIGHT + map[k][j*2+1].getCombatUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
+                    String[] civilizedUnitOwnerChar = new String[2];
+                    civilizedUnitOwnerChar[0] = (map[k][j*2].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2].getCivilizedUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
+                    civilizedUnitOwnerChar[1] = (map[k][j*2+1].getCivilizedUnit() == null ? " " : ConsoleColors.BLUE_BOLD_BRIGHT + map[k][j*2+1].getCivilizedUnit().getOwnerNation().getNationType().name.substring(0,1)+ ConsoleColors.RESET);
+
+                    String[] ownerString = new String[2];
+                    ownerString[0] = (map[k][j*2].getOwnerCity() == null ? "N/A" : ConsoleColors.PURPLE_BOLD_BRIGHT + map[k][j*2].getOwnerCity().getOwnerNation().getNationType().name.substring(0,3)+ ConsoleColors.RESET);
+                    ownerString[1] = (map[k][j*2+1].getOwnerCity() == null ? "N/A" : ConsoleColors.PURPLE_BOLD_BRIGHT + map[k][j*2+1].getOwnerCity().getOwnerNation().getNationType().name.substring(0,3)+ ConsoleColors.RESET);
+                    String[] improvementString = new String[2];
+                    ownerString[0] = (map[k][j*2].getImprovement() == null ? "   " : ConsoleColors.PURPLE_BRIGHT +  map[k][j*2].getImprovement().getImprovementType().name.substring(0,3)+ ConsoleColors.RESET);
+                    ownerString[1] = (map[k][j*2+1].getImprovement() == null ? "   " : ConsoleColors.PURPLE_BRIGHT +  map[k][j*2+1].getImprovement().getImprovementType().name.substring(0,3)+ ConsoleColors.RESET);
+
+
+                    String[] borderChar = new String[6];
+                    borderChar[0] = (map[k][j*2].getHasRiver()[0] ? ConsoleColors.CYAN_BOLD_BRIGHT + "*" + ConsoleColors.RESET : ConsoleColors.GREEN_BOLD_BRIGHT +  "_" + ConsoleColors.RESET);
+                    borderChar[1] = (map[k][j*2].getHasRiver()[1] ? ConsoleColors.CYAN_BOLD_BRIGHT + "*" + ConsoleColors.RESET : ConsoleColors.GREEN_BOLD_BRIGHT + "\\" + ConsoleColors.RESET);
+                    borderChar[2] = (map[k][j*2].getHasRiver()[2] ? ConsoleColors.CYAN_BOLD_BRIGHT + "*" + ConsoleColors.RESET : ConsoleColors.GREEN_BOLD_BRIGHT + "/" + ConsoleColors.RESET);
+                    borderChar[3] = (map[k][j*2].getHasRiver()[3] ? ConsoleColors.CYAN_BOLD_BRIGHT + "*" + ConsoleColors.RESET : ConsoleColors.GREEN_BOLD_BRIGHT + "_" + ConsoleColors.RESET);
+                    borderChar[4] = (map[k][j*2].getHasRiver()[4] ? ConsoleColors.CYAN_BOLD_BRIGHT + "*" + ConsoleColors.RESET : ConsoleColors.GREEN_BOLD_BRIGHT + "\\" + ConsoleColors.RESET);
+                    borderChar[5] = (map[k][j*2].getHasRiver()[5] ? ConsoleColors.CYAN_BOLD_BRIGHT + "*" + ConsoleColors.RESET : ConsoleColors.GREEN_BOLD_BRIGHT + "/" + ConsoleColors.RESET);
                     switch (i % 6) {
                         case 0:
-                            System.out.print("  /      \\        ");
-                            break;
-                        case 1:
-                            System.out.print(" /  " + k + "," + (j * 2) + "   \\       ");
-                            break;
-                        case 2:
-                            if (j == column - 1) {
-                                System.out.print("/          \\");
-                            } else
-                                System.out.print("/    "+ map[k][j*2].getLandType().name.charAt(0) + "     \\______");
+                            if (j == column-1 || k == 0)
+                                System.out.print("  " + borderChar[5] + " "+ ConsoleColors.BLACK_BOLD_BRIGHT + k + "--" + (j * 2) + ConsoleColors.RESET + " " + borderChar[1] + "        ");
+                            else
+                                System.out.print("  " + borderChar[5] + " "+ ConsoleColors.BLACK_BOLD_BRIGHT + k + "--" + (j * 2) + ConsoleColors.RESET + " " + borderChar[1] + "   " + civilizedUnitChar[1] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + civilizedUnitOwnerChar[1] + " ");
 
                             break;
+                        case 1:
+                            if (j == column-1 || k == 0)
+                                System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "->" + ConsoleColors.RESET + resourceChar[0] + " " + borderChar[1] + "       ");
+                            else
+                                System.out.print(" " + borderChar[5] + " "+ ConsoleColors.YELLOW_BOLD + map[k][j*2].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "->" + ConsoleColors.RESET +resourceChar[0] + " " + borderChar[1] + "  " + civilizedUnitChar[1] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + civilizedUnitOwnerChar[1] + " ");
+                            break;
+                        case 2:
+//                            if (j == column - 1) {
+//                                System.out.print(borderChar[5] + " " + ownerString[0] + " " + improvementString[0] + "  " + borderChar[1] +);
+//                            } else
+//                                System.out.print(borderChar[5] + " " + ownerString[0] + " " + improvementString[0] + "  " + borderChar[1] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0]);
+                            System.out.print(borderChar[5] + "          " + borderChar[1] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0] + borderChar[0]);
+                            break;
                         case 3:
-                            System.out.print("\\          /      ");
+                            if (j == column-1 || k == row-1)
+                                System.out.print(borderChar[4] + "   " + combatUnitChar[0] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + combatUnitOwnerChar[0] + "   " + borderChar[2] + "      ");
+                            else
+                                System.out.print(borderChar[4] + "   " + combatUnitChar[0] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + combatUnitOwnerChar[0] + "   " + borderChar[2] + " " + ConsoleColors.BLACK_BOLD_BRIGHT + k + "--" + (j * 2 + 1) + ConsoleColors.RESET + " ");
                             break;
                         case 4:
-                            if (j == column - 1 || k == row - 1) {
-                                System.out.print(" \\        /       ");
-                            } else {
-                                System.out.print(" \\        /  " + k + "," + (j * 2 + 1) + "  ");
-                            }
+                            if (k == row - 1 || j == column - 1)
+                                System.out.print(" " + borderChar[4] + "  " + civilizedUnitChar[0] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + civilizedUnitOwnerChar[0] + "  " + borderChar[2] + "       ");
+                            else
+                                System.out.print(" " + borderChar[4] + "  " + civilizedUnitChar[0] + ConsoleColors.WHITE_BOLD_BRIGHT + "=>" + civilizedUnitOwnerChar[0] + "  " + borderChar[2] + " " + ConsoleColors.YELLOW_BOLD + map[k][j*2+1].getLandType().name.substring(0,3) + ConsoleColors.WHITE_BOLD_BRIGHT + "->" + ConsoleColors.RESET + resourceChar[1]);
                             break;
                         case 5:
-                            if (k == row - 1 || j == column - 1)
-                                System.out.print("  \\______/        ");
-                            else
-                                System.out.print("  \\______/        ");
+//                            if (k == row - 1 || j == column - 1)
+//                                System.out.print("  \\______/        ");
+//                            else
+//                                System.out.print("  \\______/ " + ownerString[1] + " " + improvementString[1]);
+                            System.out.print("  " + borderChar[4] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[3] + borderChar[2] + "        ");
+
                             break;
                     }
                 }
@@ -135,12 +178,15 @@ public class LandController extends Controller {
             for (int j = 0; j < 10; j++) {
                 ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
                 LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
-
-                if (landFeatureTypes != null && landFeatureTypes.length != 0)
-                    map[i][j].setLandFeature(new LandFeature(landFeatureTypes[random.nextInt(landFeatureTypes.length)]));
+                int randomInt;
+                if (landFeatureTypes != null && landFeatureTypes.length != 0){
+                    if ((randomInt = random.nextInt(landFeatureTypes.length)) % 4 == 0)
+                        map[i][j].setLandFeature(new LandFeature(landFeatureTypes[randomInt]));
+                }
 
                 if (availableResources != null && availableResources.length != 0)
-                    map[i][j].setResource(new Resource(availableResources[random.nextInt(availableResources.length)]));
+                    if ((randomInt = random.nextInt(availableResources.length)) % 3 == 0)
+                        map[i][j].setResource(new Resource(availableResources[randomInt]));
 
                 for (int k = 0; k < 6; k++) {
                     if (random.nextInt()%15 == 0){
@@ -151,6 +197,7 @@ public class LandController extends Controller {
                 }
             }
         }
+
         return map;
     }
 

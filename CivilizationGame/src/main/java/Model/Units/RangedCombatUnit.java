@@ -1,5 +1,6 @@
 package Model.Units;
 
+import Model.Nations.Nation;
 import Model.Resources.Resource;
 
 public class RangedCombatUnit extends CombatUnit{
@@ -7,9 +8,9 @@ public class RangedCombatUnit extends CombatUnit{
     protected int range;
     protected boolean isSiege;
 
-    public RangedCombatUnit(String name, int hp, int movement, int cost, Resource resource, int combatStrength,
+    public RangedCombatUnit(Nation ownerNation, String name, int hp, int movement, int cost, Resource resource, int combatStrength,
                             int rangedStrength, int range, boolean isSiege, int turns) {
-        super(name, hp, movement, cost, resource, turns, combatStrength);
+        super(ownerNation,name, hp, movement, cost, resource, turns, combatStrength);
         this.rangedStrength = rangedStrength;
         this.range = range;
         this.isSiege = isSiege;
