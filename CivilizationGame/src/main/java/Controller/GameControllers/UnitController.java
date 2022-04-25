@@ -25,8 +25,40 @@ public class UnitController extends GameController {
         }
     }
 
-    private void unitMultiTurnMoveTo() {
+    private void unitGoToDest(Pair dest){
+        main: while (!selectedUnit.getLocation().equals(dest)){
+            Pair neighbors[] = new Pair[6];
+            for (int i = 0; i < 6; i++)
+                neighbors[i] = LandController.getNeighborIndex(selectedUnit.getLocation(), i);
 
+            for (int i = 0; i < 6; i++) {
+                if (Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedUnit.getMP()){
+                    if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedUnit.getLocation().x - dest.x) &&
+                            Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedUnit.getLocation().y - dest.y)){
+
+                        selectedUnit.setLocation(neighbors[i]);
+                        continue main;
+                    }
+
+                    if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedUnit.getLocation().x - dest.x) &&
+                            neighbors[i].y == selectedUnit.getLocation().y){
+
+                        selectedUnit.setLocation(neighbors[i]);
+                        continue main;
+                    }
+
+                    if (Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedUnit.getLocation().y - dest.y) &&
+                            neighbors[i].x == selectedUnit.getLocation().x){
+
+                        selectedUnit.setLocation(neighbors[i]);
+                        continue main;
+                    }
+                }
+
+            }
+
+            break;
+        }
     }
 
     private int findEasiestPath(Pair dest, int pathCost, int minPathCost) {
@@ -39,9 +71,6 @@ public class UnitController extends GameController {
         Pair neighbors[] = new Pair[6];
         for (int i = 0; i < 6; i++)
             neighbors[i] = LandController.getNeighborIndex(currentLocation, i);
-        
-
-//        Game.map[currentI][currentJ].setAPartOfPath(true);
 
         for (int i = 0; i < 6; i++) {
             if((tmpPathCost =findEasiestPath(dest, pathCost + Game.map[neighbors[i].x][neighbors[i].y].getMP(),
@@ -50,6 +79,10 @@ public class UnitController extends GameController {
         }
 
         return minPathCost;
+    }
+
+    private void unitMultiTurnMoveTo() {
+
     }
 
     public void unitSleep() {
