@@ -1,22 +1,16 @@
 package Model.Units;
-
-import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
-import Model.Technologies.TechnologyType;
+import Model.Nations.Nation;
+import Model.Units.Enums.RangedCombatUnitType;
 
 public class RangedCombatUnit extends CombatUnit {
     protected int rangedStrength;
-    protected int range;
-    protected boolean isSiege;
+    protected RangedCombatUnitType rangedCombatUnitType;
 
-    public RangedCombatUnit(String name, int cost, int combatStrength, int rangedStrength, int range, int MP,
-                            ResourceType resourceType, TechnologyType technologyType, int turns, int hp,
-                            boolean isSiege) {
-        super(name, cost, combatStrength, MP, resourceType, technologyType, turns, hp);
-        this.rangedStrength = rangedStrength;
-        this.range = range;
-        this.isSiege = isSiege;
+    public RangedCombatUnit(RangedCombatUnitType rangedCombatUnitType,Nation ownerNation) {
+        super(rangedCombatUnitType.name, rangedCombatUnitType.cost, rangedCombatUnitType.combatStrength, rangedCombatUnitType.MP,
+                rangedCombatUnitType.resourceType, rangedCombatUnitType.technologyType, rangedCombatUnitType.turns,
+                rangedCombatUnitType.hp,ownerNation);
+        this.rangedStrength = rangedCombatUnitType.rangedStrength;
     }
 
     public int getCombatStrength() {
@@ -27,11 +21,7 @@ public class RangedCombatUnit extends CombatUnit {
         return rangedStrength;
     }
 
-    public int getRange() {
-        return range;
-    }
-
-    public boolean isSiege() {
-        return isSiege;
+    public RangedCombatUnitType getRangedCombatUnitType() {
+        return rangedCombatUnitType;
     }
 }

@@ -1,10 +1,6 @@
 package Model.Units.Enums;
-
 import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
 import Model.Technologies.TechnologyType;
-import Model.Units.CloseCombatUnit;
 
 public enum CloseCombatUnitType {
     SCOUT("Scout", 25, 4, 2, null, null, 0, 10),
@@ -38,11 +34,22 @@ public enum CloseCombatUnitType {
     TANK("Tank", 450, 50, 4, null, TechnologyType.Combustion,
             0, 10);
 
-    private CloseCombatUnit closeCombatUnit;
-
-    CloseCombatUnitType(String name, int cost, int combatStrength, int MP, ResourceType resourceType, TechnologyType technologyType,
-                        int turns, int hp) {
-        this.closeCombatUnit = new CloseCombatUnit(name, cost, combatStrength, MP, resourceType, technologyType, turns,
-                hp);
+    public final String name;
+    public final int cost;
+    public final int combatStrength;
+    public final int MP;
+    public final ResourceType resourceType;
+    public final TechnologyType technologyType;
+    public final int turns;
+    public final int hp;
+    CloseCombatUnitType(String name, int cost, int combatStrength, int MP, ResourceType resourceType, TechnologyType technologyType, int turns, int hp) {
+        this.name = name;
+        this.cost = cost;
+        this.combatStrength = combatStrength;
+        this.MP = MP;
+        this.resourceType = resourceType;
+        this.technologyType = technologyType;
+        this.turns = turns;
+        this.hp = hp;
     }
 }

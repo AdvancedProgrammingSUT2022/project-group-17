@@ -1,8 +1,6 @@
 package Model.Units.Enums;
-
 import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
+import Model.Nations.Nation;
 import Model.Technologies.TechnologyType;
 import Model.Units.RangedCombatUnit;
 
@@ -20,12 +18,30 @@ public enum RangedCombatUnitType {
     ARTILLERY("Artillery", 420, 16, 32, 3, 2, null,
             TechnologyType.Dynamite, 0, 10, true);
 
-    private RangedCombatUnit rangedCombatUnit;
+    public final String name;
+    public final int cost;
+    public final int combatStrength;
+    public final int rangedStrength;
+    public final int range;
+    public final int MP;
+    public final ResourceType resourceType;
+    public final TechnologyType technologyType;
+    public final int turns;
+    public final int hp;
+    public final boolean isSiege;
 
     RangedCombatUnitType(String name, int cost, int combatStrength, int rangedStrength, int range, int MP,
-                         ResourceType resourceType, TechnologyType technologyType, int turns, int hp,
-                         boolean isSiege) {
-        this.rangedCombatUnit = new RangedCombatUnit(name, cost, combatStrength,
-                rangedStrength, range, MP, resourceType, technologyType, turns, hp, isSiege);
+                         ResourceType resourceType, TechnologyType technologyType, int turns, int hp, boolean isSiege) {
+        this.name = name;
+        this.cost = cost;
+        this.combatStrength = combatStrength;
+        this.rangedStrength = rangedStrength;
+        this.range = range;
+        this.MP = MP;
+        this.resourceType = resourceType;
+        this.technologyType = technologyType;
+        this.turns = turns;
+        this.hp = hp;
+        this.isSiege = isSiege;
     }
 }

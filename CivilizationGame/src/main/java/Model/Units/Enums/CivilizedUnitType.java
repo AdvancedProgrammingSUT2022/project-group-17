@@ -1,20 +1,26 @@
 package Model.Units.Enums;
-
 import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
 import Model.Technologies.TechnologyType;
-import Model.Units.CivilizedUnit;
 
 public enum CivilizedUnitType {
     SETTLER("Settler", 89, 2, null, null, 0, 10),
     WORKER("Worker", 70, 2, null, null, 0, 10);
 
-    private CivilizedUnit civilizedUnit;
-
-    CivilizedUnitType(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                      int turns, int hp) {
-        this.civilizedUnit = new CivilizedUnit(name, cost, MP, resourceType, technologyType, turns, hp);
+    public final String name;
+    public final int cost;
+    public final int MP;
+    public final ResourceType resourceType;
+    public final TechnologyType technologyType;
+    public final int turns;
+    public final int hp;
+    CivilizedUnitType(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType, int turns, int hp) {
+        this.name = name;
+        this.cost = cost;
+        this.MP = MP;
+        this.resourceType = resourceType;
+        this.technologyType = technologyType;
+        this.turns = turns;
+        this.hp = hp;
     }
 }
 

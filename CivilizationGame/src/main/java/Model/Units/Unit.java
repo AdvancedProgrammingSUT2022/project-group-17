@@ -1,28 +1,25 @@
 package Model.Units;
-
+import Model.Pair;
 import Model.Resources.Enums.ResourceType;
-import Model.Resources.Resource;
-import Model.Technologies.Technology;
+import Model.Nations.Nation;
 import Model.Technologies.TechnologyType;
 
 public class Unit {
+    protected Nation ownerNation;
     protected String name;
-    protected int i;
-    protected int j;
+    protected Pair location;
     protected int hp;
     protected int MP;
     protected int cost;
     protected int turns;
     protected int XP;
     protected boolean isWaitingForCommand;
-    //Fixme
-    protected static boolean isTechnologicallyAvailable = false;
     protected TechnologyType technologyType;
-    //TODO how to know if the user has the specific resource
     protected ResourceType resourceType;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                int turns, int hp) {
+                int turns, int hp,Nation ownerNation) {
+        this.ownerNation = ownerNation;
         this.name = name;
         this.cost = cost;
         this.MP = MP;
@@ -33,16 +30,20 @@ public class Unit {
         this.XP = 0;
     }
 
+    public Nation getOwnerNation() {
+        return ownerNation;
+    }
+
+    public void setOwnerNation(Nation ownerNation) {
+        this.ownerNation = ownerNation;
+    }
+
     public String getName() {
         return name;
     }
 
-    public int getI() {
-        return i;
-    }
-
-    public int getJ() {
-        return j;
+    public Pair getLocation() {
+        return location;
     }
 
     public int getHp() {
@@ -51,10 +52,6 @@ public class Unit {
 
     public int getCost() {
         return cost;
-    }
-
-    public static boolean isIsTechnologicallyAvailable() {
-        return isTechnologicallyAvailable;
     }
 
     public ResourceType getResourceType() {
@@ -73,14 +70,9 @@ public class Unit {
         return MP;
     }
 
-    public void setI(int i) {
-        this.i = i;
+    public void setLocation(Pair location) {
+        this.location = location;
     }
-
-    public void setJ(int j) {
-        this.j = j;
-    }
-
     public void changeXP(int amount) {
         this.XP -= amount;
     }

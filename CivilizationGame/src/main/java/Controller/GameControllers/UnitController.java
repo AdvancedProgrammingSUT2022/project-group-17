@@ -1,19 +1,20 @@
 package Controller.GameControllers;
 
 import Model.Game;
+import Model.Pair;
 
 import java.util.regex.Matcher;
 
 public class UnitController extends GameController {
 
     public void unitMoveTo(Matcher matcher) {
-        int destI = Integer.parseInt(matcher.group("i"));
-        int destJ = Integer .parseInt(matcher.group("j"));
+        int destX = Integer.parseInt(matcher.group("i"));
+        int destY = Integer .parseInt(matcher.group("j"));
+        Pair dest = new Pair(destX, destY);
 
-        int minPathCost = findEasiestPath(destI, destJ, 0, 1000);
+        int minPathCost = findEasiestPath(dest, 0, 1000);
         if(minPathCost <= selectedUnit.getMP()) {
-            selectedUnit.setI(destI);
-            selectedUnit.setJ(destJ);
+            selectedUnit.setLocation(dest);
             selectedUnit.changeMP(minPathCost);
             selectedUnit.setWaitingForCommand(false);
             //TODO set isAPartOfPath of all Lands zero
@@ -28,37 +29,25 @@ public class UnitController extends GameController {
 
     }
 
-    private int findEasiestPath(int destI, int destJ, int pathCost, int minPathCost) {
-        int currentI = selectedUnit.getI();
-        int currentJ = selectedUnit.getJ();
+    private int findEasiestPath(Pair dest, int pathCost, int minPathCost) {
+        Pair currentLocation = selectedUnit.getLocation();
         int tmpPathCost;
 
-        if(currentI == destI && currentJ == destJ) return pathCost;
-        if(Game.map[currentI][currentJ] == null) return 1000;
+        if(!LandController.isPairValid(currentLocation)) return 1000;
+        if(dest.equals(currentLocation)) return pathCost;
 
-        Game.map[currentI][currentJ].setAPartOfPath(true);
+        Pair neighbors[] = new Pair[6];
+        for (int i = 0; i < 6; i++)
+            neighbors[i] = LandController.getNeighborIndex(currentLocation, i);
+        
 
-        if(Game.map[currentI + 1][currentJ] != null)
-            if((tmpPathCost =findEasiestPath(destI, destJ,
-                    pathCost + Game.map[currentI + 1][currentJ].getMP(), minPathCost)) < minPathCost)
+//        Game.map[currentI][currentJ].setAPartOfPath(true);
+
+        for (int i = 0; i < 6; i++) {
+            if((tmpPathCost =findEasiestPath(dest, pathCost + Game.map[neighbors[i].x][neighbors[i].y].getMP(),
+                    minPathCost)) < minPathCost)
                 minPathCost = tmpPathCost;
-        if(Game.map[currentI - 1][currentJ] != null)
-            findEasiestPath(destI, destJ,
-                    pathCost + Game.map[currentI - 1][currentJ].getMP(), minPathCost);
-        if(Game.map[currentI][currentJ + 1] != null)
-            findEasiestPath(destI, destJ,
-                    pathCost + Game.map[currentI][currentJ + 1].getMP(), minPathCost);
-        if(Game.map[currentI][currentJ - 1] != null)
-            findEasiestPath(destI, destJ,
-                    pathCost + Game.map[currentI][currentJ - 1].getMP(), minPathCost);
-        if(Game.map[currentI + 1][currentJ + 1] != null)
-            findEasiestPath(destI, destJ,
-                    pathCost + Game.map[currentI + 1][currentJ + 1].getMP(), minPathCost);
-        if(Game.map[currentI - 1][currentJ - 1] != null)
-            findEasiestPath(destI, destJ,
-                    pathCost + Game.map[currentI - 1][currentJ - 1].getMP(), minPathCost);
-
-
+        }
 
         return minPathCost;
     }
