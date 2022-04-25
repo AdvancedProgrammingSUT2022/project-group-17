@@ -2,6 +2,7 @@ package Controller.GameControllers;
 
 import Model.Game;
 import Model.Pair;
+import Model.Units.CombatUnit;
 
 import java.util.regex.Matcher;
 
@@ -32,25 +33,33 @@ public class UnitController extends GameController {
                 neighbors[i] = LandController.getNeighborIndex(selectedUnit.getLocation(), i);
 
             for (int i = 0; i < 6; i++) {
-                if (Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedUnit.getMP()){
+                if (Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedUnit.getMP() &&
+                        LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null){
                     if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedUnit.getLocation().x - dest.x) &&
                             Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedUnit.getLocation().y - dest.y)){
 
+                        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
                         selectedUnit.setLocation(neighbors[i]);
+                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
                         continue main;
                     }
 
                     if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedUnit.getLocation().x - dest.x) &&
                             neighbors[i].y == selectedUnit.getLocation().y){
 
+                        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
                         selectedUnit.setLocation(neighbors[i]);
+                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
                         continue main;
                     }
 
                     if (Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedUnit.getLocation().y - dest.y) &&
                             neighbors[i].x == selectedUnit.getLocation().x){
 
+
+                        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
                         selectedUnit.setLocation(neighbors[i]);
+                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
                         continue main;
                     }
                 }

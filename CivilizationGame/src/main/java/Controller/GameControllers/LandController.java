@@ -153,7 +153,7 @@ public class LandController extends Controller {
         return null;
     }
 
-    public Land[][] mapInitializer(){
+    public static Land[][] mapInitializer(){
         Land[][] map = new Land[10][10];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
         for (int i = 0; i < 10; i++) {

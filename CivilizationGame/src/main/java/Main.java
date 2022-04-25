@@ -29,7 +29,7 @@ public class Main {
 //            currentMenu = Menu.getMenuName();
 //        }
 //        Game.saveUserListToDatabase();
-        new LandController().printMap(new LandController().mapInitializer());
+        new LandController().printMap(Game.map);
     }
 
 
