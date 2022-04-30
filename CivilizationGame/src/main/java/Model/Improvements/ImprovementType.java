@@ -1,8 +1,6 @@
 package Model.Improvements;
 
-import Model.LandFeatures.LandFeature;
 import Model.LandFeatures.LandFeatureType;
-import Model.Lands.Land;
 import Model.Lands.LandType;
 import Model.Resources.Enums.CurrencyType;
 import Model.Resources.Enums.ResourceType;
@@ -19,20 +17,20 @@ public enum ImprovementType {
     Mine("Mine", CurrencyType.Production, 1, new ResourceType[]{ResourceType.Jewel, ResourceType.Gold,
             ResourceType.Silver, ResourceType.Coal, ResourceType.Iron}, TechnologyType.Mining, new LandType[]{LandType.Desert,
             LandType.Plain, LandType.GrassLand, LandType.Tundra, LandType.Snow, LandType.Hill},
-            new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.LushJungle, LandFeatureType.Swamp}, 5),
+            new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.Forest, LandFeatureType.Marsh}, 5),
     Pasture("Pasture", null, 0, new ResourceType[]{ResourceType.Horse, ResourceType.Cow,
-    ResourceType.Sheep}, TechnologyType.AnimalHusbandry, new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Hill},
+            ResourceType.Sheep}, TechnologyType.AnimalHusbandry, new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Hill},
             null, 5),
     PlantingAndWorking("PlantingAndWorking", null, 0, new ResourceType[]{ResourceType.Banana,
             ResourceType.Cotton, ResourceType.Fumigation, ResourceType.Silk, ResourceType.Sugar}, TechnologyType.Calendar,
             new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand},
-            new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.LushJungle,
-            LandFeatureType.Swamp, LandFeatureType.Watershed}, 5),
+            new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.Forest,
+                    LandFeatureType.Marsh, LandFeatureType.Watershed}, 5),
     Quarry("Quarry", null, 0, new ResourceType[]{ResourceType.Marble},
             TechnologyType.Masonry, new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra,
             LandType.Hill}, null, 5),
     TradingPost("Trading Post", CurrencyType.Coin, 1, null, TechnologyType.Trapping,
-            new LandType[]{LandType.Desert, LandType.Plain, LandType.GrassLand, LandType.Tundra}, null,  5),
+            new LandType[]{LandType.Desert, LandType.Plain, LandType.GrassLand, LandType.Tundra}, null, 5),
     Factory("Factory", CurrencyType.Production, 2, null, TechnologyType.Engineering,
             new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Snow},
             null, 5);

@@ -4,6 +4,7 @@ import Model.City;
 import Model.Resources.Currency;
 import Model.Technologies.Technology;
 import Model.Resources.Resource;
+import Model.Technologies.TechnologyType;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,13 @@ public class Nation {
 
     public ArrayList<Technology> getTechnologies() {
         return technologies;
+    }
+
+    public boolean hasTechnology(TechnologyType technologyType) {
+        for (Technology technology: technologies)
+            if(technology.getTechnologyType() == technologyType)
+                return true;
+        return false;
     }
 
 }

@@ -13,7 +13,8 @@ public enum CivilizedUnitType {
     public final TechnologyType technologyType;
     public final int turns;
     public final int hp;
-    CivilizedUnitType(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType, int turns, int hp) {
+    CivilizedUnitType(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
+                      int turns, int hp) {
         this.name = name;
         this.cost = cost;
         this.MP = MP;

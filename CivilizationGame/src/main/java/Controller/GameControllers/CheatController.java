@@ -23,19 +23,19 @@ public class CheatController extends GameController {
         int chosenNumber = scanner.nextInt();
         switch (chosenNumber){
             case 0:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,currentTurnUser.getNation()));
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,currentTurnUser.getNation(), coordinate.x, coordinate.y));
                 selectedCombatUnit.setLocation(coordinate);
                 break;
             case 1:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new RangedCombatUnit(RangedCombatUnitType.ARCHER,currentTurnUser.getNation()));
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new RangedCombatUnit(RangedCombatUnitType.ARCHER,currentTurnUser.getNation(), coordinate.x, coordinate.y));
                 selectedCombatUnit.setLocation(coordinate);
                 break;
             case 2:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.SETTLER,currentTurnUser.getNation()));
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.SETTLER,currentTurnUser.getNation(), coordinate.x, coordinate.y));
                 selectedCivilizedUnit.setLocation(coordinate);
                 break;
             case 3:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,currentTurnUser.getNation()));
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,currentTurnUser.getNation(), coordinate.x, coordinate.y));
                 selectedCivilizedUnit.setLocation(coordinate);
                 break;
             default:
