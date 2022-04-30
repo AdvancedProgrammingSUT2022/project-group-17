@@ -17,6 +17,10 @@ public class User {
         this.score = 0;
     }
 
+    public void setNation(Nation nation) {
+        this.nation = nation;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -47,6 +51,10 @@ public class User {
 
     public Nation getNation() {
         return nation;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override

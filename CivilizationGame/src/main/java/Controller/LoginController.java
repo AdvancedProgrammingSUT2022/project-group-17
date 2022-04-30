@@ -40,7 +40,7 @@ public class LoginController extends Controller{
     }
 
     public String loginUser(Matcher matcher) {
-        if (Game.getCurrentUser() != null) return ("please logout in main menu first!");
+        if (Game.getLoggedInUser() != null) return ("please logout in main menu first!");
 
         String userName = null;
         String password = null;
@@ -70,7 +70,7 @@ public class LoginController extends Controller{
             return ("incorrect password!");
         }
 
-        Game.setCurrentUser(user);
+        Game.setLoggedInUser(user);
         Menu.setMenuName("MainMenu");
         return ("welcome " + user.getNickname() + "!");
     }

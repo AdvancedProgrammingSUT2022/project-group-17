@@ -1,13 +1,11 @@
 package Model;
 
 import Controller.GameControllers.LandController;
-import Enums.Consts;
 import Model.Lands.Land;
 import Model.Users.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,10 +16,44 @@ import java.util.ArrayList;
 public class Game {
 
     private static ArrayList<User> users = readUserListFromDatabase();
-    private static User currentUser;
+    private static User loggedInUser;
     private static int turn = 0;
+
+    // a number between 0 and players count in order to know witch user have to play
+    private static int subTurn = 0;
     private static ArrayList<String> allTechnologies = new ArrayList<>();
+    private static ArrayList<User> playersInGame = new ArrayList<>();
+
+    static {
+        playersInGame.add(users.get(0));
+        playersInGame.add(users.get(1));
+    }
+
     public static Land[][] map = LandController.mapInitializer();
+
+    public static int getSubTurn() {
+        return subTurn;
+    }
+
+    public static void setSubTurn(int subTurn) {
+        Game.subTurn = subTurn;
+    }
+
+    public static int getTurn() {
+        return turn;
+    }
+
+    public static void setTurn(int turn) {
+        Game.turn = turn;
+    }
+
+    public static ArrayList<User> getPlayersInGame() {
+        return playersInGame;
+    }
+
+    public static void setPlayersInGame(ArrayList<User> playersInGame) {
+        Game.playersInGame = playersInGame;
+    }
 
     public static User getUserByName(String username){
         for (User user : users) {
@@ -36,12 +68,12 @@ public class Game {
         return users;
     }
 
-    public static User getCurrentUser() {
-        return currentUser;
+    public static User getLoggedInUser() {
+        return loggedInUser;
     }
 
-    public static void setCurrentUser(User user){
-        Game.currentUser = user;
+    public static void setLoggedInUser(User user){
+        Game.loggedInUser = user;
     }
 
     public static void addUser(User user){

@@ -2,19 +2,33 @@ package Controller;
 
 import Model.Game;
 import Model.Users.User;
+import View.Menu;
+import com.google.gson.internal.bind.util.ISO8601Utils;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 
 public class MainController extends Controller{
 
     public void logoutUser() {
-        Game.setCurrentUser(null);
+        Game.setLoggedInUser(null);
         changeMenu("LoginMenu");
     }
 
-    public void playGame(Matcher matcher) {
+    public String playGame(Matcher matcher) {
+        ArrayList<String> tokens = new ArrayList<>(Arrays.asList(matcher.group(1).split("\\s*--player\\d+\\s*")));
+        tokens.remove(0);
+        ArrayList<User> players = new ArrayList<>();
+        for (String token : tokens) {
+            if (Game.getUserByName(token) == null) return "at least one user name doesn't exist";
+            else players.add(Game.getUserByName(token));
+        }
 
+        Game.setPlayersInGame(players);
+        Menu.setMenuName("GameMenu");
+        return "game successfully started!";
     }
 
     public void loadGame(Matcher matcher){

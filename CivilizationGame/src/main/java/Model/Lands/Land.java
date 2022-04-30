@@ -22,7 +22,7 @@ public class Land {
     protected boolean isBuyable;
     protected boolean isAPartOfPath = false;
     protected LandType landType;
-    protected int visibility;
+    protected int visibility = 0;
     // 0 -> fog of war
     // 1 -> shadow (unknown)
     // 2 -> visible (shown)
@@ -34,7 +34,6 @@ public class Land {
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
-        this.visibility = 0;
     }
 
     public CivilizedUnit getCivilizedUnit() {

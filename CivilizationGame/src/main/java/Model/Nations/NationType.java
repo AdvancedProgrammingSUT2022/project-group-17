@@ -1,13 +1,18 @@
 package Model.Nations;
 
-import Model.City;
-import Model.Resources.Currency;
-
 public enum NationType {
-    AMIR("amirKingdom","amirHossein"),
-    IRAN("Iran", "Dariush");
-    public String name;
-    public String leaderName;
+    INDUS_VALLEY("Indus Valley","Ghaggar Hakra"),
+    MAYA("Maya", "Mama The Maya"),
+    ANCIENT_GREECE("Ancient Greece","Alexander The Great"),
+    PERSIA("Persia","Cyrus the Great"),
+    ANCIENT_EGYPT("Egypt" ,"Ramesses the Great"),
+    MESOPOTAMIAN("Mesopotamian","Mess Mess the Potamia"),
+    ROME("Rome","Julius Caesar"),
+    AZTEC("Aztec","Hernan Cortes"),
+    INCA("Inca","Sapa Inca");
+
+    public final String name;
+    public final String leaderName;
 
     NationType(String name, String leaderName) {
         this.name = name;

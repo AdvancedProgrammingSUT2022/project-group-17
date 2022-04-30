@@ -8,7 +8,7 @@ public enum MainCommands {
     exit("menu exit"),
     scoreBoard("info score board"),
     logout("logout"),
-    playGame("play game (--player[1-9]+ \\S+ )+(--player[1-9]+ \\S+)");
+    playGame("play game ((?:-p[0-9]+ \\S+(?: )?){2,})");
 
     private final String regex;
 

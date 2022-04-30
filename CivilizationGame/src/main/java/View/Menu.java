@@ -5,13 +5,15 @@ import java.util.Scanner;
 public class Menu {
     protected static String menuName = "LoginMenu";
 
-    public void run(Scanner scanner){
+    public void run(Scanner scanner) {
 
     }
 
-    public static String getMenuName() { return menuName;}
+    public static String getMenuName() {
+        return menuName;
+    }
 
     public static void setMenuName(String menuName) {
-                Menu.menuName = menuName;
-        }
+        Menu.menuName = menuName;
+    }
 }

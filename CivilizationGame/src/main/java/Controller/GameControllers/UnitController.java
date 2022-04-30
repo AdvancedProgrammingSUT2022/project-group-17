@@ -14,10 +14,10 @@ public class UnitController extends GameController {
         Pair dest = new Pair(destX, destY);
 
         int minPathCost = findEasiestPath(dest, 0, 1000);
-        if(minPathCost <= selectedUnit.getMP()) {
-            selectedUnit.setLocation(dest);
-            selectedUnit.changeMP(minPathCost);
-            selectedUnit.setWaitingForCommand(false);
+        if(minPathCost <= selectedCombatUnit.getMP()) {
+            selectedCombatUnit.setLocation(dest);
+            selectedCombatUnit.changeMP(minPathCost);
+            selectedCombatUnit.setWaitingForCommand(false);
             //TODO set isAPartOfPath of all Lands zero
         } else if(minPathCost < 1000) {
             unitMultiTurnMoveTo();
@@ -31,75 +31,75 @@ public class UnitController extends GameController {
         int destY = Integer.parseInt(matcher.group("y"));
         Pair dest = new Pair(destX, destY);
 
-        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
+        System.out.println(selectedCombatUnit.getLocation().x + " " + selectedCombatUnit.getLocation().y);
 
         Pair neighbor = new Pair(destX, destY);
 
-        Game.map[neighbor.x][neighbor.y].setCombatUnit(selectedUnit);
-        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
-        selectedUnit.setLocation(neighbor);
+        Game.map[neighbor.x][neighbor.y].setCombatUnit(selectedCombatUnit);
+        Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
+        selectedCombatUnit.setLocation(neighbor);
 
-        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
+        System.out.println(selectedCombatUnit.getLocation().x + " " + selectedCombatUnit.getLocation().y);
 
 
     }
 
-    public void unitGoToDest(Matcher matcher){
+    public void unitGoToDestination(Matcher matcher){
         int destX = Integer.parseInt(matcher.group("x"));
         int destY = Integer.parseInt(matcher.group("y"));
         Pair dest = new Pair(destX, destY);
 
-        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
-        main: while (!selectedUnit.getLocation().equals(dest)){
+        System.out.println(selectedCombatUnit.getLocation().x + " " + selectedCombatUnit.getLocation().y);
+        main: while (!selectedCombatUnit.getLocation().equals(dest)){
             Pair neighbors[] = new Pair[6];
             for (int i = 0; i < 6; i++)
-                neighbors[i] = LandController.getNeighborIndex(selectedUnit.getLocation(), i);
+                neighbors[i] = LandController.getNeighborIndex(selectedCombatUnit.getLocation(), i);
 
             for (int i = 0; i < 6; i++) {
-                if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedUnit.getMP() && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null){
-                    if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedUnit.getLocation().x - dest.x) &&
-                            Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedUnit.getLocation().y - dest.y)){
+                if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedCombatUnit.getMP() && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null){
+                    if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedCombatUnit.getLocation().x - dest.x) &&
+                            Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedCombatUnit.getLocation().y - dest.y)){
 
-                        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
-                        selectedUnit.setLocation(neighbors[i]);
-                        selectedUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
-                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
+                        Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
+                        selectedCombatUnit.setLocation(neighbors[i]);
+                        selectedCombatUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedCombatUnit);
                         continue main;
                     }
 
-                    if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedUnit.getLocation().x - dest.x) &&
-                            neighbors[i].y == selectedUnit.getLocation().y){
+                    if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedCombatUnit.getLocation().x - dest.x) &&
+                            neighbors[i].y == selectedCombatUnit.getLocation().y){
 
-                        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
-                        selectedUnit.setLocation(neighbors[i]);
-                        selectedUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
-                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
+                        Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
+                        selectedCombatUnit.setLocation(neighbors[i]);
+                        selectedCombatUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedCombatUnit);
                         continue main;
                     }
 
-                    if (Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedUnit.getLocation().y - dest.y) &&
-                            neighbors[i].x == selectedUnit.getLocation().x){
+                    if (Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedCombatUnit.getLocation().y - dest.y) &&
+                            neighbors[i].x == selectedCombatUnit.getLocation().x){
 
 
-                        Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y].setCombatUnit(null);
-                        selectedUnit.setLocation(neighbors[i]);
-                        selectedUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
-                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedUnit);
+                        Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
+                        selectedCombatUnit.setLocation(neighbors[i]);
+                        selectedCombatUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedCombatUnit);
                         continue main;
                     }
-                }else if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() > selectedUnit.getMP())
-                    System.out.println("Kam dari dadash");
+                } else if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() > selectedCombatUnit.getMP())
+                    System.out.println("your move Points is not enough!");
 
             }
 
             break;
         }
 
-        System.out.println(selectedUnit.getLocation().x + " " + selectedUnit.getLocation().y);
+        System.out.println(selectedCombatUnit.getLocation().x + " " + selectedCombatUnit.getLocation().y);
     }
 
     private int findEasiestPath(Pair dest, int pathCost, int minPathCost) {
-        Pair currentLocation = selectedUnit.getLocation();
+        Pair currentLocation = selectedCombatUnit.getLocation();
         int tmpPathCost;
 
         if(!LandController.isPairValid(currentLocation)) return 1000;

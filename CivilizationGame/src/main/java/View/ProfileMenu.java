@@ -24,9 +24,9 @@ public class ProfileMenu extends Menu{
         } else if (ProfileCommands.getMatcher(input,ProfileCommands.infoProfile).matches()){
             System.out.println("user account details :\n" +
                     "----------------------------------------\n" +
-                    "user name : " + Game.getCurrentUser().getUsername() + "\n" +
-                    "nick name : " + Game.getCurrentUser().getNickname() + "\n" +
-                    "score : " + Game.getCurrentUser().getScore()
+                    "user name : " + Game.getLoggedInUser().getUsername() + "\n" +
+                    "nick name : " + Game.getLoggedInUser().getNickname() + "\n" +
+                    "score : " + Game.getLoggedInUser().getScore()
             );
 
         } else if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.removeAccount)).matches()){

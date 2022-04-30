@@ -12,4 +12,9 @@ public class Pair {
     public boolean equals(Pair pair) {
         return this.x == pair.x && this.y == pair.y;
     }
+
+    @Override
+    public String toString() {
+        return "(" + x + "," + y +")";
+    }
 }
