@@ -35,18 +35,7 @@ public enum ImprovementType {
             new LandType[]{LandType.Desert, LandType.Plain, LandType.GrassLand, LandType.Tundra}, null,  5),
     Factory("Factory", CurrencyType.Production, 2, null, TechnologyType.Engineering,
             new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Snow},
-            null, 5),
-    
-
-
-
-
-
-
-
-
-    ;
-
+            null, 5);
 
 
     public String name;
