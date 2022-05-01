@@ -32,6 +32,7 @@ public class Land {
     protected boolean[] hasRiver = new boolean[6];
     protected Resource resource;
 
+
     public Land(LandType landType, int cost) {
         this.landType = landType;
         this.cost = cost;

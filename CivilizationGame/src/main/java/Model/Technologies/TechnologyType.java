@@ -1,17 +1,12 @@
 package Model.Technologies;
 
-import Model.Buildings.Building;
 import Model.Buildings.BuildingType;
-import Model.City;
-import Model.Improvements.Improvement;
 import Model.Improvements.ImprovementType;
-import com.sun.security.auth.UnixNumericGroupPrincipal;
 
 import javax.lang.model.type.UnionType;
-import java.util.ArrayList;
 
 public enum TechnologyType {
-    Agriculture("Agriculture", 20, null, null, new ImprovementType[]{ImprovementType.Farm}, null),
+    Agriculture("Agriculture", 20, null, null, new ImprovementType[]{ImprovementType.FARM}, null),
     AnimalHusbandry("Animal Husbandry", 35, new TechnologyType[]{Agriculture}, null, null, null),
     Archery("Archery", 35, new TechnologyType[]{Agriculture}, null, null, null),
     Mining("Mining", 35, new TechnologyType[]{Agriculture}, null, null, null),
