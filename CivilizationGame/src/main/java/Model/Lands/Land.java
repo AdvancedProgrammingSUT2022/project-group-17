@@ -17,6 +17,7 @@ public class Land {
     protected LandFeature landFeature;
     protected int cost;
     protected City ownerCity = null;
+    protected boolean isCityCenter;
     protected CivilizedUnit civilizedUnit = null;
     protected CombatUnit combatUnit = null;
     protected boolean isBuyable;
@@ -53,7 +54,11 @@ public class Land {
         return improvement;
     }
 
-    public void setRiver(int index,boolean value){
+    public boolean isCityCenter() {
+        return isCityCenter;
+    }
+
+    public void setRiver(int index, boolean value){
         this.hasRiver[index] = value;
     }
 
@@ -127,5 +132,9 @@ public class Land {
 
     public void setAPartOfPath(boolean APartOfPath) {
         isAPartOfPath = APartOfPath;
+    }
+
+    public void setCityCenter(boolean cityCenter) {
+        isCityCenter = cityCenter;
     }
 }

@@ -1,10 +1,31 @@
 package Controller.GameControllers;
 
 import Model.City;
+import Model.Game;
+import Model.Lands.Land;
+import Model.Pair;
 
 import java.util.regex.Matcher;
 
 public class CityController extends GameController {
+
+    public void buildCity(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Pair main = new Pair(x, y);
+        City city = new City(selectedNation);
+        Land mainLand = Game.map[x][y];
+        mainLand.setCityCenter(true);
+        mainLand.setOwnerCity(city);
+
+        Pair neighbors[] = new Pair[6];
+        for (int i = 0; i < 6; i++)
+            neighbors[i] = LandController.getNeighborIndex(main, i);
+        for (int i = 0; i < 6; i++) {
+            if (LandController.isPairValid(neighbors[i]))
+                Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
+        }
+    }
 
     public void cityRangeAttack(Matcher matcher){
 
@@ -15,6 +36,23 @@ public class CityController extends GameController {
     }
 
     public void cityBuyLand(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Pair land = new Pair(x, y);
+
+        Pair neighbors[] = new Pair[6];
+        for (int i = 0 ; i<6 ; i++)
+            neighbors[i] = LandController.getNeighborIndex(land, i);
+
+        boolean canBuy = false;
+        for (int i = 0; i < 6; i++) {
+            if (LandController.isPairValid(neighbors[i])){
+                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity))
+                    canBuy = true;
+            }
+        }
+
+        if (canBuy && Game.map[x][y].)
 
     }
 

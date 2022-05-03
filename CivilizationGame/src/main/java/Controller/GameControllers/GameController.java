@@ -5,6 +5,7 @@ import Enums.Consts;
 import Model.City;
 import Model.Game;
 import Model.Lands.Land;
+import Model.Nations.Nation;
 import Model.Units.CombatUnit;
 import Model.Units.Unit;
 
@@ -12,7 +13,8 @@ import java.util.regex.Matcher;
 
 public class GameController extends Controller {
     public static CombatUnit selectedUnit;
-    protected City selectedCity;
+    protected static City selectedCity;
+    protected static Nation selectedNation;
 
 
     public void showResearches() {
