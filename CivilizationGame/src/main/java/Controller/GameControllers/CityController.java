@@ -13,18 +13,42 @@ public class CityController extends GameController {
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair main = new Pair(x, y);
-        City city = new City(selectedNation);
-        Land mainLand = Game.map[x][y];
-        mainLand.setCityCenter(true);
-        mainLand.setOwnerCity(city);
+        if (isCityBuildable(main)){
+            City city = new City(selectedNation);
+            Land mainLand = Game.map[x][y];
+            mainLand.setCityCenter(true);
+            mainLand.setOwnerCity(city);
 
+            Pair neighbors[] = new Pair[6];
+            for (int i = 0; i < 6; i++)
+                neighbors[i] = LandController.getNeighborIndex(main, i);
+            for (int i = 0; i < 6; i++) {
+                if (LandController.isPairValid(neighbors[i]))
+                    Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
+            }
+        }
+    }
+
+    public boolean isCityBuildable(Pair main){
         Pair neighbors[] = new Pair[6];
         for (int i = 0; i < 6; i++)
             neighbors[i] = LandController.getNeighborIndex(main, i);
+
         for (int i = 0; i < 6; i++) {
-            if (LandController.isPairValid(neighbors[i]))
-                Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
+            if (LandController.isPairValid(neighbors[i])){
+                Pair neighbors2[] = new Pair[6];
+                for (int j = 0; j < 6; j++)
+                    neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
+
+                for (int j = 0; j < 6; j++) {
+                    if (LandController.isPairValid(neighbors2[j])){
+                        if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null)
+                            return false;
+                    }
+                }
+            }
         }
+        return true;
     }
 
     public void cityRangeAttack(Matcher matcher){
@@ -53,10 +77,9 @@ public class CityController extends GameController {
         }
 
         Land land = Game.map[x][y];
-
         if (selectedCity.getOwnerNation().getCoin().getBalance() >= land.getCost()
                 && canBuy && land.isBuyable()){
-            Game.map[x][y].setOwnerCity(selectedCity);
+            land.setOwnerCity(selectedCity);
             selectedCity.getOwnerNation().getCoin().addBalance(-land.getCost());
         }
 
