@@ -2,6 +2,7 @@ package Model.Nations;
 
 import Model.City;
 import Model.Resources.Currency;
+import Model.Resources.Enums.CurrencyType;
 import Model.Technologies.Technology;
 import Model.Resources.Resource;
 
@@ -16,7 +17,11 @@ public class Nation {
     protected ArrayList<Technology> technologies = new ArrayList<>();
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
-    protected Currency[] currencies = new Currency[5];
+    protected Currency coin = new Currency(CurrencyType.Coin);
+    protected Currency food = new Currency(CurrencyType.Food);
+    protected Currency production = new Currency(CurrencyType.Production);
+    protected Currency happiness = new Currency(CurrencyType.Happiness;
+    protected Currency science = new Currency(CurrencyType.Science);
     protected NationType nationType;
 
     public Nation (NationType nationType/*, City capital, Currency[] currencies*/){
@@ -64,5 +69,7 @@ public class Nation {
     public ArrayList<Technology> getTechnologies() {
         return technologies;
     }
+
+
 
 }

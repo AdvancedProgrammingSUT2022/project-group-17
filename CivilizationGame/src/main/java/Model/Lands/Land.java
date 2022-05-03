@@ -62,6 +62,10 @@ public class Land {
         this.hasRiver[index] = value;
     }
 
+    public boolean isBuyable() {
+        return isBuyable;
+    }
+
     public void setImprovement(Improvement improvement) {
         this.improvement = improvement;
     }

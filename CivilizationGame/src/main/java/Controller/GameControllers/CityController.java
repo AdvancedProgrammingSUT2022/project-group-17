@@ -52,7 +52,7 @@ public class CityController extends GameController {
             }
         }
 
-        if (canBuy && Game.map[x][y].)
+        if (canBuy && Game.map[x][y].isBuyable() && selectedCity.getOwnerNation().get)
 
     }
 
