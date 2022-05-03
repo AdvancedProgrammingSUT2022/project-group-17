@@ -12,12 +12,28 @@ public enum ImprovementType {
             new LandFeatureType[]{LandFeatureType.Jungle}, 10),
     FARM("Farm", CurrencyType.Food, 1, new ResourceType[]{ResourceType.Wheat}, TechnologyType.Agriculture,
             new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand}, null, 5),
+    //fixme forest farm need two techs!
+    FOREST_FARM("Forest Farm", CurrencyType.Food, 1, new ResourceType[]{ResourceType.Wheat}, TechnologyType.Mining,
+            null, new LandFeatureType[]{LandFeatureType.Forest}, 10),
+    JUNGLE_FARM("Jungle Farm", CurrencyType.Food, 1, new ResourceType[]{ResourceType.Wheat}, TechnologyType.BronzeWorking,
+            null, new LandFeatureType[]{LandFeatureType.Jungle}, 13),
+    MARSH_FARM("Marsh Farm", CurrencyType.Food, 1, new ResourceType[]{ResourceType.Wheat}, TechnologyType.Masonry,
+            null, new LandFeatureType[]{LandFeatureType.Marsh}, 12),
     LUMBER_MILL("Lumber Mill", CurrencyType.Production, 1, null, TechnologyType.Construction,
             null, new LandFeatureType[]{LandFeatureType.Jungle}, 5),
     MINE("Mine", CurrencyType.Production, 1, new ResourceType[]{ResourceType.Jewel, ResourceType.Gold,
             ResourceType.Silver, ResourceType.Coal, ResourceType.Iron}, TechnologyType.Mining, new LandType[]{LandType.Desert,
             LandType.Plain, LandType.GrassLand, LandType.Tundra, LandType.Snow, LandType.Hill},
             new LandFeatureType[]{LandFeatureType.Jungle, LandFeatureType.Forest, LandFeatureType.Marsh}, 5),
+    FOREST_MINE("Forest Mine", CurrencyType.Production, 1, new ResourceType[]{ResourceType.Jewel, ResourceType.Gold,
+            ResourceType.Silver, ResourceType.Coal, ResourceType.Iron}, null, null,
+            new LandFeatureType[]{LandFeatureType.Forest}, 10),
+    JUNGLE_MINE("Jungle Mine", CurrencyType.Production, 1, new ResourceType[]{ResourceType.Jewel, ResourceType.Gold,
+            ResourceType.Silver, ResourceType.Coal, ResourceType.Iron}, TechnologyType.BronzeWorking, null,
+            new LandFeatureType[]{LandFeatureType.Jungle}, 13),
+    MARSH_MINE("Marsh Mine", CurrencyType.Production, 1, new ResourceType[]{ResourceType.Jewel, ResourceType.Gold,
+            ResourceType.Silver, ResourceType.Coal, ResourceType.Iron}, TechnologyType.Masonry, null,
+            new LandFeatureType[]{LandFeatureType.Marsh}, 12),
     PASTURE("Pasture", null, 0, new ResourceType[]{ResourceType.Horse, ResourceType.Cow,
             ResourceType.Sheep}, TechnologyType.AnimalHusbandry, new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Hill},
             null, 5),
@@ -33,7 +49,10 @@ public enum ImprovementType {
             new LandType[]{LandType.Desert, LandType.Plain, LandType.GrassLand, LandType.Tundra}, null, 5),
     FACTORY("Factory", CurrencyType.Production, 2, null, TechnologyType.Engineering,
             new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Snow},
-            null, 5);
+            null, 5),
+    ROAD("Road", null, 0, null, TechnologyType.TheWheel,
+            new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Snow, LandType.Hill},
+            null, 3);
 
 
     public String name;

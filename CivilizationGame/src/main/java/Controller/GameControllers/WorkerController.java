@@ -5,13 +5,17 @@ import Model.Improvements.ImprovementType;
 import Model.LandFeatures.LandFeatureType;
 import Model.Lands.LandType;
 import Model.Resources.Enums.ResourceType;
-import Model.Technologies.TechnologyType;
 import Model.Units.Enums.CivilizedUnitType;
 
 public class WorkerController extends GameController {
 
     public void workerBuildRoad() {
-
+        if(canGenerallyBuildImprovement(ImprovementType.ROAD)) {
+            //TODO road can built on another improvement
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                    setImprovementType(ImprovementType.ROAD);
+            //TODO complete
+        }
     }
 
     public void workerBuildRailroad() {
@@ -22,73 +26,116 @@ public class WorkerController extends GameController {
         //fixme Doc's paradox in lands where can a farm built
         if (canGenerallyBuildImprovement(ImprovementType.FARM)) {
 
-            boolean canBuild = false;
             switch (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandFeature().getLandFeatureType()) {
-                //TODO complete building farm on special land features : change turns,...
-                case Jungle -> {
-                    if (currentTurnUser.getNation().hasTechnology(TechnologyType.BronzeWorking)) {
-                        Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
-                        canBuild = true;
-                    }
-                }
-                case Forest -> {
-                    if (currentTurnUser.getNation().hasTechnology(TechnologyType.Mining)) {
-                        Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
-                        canBuild = true;
-                    }
-                }
-                case Marsh -> {
-                    if (currentTurnUser.getNation().hasTechnology(TechnologyType.Masonry)) {
-                        Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
-                        canBuild = true;
-                    }
+                case Jungle -> workerBuildJungleFarm();
+                case Forest -> workerBuildForestFarm();
+                case Marsh -> workerBuildMarshFarm();
+                default -> {
+                    Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
+                    //fixme Change an enum's field ?!
+                    Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().foodGrowth += 1;
+                    currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                            getResource().getResourceType());
+                    //TODO complete
                 }
             }
+        }
+    }
 
-            if (canBuild) {
-                Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
-                //fixme Change an enum's field ?!
-                Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().foodGrowth += 1;
-                currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
-                        getResource().getResourceType());
-                //TODO complete
-            }
+    public void workerBuildJungleFarm() {
+        if (canGenerallyBuildImprovement(ImprovementType.JUNGLE_FARM)) {
+            //fixme add farm improvement or jungle_farm?
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
+            //fixme Change an enum's field ?!
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().foodGrowth += 1;
+            currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                    getResource().getResourceType());
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
+            //TODO complete
+        }
+    }
+
+    public void workerBuildForestFarm() {
+        if (canGenerallyBuildImprovement(ImprovementType.FOREST_FARM)) {
+            //fixme add farm improvement or jungle_farm?
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
+            //fixme Change an enum's field ?!
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().foodGrowth += 1;
+            currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                    getResource().getResourceType());
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
+            //TODO complete
+        }
+    }
+
+    public void workerBuildMarshFarm() {
+        if (canGenerallyBuildImprovement(ImprovementType.MARSH_FARM)) {
+            //fixme add farm improvement or jungle_farm?
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
+            //fixme Change an enum's field ?!
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().foodGrowth += 1;
+            currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                    getResource().getResourceType());
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
+            //TODO complete
         }
     }
 
     public void workerBuildMine() {
         //fixme Doc's paradox in lands where can a mine built
         if (canGenerallyBuildImprovement(ImprovementType.MINE) && hasResourceOfImprovement(ImprovementType.MINE)) {
-
-            boolean canBuild = false;
             switch (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandFeature().getLandFeatureType()) {
-                //TODO complete building farm on special land features : change turns,...
-                case Jungle -> {
-                    if (currentTurnUser.getNation().hasTechnology(TechnologyType.BronzeWorking)) {
-                        Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
-                        canBuild = true;
-                    }
-                }
-                case Forest -> {
-                    Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
-                    canBuild = true;
-                }
-                case Marsh -> {
-                    if (currentTurnUser.getNation().hasTechnology(TechnologyType.Masonry)) {
-                        Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
-                        canBuild = true;
-                    }
+                case Jungle -> workerBuildJungleMine();
+                case Forest -> workerBuildForestMine();
+                case Marsh -> workerBuildMarshMine();
+                default -> {
+                    Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.MINE);
+                    //fixme Change an enum's field ?!
+                    Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().productionGrowth += 1;
+                    currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                            getResource().getResourceType());
+                    //TODO complete
                 }
             }
+        }
+    }
 
-            if (canBuild) {
-                Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.MINE);
-                //fixme Change an enum's field ?!
-                Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().productionGrowth += 1;
-                currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
-                        getResource().getResourceType());
-                //TODO complete
-            }
+    public void workerBuildForestMine() {
+        if(canGenerallyBuildImprovement(ImprovementType.FOREST_MINE)) {
+            //fixme add farm improvement or forest_mine?
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.MINE);
+            //fixme Change an enum's field ?!
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().productionGrowth += 1;
+            currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                    getResource().getResourceType());
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
+            //TODO complete
+        }
+    }
+
+    public void workerBuildJungleMine() {
+        if(canGenerallyBuildImprovement(ImprovementType.JUNGLE_MINE)) {
+            //fixme add farm improvement or forest_mine?
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.MINE);
+            //fixme Change an enum's field ?!
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().productionGrowth += 1;
+            currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                    getResource().getResourceType());
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
+            //TODO complete
+        }
+    }
+
+    public void workerBuildMarshMine() {
+        if(canGenerallyBuildImprovement(ImprovementType.MARSH_MINE)) {
+            //fixme add farm improvement or forest_mine?
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.MINE);
+            //fixme Change an enum's field ?!
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType().productionGrowth += 1;
+            currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
+                    getResource().getResourceType());
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
+            //TODO complete
         }
     }
 
@@ -166,16 +213,25 @@ public class WorkerController extends GameController {
         }
     }
 
-    public void workerRemoveJungle() {
-
+    public void workerRemoveFeature() {
+        switch (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandFeature().getLandFeatureType()) {
+            case Jungle, Forest, Marsh -> Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setLandFeature(null);
+            //TODO complete
+        }
     }
 
     public void workerRemoveRoute() {
-
+        if (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getImprovementType() == ImprovementType.ROAD) {
+            //fixme just remove road, not other improvements
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovement(null);
+        }
     }
 
     public void workerRepair() {
-
+        if(Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getImprovement().isBroken()) {
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getImprovement().setBroken(false);
+            //TODO complete
+        }
     }
 
     private boolean canGenerallyBuildImprovement(ImprovementType improvementType) {
@@ -214,8 +270,4 @@ public class WorkerController extends GameController {
         return false;
     }
 
-    //FIXME is this method necessary?
-    public void workerSetupImprovement() {
-
-    }
 }

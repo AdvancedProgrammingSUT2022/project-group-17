@@ -31,6 +31,10 @@ public class Land {
     // 2 -> visible (shown)
     protected boolean[] hasRiver = new boolean[6];
     protected Resource resource;
+    //fixme check this
+    protected int foodGrowth;
+    protected int productionGrowth;
+    protected int coinGrowth;
 
 
     public Land(LandType landType, int cost) {
