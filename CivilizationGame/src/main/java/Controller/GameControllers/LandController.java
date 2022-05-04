@@ -1,6 +1,7 @@
 package Controller.GameControllers;
 import Controller.Controller;
 import Model.ConsoleColors;
+import Model.Game;
 import Model.LandFeatures.LandFeature;
 import Model.LandFeatures.LandFeatureType;
 import Model.Lands.Land;
@@ -214,7 +215,17 @@ public class LandController extends Controller {
 
         return map;
     }
-
+    
+    public static void findShortestPaths(){
+        for (int i = 0; i < Game.map.length; i++) {
+            for (int k = 0; k < Game.map.length; k++){
+                for (int j = 0; j < Game.map.length; j++){
+                    if ()
+                }
+            }
+        }
+    }
+    
     public static boolean isPairValid(Pair pair){
         if (pair == null)
             return false;

@@ -22,6 +22,7 @@ public class Game {
     private static int turn = 0;
     private static ArrayList<String> allTechnologies = new ArrayList<>();
     public static Land[][] map = LandController.mapInitializer();
+    public static int[][] distance = new int[10][10];
 
     public static User getUserByName(String username){
         for (User user : users) {
