@@ -216,15 +216,15 @@ public class LandController extends Controller {
         return map;
     }
     
-    public static void findShortestPaths(){
-        for (int i = 0; i < Game.map.length; i++) {
-            for (int k = 0; k < Game.map.length; k++){
-                for (int j = 0; j < Game.map.length; j++){
-                    if ()
-                }
-            }
-        }
-    }
+//    public static void findShortestPaths(){
+//        for (int i = 0; i < Game.map.length; i++) {
+//            for (int k = 0; k < Game.map.length; k++){
+//                for (int j = 0; j < Game.map.length; j++){
+//                    if ()
+//                }
+//            }
+//        }
+//    }
     
     public static boolean isPairValid(Pair pair){
         if (pair == null)
