@@ -37,6 +37,7 @@ public class MainMenu extends Menu{
 
         } else if ((commandMatcher = MainCommands.getMatcher(input,MainCommands.playGame)).matches()){
             System.out.println(mainController.playGame(commandMatcher));
+            new GameMenu().startingGame(scanner);
 
         } else if (MainCommands.getMatcher(input,MainCommands.exit).matches()){
             mainController.changeMenu("LoginMenu");
