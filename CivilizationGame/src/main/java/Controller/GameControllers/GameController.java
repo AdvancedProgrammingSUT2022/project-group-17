@@ -16,6 +16,7 @@ public class GameController extends Controller {
     protected static CivilizedUnit selectedCivilizedUnit;
     protected static City selectedCity;
     protected static User currentTurnUser;
+    protected static Nation selectedNation;
 
     public void chooseNation(int chosenNumber,int playerNum){
 

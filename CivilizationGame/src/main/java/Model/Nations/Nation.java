@@ -2,6 +2,7 @@ package Model.Nations;
 
 import Model.City;
 import Model.Resources.Currency;
+import Model.Resources.Enums.CurrencyType;
 import Model.Technologies.Technology;
 import Model.Resources.Resource;
 
@@ -16,7 +17,11 @@ public class Nation {
     protected ArrayList<Technology> technologies = new ArrayList<>();
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
-    protected Currency[] currencies = new Currency[5];
+    protected Currency coin = new Currency(CurrencyType.Coin);
+    protected Currency food = new Currency(CurrencyType.Food);
+    protected Currency production = new Currency(CurrencyType.Production);
+    protected Currency happiness = new Currency(CurrencyType.Happiness);
+    protected Currency science = new Currency(CurrencyType.Science);
     protected NationType nationType;
 
     public Nation (NationType nationType/*, City capital, Currency[] currencies*/){
@@ -41,8 +46,24 @@ public class Nation {
         return enemies;
     }
 
-    public Currency[] getCurrencies() {
-        return currencies;
+    public Currency getCoin() {
+        return coin;
+    }
+
+    public Currency getFood() {
+        return food;
+    }
+
+    public Currency getProduction() {
+        return production;
+    }
+
+    public Currency getHappiness() {
+        return happiness;
+    }
+
+    public Currency getScience() {
+        return science;
     }
 
     public NationType getNationType() {
@@ -65,4 +86,31 @@ public class Nation {
         return technologies;
     }
 
+    public void setCities(ArrayList<City> cities) {
+        this.cities = cities;
+    }
+
+    public void setCapital(City capital) {
+        this.capital = capital;
+    }
+
+    public void setResources(ArrayList<Resource> resources) {
+        this.resources = resources;
+    }
+
+    public void setTechnologies(ArrayList<Technology> technologies) {
+        this.technologies = technologies;
+    }
+
+    public void setFriends(ArrayList<Nation> friends) {
+        this.friends = friends;
+    }
+
+    public void setEnemies(ArrayList<Nation> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setNationType(NationType nationType) {
+        this.nationType = nationType;
+    }
 }
