@@ -2,6 +2,7 @@ package Model.Lands;
 
 import Model.City;
 import Model.Improvements.Improvement;
+import Model.Improvements.ImprovementType;
 import Model.LandFeatures.LandFeature;
 import Model.Resources.Resource;
 import Model.Units.CivilizedUnit;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 public class Land {
 
     protected Improvement improvement;
+    //fixme
+    protected ImprovementType improvementType;
     protected LandFeature landFeature;
     protected int cost;
     protected City ownerCity = null;
@@ -29,6 +32,11 @@ public class Land {
     // 2 -> visible (shown)
     protected boolean[] hasRiver = new boolean[6];
     protected Resource resource;
+    //fixme check this
+    protected int foodGrowth;
+    protected int productionGrowth;
+    protected int coinGrowth;
+
 
     public Land(LandType landType, int cost) {
         this.landType = landType;
@@ -57,6 +65,11 @@ public class Land {
         return isCityCenter;
     }
 
+    public ImprovementType getImprovementType() {
+        return improvementType;
+
+    }
+
     public void setRiver(int index, boolean value){
         this.hasRiver[index] = value;
     }
@@ -67,6 +80,10 @@ public class Land {
 
     public void setImprovement(Improvement improvement) {
         this.improvement = improvement;
+    }
+
+    public void setImprovementType(ImprovementType improvementType) {
+        this.improvementType = improvementType;
     }
 
     public LandFeature getLandFeature() {

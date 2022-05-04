@@ -7,6 +7,8 @@ import Model.Technologies.TechnologyType;
 public class Unit {
     protected Nation ownerNation;
     protected String name;
+    protected int x;
+    protected int y;
     protected Pair location;
     protected int hp;
     protected int MP;
@@ -18,7 +20,7 @@ public class Unit {
     protected ResourceType resourceType;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                int turns, int hp,Nation ownerNation) {
+                int turns, int hp, Nation ownerNation, int x, int y) {
         this.ownerNation = ownerNation;
         this.name = name;
         this.cost = cost;
@@ -28,6 +30,8 @@ public class Unit {
         this.turns = turns;
         this.hp = hp;
         this.XP = 0;
+        this.x = x;
+        this.y = y;
     }
 
     public Nation getOwnerNation() {
@@ -40,6 +44,14 @@ public class Unit {
 
     public String getName() {
         return name;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public Pair getLocation() {

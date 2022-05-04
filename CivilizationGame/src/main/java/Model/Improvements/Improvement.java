@@ -5,6 +5,7 @@ public class Improvement {
     protected boolean hasCitizen;
     protected int turns;
     protected ImprovementType improvementType;
+    protected boolean isBroken = false;
 
     public Improvement(ImprovementType improvementType) {
         this.improvementType = improvementType;
@@ -20,6 +21,10 @@ public class Improvement {
         return turns;
     }
 
+    public boolean isBroken() {
+        return isBroken;
+    }
+
     public static boolean isIsTechnologicallyAvailable() {
         return isTechnologicallyAvailable;
     }
@@ -32,5 +37,9 @@ public class Improvement {
 
     public void setHasCitizen(boolean hasCitizen) {
         this.hasCitizen = hasCitizen;
+    }
+
+    public void setBroken(boolean broken) {
+        isBroken = broken;
     }
 }

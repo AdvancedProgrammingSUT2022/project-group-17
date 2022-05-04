@@ -6,10 +6,10 @@ public class RangedCombatUnit extends CombatUnit {
     protected int rangedStrength;
     protected RangedCombatUnitType rangedCombatUnitType;
 
-    public RangedCombatUnit(RangedCombatUnitType rangedCombatUnitType,Nation ownerNation) {
+    public RangedCombatUnit(RangedCombatUnitType rangedCombatUnitType,Nation ownerNation, int x, int y) {
         super(rangedCombatUnitType.name, rangedCombatUnitType.cost, rangedCombatUnitType.combatStrength, rangedCombatUnitType.MP,
                 rangedCombatUnitType.resourceType, rangedCombatUnitType.technologyType, rangedCombatUnitType.turns,
-                rangedCombatUnitType.hp,ownerNation);
+                rangedCombatUnitType.hp,ownerNation, x, y);
         this.rangedStrength = rangedCombatUnitType.rangedStrength;
     }
 

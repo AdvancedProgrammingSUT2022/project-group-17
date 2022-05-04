@@ -10,8 +10,8 @@ public class CombatUnit extends Unit {
     protected int ZOC;
 
     public CombatUnit(String name, int cost, int combatStrength, int MP, ResourceType resourceType,
-                      TechnologyType technologyType, int turns, int hp,Nation ownerNation) {
-        super(name, cost, MP, resourceType, technologyType, turns, hp,ownerNation);
+                      TechnologyType technologyType, int turns, int hp,Nation ownerNation, int x, int y) {
+        super(name, cost, MP, resourceType, technologyType, turns, hp,ownerNation, x, y);
         this.combatStrength = combatStrength;
     }
 }

@@ -3,8 +3,10 @@ package Model.Nations;
 import Model.City;
 import Model.Resources.Currency;
 import Model.Resources.Enums.CurrencyType;
+import Model.Resources.Enums.ResourceType;
 import Model.Technologies.Technology;
 import Model.Resources.Resource;
+import Model.Technologies.TechnologyType;
 
 import java.util.ArrayList;
 
@@ -13,8 +15,8 @@ public class Nation {
 
     protected ArrayList<City> cities = new ArrayList<>();
     protected City capital;
-    protected ArrayList<Resource> resources = new ArrayList<>();
-    protected ArrayList<Technology> technologies = new ArrayList<>();
+    protected ArrayList<ResourceType> resources = new ArrayList<>();
+    protected ArrayList<TechnologyType> technologies = new ArrayList<>();
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
     protected Currency coin = new Currency(CurrencyType.Coin);
@@ -78,11 +80,11 @@ public class Nation {
         return capital;
     }
 
-    public ArrayList<Resource> getResources() {
+    public ArrayList<ResourceType> getResources() {
         return resources;
     }
 
-    public ArrayList<Technology> getTechnologies() {
+    public ArrayList<TechnologyType> getTechnologies() {
         return technologies;
     }
 
@@ -94,11 +96,11 @@ public class Nation {
         this.capital = capital;
     }
 
-    public void setResources(ArrayList<Resource> resources) {
+    public void setResources(ArrayList<ResourceType> resources) {
         this.resources = resources;
     }
 
-    public void setTechnologies(ArrayList<Technology> technologies) {
+    public void setTechnologies(ArrayList<TechnologyType> technologies) {
         this.technologies = technologies;
     }
 
@@ -112,5 +114,15 @@ public class Nation {
 
     public void setNationType(NationType nationType) {
         this.nationType = nationType;
+    }
+    public void addResource(ResourceType resource) {
+        this.resources.add(resource);
+    }
+
+    public boolean hasTechnology(TechnologyType technologyType) {
+        for (TechnologyType technology: technologies)
+            if(technology == technologyType)
+                return true;
+        return false;
     }
 }

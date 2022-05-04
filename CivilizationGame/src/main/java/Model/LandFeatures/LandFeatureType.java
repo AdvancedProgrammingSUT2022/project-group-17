@@ -6,8 +6,8 @@ public enum LandFeatureType {
     Watershed("Watershed", 2, 0, 0, -33, 1, new ResourceType[]{ResourceType.Wheat, ResourceType.Sugar}, true),
     Jungle("Jungle", 1, 1, 0, 25, 2, new ResourceType[]{ResourceType.Deer, ResourceType.Silk}, true),
     Ice("Ice", 0, 0, 0, 0, -1, null, false),
-    LushJungle("Lush Jungle", 1, -1, 0, 25, 2, new ResourceType[]{ResourceType.Banana, ResourceType.Jewel}, true),
-    Swamp("Swamp", -1, 0, 0, -33, 2, new ResourceType[]{ResourceType.Sugar}, true),
+    Forest("Forest", 1, -1, 0, 25, 2, new ResourceType[]{ResourceType.Banana, ResourceType.Jewel}, true),
+    Marsh("Marsh", -1, 0, 0, -33, 2, new ResourceType[]{ResourceType.Sugar}, true),
     Oasis("Oasis", 3, 0, 1, -33, 1, null, true),
     //fixme put sth else other than the number 1000 for movement cost of Rivers
     RiverTop("RiverTop", 0, 0, 1, 0, 1000, null, true),

@@ -261,9 +261,9 @@ public class LandController extends Controller {
 
         }
 
-        map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA)));
-        map[4][8].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA)));
-        map[6][1].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA)));
+        map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA), 3, 3));
+        map[4][8].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA), 4, 8));
+        map[6][1].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA), 6, 1));
 
         return map;
     }
