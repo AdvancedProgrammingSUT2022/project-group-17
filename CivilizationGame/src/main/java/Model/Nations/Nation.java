@@ -215,4 +215,12 @@ public class Nation {
     public boolean hasTechnology(TechnologyType technologyType) {
         return technologies.get(technologyType);
     }
+
+    public HashMap<TechnologyType, Boolean> getTechnologies() {
+        return technologies;
+    }
+
+    public HashMap<BuildingType, Boolean> getBuildings() {
+        return buildings;
+    }
 }

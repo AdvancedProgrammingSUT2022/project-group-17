@@ -1,8 +1,15 @@
 package Controller.GameControllers;
 
 import Model.Game;
+import Model.Nations.Nation;
 import Model.Pair;
+import Model.Units.CivilizedUnit;
+import Model.Units.CloseCombatUnit;
 import Model.Units.CombatUnit;
+import Model.Units.Enums.CivilizedUnitType;
+import Model.Units.Enums.CloseCombatUnitType;
+import Model.Units.Enums.RangedCombatUnitType;
+import Model.Units.RangedCombatUnit;
 
 import java.util.regex.Matcher;
 
@@ -165,5 +172,69 @@ public class UnitController extends GameController {
     public void unitDelete() {
 
     }
+
+    public int makeCivilizedUnit(int x, int y, CivilizedUnitType unitType){
+        Nation currentNation = Game.getPlayersInGame().get(Game.getSubTurn()).getNation();
+        if (Game.map[x][y].getCivilizedUnit() != null)
+            return -4;
+
+        if (unitType.resourceType != null)
+            if (currentNation.getResourceCellar().get(unitType.resourceType) == 0)
+                return -3;
+
+        if (unitType.technologyType != null)
+            if (currentNation.getTechnologies().get(unitType.technologyType))
+                return -2;
+
+        if (currentNation.getCoin().getBalance() < unitType.cost)
+            return -1;
+
+        currentNation.getCoin().setBalance(currentNation.getCoin().getBalance() - unitType.cost);
+        currentNation.getResourceCellar().put(unitType.resourceType,currentNation.getResourceCellar().get(unitType.resourceType) -1);
+        return Game.getTurn() + unitType.turns;
+    }
+
+    public int makeCloseCombatUnit(int x, int y, CloseCombatUnitType unitType){
+        Nation currentNation = Game.getPlayersInGame().get(Game.getSubTurn()).getNation();
+        if (Game.map[x][y].getCombatUnit() != null)
+            return -4;
+
+        if (unitType.resourceType != null)
+            if (currentNation.getResourceCellar().get(unitType.resourceType) == 0)
+                return -3;
+
+        if (unitType.technologyType != null)
+            if (currentNation.getTechnologies().get(unitType.technologyType))
+                return -2;
+
+        if (currentNation.getCoin().getBalance() < unitType.cost)
+            return -1;
+
+        currentNation.getResourceCellar().put(unitType.resourceType,currentNation.getResourceCellar().get(unitType.resourceType) -1);
+        currentNation.getCoin().setBalance(currentNation.getCoin().getBalance() - unitType.cost);
+        return Game.getTurn() + unitType.turns;
+    }
+
+    public int makeRangedCombatUnit(int x, int y, RangedCombatUnitType unitType){
+        Nation currentNation = Game.getPlayersInGame().get(Game.getSubTurn()).getNation();
+        if (Game.map[x][y].getCombatUnit() != null)
+            return -4;
+
+        if (unitType.resourceType != null)
+            if (currentNation.getResourceCellar().get(unitType.resourceType) == 0)
+                return -3;
+
+        if (unitType.technologyType != null)
+            if (currentNation.getTechnologies().get(unitType.technologyType))
+                return -2;
+
+        if (currentNation.getCoin().getBalance() < unitType.cost)
+            return -1;
+
+        currentNation.getResourceCellar().put(unitType.resourceType,currentNation.getResourceCellar().get(unitType.resourceType) -1);
+        currentNation.getCoin().setBalance(currentNation.getCoin().getBalance() - unitType.cost);
+        return Game.getTurn() + unitType.turns;
+    }
+
 
 }
