@@ -17,7 +17,7 @@ public class GameController extends Controller {
     protected static City selectedCity;
     protected static User currentTurnUser;
 
-    public void chooseNation(int chosenNumber,int playerNum){
+    public void chooseNation(int chosenNumber, int playerNum) {
 
         Nation nation = switch (chosenNumber) {
             case 0 -> new Nation(NationType.INDUS_VALLEY);
@@ -43,15 +43,35 @@ public class GameController extends Controller {
         int i = 1;
         for (Unit unit : currentTurnUser.getNation().getUnits()) {
             System.out.printf("%d- %s\tLocation: (%d , %d)\n", i, unit.getName(), unit.getLocation().x, unit.getLocation().y);
+            i++;
         }
+        System.out.println();
     }
 
     public void showCities() {
-
+        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s cities:");
+        int i = 1;
+        for (City city : currentTurnUser.getNation().getCities()) {
+            if (city == currentTurnUser.getNation().getCapital()) System.out.print("(*Capital) ");
+            System.out.printf("%d- %s\tArea Size: %d\tPopulation: %d\n", i, city.getName(), city.getLands().size(), city.getCitizens());
+            i++;
+        }
     }
 
     public void showDiplomacies() {
+        System.out.println(currentTurnUser.getNation().getNationType().name + "'s friends:");
+        int i = 0;
+        for (Nation nation: currentTurnUser.getNation().getFriends()) {
+            System.out.printf("%d- %s\n", i, nation.getNationType().name);
+            i++;
+        }
 
+        System.out.println(currentTurnUser.getNation().getNationType().name + "'s enemies:");
+        i = 0;
+        for (Nation nation: currentTurnUser.getNation().getEnemies()) {
+            System.out.printf("%d- %s\n", i, nation.getNationType().name);
+            i++;
+        }
     }
 
     public void showVictories() {
@@ -86,19 +106,18 @@ public class GameController extends Controller {
         int selectedLandI = Integer.parseInt(matcher.group("x"));
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
-        if(Game.map[selectedLandI][selectedLandJ].getCombatUnit() != null)
-        {
+        if (Game.map[selectedLandI][selectedLandJ].getCombatUnit() != null) {
             selectedCombatUnit = Game.map[selectedLandI][selectedLandJ].getCombatUnit();
             return (selectedCombatUnit.getName() + " is now selected");
         }
-        return("There is no combat unit here!");
+        return ("There is no combat unit here!");
     }
 
     public String selectCivilizedUnit(Matcher matcher) {
         int selectedLandI = Integer.parseInt(matcher.group("x"));
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
-        if(Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null){
+        if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null) {
             selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
             return (selectedCivilizedUnit + " is now selected");
         }
@@ -117,25 +136,22 @@ public class GameController extends Controller {
 
     }
 
-    public void nextPlayerTurn(){
+    public void nextPlayerTurn() {
         Game.setSubTurn(Game.getSubTurn() + 1);
         currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
-        if (Game.getSubTurn() == Game.getPlayersInGame().size()){
+        if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
             nextGameTurn();
             Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
         }
     }
 
-    public void nextGameTurn(){
+    public void nextGameTurn() {
         Game.setTurn(Game.getTurn() + 1);
     }
 
-    public void saveGame(){
+    public void saveGame() {
 
     }
-
-
-
 
 
 }

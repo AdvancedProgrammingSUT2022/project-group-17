@@ -10,6 +10,7 @@ import Model.Units.Unit;
 import java.util.ArrayList;
 
 public class City {
+    protected String name;
     protected Nation ownerNation;
     protected ArrayList<Land> lands = new ArrayList<>();
     protected int citizens;
@@ -30,6 +31,11 @@ public class City {
         this.rangedStrength = 10;
         this.level = 1;
         this.ownerNation = ownerNation;
+    }
+
+
+    public String getName() {
+        return name;
     }
 
     public Nation getOwnerNation() {
