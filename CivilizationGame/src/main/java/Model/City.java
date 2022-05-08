@@ -4,6 +4,8 @@ import Model.Buildings.Building;
 import Model.Improvements.Improvement;
 import Model.Lands.Land;
 import Model.Nations.Nation;
+import Model.Resources.Currency;
+import Model.Resources.Enums.CurrencyType;
 import Model.Units.CloseCombatUnit;
 import Model.Units.Unit;
 
@@ -23,6 +25,11 @@ public class City {
     protected Building inProgressBuilding;
     protected Unit inProgressUnit;
     protected CloseCombatUnit garrison;
+    protected int coinGrowth;
+    protected int foodGrowth;
+    protected int productionGrowth;
+    protected int happinessGrowth;
+    protected int scienceGrowth;
 
     public City(Nation ownerNation){
         this.citizens = 3;
@@ -84,6 +91,26 @@ public class City {
 
     public ArrayList<Improvement> getImprovements() {
         return improvements;
+    }
+
+    public int getCoinGrowth() {
+        return coinGrowth;
+    }
+
+    public int getFoodGrowth() {
+        return foodGrowth;
+    }
+
+    public int getProductionGrowth() {
+        return productionGrowth;
+    }
+
+    public int getHappinessGrowth() {
+        return happinessGrowth;
+    }
+
+    public int getScienceGrowth() {
+        return scienceGrowth;
     }
 
     public void addBuilding(Building building){

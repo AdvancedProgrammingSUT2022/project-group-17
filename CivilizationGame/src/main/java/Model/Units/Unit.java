@@ -3,6 +3,7 @@ import Model.Pair;
 import Model.Resources.Enums.ResourceType;
 import Model.Nations.Nation;
 import Model.Technologies.TechnologyType;
+import Model.Units.Enums.UnitStatus;
 
 public class Unit {
     protected Nation ownerNation;
@@ -18,6 +19,7 @@ public class Unit {
     protected boolean isWaitingForCommand;
     protected TechnologyType technologyType;
     protected ResourceType resourceType;
+    protected UnitStatus unitStatus;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
                 int turns, int hp, Nation ownerNation, int x, int y) {
@@ -80,6 +82,10 @@ public class Unit {
 
     public int getMP() {
         return MP;
+    }
+
+    public UnitStatus getUnitStatus() {
+        return unitStatus;
     }
 
     public void setLocation(Pair location) {

@@ -3,6 +3,8 @@ package Controller.GameControllers;
 import Controller.Controller;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
+import Model.Technologies.Technology;
+import Model.Technologies.TechnologyType;
 import Model.Units.*;
 import Model.City;
 import Model.Game;
@@ -35,14 +37,21 @@ public class GameController extends Controller {
     }
 
     public void showResearches() {
-
+        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s technologies:");
+        int i = 0;
+        for (TechnologyType technologyType : TechnologyType.values()) {
+            if (currentTurnUser.getNation().getTechnologies().get(technologyType))
+                System.out.printf("%d- %s\n", i, technologyType.name);
+            i++;
+        }
+        System.out.println();
     }
 
     public void showUnits() {
         System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s units:");
         int i = 1;
         for (Unit unit : currentTurnUser.getNation().getUnits()) {
-            System.out.printf("%d- %s\tLocation: (%d , %d)\n", i, unit.getName(), unit.getLocation().x, unit.getLocation().y);
+            System.out.printf("%d- %s\tLocation: (%d , %d)\tStatus: %s\n", i, unit.getName(), unit.getLocation().x, unit.getLocation().y, unit.getUnitStatus().name);
             i++;
         }
         System.out.println();
@@ -61,14 +70,14 @@ public class GameController extends Controller {
     public void showDiplomacies() {
         System.out.println(currentTurnUser.getNation().getNationType().name + "'s friends:");
         int i = 0;
-        for (Nation nation: currentTurnUser.getNation().getFriends()) {
+        for (Nation nation : currentTurnUser.getNation().getFriends()) {
             System.out.printf("%d- %s\n", i, nation.getNationType().name);
             i++;
         }
 
         System.out.println(currentTurnUser.getNation().getNationType().name + "'s enemies:");
         i = 0;
-        for (Nation nation: currentTurnUser.getNation().getEnemies()) {
+        for (Nation nation : currentTurnUser.getNation().getEnemies()) {
             System.out.printf("%d- %s\n", i, nation.getNationType().name);
             i++;
         }
@@ -79,7 +88,18 @@ public class GameController extends Controller {
     }
 
     public void showDemographics() {
-
+        for (User user : Game.getUsers()) {
+            System.out.println(user.getNation().getNationType().name + " :");
+            int population = 0;
+            for (City city : user.getNation().getCities())
+                population += city.getCitizens();
+            System.out.println("- Population: " + population);
+            System.out.println("- Soldiers: " + user.getNation().getUnits().size());
+            int lands = 0;
+            for (City city : user.getNation().getCities())
+                lands += city.getLands().size();
+            System.out.println("- Lands: " + lands);
+        }
     }
 
     public void showNotifications() {
@@ -87,11 +107,25 @@ public class GameController extends Controller {
     }
 
     public void showMilitaries() {
-
+        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s combat units:");
+        int i = 1;
+        for (Unit unit : currentTurnUser.getNation().getUnits())
+            if (unit instanceof CombatUnit) {
+                System.out.printf("%d- %s\tLocation: (%d , %d)\tStatus: %s\n", i, unit.getName(), unit.getLocation().x, unit.getLocation().y, unit.getUnitStatus().name);
+                i++;
+            }
+        System.out.println();
     }
 
     public void showEconomics() {
-
+        System.out.println("Economic Overview:");
+        int i = 0;
+        for(City city : currentTurnUser.getNation().getCities()) {
+            System.out.printf("%d- %s\tLevel: %d\tStrength: %d\tCoin: %d\tFood: %d\tProduction: %d\n" ,
+                    i, city.getName(), city.getLevel(), city.getHP(), city.getCoinGrowth(), city.getFoodGrowth(), city.getProductionGrowth());
+            i++;
+        }
+        System.out.println();
     }
 
     public void showDiplomatics() {

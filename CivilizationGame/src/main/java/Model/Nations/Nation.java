@@ -197,6 +197,9 @@ public class Nation {
         return capital;
     }
 
+    public HashMap<TechnologyType, Boolean> getTechnologies() {
+        return technologies;
+    }
 
     public void setCities(ArrayList<City> cities) {
         this.cities = cities;
