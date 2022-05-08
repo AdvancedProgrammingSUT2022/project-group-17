@@ -6,6 +6,7 @@ import Model.Resources.Currency;
 import Model.Resources.Enums.CurrencyType;
 import Model.Resources.Enums.ResourceType;
 import Model.Technologies.TechnologyType;
+import Model.Units.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class Nation {
 
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
+    protected ArrayList<Unit> units = new ArrayList<>();
 
     protected Currency coin = new Currency(CurrencyType.Coin);
     protected Currency food = new Currency(CurrencyType.Food);
@@ -155,6 +157,10 @@ public class Nation {
         return enemies;
     }
 
+    public ArrayList<Unit> getUnits() {
+        return units;
+    }
+
     public Currency getCoin() {
         return coin;
     }
@@ -212,7 +218,15 @@ public class Nation {
         this.nationType = nationType;
     }
 
+    public void addUnit(Unit unit) {
+        units.add(unit);
+    }
+
     public boolean hasTechnology(TechnologyType technologyType) {
         return technologies.get(technologyType);
+    }
+
+    public void addResource(ResourceType resourceType) {
+        resourceCellar.put(resourceType, resourceCellar.get(resourceType) + 1);
     }
 }

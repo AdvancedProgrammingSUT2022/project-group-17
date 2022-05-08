@@ -14,7 +14,7 @@ public class CityController extends GameController {
         int y = Integer.parseInt(matcher.group("y"));
         Pair main = new Pair(x, y);
         if (isCityBuildable(main)){
-            City city = new City(selectedNation);
+            City city = new City(currentTurnUser.getNation());
             Land mainLand = Game.map[x][y];
             mainLand.setCityCenter(true);
             mainLand.setOwnerCity(city);

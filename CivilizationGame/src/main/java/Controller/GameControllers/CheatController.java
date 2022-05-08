@@ -23,20 +23,28 @@ public class CheatController extends GameController {
         int chosenNumber = scanner.nextInt();
         switch (chosenNumber){
             case 0:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,currentTurnUser.getNation(), coordinate.x, coordinate.y));
+                CloseCombatUnit knight = new CloseCombatUnit(CloseCombatUnitType.KNIGHT,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(knight);
                 selectedCombatUnit.setLocation(coordinate);
+                currentTurnUser.getNation().addUnit(knight);
                 break;
             case 1:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new RangedCombatUnit(RangedCombatUnitType.ARCHER,currentTurnUser.getNation(), coordinate.x, coordinate.y));
+                RangedCombatUnit archer = new RangedCombatUnit(RangedCombatUnitType.ARCHER,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(archer);
                 selectedCombatUnit.setLocation(coordinate);
+                currentTurnUser.getNation().addUnit(archer);
                 break;
             case 2:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.SETTLER,currentTurnUser.getNation(), coordinate.x, coordinate.y));
+                CivilizedUnit settler = new CivilizedUnit(CivilizedUnitType.SETTLER,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(settler);
                 selectedCivilizedUnit.setLocation(coordinate);
+                currentTurnUser.getNation().addUnit(settler);
                 break;
             case 3:
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,currentTurnUser.getNation(), coordinate.x, coordinate.y));
+                CivilizedUnit worker = new CivilizedUnit (CivilizedUnitType.WORKER,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(worker);
                 selectedCivilizedUnit.setLocation(coordinate);
+                currentTurnUser.getNation().addUnit(worker);
                 break;
             default:
                 return chosenNumber + "is not a valid number : [0-3]";

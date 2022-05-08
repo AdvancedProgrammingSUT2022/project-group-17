@@ -16,7 +16,6 @@ public class GameController extends Controller {
     protected static CivilizedUnit selectedCivilizedUnit;
     protected static City selectedCity;
     protected static User currentTurnUser;
-    protected static Nation selectedNation;
 
     public void chooseNation(int chosenNumber,int playerNum){
 
@@ -40,7 +39,11 @@ public class GameController extends Controller {
     }
 
     public void showUnits() {
-
+        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s units:");
+        int i = 1;
+        for (Unit unit : currentTurnUser.getNation().getUnits()) {
+            System.out.printf("%d- %s\tLocation: (%d , %d)\n", i, unit.getName(), unit.getLocation().x, unit.getLocation().y);
+        }
     }
 
     public void showCities() {
