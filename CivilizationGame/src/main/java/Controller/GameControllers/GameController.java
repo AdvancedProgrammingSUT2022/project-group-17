@@ -19,6 +19,7 @@ public class GameController extends Controller {
     protected static City selectedCity;
     protected static User currentTurnUser;
 
+
     public void chooseNation(int chosenNumber, int playerNum) {
 
         Nation nation = switch (chosenNumber) {
@@ -45,6 +46,10 @@ public class GameController extends Controller {
             i++;
         }
         System.out.println();
+    }
+
+    public static void setCurrentTurnUser(User currentTurnUser) {
+        GameController.currentTurnUser = currentTurnUser;
     }
 
     public void showUnits() {

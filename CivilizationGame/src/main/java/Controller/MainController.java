@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.GameControllers.GameController;
 import Model.Game;
 import Model.Users.User;
 import View.Menu;
@@ -18,7 +19,7 @@ public class MainController extends Controller{
     }
 
     public String playGame(Matcher matcher) {
-        ArrayList<String> tokens = new ArrayList<>(Arrays.asList(matcher.group(1).split("\\s*--player\\d+\\s*")));
+        ArrayList<String> tokens = new ArrayList<>(Arrays.asList(matcher.group(1).split("\\s*-p\\d+\\s*")));
         tokens.remove(0);
         ArrayList<User> players = new ArrayList<>();
         for (String token : tokens) {
@@ -27,6 +28,7 @@ public class MainController extends Controller{
         }
 
         Game.setPlayersInGame(players);
+        GameController.setCurrentTurnUser(Game.getPlayersInGame().get(0));
         Menu.setMenuName("GameMenu");
         return "game successfully started!";
     }

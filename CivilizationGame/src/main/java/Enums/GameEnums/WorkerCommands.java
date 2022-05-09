@@ -4,18 +4,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum WorkerCommands {
-    BUILD_ROAD("worker build road on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_RAILROAD("worker build railroad on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_FARM("worker build farm on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_MINE("worker build mine on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_TRADING_POST("worker build trading post on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_LUMBERMILL("worker build lumbermill on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_PASTURE("worker build pasture on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_CAMP("worker build camp on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_PLANTATION("worker build plantation on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    BUILD_QUARRY("worker build quarry on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    REMOVE_JUNGLE("worker remove jungle from -x (?<x>\\d+) -y (?<y>\\d+)"),
-    REMOVE_ROUTE("worker remove route from -x (?<x>\\d+) -y (?<y>\\d+)");
+    BUILD_ROAD("worker build road"),
+    BUILD_RAILROAD("worker build railroad"),
+    BUILD_FARM("worker build farm"),
+    BUILD_MINE("worker build mine"),
+    BUILD_TRADING_POST("worker build trading post"),
+    BUILD_LUMBER_MILL("worker build lumberMill"),
+    BUILD_PASTURE("worker build pasture"),
+    BUILD_CAMP("worker build camp"),
+    BUILD_PLANTATION("worker build plantation"),
+    BUILD_QUARRY("worker build quarry"),
+    REMOVE_JUNGLE("worker remove jungle"),
+    REMOVE_ROUTE("worker remove route");
     private final String regex;
 
     WorkerCommands(String regex) {

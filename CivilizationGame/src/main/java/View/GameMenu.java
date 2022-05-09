@@ -3,11 +3,12 @@ package View;
 import Controller.GameControllers.CheatController;
 import Controller.GameControllers.GameController;
 import Controller.GameControllers.UnitController;
+import Controller.GameControllers.WorkerController;
+import Enums.GameEnums.CheatCommands;
 import Enums.GameEnums.GameCommands;
 import Enums.GameEnums.UnitCommands;
+import Enums.GameEnums.WorkerCommands;
 import Model.Game;
-import Model.Nations.Nation;
-import Model.Nations.NationType;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -16,12 +17,13 @@ public class GameMenu extends Menu{
     private final GameController gameController = new GameController();
     private final CheatController cheatController = new CheatController();
     private final UnitController unitController = new UnitController();
+    private final WorkerController workerController = new WorkerController();
 
     @Override
     public void run(Scanner scanner) {
         String input = scanner.nextLine();
         Matcher commandMatcher;
-        if ((commandMatcher = GameCommands.getMatcher(input,GameCommands.CHEAT_PUT_UNIT)).matches()){
+        if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.PUT_UNIT)).matches()){
             System.out.println("choose Unit:");
             System.out.println("0: close combat unit");
             System.out.println("1: ranged combat unit");
@@ -29,10 +31,12 @@ public class GameMenu extends Menu{
             System.out.println("3: worker unit");
             System.out.println(cheatController.putUnit(commandMatcher,scanner));
 
-        } else if ((commandMatcher = GameCommands.getMatcher(input,GameCommands.MENU_EXIT)).matches()){
+        } else if((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.ADD_TECHNOLOGY)).matches()) {
+            System.out.println(cheatController.addTechnology(commandMatcher));
+        } else if (GameCommands.getMatcher(input,GameCommands.MENU_EXIT).matches()){
             setMenuName("MainMenu");
 
-        } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SHOW_MAP)).matches()){
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_MAP).matches()){
             gameController.mapShow();
 
         } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_CIVILIZED_UNIT)).matches()){
@@ -46,6 +50,21 @@ public class GameMenu extends Menu{
 
         } else if (GameCommands.getMatcher(input,GameCommands.NEXT_TURN).matches()){
             gameController.nextPlayerTurn();
+        // Improvements
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PASTURE).matches()) {
+            workerController.workerBuildPasture();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_FARM).matches()) {
+            workerController.workerBuildFarm();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_MINE).matches()) {
+            workerController.workerBuildMine();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_CAMP).matches()) {
+            workerController.workerBuildCamp();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_LUMBER_MILL).matches()) {
+            workerController.workerBuildLumberMill();
 
         } else
             System.out.println("invalid command !");

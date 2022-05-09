@@ -225,11 +225,15 @@ public class Nation {
         units.add(unit);
     }
 
-    public boolean hasTechnology(TechnologyType technologyType) {
-        return technologies.get(technologyType);
-    }
-
     public void addResource(ResourceType resourceType) {
         resourceCellar.put(resourceType, resourceCellar.get(resourceType) + 1);
+    }
+
+    public void addTechnology(TechnologyType technologyType) {
+        technologies.put(technologyType, true);
+    }
+
+    public boolean hasTechnology(TechnologyType technologyType) {
+        return technologies.get(technologyType);
     }
 }

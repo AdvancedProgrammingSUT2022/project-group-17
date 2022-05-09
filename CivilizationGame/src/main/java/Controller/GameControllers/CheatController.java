@@ -5,6 +5,7 @@ import Model.Game;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Pair;
+import Model.Technologies.TechnologyType;
 import Model.Units.CivilizedUnit;
 import Model.Units.CloseCombatUnit;
 import Model.Units.CombatUnit;
@@ -23,33 +24,44 @@ public class CheatController extends GameController {
         int chosenNumber = scanner.nextInt();
         switch (chosenNumber){
             case 0:
-                CloseCombatUnit knight = new CloseCombatUnit(CloseCombatUnitType.KNIGHT,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                CloseCombatUnit knight = new CloseCombatUnit(CloseCombatUnitType.KNIGHT,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(knight);
-                selectedCombatUnit.setLocation(coordinate);
-                currentTurnUser.getNation().addUnit(knight);
+//                selectedCombatUnit.setLocation(coordinate);
+                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(knight);
                 break;
             case 1:
-                RangedCombatUnit archer = new RangedCombatUnit(RangedCombatUnitType.ARCHER,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                RangedCombatUnit archer = new RangedCombatUnit(RangedCombatUnitType.ARCHER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(archer);
-                selectedCombatUnit.setLocation(coordinate);
-                currentTurnUser.getNation().addUnit(archer);
+//                selectedCombatUnit.setLocation(coordinate);
+                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(archer);
                 break;
             case 2:
-                CivilizedUnit settler = new CivilizedUnit(CivilizedUnitType.SETTLER,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                CivilizedUnit settler = new CivilizedUnit(CivilizedUnitType.SETTLER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(settler);
-                selectedCivilizedUnit.setLocation(coordinate);
-                currentTurnUser.getNation().addUnit(settler);
+//                selectedCivilizedUnit.setLocation(coordinate);
+                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(settler);
                 break;
             case 3:
-                CivilizedUnit worker = new CivilizedUnit (CivilizedUnitType.WORKER,currentTurnUser.getNation(), coordinate.x, coordinate.y);
+                CivilizedUnit worker = new CivilizedUnit (CivilizedUnitType.WORKER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(worker);
-                selectedCivilizedUnit.setLocation(coordinate);
-                currentTurnUser.getNation().addUnit(worker);
+//                selectedCivilizedUnit.setLocation(coordinate);
+                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(worker);
                 break;
             default:
                 return chosenNumber + "is not a valid number : [0-3]";
         }
         return "cheat successfully activated !";
+    }
+
+    public String addTechnology(Matcher matcher) {
+        String technologyName = matcher.group("name");
+        for(TechnologyType technologyType : TechnologyType.values()) {
+            if(technologyType.name.equals(technologyName)) {
+                currentTurnUser.getNation().addTechnology(technologyType);
+                return "cheat successfully activated! : Technology's added";
+            }
+        }
+        return "error!";
     }
 
 

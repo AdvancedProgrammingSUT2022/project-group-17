@@ -4,16 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameCommands {
-    CHEAT_PUT_UNIT("put unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
     SHOW_MAP("show map"),
     MENU_EXIT("menu exit"),
     NEXT_TURN("next turn"),
     SELECT_COMBAT_UNIT("select combat unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    SELECT_CIVILIZED_UNIT("select civilized unit on -((?:x|y) \\d+) -((?:x|y) \\d+)"),
-    CHEAT_INCREASE_GOLD("increase --gold (?<amount>\\d+)"),
-    CHEAT_INCREASE_TURN("increase --turn (?<amount>\\d+)"),
-    CHEAT_INCREASE_FOOD("increase --food (?<amount>\\d+)"),
-    CHEAT_INCREASE_PRODUCTION("increase --production (?<amount>\\d+)");
+    SELECT_CIVILIZED_UNIT("select civilized unit on -x (?<x>\\d+) -y (?<y>\\d+)");
+
     //TODO fill enums
 
     private final String regex;

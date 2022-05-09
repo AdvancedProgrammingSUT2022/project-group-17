@@ -42,7 +42,7 @@ public class WorkerController extends GameController {
         }
     }
 
-    public void workerBuildJungleFarm() {
+    private void workerBuildJungleFarm() {
         if (canGenerallyBuildImprovement(ImprovementType.JUNGLE_FARM)) {
             //fixme add farm improvement or jungle_farm?
             Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
@@ -55,7 +55,7 @@ public class WorkerController extends GameController {
         }
     }
 
-    public void workerBuildForestFarm() {
+    private void workerBuildForestFarm() {
         if (canGenerallyBuildImprovement(ImprovementType.FOREST_FARM)) {
             //fixme add farm improvement or jungle_farm?
             Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
@@ -68,7 +68,7 @@ public class WorkerController extends GameController {
         }
     }
 
-    public void workerBuildMarshFarm() {
+    private void workerBuildMarshFarm() {
         if (canGenerallyBuildImprovement(ImprovementType.MARSH_FARM)) {
             //fixme add farm improvement or jungle_farm?
             Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovementType(ImprovementType.FARM);
@@ -253,7 +253,7 @@ public class WorkerController extends GameController {
                         System.out.println("This Land isn't suitable for " + improvementType.name + "!");
 
                     } else System.out.println("There is already an Improvement here!");
-                } else System.out.println("You don't have " + ImprovementType.FARM.technology.name + " technology!");
+                } else System.out.println("You don't have " + improvementType.technology.name + " technology!");
             } else System.out.println("The selected unit is not a Worker!");
         } else System.out.println("Please select a Worker first!");
 
