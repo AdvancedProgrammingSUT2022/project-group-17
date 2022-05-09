@@ -191,7 +191,6 @@ public class Nation {
         return capital;
     }
 
-
     public void setCities(ArrayList<City> cities) {
         this.cities = cities;
     }
@@ -215,4 +214,19 @@ public class Nation {
     public boolean hasTechnology(TechnologyType technologyType) {
         return technologies.get(technologyType);
     }
+<<<<<<< Updated upstream
+=======
+
+    public HashMap<TechnologyType, Boolean> getTechnologies() {
+        return technologies;
+    }
+
+    public void addResource(ResourceType resourceType){
+        resourceCellar.put(resourceType,resourceCellar.get(resourceType)+1);
+    }
+
+    public HashMap<BuildingType, Boolean> getBuildings() {
+        return buildings;
+    }
+>>>>>>> Stashed changes
 }
