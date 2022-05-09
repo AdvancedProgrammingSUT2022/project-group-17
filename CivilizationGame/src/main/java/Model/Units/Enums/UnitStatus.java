@@ -8,7 +8,7 @@ public enum UnitStatus {
     GARRISON("Garrison"),
     WORKING("Working");
 
-    public String name;
+    public final String name;
 
     UnitStatus(String name) {
         this.name = name;

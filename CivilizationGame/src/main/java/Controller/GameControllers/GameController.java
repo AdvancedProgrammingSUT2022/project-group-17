@@ -83,10 +83,6 @@ public class GameController extends Controller {
         }
     }
 
-    public void showVictories() {
-
-    }
-
     public void showDemographics() {
         for (User user : Game.getUsers()) {
             System.out.println(user.getNation().getNationType().name + " :");
@@ -127,14 +123,7 @@ public class GameController extends Controller {
         }
         System.out.println();
     }
-
-    public void showDiplomatics() {
-
-    }
-
-    public void showDeals() {
-
-    }
+    
 
     public String selectCombatUnit(Matcher matcher) {
         int selectedLandI = Integer.parseInt(matcher.group("x"));
