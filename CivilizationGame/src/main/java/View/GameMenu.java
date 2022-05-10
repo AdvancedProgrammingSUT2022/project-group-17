@@ -54,34 +54,37 @@ public class GameMenu extends Menu{
 
         // Improvements
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PASTURE).matches()) {
-            workerController.workerBuildPasture();
+            System.out.println(workerController.workerBuildPasture());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_FARM).matches()) {
-            workerController.workerBuildFarm();
+            System.out.println(workerController.workerBuildFarm());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_MINE).matches()) {
-            workerController.workerBuildMine();
+            System.out.println(workerController.workerBuildMine());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_CAMP).matches()) {
-            workerController.workerBuildCamp();
+            System.out.println(workerController.workerBuildCamp());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_LUMBER_MILL).matches()) {
-            workerController.workerBuildLumberMill();
+            System.out.println(workerController.workerBuildLumberMill());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PLANTATION).matches()) {
-            workerController.workerBuildPlantation();
+            System.out.println(workerController.workerBuildPlantation());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_QUARRY).matches()) {
-            workerController.workerBuildQuarry();
+            System.out.println(workerController.workerBuildQuarry());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_RAILROAD).matches()) {
-            workerController.workerBuildRailroad();
+            System.out.println(workerController.workerBuildRailroad());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_ROAD).matches()) {
-            workerController.workerBuildRoad();
+            System.out.println(workerController.workerBuildRoad());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_TRADING_POST).matches()) {
-            workerController.workerBuildTradingPost();
+            System.out.println(workerController.workerBuildTradingPost());
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_FACTORY).matches()) {
+            System.out.println(workerController.workerBuildFactory());
 
         } else
             System.out.println("invalid command !");

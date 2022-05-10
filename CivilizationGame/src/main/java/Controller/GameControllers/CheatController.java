@@ -26,25 +26,21 @@ public class CheatController extends GameController {
             case 0:
                 CloseCombatUnit knight = new CloseCombatUnit(CloseCombatUnitType.KNIGHT,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(knight);
-//                selectedCombatUnit.setLocation(coordinate);
                 Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(knight);
                 break;
             case 1:
                 RangedCombatUnit archer = new RangedCombatUnit(RangedCombatUnitType.ARCHER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(archer);
-//                selectedCombatUnit.setLocation(coordinate);
                 Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(archer);
                 break;
             case 2:
                 CivilizedUnit settler = new CivilizedUnit(CivilizedUnitType.SETTLER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(settler);
-//                selectedCivilizedUnit.setLocation(coordinate);
                 Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(settler);
                 break;
             case 3:
                 CivilizedUnit worker = new CivilizedUnit (CivilizedUnitType.WORKER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
                 Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(worker);
-//                selectedCivilizedUnit.setLocation(coordinate);
                 Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(worker);
                 break;
             default:
