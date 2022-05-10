@@ -33,6 +33,7 @@ public class GameMenu extends Menu{
 
         } else if((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.ADD_TECHNOLOGY)).matches()) {
             System.out.println(cheatController.addTechnology(commandMatcher));
+
         } else if (GameCommands.getMatcher(input,GameCommands.MENU_EXIT).matches()){
             setMenuName("MainMenu");
 
@@ -50,6 +51,7 @@ public class GameMenu extends Menu{
 
         } else if (GameCommands.getMatcher(input,GameCommands.NEXT_TURN).matches()){
             gameController.nextPlayerTurn();
+
         // Improvements
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PASTURE).matches()) {
             workerController.workerBuildPasture();
@@ -65,6 +67,21 @@ public class GameMenu extends Menu{
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_LUMBER_MILL).matches()) {
             workerController.workerBuildLumberMill();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PLANTATION).matches()) {
+            workerController.workerBuildPlantation();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_QUARRY).matches()) {
+            workerController.workerBuildQuarry();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_RAILROAD).matches()) {
+            workerController.workerBuildRailroad();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_ROAD).matches()) {
+            workerController.workerBuildRoad();
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_TRADING_POST).matches()) {
+            workerController.workerBuildTradingPost();
 
         } else
             System.out.println("invalid command !");

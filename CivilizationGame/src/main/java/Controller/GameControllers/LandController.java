@@ -23,7 +23,8 @@ import Model.Units.Enums.CloseCombatUnitType;
 public class LandController extends Controller {
 
     public static void printMap(Land[][] map) {
-        updateLandVisibility();
+        //fixme IMPORTANT
+//        updateLandVisibility();
 
         int column = 5;
         int row = 10;

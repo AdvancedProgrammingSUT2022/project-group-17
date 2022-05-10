@@ -147,7 +147,7 @@ public class GameController extends Controller {
 
         if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null) {
             selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
-            return (selectedCivilizedUnit + " is now selected");
+            return (selectedCivilizedUnit.getName() + " is now selected");
         }
         return ("There is no civilized unit here!");
     }
