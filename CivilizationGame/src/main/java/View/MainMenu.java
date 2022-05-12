@@ -19,17 +19,9 @@ public class MainMenu extends Menu{
             System.out.println(mainController.menuChange(commandMatcher.group("menuName")));
 
             if(commandMatcher.group("menuName").equals("profile menu"))
-                mainController.changeMenu("ProfileMenu");
+                mainController.menuChange("profile menu");
             else
-                mainController.changeMenu("LoginMenu");
-
-        } else if (MainCommands.getMatcher(input,MainCommands.scoreBoard).matches()){
-            ArrayList<User> sortedUsers = mainController.getSortedList();
-            System.out.println("users scores are : ");
-            System.out.println("---\t----------------------------------");
-            for (int i = 0; i < sortedUsers.size(); i++) {
-                System.out.println(i+1 + "-\t" + sortedUsers.get(i));
-            }
+                mainController.menuChange("login menu");
 
         } else if (MainCommands.getMatcher(input,MainCommands.logout).matches()){
             System.out.println("logout successfully");
@@ -40,7 +32,7 @@ public class MainMenu extends Menu{
             new GameMenu().startingGame(scanner);
 
         } else if (MainCommands.getMatcher(input,MainCommands.exit).matches()){
-            mainController.changeMenu("LoginMenu");
+            mainController.menuChange("login menu");
 
         } else {
             System.out.println("invalid command!");

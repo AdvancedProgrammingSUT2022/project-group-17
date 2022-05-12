@@ -30,17 +30,22 @@ public class LoginController extends Controller{
             }
         }
 
-        if (Game.getUserByName(newUser.getUsername()) != null)
-            return ("this username already exists");
+        for (User user : Game.getUsers()) {
+            if (user.getUsername().equals(newUser.getUsername()))
+                return ("this username already exists");
+            if (user.getNickname().equals(newUser.getNickname()))
+                return ("this nickname already exists");
+        }
 
         Game.addUser(newUser);
-        if (!Game.saveUserListToDatabase()) return ("unable to save users to database");
+
+//        if (!Game.saveUserListToDatabase()) return ("unable to save users to database");
 
         return ("user successfully created!");
     }
 
     public String loginUser(Matcher matcher) {
-        if (Game.getLoggedInUser() != null) return ("please logout in main menu first!");
+//        if (Game.getLoggedInUser() != null) return ("please logout in main menu first!");
 
         String userName = null;
         String password = null;

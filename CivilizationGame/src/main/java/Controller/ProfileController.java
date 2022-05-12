@@ -7,17 +7,18 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class ProfileController extends Controller {
-    public String changeNickname(Matcher matcher) {
-        for (User user : Game.getUsers()) {
-            if (user.getNickname().equals(matcher.group("nickName")))
+
+    public String changeNickname(User user,Matcher matcher) {
+        for (User oldUser : Game.getUsers()) {
+            if (oldUser.getNickname().equals(matcher.group("nickName")))
                 return ("user with nickname " + matcher.group("nickName") + " already exists.");
         }
 
-        Game.getLoggedInUser().setNickname(matcher.group("nickName"));
+        user.setNickname(matcher.group("nickName"));
         return ("nick name successfully changed");
     }
 
-    public String changePassword(Matcher matcher) {
+    public String changePassword(User user,Matcher matcher) {
         String oldPassword = null;
         String newPassword = null;
         for (int i = 1; i < 3; i++) {
@@ -31,23 +32,23 @@ public class ProfileController extends Controller {
         }
         if (oldPassword == null || newPassword == null) return ("you must fill both of new password and old password fields");
 
-        if (!oldPassword.equals(Game.getLoggedInUser().getPassword()))
+        if (!oldPassword.equals(user.getPassword()))
             return ("password is incorrect");
         if (oldPassword.equals(newPassword))
             return ("please enter a new password");
 
-        Game.getLoggedInUser().setPassword(newPassword);
+        user.setPassword(newPassword);
         return ("password changed successfully");
     }
 
-    public String removeAccount(Matcher matcher) {
-        if (!matcher.group("password").equals(Game.getLoggedInUser().getPassword()))
+    public String removeAccount(User user,Matcher matcher) {
+        if (!matcher.group("password").equals(user.getPassword()))
             return ("password is incorrect!");
 
         ArrayList<User> users = Game.getUsers();
         for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
-            if (user.getUsername().equals(Game.getLoggedInUser().getUsername())) {
+            User oldUser = users.get(i);
+            if (oldUser.getUsername().equals(user.getUsername())) {
                 users.remove(i);
                 break;
             }

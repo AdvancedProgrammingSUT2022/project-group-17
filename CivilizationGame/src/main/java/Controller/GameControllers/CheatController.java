@@ -1,52 +1,44 @@
 package Controller.GameControllers;
-import Controller.Controller;
-import Model.City;
 import Model.Game;
-import Model.Nations.Nation;
-import Model.Nations.NationType;
 import Model.Pair;
 import Model.Technologies.TechnologyType;
 import Model.Units.CivilizedUnit;
 import Model.Units.CloseCombatUnit;
-import Model.Units.CombatUnit;
 import Model.Units.Enums.CivilizedUnitType;
 import Model.Units.Enums.CloseCombatUnitType;
 import Model.Units.Enums.RangedCombatUnitType;
 import Model.Units.RangedCombatUnit;
+import Model.Users.User;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class CheatController extends GameController {
 
-    public String putUnit(Matcher matcher, Scanner scanner){
+    public String putUnit(Matcher matcher, Scanner scanner, User user){
 
         Pair coordinate  = new Pair(Integer.parseInt(matcher.group("x")),Integer.parseInt(matcher.group("y")));
+        if (!Pair.isValid(coordinate))
+            return "coordinate is not valid!";
+
         int chosenNumber = scanner.nextInt();
         switch (chosenNumber){
             case 0:
-                CloseCombatUnit knight = new CloseCombatUnit(CloseCombatUnitType.KNIGHT,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(knight);
-                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(knight);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,user.getNation(), coordinate.x, coordinate.y));
                 break;
             case 1:
-                RangedCombatUnit archer = new RangedCombatUnit(RangedCombatUnitType.ARCHER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(archer);
-                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(archer);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCombatUnit(new RangedCombatUnit(RangedCombatUnitType.ARCHER,user.getNation(), coordinate.x, coordinate.y));
                 break;
             case 2:
-                CivilizedUnit settler = new CivilizedUnit(CivilizedUnitType.SETTLER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(settler);
-                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(settler);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.SETTLER,user.getNation(), coordinate.x, coordinate.y));
                 break;
             case 3:
-                CivilizedUnit worker = new CivilizedUnit (CivilizedUnitType.WORKER,Game.getPlayersInGame().get(Game.getSubTurn()).getNation(), coordinate.x, coordinate.y);
-                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(worker);
-                Game.getPlayersInGame().get(Game.getSubTurn()).getNation().addUnit(worker);
+                Game.map[Integer.parseInt(matcher.group("x"))][Integer.parseInt(matcher.group("y"))].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,user.getNation(), coordinate.x, coordinate.y));
                 break;
             default:
-                return chosenNumber + "is not a valid number : [0-3]";
+                return chosenNumber + " is not a valid number : [0-3]";
         }
-        return "cheat successfully activated !";
+        return "cheat successfully activated!";
     }
 
     public String addTechnology(Matcher matcher) {

@@ -55,6 +55,10 @@ public class Game {
         Game.playersInGame = playersInGame;
     }
 
+    public static void setUsers(ArrayList<User> users) {
+        Game.users = users;
+    }
+
     public static User getUserByName(String username){
         for (User user : users) {
             if (user.getUsername().equals(username)){
@@ -80,7 +84,7 @@ public class Game {
         Game.users.add(user);
     }
 
-    private static ArrayList<User> readUserListFromDatabase(){
+    public static ArrayList<User> readUserListFromDatabase(){
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("src/main/databases/Users.json")));

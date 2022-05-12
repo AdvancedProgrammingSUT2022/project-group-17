@@ -7,8 +7,6 @@ import Model.LandFeatures.LandFeature;
 import Model.LandFeatures.LandFeatureType;
 import Model.Lands.Land;
 import Model.Lands.LandType;
-import Model.Nations.Nation;
-import Model.Nations.NationType;
 import Model.Pair;
 import Model.Resources.Enums.ResourceType;
 import Model.Resources.Resource;
@@ -17,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Enums.Consts;
-import Model.Units.CloseCombatUnit;
-import Model.Units.Enums.CloseCombatUnitType;
 
 public class LandController extends Controller {
 
@@ -169,7 +165,7 @@ public class LandController extends Controller {
 
     private static void lightNeighbors(Pair coordinate) {
         for (Pair pair : getAllNeighborsIndexes(coordinate)) {
-            if (!Game.map[pair.x][pair.y].getLandType().name.equals(LandType.Mountain.name) && isPairValid(pair))
+            if (!Game.map[pair.x][pair.y].getLandType().name.equals(LandType.Mountain.name) && Pair.isValid(pair))
                 Game.map[pair.x][pair.y].setVisibility(2);
         }
 
@@ -254,24 +250,16 @@ public class LandController extends Controller {
                 for (int k = 0; k < 6; k++) {
                     if (random.nextInt() % 15 == 0) {
                         map[i][j].setRiver(k, true);
-                        if (isPairValid(getNeighborIndex(new Pair(i, j), k)))
+                        if (Pair.isValid(getNeighborIndex(new Pair(i, j), k)))
                             map[getNeighborIndex(new Pair(i, j), k).x][getNeighborIndex(new Pair(i, j), k).y].setRiver((k + 3) % 6, true);
                     }
                 }
             }
 
         }
-
-        map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA), 3, 3));
-        map[4][8].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA), 4, 8));
-        map[6][1].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT, new Nation(NationType.PERSIA), 6, 1));
-
         return map;
     }
 
-    public static boolean isPairValid(Pair pair) {
-        if (pair == null)
-            return false;
-        return pair.x >= 0 && pair.y >= 0 && pair.x < Consts.MAP_SIZE.amount.x && pair.y < Consts.MAP_SIZE.amount.y;
-    }
+
+
 }

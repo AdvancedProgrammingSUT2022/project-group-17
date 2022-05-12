@@ -52,18 +52,14 @@ public enum TechnologyType {
     Combustion("Combustion", 2200, new TechnologyType[]{ReplaceableParts, Railroad, Dynamite}, null, null, null),
     Electricity("Electricity", 1900, new TechnologyType[]{Biology, SteamPower}, null, null, null),
     Telegraph("Telegraph", 2200, new TechnologyType[]{Electricity}, null, null, null),
-
-
-
-
     ;
 
-    public String name;
-    public int cost;
-    public TechnologyType[] fathers;
-    public BuildingType[] buildings;
-    public ImprovementType[] improvements;
-    public UnionType[] units;
+    public final String name;
+    public final int cost;
+    public final TechnologyType[] fathers;
+    public final BuildingType[] buildings;
+    public final ImprovementType[] improvements;
+    public final UnionType[] units;
 
 
     TechnologyType(String name, int cost, TechnologyType[] fathers, BuildingType[] buildings, ImprovementType[] improvements, UnionType[] units) {

@@ -20,7 +20,11 @@ public class GameController extends Controller {
     protected static User currentTurnUser;
 
 
-    public void chooseNation(int chosenNumber, int playerNum) {
+    public static User getCurrentTurnUser() {
+        return currentTurnUser;
+    }
+
+    public void chooseNation(int chosenNumber, int playerNum){
 
         Nation nation = switch (chosenNumber) {
             case 0 -> new Nation(NationType.INDUS_VALLEY);

@@ -15,7 +15,7 @@ public class MainController extends Controller{
 
     public void logoutUser() {
         Game.setLoggedInUser(null);
-        changeMenu("LoginMenu");
+        menuChange("login menu");
     }
 
     public String playGame(Matcher matcher) {
@@ -33,23 +33,11 @@ public class MainController extends Controller{
         return "game successfully started!";
     }
 
-    public void loadGame(Matcher matcher){
-
-    }
-
     public String menuChange(String menuName){
         if (!menuName.equals("login menu") && !menuName.equals("profile menu")){
             return ("invalid menu name\navailable menu names : \"login menu\" \"profile menu\"");
         }
 
         return ("menu changed successfully");
-    }
-
-    public ArrayList<User> getSortedList(){
-        Comparator<User> comparator = Comparator.comparingInt(User::getScore).reversed().thenComparing(User::getUsername);
-        ArrayList<User> sortedUsers = new ArrayList<>(Game.getUsers());
-        sortedUsers.sort(comparator);
-
-        return sortedUsers;
     }
 }

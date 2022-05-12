@@ -16,10 +16,10 @@ public class ProfileMenu extends Menu{
         Matcher commandMatcher;
 
         if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.changePassword)).matches()){
-            System.out.println(profileController.changePassword(commandMatcher));
+            System.out.println(profileController.changePassword(Game.getLoggedInUser(),commandMatcher));
 
         } else if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.changeNickname)).matches()){
-            System.out.println(profileController.changeNickname(commandMatcher));
+            System.out.println(profileController.changeNickname(Game.getLoggedInUser(),commandMatcher));
 
         } else if (ProfileCommands.getMatcher(input,ProfileCommands.infoProfile).matches()){
             System.out.println("user account details :\n" +
@@ -30,11 +30,11 @@ public class ProfileMenu extends Menu{
             );
 
         } else if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.removeAccount)).matches()){
-            System.out.println(profileController.removeAccount(commandMatcher));
-            profileController.changeMenu("LoginMenu");
+            System.out.println(profileController.removeAccount(Game.getLoggedInUser(),commandMatcher));
+            Menu.setMenuName("LoginMenu");
 
         } else if (ProfileCommands.getMatcher(input,ProfileCommands.exit).matches()){
-            profileController.changeMenu("MainMenu");
+            Menu.setMenuName("MainMenu");
         } else {
             System.out.println("invalid command!");
 

@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public enum MainCommands {
     menuEnter("menu enter (?<menuName>.+)"),
     exit("menu exit"),
-    scoreBoard("info score board"),
     logout("logout"),
     playGame("play game ((?:-p[0-9]+ \\S+(?: )?){2,})");
 
