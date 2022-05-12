@@ -34,12 +34,12 @@ public class LoginController extends Controller{
             if (user.getUsername().equals(newUser.getUsername()))
                 return ("this username already exists");
             if (user.getNickname().equals(newUser.getNickname()))
-                return ("this nick name already exists");
+                return ("this nickname already exists");
         }
 
         Game.addUser(newUser);
 
-        if (!Game.saveUserListToDatabase()) return ("unable to save users to database");
+//        if (!Game.saveUserListToDatabase()) return ("unable to save users to database");
 
         return ("user successfully created!");
     }

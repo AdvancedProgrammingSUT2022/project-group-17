@@ -1,7 +1,9 @@
 import Controller.GameControllers.LandController;
 import Model.Game;
+import Model.Pair;
 import View.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -19,7 +21,6 @@ public class Main {
         menus[1] = new MainMenu();
         menus[2] = new GameMenu();
         menus[3] = new ProfileMenu();
-
         String currentMenu = "LoginMenu";
         Scanner scanner = new Scanner(System.in);
         LandController.printMap(Game.map);

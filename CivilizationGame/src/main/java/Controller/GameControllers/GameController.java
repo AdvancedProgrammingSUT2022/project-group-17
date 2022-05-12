@@ -18,7 +18,15 @@ public class GameController extends Controller {
     protected static User currentTurnUser;
     protected static Nation selectedNation;
 
-    public void chooseNation(int chosenNumber,int playerNum){
+    public static void setCurrentTurnUser(User currentTurnUser) {
+        GameController.currentTurnUser = currentTurnUser;
+    }
+
+    public static User getCurrentTurnUser() {
+        return currentTurnUser;
+    }
+
+    public void chooseNation(int chosenNumber, int playerNum){
 
         Nation nation = switch (chosenNumber) {
             case 0 -> new Nation(NationType.INDUS_VALLEY);
@@ -97,7 +105,7 @@ public class GameController extends Controller {
 
         if(Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null){
             selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
-            return (selectedCivilizedUnit + " is now selected");
+            return (selectedCivilizedUnit.getName() + " is now selected");
         }
         return ("There is no civilized unit here!");
     }

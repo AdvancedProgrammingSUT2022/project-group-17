@@ -23,7 +23,7 @@ public class CityController extends GameController {
             for (int i = 0; i < 6; i++)
                 neighbors[i] = LandController.getNeighborIndex(main, i);
             for (int i = 0; i < 6; i++) {
-                if (LandController.isPairValid(neighbors[i]))
+                if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
         }
@@ -35,13 +35,13 @@ public class CityController extends GameController {
             neighbors[i] = LandController.getNeighborIndex(main, i);
 
         for (int i = 0; i < 6; i++) {
-            if (LandController.isPairValid(neighbors[i])){
+            if (Pair.isValid(neighbors[i])){
                 Pair neighbors2[] = new Pair[6];
                 for (int j = 0; j < 6; j++)
                     neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
 
                 for (int j = 0; j < 6; j++) {
-                    if (LandController.isPairValid(neighbors2[j])){
+                    if (Pair.isValid(neighbors2[j])){
                         if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null)
                             return false;
                     }
@@ -70,7 +70,7 @@ public class CityController extends GameController {
 
         boolean canBuy = false;
         for (int i = 0; i < 6; i++) {
-            if (LandController.isPairValid(neighbors[i])){
+            if (Pair.isValid(neighbors[i])){
                 if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity))
                     canBuy = true;
             }

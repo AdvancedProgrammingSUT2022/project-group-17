@@ -56,7 +56,7 @@ public class UnitController extends GameController {
                 neighbors[i] = LandController.getNeighborIndex(selectedCombatUnit.getLocation(), i);
 
             for (int i = 0; i < 6; i++) {
-                if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedCombatUnit.getMP() && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null){
+                if (Pair.isValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() <= selectedCombatUnit.getMP() && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null){
                     if (Math.abs(neighbors[i].x - dest.x) < Math.abs(selectedCombatUnit.getLocation().x - dest.x) &&
                             Math.abs(neighbors[i].y - dest.y) < Math.abs(selectedCombatUnit.getLocation().y - dest.y)){
 
@@ -87,7 +87,7 @@ public class UnitController extends GameController {
                         Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedCombatUnit);
                         continue main;
                     }
-                } else if (LandController.isPairValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() > selectedCombatUnit.getMP())
+                } else if (Pair.isValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() > selectedCombatUnit.getMP())
                     System.out.println("your move Points is not enough!");
 
             }
@@ -102,7 +102,7 @@ public class UnitController extends GameController {
         Pair currentLocation = selectedCombatUnit.getLocation();
         int tmpPathCost;
 
-        if(!LandController.isPairValid(currentLocation)) return 1000;
+        if(!Pair.isValid(currentLocation)) return 1000;
         if(dest.equals(currentLocation)) return pathCost;
 
         Pair neighbors[] = new Pair[6];

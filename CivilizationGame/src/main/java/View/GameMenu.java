@@ -27,7 +27,7 @@ public class GameMenu extends Menu{
             System.out.println("1: ranged combat unit");
             System.out.println("2: settler unit");
             System.out.println("3: worker unit");
-            System.out.println(cheatController.putUnit(commandMatcher,scanner));
+            System.out.println(cheatController.putUnit(commandMatcher,scanner,GameController.getCurrentTurnUser()));
 
         } else if ((commandMatcher = GameCommands.getMatcher(input,GameCommands.MENU_EXIT)).matches()){
             setMenuName("MainMenu");
@@ -47,7 +47,7 @@ public class GameMenu extends Menu{
         } else if (GameCommands.getMatcher(input,GameCommands.NEXT_TURN).matches()){
             gameController.nextPlayerTurn();
 
-        } else
+        } else if (input.length() != 0)
             System.out.println("invalid command !");
     }
 
@@ -76,4 +76,5 @@ public class GameMenu extends Menu{
             gameController.chooseNation(chosenNumber,i);
         }
     }
+
 }
