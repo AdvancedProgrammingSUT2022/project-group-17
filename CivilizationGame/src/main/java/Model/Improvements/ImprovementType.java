@@ -50,9 +50,8 @@ public enum ImprovementType {
     FACTORY("Factory", CurrencyType.Production, 2, null, TechnologyType.Engineering,
             new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Snow},
             null, 5),
-    ROAD("Road", null, 0, null, TechnologyType.TheWheel,
-            new LandType[]{LandType.Plain, LandType.Desert, LandType.GrassLand, LandType.Tundra, LandType.Snow, LandType.Hill},
-            null, 3);
+    ROAD("Road", null, 0, null, TechnologyType.TheWheel, null ,null, 3),
+    RAILROAD("Railroad", null, 0, null, TechnologyType.Railroad, null, null, 3);
 
 
     public String name;

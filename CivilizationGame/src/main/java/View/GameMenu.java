@@ -81,10 +81,10 @@ public class GameMenu extends Menu{
             System.out.println(workerController.workerBuildResourcedImprovement(ImprovementType.QUARRY));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_RAILROAD).matches()) {
-            System.out.println(workerController.workerBuildRailroad());
+            System.out.println(workerController.workerBuildRoad(ImprovementType.RAILROAD));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_ROAD).matches()) {
-            System.out.println(workerController.workerBuildRoad());
+            System.out.println(workerController.workerBuildRoad(ImprovementType.ROAD));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_TRADING_POST).matches()) {
             System.out.println(workerController.workerBuildNonResourcedImprovement(ImprovementType.TRADING_POST));
@@ -97,6 +97,9 @@ public class GameMenu extends Menu{
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.REMOVE_FEATURE).matches()) {
             System.out.println(workerController.workerRemoveFeature());
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.REMOVE_ROUTE).matches()) {
+            System.out.println(workerController.workerRemoveRoute());
 
         } else
             System.out.println("invalid command !");

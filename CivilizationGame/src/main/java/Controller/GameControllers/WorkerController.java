@@ -10,19 +10,18 @@ import Model.Units.Enums.CivilizedUnitType;
 
 public class WorkerController extends GameController {
 
-    public String workerBuildRoad() {
+    public String workerBuildRoad(ImprovementType improvementType) {
         String message;
-        if ((message = canGenerallyBuildImprovement(ImprovementType.ROAD)).equals("yes")) {
-            //TODO road can built on another improvement
-            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].
-                    setImprovementType(ImprovementType.ROAD);
-            //TODO complete
+        if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes")) {
+            if ((Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandFeature() == null &&
+                    Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandType() != LandType.Mountain) ||
+                    (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandFeature().getLandFeatureType() != LandFeatureType.Ice &&
+                            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getLandFeature().getLandFeatureType() != LandFeatureType.Watershed)) {
+                Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setRoute(new Improvement(improvementType));
+                Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setMovementCost(0);
+            }
         }
         return message;
-    }
-
-    public String workerBuildRailroad() {
-        return "error";
     }
 
     public String workerBuildFarm() {
@@ -112,12 +111,11 @@ public class WorkerController extends GameController {
     }
 
     public String workerRemoveRoute() {
-        if (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getImprovementType() == ImprovementType.ROAD) {
-            //fixme just remove road, not other improvements
-            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setImprovement(null);
+        if (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getRoute() != null) {
+            Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].setRoute(null);
             return "Route has been removed successfully!";
         }
-        return "error";
+        return "There isn't any route here!";
     }
 
     public String workerRepair() {
@@ -159,9 +157,15 @@ public class WorkerController extends GameController {
         if (selectedCivilizedUnit != null) {
             if (selectedCivilizedUnit.getCivilizedUnitType() == CivilizedUnitType.WORKER) {
                 if (currentTurnUser.getNation().hasTechnology(improvementType.technology)) {
-                    if (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getImprovement() == null) {
-                        return "yes";
-                    } else return ("There is already an Improvement here!");
+                    if (improvementType == ImprovementType.ROAD || improvementType == ImprovementType.RAILROAD) {
+                        if (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getRoute() == null) {
+                            return "yes";
+                        } else return ("There is already a road here!");
+                    } else {
+                        if (Game.map[selectedCivilizedUnit.getX()][selectedCivilizedUnit.getY()].getImprovement() == null) {
+                            return "yes";
+                        } else return ("There is already an Improvement here!");
+                    }
                 } else return ("You don't have " + improvementType.technology.name + " technology!");
             } else return ("The selected unit is not a Worker!");
         } else return ("Please select a Worker first!");
