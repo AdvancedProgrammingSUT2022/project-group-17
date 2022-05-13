@@ -8,7 +8,14 @@ public enum GameCommands {
     MENU_EXIT("menu exit"),
     NEXT_TURN("next turn"),
     SELECT_COMBAT_UNIT("select combat unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    SELECT_CIVILIZED_UNIT("select civilized unit on -x (?<x>\\d+) -y (?<y>\\d+)");
+    SELECT_CIVILIZED_UNIT("select civilized unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
+    SHOW_RESEARCH("show research"),
+    SHOW_UNITS("show units"),
+    SHOW_CITIES("show cities"),
+    SHOW_DIPLOMACIES("show diplomacies"),
+    SHOW_DEMOGRAPHICS("show demographics"),
+    SHOW_MILITARIES("show militaries"),
+    SHOW_ECONOMICS("show economics");
 
     //TODO fill enums
 

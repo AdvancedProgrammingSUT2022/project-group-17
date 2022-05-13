@@ -101,8 +101,37 @@ public class GameMenu extends Menu{
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.REMOVE_ROUTE).matches()) {
             System.out.println(workerController.workerRemoveRoute());
 
+        //info
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_RESEARCH).matches()) {
+            for (String output: gameController.showResearches())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_UNITS).matches()) {
+            for (String output: gameController.showUnits())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_CITIES).matches()) {
+            for (String output: gameController.showCities())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_DEMOGRAPHICS).matches()) {
+            for (String output: gameController.showDemographics())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_DIPLOMACIES).matches()) {
+            for (String output: gameController.showDiplomacies())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_MILITARIES).matches()) {
+            for (String output: gameController.showMilitaries())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_ECONOMICS).matches()) {
+            for (String output: gameController.showEconomics())
+                System.out.println(output);
+
         } else
-            System.out.println("invalid command !");
+            System.out.println("invalid command!");
     }
 
     public void startingGame(Scanner scanner){
