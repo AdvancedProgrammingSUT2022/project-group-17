@@ -166,4 +166,17 @@ public class UnitController extends GameController {
 
     }
 
+    public void unitSetCityTarget(){
+        if (selectedCity != null && selectedCombatUnit != null){
+            //if are neighbors
+            if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
+                selectedCombatUnit.setTargetCity(selectedCity);
+            }
+        }
+    }
+
+    public void unitAttackCity(){
+        
+    }
+
 }
