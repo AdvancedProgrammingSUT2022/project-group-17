@@ -60,5 +60,13 @@ public class CheatController extends GameController {
         return "error!";
     }
 
+    public String destroyImprovement(Matcher matcher) {
+        Pair location = new Pair(Integer.parseInt(matcher.group("x")), Integer.parseInt(matcher.group("y")));
+        if (Game.map[location.x][location.y].getImprovement() != null) {
+            Game.map[location.x][location.y].getImprovement().setBroken(true);
+            return "The improvement is now broken!";
+        }
+        return "There isn't any Improvement here!";
+    }
 
 }

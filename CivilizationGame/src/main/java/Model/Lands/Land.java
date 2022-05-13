@@ -34,9 +34,9 @@ public class Land {
     protected boolean[] hasRiver = new boolean[6];
     protected Resource resource;
     //fixme check this
-    protected int foodGrowth;
-    protected int productionGrowth;
-    protected int coinGrowth;
+    protected int foodGrowth = 0;
+    protected int productionGrowth = 0;
+    protected int coinGrowth = 0;
 
 
     public Land(LandType landType, int cost) {
@@ -157,5 +157,17 @@ public class Land {
 
     public void setCityCenter(boolean cityCenter) {
         isCityCenter = cityCenter;
+    }
+
+    public void addFoodGrowth(int amount) {
+        this.foodGrowth += amount;
+    }
+
+    public void addProductionGrowth(int amount) {
+        this.productionGrowth += amount;
+    }
+
+    public void addCoinGrowth(int amount) {
+        this.coinGrowth += amount;
     }
 }

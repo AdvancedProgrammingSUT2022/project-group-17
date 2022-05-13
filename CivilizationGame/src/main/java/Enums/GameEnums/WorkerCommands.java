@@ -15,7 +15,8 @@ public enum WorkerCommands {
     BUILD_PLANTATION("worker build plantation"),
     BUILD_QUARRY("worker build quarry"),
     BUILD_FACTORY("worker build factory"),
-    REMOVE_JUNGLE("worker remove jungle"),
+    REPAIR_IMPROVEMENT("worker repair improvement"),
+    REMOVE_FEATURE("worker remove feature"),
     REMOVE_ROUTE("worker remove route");
     private final String regex;
 
