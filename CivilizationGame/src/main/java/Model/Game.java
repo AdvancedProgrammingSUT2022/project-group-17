@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Game {
@@ -22,7 +23,8 @@ public class Game {
     private static int turn = 0;
     private static ArrayList<String> allTechnologies = new ArrayList<>();
     public static Land[][] map = LandController.mapInitializer();
-    public static int[][] distance = new int[10][10];
+    public static int[][] distance = new int[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
+    public static HashMap<LandPair, Integer> dist = new HashMap<>();
 
     public static User getUserByName(String username){
         for (User user : users) {

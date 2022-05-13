@@ -4,6 +4,7 @@ import Model.ConsoleColors;
 import Model.Game;
 import Model.LandFeatures.LandFeature;
 import Model.LandFeatures.LandFeatureType;
+import Model.LandPair;
 import Model.Lands.Land;
 import Model.Lands.LandType;
 import Model.Pair;
@@ -230,5 +231,47 @@ public class LandController extends Controller {
         if (pair == null)
             return false;
         return pair.x >= 0 && pair.y >= 0 && pair.x < Consts.MAP_SIZE.amount.x && pair.y < Consts.MAP_SIZE.amount.y;
+    }
+
+    public static Land getLandByCoordinates(int x, int y){
+        return Game.map[x][y];
+    }
+
+    public static void initializeDistances(){
+        for (int i1 = 0; i1 < 10; i1++) {
+            for (int j1 = 0; j1 < 10; j1++) {
+                for (int i2 = 0; i2 < 10; i2++) {
+                    for (int j2 = 0; j2 < 10; j2++) {
+                        Pair firstLand = new Pair(i1, j1);
+                        Pair secondLand = new Pair(i2, j2);
+
+                    }
+                }
+            }
+        }
+    }
+
+    public static void updateDistances(){
+        for (int i1 = 0; i1 < 10; i1++) {
+            for (int j1 = 0; j1 < 10; j1++) {
+                for (int i2 = 0; i2 < 10; i2++) {
+                    for (int j2 = 0; j2 < 10; j2++) {
+                        for (int i3 = 0; i3 < 10; i3++) {
+                            for (int j3 = 0; j3 < 10; j3++) {
+                                Pair firstLand = new Pair(i1, j1);
+                                Pair secondLand = new Pair(i2, j2);
+                                Pair thirdLand = new Pair(i3, j3);
+                                LandPair firstDist = new LandPair(getLandByCoordinates(i1, j1), getLandByCoordinates(i3, j3));
+                                LandPair secondDist = new LandPair(getLandByCoordinates(i1, j1), getLandByCoordinates(i2, j2));
+                                LandPair thirdDist = new LandPair(getLandByCoordinates(i2, j2), getLandByCoordinates(i3, j3));
+                                if (Game.dist.get(firstDist) < Game.dist.get(secondDist) + Game.dist.get(thirdDist)){
+                                    Game.dist.put(firstDist, Game.dist.get(secondDist) + Game.dist.get(thirdDist));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
