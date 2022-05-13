@@ -163,6 +163,14 @@ public class LandController extends Controller {
         return null;
     }
 
+    public static boolean areNeighbors(Pair land1, Pair land2){
+        for (int i = 0; i < 6; i++) {
+            if (land2 == getNeighborIndex(land1, i))
+                return true;
+        }
+        return false;
+    }
+
     public static Land[][] mapInitializer(){
         Land[][] map = new Land[12][12];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
@@ -216,17 +224,7 @@ public class LandController extends Controller {
 
         return map;
     }
-    
-//    public static void findShortestPaths(){
-//        for (int i = 0; i < Game.map.length; i++) {
-//            for (int k = 0; k < Game.map.length; k++){
-//                for (int j = 0; j < Game.map.length; j++){
-//                    if ()
-//                }
-//            }
-//        }
-//    }
-    
+
     public static boolean isPairValid(Pair pair){
         if (pair == null)
             return false;
@@ -242,9 +240,16 @@ public class LandController extends Controller {
             for (int j1 = 0; j1 < 10; j1++) {
                 for (int i2 = 0; i2 < 10; i2++) {
                     for (int j2 = 0; j2 < 10; j2++) {
-                        Pair firstLand = new Pair(i1, j1);
-                        Pair secondLand = new Pair(i2, j2);
-
+                        Land land1 = getLandByCoordinates(i1, j1);
+                        Land land2 = getLandByCoordinates(i2, j2);
+                        LandPair dist = new LandPair(land1, land2);
+                        if (i1 == i2 && j1 == j2){
+                            Game.dist.put(dist, 0);
+                        }else   if (areNeighbors(new Pair(i1, j1), new Pair(i2, j2))){
+                            Game.dist.put(dist, land2.getMP());
+                        }else{
+                            Game.dist.put(dist, 1000);
+                        }
                     }
                 }
             }
