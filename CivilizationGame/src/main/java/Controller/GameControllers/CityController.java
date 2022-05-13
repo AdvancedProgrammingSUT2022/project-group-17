@@ -70,6 +70,20 @@ public class CityController extends GameController {
         }
     }
 
+    public void retrieveCitizen(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Pair origin = new Pair(x, y);
+
+        if (selectedCity != null){
+            if (Game.map[x][y].hasCitizen()){
+                Game.map[x][y].setCitizen(false);
+                selectedCity.setEmployees(selectedCity.getEmployees() - 1);
+            }
+        }
+
+    }
+
     public void cityBuyLand(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
