@@ -171,6 +171,14 @@ public class LandController extends Controller {
         return false;
     }
 
+    public static int getIndex(Pair land1, Pair land2){
+        for (int i = 0; i < 6; i++) {
+            if (land2 == getNeighborIndex(land1, i))
+                return i;
+        }
+        return -1;
+    }
+
     public static Land[][] mapInitializer(){
         Land[][] map = new Land[12][12];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
@@ -245,10 +253,13 @@ public class LandController extends Controller {
                         LandPair dist = new LandPair(land1, land2);
                         if (i1 == i2 && j1 == j2){
                             Game.dist.put(dist, 0);
+                            Game.path.put(dist, "");
                         }else   if (areNeighbors(new Pair(i1, j1), new Pair(i2, j2))){
                             Game.dist.put(dist, land2.getMP());
+                            Game.path.put(dist, "" + getIndex(new Pair(i1, j1), new Pair(i2, j2)));
                         }else{
                             Game.dist.put(dist, 1000);
+                            Game.path.put(dist, "");
                         }
                     }
                 }
@@ -271,6 +282,7 @@ public class LandController extends Controller {
                                 LandPair thirdDist = new LandPair(getLandByCoordinates(i2, j2), getLandByCoordinates(i3, j3));
                                 if (Game.dist.get(firstDist) < Game.dist.get(secondDist) + Game.dist.get(thirdDist)){
                                     Game.dist.put(firstDist, Game.dist.get(secondDist) + Game.dist.get(thirdDist));
+                                    Game.path.put(firstDist, Game.path.get(secondDist) + Game.path.get(thirdDist));
                                 }
                             }
                         }
