@@ -274,12 +274,12 @@ public class LandController extends Controller {
                     for (int j2 = 0; j2 < 10; j2++) {
                         for (int i3 = 0; i3 < 10; i3++) {
                             for (int j3 = 0; j3 < 10; j3++) {
-                                Pair firstLand = new Pair(i1, j1);
-                                Pair secondLand = new Pair(i2, j2);
-                                Pair thirdLand = new Pair(i3, j3);
-                                LandPair firstDist = new LandPair(getLandByCoordinates(i1, j1), getLandByCoordinates(i3, j3));
-                                LandPair secondDist = new LandPair(getLandByCoordinates(i1, j1), getLandByCoordinates(i2, j2));
-                                LandPair thirdDist = new LandPair(getLandByCoordinates(i2, j2), getLandByCoordinates(i3, j3));
+                                Land firstLand = getLandByCoordinates(i1, j1);
+                                Land secondLand = getLandByCoordinates(i2, j2);
+                                Land thirdLand = getLandByCoordinates(i3, j3);
+                                LandPair firstDist = new LandPair(firstLand, thirdLand);
+                                LandPair secondDist = new LandPair(firstLand, secondLand);
+                                LandPair thirdDist = new LandPair(secondLand, thirdLand);
                                 if (Game.dist.get(firstDist) < Game.dist.get(secondDist) + Game.dist.get(thirdDist)){
                                     Game.dist.put(firstDist, Game.dist.get(secondDist) + Game.dist.get(thirdDist));
                                     Game.path.put(firstDist, Game.path.get(secondDist) + Game.path.get(thirdDist));
