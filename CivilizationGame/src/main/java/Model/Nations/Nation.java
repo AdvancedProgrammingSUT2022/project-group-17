@@ -232,4 +232,8 @@ public class Nation {
     public void addResource(ResourceType resourceType) {
         resourceCellar.put(resourceType, resourceCellar.get(resourceType) + 1);
     }
+
+    public void removeUnit(Unit unit){
+        units.remove(unit);
+    }
 }

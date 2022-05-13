@@ -1,8 +1,10 @@
 package Controller.GameControllers;
 
 import Model.Game;
+import Model.Nations.Nation;
 import Model.Pair;
 import Model.Units.CombatUnit;
+import Model.Units.Unit;
 
 import java.util.regex.Matcher;
 
@@ -175,8 +177,19 @@ public class UnitController extends GameController {
         }
     }
 
-    public void unitAttackCity(){
-        
+    public void unitAttackCity(CombatUnit combatUnit){
+        combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
+        combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
+        if (combatUnit.getHp() <= 0){
+            unitDeath(combatUnit);
+        }
+    }
+
+    public void unitDeath(Unit unit){
+        Nation nation = unit.getOwnerNation();
+        nation.removeUnit(unit);
+        unit = null;
+        System.gc();
     }
 
 }

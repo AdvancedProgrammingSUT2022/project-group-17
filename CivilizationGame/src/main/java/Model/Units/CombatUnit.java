@@ -14,4 +14,8 @@ public class CombatUnit extends Unit {
         super(name, cost, MP, resourceType, technologyType, turns, hp,ownerNation, x, y);
         this.combatStrength = combatStrength;
     }
+
+    public int getCombatStrength() {
+        return combatStrength;
+    }
 }
