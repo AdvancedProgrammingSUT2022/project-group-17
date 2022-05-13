@@ -16,6 +16,7 @@ public class City {
     protected Nation ownerNation;
     protected ArrayList<Land> lands = new ArrayList<>();
     protected int citizens;
+    protected int employees = 0;
     protected int HP;
     protected int combatStrength;
     protected int rangedStrength;
@@ -137,4 +138,11 @@ public class City {
         this.inProgressUnit = inProgressUnit;
     }
 
+    public int getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(int employees) {
+        this.employees = employees;
+    }
 }

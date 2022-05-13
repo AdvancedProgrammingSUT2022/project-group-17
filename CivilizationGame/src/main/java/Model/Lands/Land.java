@@ -36,6 +36,7 @@ public class Land {
     protected int foodGrowth;
     protected int productionGrowth;
     protected int coinGrowth;
+    protected boolean hasCitizen;
 
 
     public Land(LandType landType, int cost) {
@@ -156,5 +157,13 @@ public class Land {
 
     public void setCityCenter(boolean cityCenter) {
         isCityCenter = cityCenter;
+    }
+
+    public void setCitizen(boolean hasCitizen) {
+        this.hasCitizen = hasCitizen;
+    }
+
+    public boolean hasCitizen() {
+        return hasCitizen;
     }
 }

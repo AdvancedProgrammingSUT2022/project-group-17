@@ -56,7 +56,18 @@ public class CityController extends GameController {
     }
 
     public void sendCitizen(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Pair dest = new Pair(x, y);
 
+        if (selectedCity != null){
+            if (selectedCity.getEmployees() < selectedCity.getCitizens()){
+                selectedCity.setEmployees(selectedCity.getEmployees() + 1);
+                if (!Game.map[x][y].hasCitizen()){
+                    Game.map[dest.x][dest.y].setCitizen(true);
+                }
+            }
+        }
     }
 
     public void cityBuyLand(Matcher matcher){
