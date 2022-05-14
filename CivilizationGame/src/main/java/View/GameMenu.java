@@ -34,8 +34,7 @@ public class GameMenu extends Menu{
         } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_COMBAT_UNIT)).matches()){
             gameController.selectCombatUnit(commandMatcher);
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_MOVE_TO)).matches()){
-
-            unitController.unitGoToDest(commandMatcher);
+            unitController.unitSetPath(commandMatcher);
         }
         else if (input == "exit")
             setMenuName("exit");
