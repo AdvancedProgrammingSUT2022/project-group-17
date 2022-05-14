@@ -3,6 +3,7 @@ package Controller.GameControllers;
 import Model.Game;
 import Model.LandPair;
 import Model.Lands.Land;
+import Model.Nations.Nation;
 import Model.Pair;
 import Model.Units.CombatUnit;
 import Model.Units.Unit;
@@ -193,6 +194,38 @@ public class UnitController extends GameController {
 
     public void unitDelete() {
 
+    }
+
+    public String unitSetCityTarget(){
+        if (selectedCity != null && selectedCombatUnit != null){
+            //if are neighbors
+            if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
+                selectedCombatUnit.setTargetCity(selectedCity);
+            }
+            else{
+                return "Can't attack owner nation's city";
+            }
+        }
+        unitAttackCity(selectedCombatUnit);
+        return "Attack successful";
+    }
+
+    public void unitAttackCity(CombatUnit combatUnit){
+        combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
+        combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
+        if (combatUnit.getHp() <= 0){
+            unitDeath(combatUnit);
+        }
+        if (combatUnit.getTargetCity().getHP() <= 0){
+            CityController.cityDeath(combatUnit.getTargetCity());
+        }
+    }
+
+    public void unitDeath(Unit unit){
+        Nation nation = unit.getOwnerNation();
+        nation.removeUnit(unit);
+        unit = null;
+        System.gc();
     }
 
 }

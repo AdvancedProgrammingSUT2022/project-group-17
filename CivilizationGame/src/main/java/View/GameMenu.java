@@ -138,8 +138,11 @@ public class GameMenu extends Menu{
             for (String output: gameController.showEconomics())
                 System.out.println(output);
 
+        }else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_ATTACK)).matches()){
+            System.out.println(unitController.unitSetCityTarget());
         } else if (input.length() != 0)
             System.out.println("invalid command !");
+
     }
 
     public void startingGame(Scanner scanner){

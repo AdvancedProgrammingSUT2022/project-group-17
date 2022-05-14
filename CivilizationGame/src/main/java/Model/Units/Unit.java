@@ -1,4 +1,5 @@
 package Model.Units;
+import Model.City;
 import Model.Pair;
 import Model.Resources.Enums.ResourceType;
 import Model.Nations.Nation;
@@ -19,6 +20,8 @@ public class Unit {
     protected ResourceType resourceType;
     protected UnitStatus unitStatus;
     protected String path = "";
+    protected City targetCity;
+    protected Unit targetUnit;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
                 int turns, int hp, Nation ownerNation, Pair location, UnitStatus unitStatus) {
@@ -113,4 +116,21 @@ public class Unit {
     public void setPath(String path) {
         this.path = path;
     }
+
+    public void setTargetCity(City targetCity) {
+        this.targetCity = targetCity;
+    }
+
+    public void setTargetUnit(Unit targetUnit) {
+        this.targetUnit = targetUnit;
+    }
+
+    public City getTargetCity() {
+        return targetCity;
+    }
+
+    public Unit getTargetUnit() {
+        return targetUnit;
+    }
+
 }
