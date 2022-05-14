@@ -24,6 +24,10 @@ public class GameController extends Controller {
         return currentTurnUser;
     }
 
+    public static void setCurrentTurnUser(User currentTurnUser) {
+        GameController.currentTurnUser = currentTurnUser;
+    }
+
     public void chooseNation(int chosenNumber, int playerNum){
 
         Nation nation = switch (chosenNumber) {
@@ -43,17 +47,13 @@ public class GameController extends Controller {
 
     public void showResearches() {
         System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s technologies:");
-        int i = 0;
+        int i = 1;
         for (TechnologyType technologyType : TechnologyType.values()) {
             if (currentTurnUser.getNation().getTechnologies().get(technologyType))
                 System.out.printf("%d- %s\n", i, technologyType.name);
             i++;
         }
         System.out.println();
-    }
-
-    public static void setCurrentTurnUser(User currentTurnUser) {
-        GameController.currentTurnUser = currentTurnUser;
     }
 
     public void showUnits() {
@@ -107,10 +107,6 @@ public class GameController extends Controller {
         }
     }
 
-    public void showNotifications() {
-
-    }
-
     public void showMilitaries() {
         System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s combat units:");
         int i = 1;
@@ -132,7 +128,7 @@ public class GameController extends Controller {
         }
         System.out.println();
     }
-    
+
 
     public String selectCombatUnit(Matcher matcher) {
         int selectedLandI = Integer.parseInt(matcher.group("x"));
@@ -154,6 +150,14 @@ public class GameController extends Controller {
             return (selectedCivilizedUnit.getName() + " is now selected");
         }
         return ("There is no civilized unit here!");
+    }
+
+    public static void setSelectedCity(City selectedCity) {
+        GameController.selectedCity = selectedCity;
+    }
+
+    public void showNotifications() {
+
     }
 
     public void selectCity(Matcher matcher) {

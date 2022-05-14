@@ -6,7 +6,8 @@ public enum UnitStatus {
     ALERT("Alert"),
     FORTIFY_UNTIL_HILL("Fortify until hill"),
     GARRISON("Garrison"),
-    WORKING("Working");
+    WORKING("Working"),
+    WAITING_FOR_COMMAND("Waiting for command");
 
     public final String name;
 

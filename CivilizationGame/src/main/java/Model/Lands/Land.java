@@ -44,6 +44,7 @@ public class Land {
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
+        this.isBuyable = true;
     }
 
     public CivilizedUnit getCivilizedUnit() {

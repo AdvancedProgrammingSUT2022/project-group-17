@@ -49,7 +49,7 @@ public class CheatController extends GameController {
                 return "cheat successfully activated! : Technology's added";
             }
         }
-        return "error!";
+        return "error! technology name doesn't exist";
     }
 
 

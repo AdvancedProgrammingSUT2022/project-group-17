@@ -66,4 +66,19 @@ public class CheatTester extends Tester {
             Assert.assertEquals("cheat successfully activated!", cheatController.putUnit(commandMatcher, scanner, user));
     }
 
+    @Test
+    public void technologyCheatWrongName(){
+        commandMatcher = CheatCommands.getMatcher("add technology --name kooft",CheatCommands.ADD_TECHNOLOGY);
+        if (commandMatcher.matches())
+            Assert.assertEquals("error! technology name doesn't exist",cheatController.addTechnology(commandMatcher));
+    }
+
+    @Test
+    public void technologyCheatSuccessful(){
+        commandMatcher = CheatCommands.getMatcher("add technology --name Agriculture",CheatCommands.ADD_TECHNOLOGY);
+        user.setNation(new Nation(NationType.PERSIA));
+        CheatController.setCurrentTurnUser(user);
+        if (commandMatcher.matches())
+            Assert.assertEquals("cheat successfully activated! : Technology's added",cheatController.addTechnology(commandMatcher));
+    }
 }

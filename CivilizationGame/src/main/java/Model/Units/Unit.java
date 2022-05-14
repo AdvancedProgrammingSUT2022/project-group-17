@@ -8,8 +8,6 @@ import Model.Units.Enums.UnitStatus;
 public class Unit {
     protected Nation ownerNation;
     protected String name;
-    protected int x;
-    protected int y;
     protected Pair location;
     protected int hp;
     protected int MP;
@@ -32,8 +30,8 @@ public class Unit {
         this.turns = turns;
         this.hp = hp;
         this.XP = 0;
-        this.x = x;
-        this.y = y;
+        this.location = new Pair(x,y);
+        unitStatus = UnitStatus.WAITING_FOR_COMMAND;
     }
 
     public Nation getOwnerNation() {
@@ -49,11 +47,11 @@ public class Unit {
     }
 
     public int getX() {
-        return x;
+        return location.x;
     }
 
     public int getY() {
-        return y;
+        return location.y;
     }
 
     public Pair getLocation() {
@@ -91,11 +89,12 @@ public class Unit {
     public void setLocation(Pair location) {
         this.location = location;
     }
+
     public void changeXP(int amount) {
         this.XP -= amount;
     }
 
-    public void changeMP(int amount) {
+    public void decreaseMP(int amount) {
         this.MP -= amount;
     }
 

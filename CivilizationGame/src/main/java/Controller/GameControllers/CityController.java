@@ -59,30 +59,32 @@ public class CityController extends GameController {
 
     }
 
-    public void cityBuyLand(Matcher matcher){
+    public String cityBuyLand(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair landPair = new Pair(x, y);
 
-        Pair neighbors[] = new Pair[6];
+        Pair[] neighbors = new Pair[6];
         for (int i = 0 ; i<6 ; i++)
             neighbors[i] = LandController.getNeighborIndex(landPair, i);
 
         boolean canBuy = false;
         for (int i = 0; i < 6; i++) {
             if (Pair.isValid(neighbors[i])){
-                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity))
+                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity() != null && Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity)){
                     canBuy = true;
+                    break;
+                }
             }
         }
-
         Land land = Game.map[x][y];
         if (selectedCity.getOwnerNation().getCoin().getBalance() >= land.getCost()
                 && canBuy && land.isBuyable()){
             land.setOwnerCity(selectedCity);
             selectedCity.getOwnerNation().getCoin().addBalance(-land.getCost());
+            return "Land bought successfully";
         }
-
+        return "you can't buy this land!";
     }
 
     public void cityBuyBuilding(Matcher matcher){

@@ -9,14 +9,14 @@ import java.util.regex.Matcher;
 public class UnitController extends GameController {
 
     public void unitMoveTo(Matcher matcher) {
-        int destX = Integer.parseInt(matcher.group("i"));
-        int destY = Integer .parseInt(matcher.group("j"));
+        int destX = Integer.parseInt(matcher.group("x"));
+        int destY = Integer .parseInt(matcher.group("y"));
         Pair dest = new Pair(destX, destY);
 
         int minPathCost = findEasiestPath(dest, 0, 1000);
         if(minPathCost <= selectedCombatUnit.getMP()) {
             selectedCombatUnit.setLocation(dest);
-            selectedCombatUnit.changeMP(minPathCost);
+            selectedCombatUnit.decreaseMP(minPathCost);
             selectedCombatUnit.setWaitingForCommand(false);
             //TODO set isAPartOfPath of all Lands zero
         } else if(minPathCost < 1000) {
@@ -62,7 +62,7 @@ public class UnitController extends GameController {
 
                         Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
                         selectedCombatUnit.setLocation(neighbors[i]);
-                        selectedCombatUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        selectedCombatUnit.decreaseMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
                         Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedCombatUnit);
                         continue main;
                     }
@@ -72,7 +72,7 @@ public class UnitController extends GameController {
 
                         Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
                         selectedCombatUnit.setLocation(neighbors[i]);
-                        selectedCombatUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        selectedCombatUnit.decreaseMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
                         Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedCombatUnit);
                         continue main;
                     }
@@ -83,7 +83,7 @@ public class UnitController extends GameController {
 
                         Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
                         selectedCombatUnit.setLocation(neighbors[i]);
-                        selectedCombatUnit.changeMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        selectedCombatUnit.decreaseMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
                         Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) selectedCombatUnit);
                         continue main;
                     }
