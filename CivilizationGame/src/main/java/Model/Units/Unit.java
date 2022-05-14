@@ -47,14 +47,6 @@ public class Unit {
         return name;
     }
 
-    public int getX() {
-        return location.x;
-    }
-
-    public int getY() {
-        return location.y;
-    }
-
     public Pair getLocation() {
         return location;
     }
