@@ -147,7 +147,15 @@ public class GameController extends Controller {
         return ("There is no civilized unit here!");
     }
 
-    public void selectCity(Matcher matcher) {
+    public String selectCity(Matcher matcher) {
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        if (Game.map[x][y].getOwnerCity() != null) {
+            selectedCity = Game.map[x][y].getOwnerCity();
+            return (selectedCity + " is now selected");
+        }
+        return "There is no city here!";
 
     }
 

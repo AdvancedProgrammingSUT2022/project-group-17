@@ -10,6 +10,7 @@ public enum GameCommands {
     NEXT_TURN("next turn"),
     SELECT_COMBAT_UNIT("select combat unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
     SELECT_CIVILIZED_UNIT("select civilized unit on -((?:x|y) \\d+) -((?:x|y) \\d+)"),
+    SELECT_CITY("select city on -x (?<x>\\d+) -y (?<y>\\d+)"),
     CHEAT_INCREASE_GOLD("increase --gold (?<amount>\\d+)"),
     CHEAT_INCREASE_TURN("increase --turn (?<amount>\\d+)"),
     CHEAT_INCREASE_FOOD("increase --food (?<amount>\\d+)"),
