@@ -2,7 +2,9 @@ package Controller.GameControllers;
 
 import Model.City;
 import Model.Game;
+import Model.Improvements.Improvement;
 import Model.Lands.Land;
+import Model.Nations.Nation;
 import Model.Pair;
 
 import java.util.regex.Matcher;
@@ -115,6 +117,30 @@ public class CityController extends GameController {
 
     public void cityLevelUp(City city){
 
+    }
+
+    public void cityDeath(City city){
+        Nation nation = city.getOwnerNation();
+        nation.removeCity(city);
+        for (Improvement improvement : city.getImprovements()) {
+            city.getImprovements().remove(improvement);
+        }
+        for (Land land : city.getLands()) {
+            land.setOwnerCity(null);
+            land.setImprovement(null);
+            land.setImprovementType(null);
+            land.setCityCenter(false);
+            city.getLands().remove(land);
+        }
+        city.setOwnerNation(null);
+        city = null;
+        System.gc();
+    }
+
+    public void cityTakeOver(City city, Nation nextNation){
+        Nation previousNation = city.getOwnerNation();
+        city.setOwnerNation(nextNation);
+        previousNation.removeCity(city);
     }
 
 }

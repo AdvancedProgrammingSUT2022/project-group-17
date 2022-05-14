@@ -236,4 +236,8 @@ public class Nation {
     public void removeUnit(Unit unit){
         units.remove(unit);
     }
+
+    public void removeCity(City city){
+        cities.remove(city);
+    }
 }
