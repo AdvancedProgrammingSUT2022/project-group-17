@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 
 public class CityController extends GameController {
 
-    public void buildCity(Matcher matcher){
+    public String buildCity(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair main = new Pair(x, y);
@@ -26,7 +26,9 @@ public class CityController extends GameController {
                 if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
+            return "City built successfully";
         }
+        return "Can't build a city here";
     }
 
     public boolean isCityBuildable(Pair main){
@@ -59,7 +61,7 @@ public class CityController extends GameController {
 
     }
 
-    public void cityBuyLand(Matcher matcher){
+    public String cityBuyLand(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair landPair = new Pair(x, y);
@@ -81,7 +83,9 @@ public class CityController extends GameController {
                 && canBuy && land.isBuyable()){
             land.setOwnerCity(selectedCity);
             selectedCity.getOwnerNation().getCoin().addBalance(-land.getCost());
+            return "Land bought successfully";
         }
+        return "The specific land is not buyable";
 
     }
 
