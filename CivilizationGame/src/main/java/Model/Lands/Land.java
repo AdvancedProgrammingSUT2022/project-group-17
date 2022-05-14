@@ -32,6 +32,7 @@ public class Land {
     protected int coinGrowth = 0;
     //TODO assign land's movement cost it's landType movement cost when initializing map
     protected int movementCost;
+    protected boolean hasCitizen;
 
 
     public Land(LandType landType, int cost) {
@@ -167,5 +168,13 @@ public class Land {
 
     public void setMovementCost(int movementCost) {
         this.movementCost = movementCost;
+    }
+
+    public void setCitizen(boolean hasCitizen) {
+        this.hasCitizen = hasCitizen;
+    }
+
+    public boolean hasCitizen() {
+        return hasCitizen;
     }
 }
