@@ -1,4 +1,4 @@
-package View;
+package Model.Lands.View;
 
 import java.util.Scanner;
 

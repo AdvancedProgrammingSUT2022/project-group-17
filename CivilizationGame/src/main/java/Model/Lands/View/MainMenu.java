@@ -1,10 +1,8 @@
-package View;
+package Model.Lands.View;
 
 import Controller.MainController;
 import Enums.MainCommands;
-import Model.Game;
-import Model.Users.User;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 

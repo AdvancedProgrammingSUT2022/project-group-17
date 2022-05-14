@@ -1,4 +1,4 @@
-package View;
+package Model.Lands.View;
 
 import Controller.LoginController;
 import Enums.LoginCommands;
@@ -31,7 +31,7 @@ public class LoginMenu extends Menu {
 
 
         } else if (LoginCommands.getMatcher(input, LoginCommands.exit).matches()) {
-            Menu.setMenuName("EXIT");
+            setMenuName("EXIT");
 
         } else {
             System.out.println("invalid command!");

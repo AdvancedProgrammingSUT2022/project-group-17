@@ -2,7 +2,7 @@ package Controller;
 
 import Model.Game;
 import Model.Users.User;
-import View.Menu;
+import Model.Lands.View.Menu;
 import java.util.regex.Matcher;
 
 public class LoginController extends Controller{

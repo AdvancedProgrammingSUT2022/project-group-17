@@ -7,10 +7,8 @@ import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Users.User;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CheatTester extends Tester {

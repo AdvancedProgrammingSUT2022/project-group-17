@@ -1,4 +1,4 @@
-package View;
+package Model.Lands.View;
 
 import Controller.ProfileController;
 import Enums.ProfileCommands;
@@ -31,10 +31,10 @@ public class ProfileMenu extends Menu{
 
         } else if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.removeAccount)).matches()){
             System.out.println(profileController.removeAccount(Game.getLoggedInUser(),commandMatcher));
-            Menu.setMenuName("LoginMenu");
+            setMenuName("LoginMenu");
 
         } else if (ProfileCommands.getMatcher(input,ProfileCommands.exit).matches()){
-            Menu.setMenuName("MainMenu");
+            setMenuName("MainMenu");
         } else {
             System.out.println("invalid command!");
 

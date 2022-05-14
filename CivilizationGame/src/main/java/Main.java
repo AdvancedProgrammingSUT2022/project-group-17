@@ -1,9 +1,8 @@
 import Controller.GameControllers.LandController;
 import Model.Game;
-import Model.Pair;
+import Model.Lands.View.*;
 import View.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
