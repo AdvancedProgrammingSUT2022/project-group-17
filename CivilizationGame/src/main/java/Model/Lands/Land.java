@@ -20,7 +20,7 @@ public class Land {
     protected boolean isBuyable;
     protected boolean isAPartOfPath = false;
     protected LandType landType;
-    protected int visibility = 0;
+    protected int visibility = 2;
     // 0 -> fog of war
     // 1 -> shadow (unknown)
     // 2 -> visible (shown)

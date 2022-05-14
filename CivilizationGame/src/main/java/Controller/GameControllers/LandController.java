@@ -165,7 +165,7 @@ public class LandController extends Controller {
 
     private static void lightNeighbors(Pair coordinate) {
         for (Pair pair : getAllNeighborsIndexes(coordinate)) {
-            if (!Game.map[pair.x][pair.y].getLandType().name.equals(LandType.Mountain.name) && Pair.isValid(pair))
+            if (Pair.isValid(pair) && !Game.map[pair.x][pair.y].getLandType().name.equals(LandType.Mountain.name))
                 Game.map[pair.x][pair.y].setVisibility(2);
         }
 

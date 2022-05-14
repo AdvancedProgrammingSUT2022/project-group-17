@@ -8,8 +8,6 @@ import Model.Units.Enums.UnitStatus;
 public class Unit {
     protected Nation ownerNation;
     protected String name;
-    protected int x;
-    protected int y;
     protected Pair location;
     protected int hp;
     protected int MP;
@@ -46,14 +44,6 @@ public class Unit {
 
     public String getName() {
         return name;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public Pair getLocation() {
