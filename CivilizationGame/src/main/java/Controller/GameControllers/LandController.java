@@ -19,8 +19,7 @@ import Enums.Consts;
 public class LandController extends Controller {
 
     public static void printMap(Land[][] map) {
-        //fixme IMPORTANT
-//        updateLandVisibility();
+        updateLandVisibility();
 
         int column = 5;
         int row = 10;
@@ -257,6 +256,7 @@ public class LandController extends Controller {
             }
 
         }
+
         return map;
     }
 

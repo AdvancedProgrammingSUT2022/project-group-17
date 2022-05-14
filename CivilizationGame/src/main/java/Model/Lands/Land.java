@@ -2,21 +2,15 @@ package Model.Lands;
 
 import Model.City;
 import Model.Improvements.Improvement;
-import Model.Improvements.ImprovementType;
 import Model.LandFeatures.LandFeature;
 import Model.Resources.Resource;
 import Model.Units.CivilizedUnit;
-import Model.Units.CloseCombatUnit;
 import Model.Units.CombatUnit;
-import Model.Units.RangedCombatUnit;
-
-import java.util.ArrayList;
 
 public class Land {
 
     protected Improvement improvement;
-    //fixme
-    protected ImprovementType improvementType;
+    protected Improvement route;
     protected LandFeature landFeature;
     protected int cost;
     protected City ownerCity = null;
@@ -26,17 +20,18 @@ public class Land {
     protected boolean isBuyable;
     protected boolean isAPartOfPath = false;
     protected LandType landType;
-    //FIXME Hamed you must set visibility below to 0
-    protected int visibility = 2;
+    protected int visibility = 0;
     // 0 -> fog of war
     // 1 -> shadow (unknown)
     // 2 -> visible (shown)
     protected boolean[] hasRiver = new boolean[6];
     protected Resource resource;
     //fixme check this
-    protected int foodGrowth;
-    protected int productionGrowth;
-    protected int coinGrowth;
+    protected int foodGrowth = 0;
+    protected int productionGrowth = 0;
+    protected int coinGrowth = 0;
+    //TODO assign land's movement cost it's landType movement cost when initializing map
+    protected int movementCost;
 
 
     public Land(LandType landType, int cost) {
@@ -63,13 +58,12 @@ public class Land {
         return improvement;
     }
 
-    public boolean isCityCenter() {
-        return isCityCenter;
+    public Improvement getRoute() {
+        return route;
     }
 
-    public ImprovementType getImprovementType() {
-        return improvementType;
-
+    public boolean isCityCenter() {
+        return isCityCenter;
     }
 
     public void setRiver(int index, boolean value){
@@ -82,10 +76,6 @@ public class Land {
 
     public void setImprovement(Improvement improvement) {
         this.improvement = improvement;
-    }
-
-    public void setImprovementType(ImprovementType improvementType) {
-        this.improvementType = improvementType;
     }
 
     public LandFeature getLandFeature() {
@@ -144,6 +134,10 @@ public class Land {
         this.hasRiver = hasRiver;
     }
 
+    public void setRoute(Improvement route) {
+        this.route = route;
+    }
+
     public Resource getResource() {
         return resource;
     }
@@ -158,5 +152,21 @@ public class Land {
 
     public void setCityCenter(boolean cityCenter) {
         isCityCenter = cityCenter;
+    }
+
+    public void addFoodGrowth(int amount) {
+        this.foodGrowth += amount;
+    }
+
+    public void addProductionGrowth(int amount) {
+        this.productionGrowth += amount;
+    }
+
+    public void addCoinGrowth(int amount) {
+        this.coinGrowth += amount;
+    }
+
+    public void setMovementCost(int movementCost) {
+        this.movementCost = movementCost;
     }
 }

@@ -9,10 +9,14 @@ public enum GameCommands {
     NEXT_TURN("next turn"),
     SELECT_COMBAT_UNIT("select combat unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
     SELECT_CIVILIZED_UNIT("select civilized unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
-    CHEAT_INCREASE_GOLD("increase --gold (?<amount>\\d+)"),
-    CHEAT_INCREASE_TURN("increase --turn (?<amount>\\d+)"),
-    CHEAT_INCREASE_FOOD("increase --food (?<amount>\\d+)"),
-    CHEAT_INCREASE_PRODUCTION("increase --production (?<amount>\\d+)");
+    SHOW_RESEARCH("show research"),
+    SHOW_UNITS("show units"),
+    SHOW_CITIES("show cities"),
+    SHOW_DIPLOMACIES("show diplomacies"),
+    SHOW_DEMOGRAPHICS("show demographics"),
+    SHOW_MILITARIES("show militaries"),
+    SHOW_ECONOMICS("show economics");
+
     //TODO fill enums
 
     private final String regex;

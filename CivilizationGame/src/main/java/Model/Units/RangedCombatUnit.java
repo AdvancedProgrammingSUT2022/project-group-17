@@ -1,15 +1,16 @@
 package Model.Units;
 import Model.Nations.Nation;
+import Model.Pair;
 import Model.Units.Enums.RangedCombatUnitType;
 
 public class RangedCombatUnit extends CombatUnit {
     protected int rangedStrength;
     protected RangedCombatUnitType rangedCombatUnitType;
 
-    public RangedCombatUnit(RangedCombatUnitType rangedCombatUnitType,Nation ownerNation, int x, int y) {
+    public RangedCombatUnit(RangedCombatUnitType rangedCombatUnitType,Nation ownerNation, Pair location) {
         super(rangedCombatUnitType.name, rangedCombatUnitType.cost, rangedCombatUnitType.combatStrength, rangedCombatUnitType.MP,
                 rangedCombatUnitType.resourceType, rangedCombatUnitType.technologyType, rangedCombatUnitType.turns,
-                rangedCombatUnitType.hp,ownerNation, x, y);
+                rangedCombatUnitType.hp,ownerNation, location);
         this.rangedStrength = rangedCombatUnitType.rangedStrength;
     }
 

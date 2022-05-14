@@ -6,6 +6,7 @@ import Enums.GameEnums.UnitCommands;
 import Model.Game;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
+import Model.Pair;
 import Model.Units.CloseCombatUnit;
 import Model.Units.Enums.CloseCombatUnitType;
 import org.junit.Assert;
@@ -23,7 +24,7 @@ public class UnitTester extends Tester{
 
     @Test
     public void unitMoveTestSuccessful(){
-        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),3,3));
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),new Pair(3,3)));
 
         commandMatcher = GameCommands.getMatcher("select combat unit on -x 3 -y 3",GameCommands.SELECT_COMBAT_UNIT);
         if (commandMatcher.matches())
@@ -38,7 +39,7 @@ public class UnitTester extends Tester{
 
     @Test
     public void unitMoveTest(){
-        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),3,3));
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),new Pair(3,3)));
 
         commandMatcher = GameCommands.getMatcher("select combat unit on -x 3 -y 3",GameCommands.SELECT_COMBAT_UNIT);
         if (commandMatcher.matches())
@@ -53,7 +54,7 @@ public class UnitTester extends Tester{
 
     @Test
     public void unitMoveToNeighborTest(){
-        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),3,3));
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),new Pair(3,3)));
         commandMatcher = GameCommands.getMatcher("select combat unit on -x 3 -y 3",GameCommands.SELECT_COMBAT_UNIT);
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
@@ -67,7 +68,7 @@ public class UnitTester extends Tester{
 
     @Test
     public void unitMoveToTestWrongDestination(){
-        Game.map[1][1].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),1,1));
+        Game.map[1][1].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),new Pair(1,1)));
         commandMatcher = GameCommands.getMatcher("select combat unit on -x 1 -y 1",GameCommands.SELECT_COMBAT_UNIT);
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
@@ -81,7 +82,7 @@ public class UnitTester extends Tester{
 
     @Test
     public void unitMoveToTestSuccessful(){
-        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),3,3));
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,new Nation(NationType.PERSIA),new Pair(3,3)));
         commandMatcher = GameCommands.getMatcher("select combat unit on -x 3 -y 3",GameCommands.SELECT_COMBAT_UNIT);
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
