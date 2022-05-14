@@ -2,14 +2,16 @@ package Controller.GameControllers;
 
 import Model.City;
 import Model.Game;
+import Model.Improvements.Improvement;
 import Model.Lands.Land;
+import Model.Nations.Nation;
 import Model.Pair;
 
 import java.util.regex.Matcher;
 
 public class CityController extends GameController {
 
-    public void buildCity(Matcher matcher){
+    public String buildCity(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair main = new Pair(x, y);
@@ -26,7 +28,9 @@ public class CityController extends GameController {
                 if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
+            return "City built successfully";
         }
+        return "Can't build a city here";
     }
 
     public boolean isCityBuildable(Pair main){
@@ -56,6 +60,31 @@ public class CityController extends GameController {
     }
 
     public void sendCitizen(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Pair dest = new Pair(x, y);
+
+        if (selectedCity != null){
+            if (selectedCity.getEmployees() < selectedCity.getCitizens()){
+                selectedCity.setEmployees(selectedCity.getEmployees() + 1);
+                if (!Game.map[x][y].hasCitizen()){
+                    Game.map[dest.x][dest.y].setCitizen(true);
+                }
+            }
+        }
+    }
+
+    public void retrieveCitizen(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Pair origin = new Pair(x, y);
+
+        if (selectedCity != null){
+            if (Game.map[x][y].hasCitizen()){
+                Game.map[x][y].setCitizen(false);
+                selectedCity.setEmployees(selectedCity.getEmployees() - 1);
+            }
+        }
 
     }
 
@@ -84,7 +113,9 @@ public class CityController extends GameController {
             selectedCity.getOwnerNation().getCoin().addBalance(-land.getCost());
             return "Land bought successfully";
         }
-        return "you can't buy this land!";
+
+        return "The specific land is not buyable";
+
     }
 
     public void cityBuyBuilding(Matcher matcher){
@@ -117,6 +148,29 @@ public class CityController extends GameController {
 
     public void cityLevelUp(City city){
 
+    }
+
+    public static void cityDeath(City city){
+        Nation nation = city.getOwnerNation();
+        nation.removeCity(city);
+        for (Improvement improvement : city.getImprovements()) {
+            city.getImprovements().remove(improvement);
+        }
+        for (Land land : city.getLands()) {
+            land.setOwnerCity(null);
+            land.setImprovement(null);
+            land.setCityCenter(false);
+            city.getLands().remove(land);
+        }
+        city.setOwnerNation(null);
+        city = null;
+        System.gc();
+    }
+
+    public static void cityTakeOver(City city, Nation nextNation){
+        Nation previousNation = city.getOwnerNation();
+        city.setOwnerNation(nextNation);
+        previousNation.removeCity(city);
     }
 
 }

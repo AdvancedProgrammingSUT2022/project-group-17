@@ -1,10 +1,12 @@
 package View;
 
 import Controller.GameControllers.CheatController;
+import Controller.GameControllers.CityController;
 import Controller.GameControllers.GameController;
 import Controller.GameControllers.UnitController;
 import Controller.GameControllers.WorkerController;
 import Enums.GameEnums.CheatCommands;
+import Enums.GameEnums.CityCommands;
 import Enums.GameEnums.GameCommands;
 import Enums.GameEnums.UnitCommands;
 import Enums.GameEnums.WorkerCommands;
@@ -19,12 +21,12 @@ public class GameMenu extends Menu{
     private final CheatController cheatController = new CheatController();
     private final UnitController unitController = new UnitController();
     private final WorkerController workerController = new WorkerController();
+    private final CityController cityController = new CityController();
 
     @Override
     public void run(Scanner scanner) {
         String input = scanner.nextLine();
         Matcher commandMatcher;
-
         //cheats
         if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.PUT_UNIT)).matches()){
             System.out.println("choose Unit:");
@@ -51,10 +53,16 @@ public class GameMenu extends Menu{
 
         } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_COMBAT_UNIT)).matches()){
             System.out.println((gameController.selectCombatUnit(commandMatcher)));
-
-        } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_MOVE_TO)).matches()){
-            unitController.unitGoToDestination(commandMatcher);
-
+        } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_CITY)).matches()) {
+            System.out.println(gameController.selectCity(commandMatcher));
+        } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CIVILIZED_UNIT_MOVE_TO)).matches()){
+            unitController.unitSetPath(commandMatcher, 0);
+        } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.COMBAT_UNIT_MOVE_TO)).matches()){
+            unitController.unitSetPath(commandMatcher, 1);
+        } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUILD_CITY)).matches()){
+            System.out.println(cityController.buildCity(commandMatcher));
+        } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUY_LAND)).matches()){
+            System.out.println(cityController.cityBuyLand(commandMatcher));
         } else if (GameCommands.getMatcher(input,GameCommands.NEXT_TURN).matches()){
             gameController.nextPlayerTurn();
 
@@ -130,8 +138,11 @@ public class GameMenu extends Menu{
             for (String output: gameController.showEconomics())
                 System.out.println(output);
 
+        }else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_ATTACK)).matches()){
+            System.out.println(unitController.unitSetCityTarget());
         } else if (input.length() != 0)
             System.out.println("invalid command !");
+
     }
 
     public void startingGame(Scanner scanner){

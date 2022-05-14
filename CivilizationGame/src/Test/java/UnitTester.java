@@ -30,7 +30,7 @@ public class UnitTester extends Tester{
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
 
-        commandMatcher = UnitCommands.getMatcher("unit move to -x 4 -y 4",UnitCommands.UNIT_MOVE_TO);
+        commandMatcher = UnitCommands.getMatcher("combat unit move to -x 4 -y 4",UnitCommands.COMBAT_UNIT_MOVE_TO);
         if (commandMatcher.matches())
             unitController.unitGoToDestination(commandMatcher);
 
@@ -45,7 +45,7 @@ public class UnitTester extends Tester{
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
 
-        commandMatcher = UnitCommands.getMatcher("unit move to -x 6 -y 6",UnitCommands.UNIT_MOVE_TO);
+        commandMatcher = UnitCommands.getMatcher("combat unit move to -x 6 -y 6",UnitCommands.COMBAT_UNIT_MOVE_TO);
         if (commandMatcher.matches())
             unitController.unitGoToDestination(commandMatcher);
 
@@ -59,7 +59,7 @@ public class UnitTester extends Tester{
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
 
-        commandMatcher = UnitCommands.getMatcher("unit move to -x 3 -y 4",UnitCommands.UNIT_MOVE_TO);
+        commandMatcher = UnitCommands.getMatcher("combat unit move to -x 3 -y 4",UnitCommands.COMBAT_UNIT_MOVE_TO);
         if (commandMatcher.matches())
             unitController.unitGoToNeighbor(commandMatcher);
 
@@ -73,7 +73,7 @@ public class UnitTester extends Tester{
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
 
-        commandMatcher = UnitCommands.getMatcher("unit move to -x 10 -y 10",UnitCommands.UNIT_MOVE_TO);
+        commandMatcher = UnitCommands.getMatcher("combat unit move to -x 10 -y 10",UnitCommands.COMBAT_UNIT_MOVE_TO);
         if (commandMatcher.matches())
             unitController.unitMoveTo(commandMatcher);
 
@@ -87,7 +87,7 @@ public class UnitTester extends Tester{
         if (commandMatcher.matches())
             System.out.println(gameController.selectCombatUnit(commandMatcher));
 
-        commandMatcher = UnitCommands.getMatcher("unit move to -x 4 -y 5",UnitCommands.UNIT_MOVE_TO);
+        commandMatcher = UnitCommands.getMatcher("combat unit move to -x 4 -y 5",UnitCommands.COMBAT_UNIT_MOVE_TO);
         if (commandMatcher.matches())
             unitController.unitMoveTo(commandMatcher);
 

@@ -1,13 +1,16 @@
 package Controller.GameControllers;
 
 import Model.Game;
+import Model.LandPair;
+import Model.Lands.Land;
+import Model.Nations.Nation;
 import Model.Pair;
 import Model.Units.CombatUnit;
+import Model.Units.Unit;
 
 import java.util.regex.Matcher;
 
 public class UnitController extends GameController {
-
     public void unitMoveTo(Matcher matcher) {
         int destX = Integer.parseInt(matcher.group("x"));
         int destY = Integer .parseInt(matcher.group("y"));
@@ -102,20 +105,47 @@ public class UnitController extends GameController {
         Pair currentLocation = selectedCombatUnit.getLocation();
         int tmpPathCost;
 
-        if(!Pair.isValid(currentLocation)) return 1000;
-        if(dest.equals(currentLocation)) return pathCost;
+        if (!Pair.isValid(currentLocation)) return 1000;
+        if (dest.equals(currentLocation)) return pathCost;
 
         Pair neighbors[] = new Pair[6];
         for (int i = 0; i < 6; i++)
             neighbors[i] = LandController.getNeighborIndex(currentLocation, i);
 
         for (int i = 0; i < 6; i++) {
-            if((tmpPathCost =findEasiestPath(dest, pathCost + Game.map[neighbors[i].x][neighbors[i].y].getMP(),
+            if ((tmpPathCost = findEasiestPath(dest, pathCost + Game.map[neighbors[i].x][neighbors[i].y].getMP(),
                     minPathCost)) < minPathCost)
                 minPathCost = tmpPathCost;
         }
 
         return minPathCost;
+    }
+
+    public void unitSetPath(Matcher matcher, int selection){
+        Unit selectedUnit;
+        if (selection == 1)
+            selectedUnit = selectedCombatUnit;
+        else
+            selectedUnit = selectedCivilizedUnit;
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+        Land origin = Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
+        Land dest = Game.map[x][y];
+        if (Game.dist.get(new LandPair(origin, dest)) < 1000)
+            selectedUnit.setPath(Game.path.get(new LandPair(origin, dest)));
+        while (selectedUnit.getMP() > 0)
+            unitGoForward(selectedUnit);
+    }
+
+    public void unitGoForward(Unit unit){
+        String path = unit.getPath();
+        int neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
+        Pair next = LandController.getNeighborIndex(unit.getLocation(), neighbor);
+        Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+        Game.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
+        unit.setLocation(next);
+        unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()));
+        unit.setPath(path.substring(1));
     }
 
     private void unitMultiTurnMoveTo() {
@@ -164,6 +194,38 @@ public class UnitController extends GameController {
 
     public void unitDelete() {
 
+    }
+
+    public String unitSetCityTarget(){
+        if (selectedCity != null && selectedCombatUnit != null){
+            //if are neighbors
+            if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
+                selectedCombatUnit.setTargetCity(selectedCity);
+            }
+            else{
+                return "Can't attack owner nation's city";
+            }
+        }
+        unitAttackCity(selectedCombatUnit);
+        return "Attack successful";
+    }
+
+    public void unitAttackCity(CombatUnit combatUnit){
+        combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
+        combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
+        if (combatUnit.getHp() <= 0){
+            unitDeath(combatUnit);
+        }
+        if (combatUnit.getTargetCity().getHP() <= 0){
+            CityController.cityDeath(combatUnit.getTargetCity());
+        }
+    }
+
+    public void unitDeath(Unit unit){
+        Nation nation = unit.getOwnerNation();
+        nation.removeUnit(unit);
+        unit = null;
+        System.gc();
     }
 
 }

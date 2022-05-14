@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Game {
@@ -30,6 +31,8 @@ public class Game {
     }
 
     public static Land[][] map = LandController.mapInitializer();
+    public static HashMap<LandPair, Integer> dist = new HashMap<>();
+    public static HashMap<LandPair, String> path = new HashMap<>();
 
     public static int getSubTurn() {
         return subTurn;

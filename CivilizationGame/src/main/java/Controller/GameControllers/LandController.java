@@ -5,6 +5,7 @@ import Model.ConsoleColors;
 import Model.Game;
 import Model.LandFeatures.LandFeature;
 import Model.LandFeatures.LandFeatureType;
+import Model.LandPair;
 import Model.Lands.Land;
 import Model.Lands.LandType;
 import Model.Pair;
@@ -205,61 +206,134 @@ public class LandController extends Controller {
         return null;
     }
 
-    public static Land[][] mapInitializer() {
-        Land[][] map = new Land[12][12];
-        Random random = new Random(Double.doubleToLongBits(Math.random()));
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 12; j++) {
 
-                LandType landtype = switch (random.nextInt(8)) {
-                    case 0 -> LandType.GrassLand;
-                    case 1 -> LandType.Tundra;
-                    case 2 -> LandType.Desert;
-                    case 3 -> LandType.Hill;
-                    case 4 -> LandType.Mountain;
-                    case 5 -> LandType.Ocean;
-                    case 6 -> LandType.Plain;
-                    default -> LandType.Snow;
-                };
-
-                map[i][j] = new Land(landtype, random.nextInt(50) + 50);
-            }
+    public static boolean areNeighbors(Pair land1, Pair land2){
+        for (int i = 0; i < 6; i++) {
+            if (land2 == getNeighborIndex(land1, i))
+                return true;
         }
+        return false;
+    }
 
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 12; j++) {
-                ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
-                LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
-                int randomInt;
-
-                if (landFeatureTypes != null && landFeatureTypes.length != 0) {
-                    if (random.nextInt(landFeatureTypes.length) % 2 == 0) {
-                        randomInt = random.nextInt(landFeatureTypes.length);
-                        map[i][j].setLandFeature(new LandFeature(landFeatureTypes[randomInt]));
-                    }
-                }
-
-                if (availableResources != null && availableResources.length != 0) {
-                    if (random.nextInt(availableResources.length) % 3 == 0) {
-                        randomInt = random.nextInt(availableResources.length);
-                        map[i][j].setResource(new Resource(availableResources[randomInt]));
-                    }
-                }
-
-                for (int k = 0; k < 6; k++) {
-                    if (random.nextInt() % 15 == 0) {
-                        map[i][j].setRiver(k, true);
-                        if (Pair.isValid(getNeighborIndex(new Pair(i, j), k)))
-                            map[getNeighborIndex(new Pair(i, j), k).x][getNeighborIndex(new Pair(i, j), k).y].setRiver((k + 3) % 6, true);
-                    }
-                }
-            }
-
+    public static int getIndex(Pair land1, Pair land2){
+        for (int i = 0; i < 6; i++) {
+            if (land2 == getNeighborIndex(land1, i))
+                return i;
         }
-
-        return map;
+        return -1;
     }
 
 
+    public static Land[][]mapInitializer () {
+            Land[][] map = new Land[12][12];
+            Random random = new Random(Double.doubleToLongBits(Math.random()));
+            for (int i = 0; i < 12; i++) {
+                for (int j = 0; j < 12; j++) {
 
+                    LandType landtype = switch (random.nextInt(8)) {
+                        case 0 -> LandType.GrassLand;
+                        case 1 -> LandType.Tundra;
+                        case 2 -> LandType.Desert;
+                        case 3 -> LandType.Hill;
+                        case 4 -> LandType.Mountain;
+                        case 5 -> LandType.Ocean;
+                        case 6 -> LandType.Plain;
+                        default -> LandType.Snow;
+                    };
+
+                    map[i][j] = new Land(landtype, random.nextInt(50) + 50);
+                }
+            }
+
+            for (int i = 0; i < 12; i++) {
+                for (int j = 0; j < 12; j++) {
+                    ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
+                    LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
+                    int randomInt;
+
+                    if (landFeatureTypes != null && landFeatureTypes.length != 0) {
+                        if (random.nextInt(landFeatureTypes.length) % 2 == 0) {
+                            randomInt = random.nextInt(landFeatureTypes.length);
+                            map[i][j].setLandFeature(new LandFeature(landFeatureTypes[randomInt]));
+                        }
+                    }
+
+                    if (availableResources != null && availableResources.length != 0) {
+                        if (random.nextInt(availableResources.length) % 3 == 0) {
+                            randomInt = random.nextInt(availableResources.length);
+                            map[i][j].setResource(new Resource(availableResources[randomInt]));
+                        }
+                    }
+
+                    for (int k = 0; k < 6; k++) {
+                        if (random.nextInt() % 15 == 0) {
+                            map[i][j].setRiver(k, true);
+                            if (Pair.isValid(getNeighborIndex(new Pair(i, j), k)))
+                                map[getNeighborIndex(new Pair(i, j), k).x][getNeighborIndex(new Pair(i, j), k).y].setRiver((k + 3) % 6, true);
+                        }
+                    }
+                }
+
+            }
+
+            return map;
+        }
+    public static boolean isPairValid(Pair pair){
+        if (pair == null)
+            return false;
+        return pair.x >= 0 && pair.y >= 0 && pair.x < Consts.MAP_SIZE.amount.x && pair.y < Consts.MAP_SIZE.amount.y;
+    }
+
+    public static Land getLandByCoordinates(int x, int y){
+        return Game.map[x][y];
+    }
+
+    public static void initializeDistances(){
+        for (int i1 = 0; i1 < 10; i1++) {
+            for (int j1 = 0; j1 < 10; j1++) {
+                for (int i2 = 0; i2 < 10; i2++) {
+                    for (int j2 = 0; j2 < 10; j2++) {
+                        Land land1 = getLandByCoordinates(i1, j1);
+                        Land land2 = getLandByCoordinates(i2, j2);
+                        LandPair dist = new LandPair(land1, land2);
+                        if (i1 == i2 && j1 == j2){
+                            Game.dist.put(dist, 0);
+                            Game.path.put(dist, "");
+                        }else   if (areNeighbors(new Pair(i1, j1), new Pair(i2, j2))){
+                            Game.dist.put(dist, land2.getMP());
+                            Game.path.put(dist, "" + getIndex(new Pair(i1, j1), new Pair(i2, j2)));
+                        }else{
+                            Game.dist.put(dist, 1000);
+                            Game.path.put(dist, "");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void updateDistances(){
+        for (int i1 = 0; i1 < 10; i1++) {
+            for (int j1 = 0; j1 < 10; j1++) {
+                for (int i2 = 0; i2 < 10; i2++) {
+                    for (int j2 = 0; j2 < 10; j2++) {
+                        for (int i3 = 0; i3 < 10; i3++) {
+                            for (int j3 = 0; j3 < 10; j3++) {
+                                Land firstLand = getLandByCoordinates(i1, j1);
+                                Land secondLand = getLandByCoordinates(i2, j2);
+                                Land thirdLand = getLandByCoordinates(i3, j3);
+                                LandPair firstDist = new LandPair(firstLand, thirdLand);
+                                LandPair secondDist = new LandPair(firstLand, secondLand);
+                                LandPair thirdDist = new LandPair(secondLand, thirdLand);
+                                if (Game.dist.get(firstDist) < Game.dist.get(secondDist) + Game.dist.get(thirdDist)){
+                                    Game.dist.put(firstDist, Game.dist.get(secondDist) + Game.dist.get(thirdDist));
+                                    Game.path.put(firstDist, Game.path.get(secondDist) + Game.path.get(thirdDist));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

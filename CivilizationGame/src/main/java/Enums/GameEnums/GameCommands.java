@@ -15,8 +15,9 @@ public enum GameCommands {
     SHOW_DIPLOMACIES("show diplomacies"),
     SHOW_DEMOGRAPHICS("show demographics"),
     SHOW_MILITARIES("show militaries"),
-    SHOW_ECONOMICS("show economics");
-
+    SHOW_ECONOMICS("show economics"),
+    SELECT_CITY("select city on -x (?<x>\\d+) -y (?<y>\\d+)"),
+    ;
     //TODO fill enums
 
     private final String regex;

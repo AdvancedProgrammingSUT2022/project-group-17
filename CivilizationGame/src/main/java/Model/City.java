@@ -16,6 +16,7 @@ public class City {
     protected Nation ownerNation;
     protected ArrayList<Land> lands = new ArrayList<>();
     protected int citizens;
+    protected int employees = 0;
     protected int HP;
     protected int combatStrength;
     protected int rangedStrength;
@@ -137,4 +138,51 @@ public class City {
         this.inProgressUnit = inProgressUnit;
     }
 
+    public int getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(int employees) {
+        this.employees = employees;
+    }
+
+    public void setCitizens(int citizens) {
+        this.citizens = citizens;
+    }
+
+    public void setHP(int HP) {
+        this.HP = HP;
+    }
+
+    public void setCombatStrength(int combatStrength) {
+        this.combatStrength = combatStrength;
+    }
+
+    public void setRangedStrength(int rangedStrength) {
+        this.rangedStrength = rangedStrength;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setCoinGrowth(int coinGrowth) {
+        this.coinGrowth = coinGrowth;
+    }
+
+    public void setFoodGrowth(int foodGrowth) {
+        this.foodGrowth = foodGrowth;
+    }
+
+    public void setProductionGrowth(int productionGrowth) {
+        this.productionGrowth = productionGrowth;
+    }
+
+    public void setHappinessGrowth(int happinessGrowth) {
+        this.happinessGrowth = happinessGrowth;
+    }
+
+    public void setScienceGrowth(int scienceGrowth) {
+        this.scienceGrowth = scienceGrowth;
+    }
 }

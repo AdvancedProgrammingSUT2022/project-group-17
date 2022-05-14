@@ -163,16 +163,16 @@ public class GameController extends Controller {
         return ("There is no civilized unit here!");
     }
 
-    public static void setSelectedCity(City selectedCity) {
-        GameController.selectedCity = selectedCity;
-    }
 
-    public void showNotifications() {
+    public String selectCity(Matcher matcher) {
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
 
-    }
-
-    public void selectCity(Matcher matcher) {
-
+        if (Game.map[x][y].getOwnerCity() != null) {
+            selectedCity = Game.map[x][y].getOwnerCity();
+            return (selectedCity + " is now selected");
+        }
+        return "There is no city here!";
     }
 
     public void mapShow() {
@@ -199,6 +199,5 @@ public class GameController extends Controller {
     public void saveGame() {
 
     }
-
 
 }

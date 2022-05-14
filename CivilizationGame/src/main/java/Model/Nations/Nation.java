@@ -42,7 +42,7 @@ public class Nation {
         initializeBuildings();
     }
 
-    private void initializeTechnologies() {
+    public void initializeTechnologies() {
 
         for (TechnologyType technologyType : TechnologyType.values()) {
             this.technologies.put(technologyType,false);
@@ -160,5 +160,13 @@ public class Nation {
 
     public HashMap<BuildingType, Boolean> getBuildings() {
         return buildings;
+    }
+
+    public void removeUnit(Unit unit){
+        units.remove(unit);
+    }
+
+    public void removeCity(City city){
+        cities.remove(city);
     }
 }
