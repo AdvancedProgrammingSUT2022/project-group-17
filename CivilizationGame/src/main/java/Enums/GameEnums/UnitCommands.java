@@ -4,7 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum UnitCommands {
-    UNIT_MOVE_TO("unit move to -x (?<x>\\d+) -y (?<y>\\d+)"); //TODO fill enums
+    CIVILIZED_UNIT_MOVE_TO("civilized unit move to -x (?<x>\\d+) -y (?<y>\\d+)"), //TODO fill enums
+    COMBAT_UNIT_MOVE_TO("combat unit move to -x (?<x>\\d+) -y (?<y>\\d+)")
+    ;
     private final String regex;
 
     UnitCommands(String regex) {

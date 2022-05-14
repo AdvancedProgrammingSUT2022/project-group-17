@@ -18,6 +18,7 @@ public class Unit {
     protected TechnologyType technologyType;
     protected ResourceType resourceType;
     protected UnitStatus unitStatus;
+    protected String path = "";
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
                 int turns, int hp, Nation ownerNation, Pair location, UnitStatus unitStatus) {
@@ -66,6 +67,10 @@ public class Unit {
         return XP;
     }
 
+    public String getPath() {
+        return path;
+    }
+
     public boolean isWaitingForCommand() {
         return isWaitingForCommand;
     }
@@ -89,6 +94,10 @@ public class Unit {
         this.MP -= amount;
     }
 
+    public void setMP(int MP) {
+        this.MP = MP;
+    }
+
     public void setHp(int hp) {
         this.hp = hp;
     }
@@ -99,5 +108,9 @@ public class Unit {
 
     public void setWaitingForCommand(boolean waitingForCommand) {
         isWaitingForCommand = waitingForCommand;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }
