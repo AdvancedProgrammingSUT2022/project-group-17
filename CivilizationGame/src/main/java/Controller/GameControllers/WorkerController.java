@@ -171,7 +171,7 @@ public class WorkerController extends GameController {
         } else return ("Please select a Worker first!");
     }
 
-    private String hasResourceOfImprovement(ImprovementType improvementType) {
+    public String hasResourceOfImprovement(ImprovementType improvementType) {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource() != null)
             for (ResourceType resourceType : improvementType.resourcesGiven)
                 if (resourceType == Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource().
@@ -181,13 +181,13 @@ public class WorkerController extends GameController {
         return ("There is not the suitable resource for " + improvementType.name + " here!");
     }
 
-    private String isLandSuitable(ImprovementType improvementType) {
+    public String isLandSuitable(ImprovementType improvementType) {
         if (improvementType.landTypes != null)
             for (LandType landType : improvementType.landTypes)
                 if (landType == Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandType())
                     return "yes";
         if (improvementType.landFeatureTypes != null &&
-                Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType() != null)
+                Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature() != null)
             for (LandFeatureType landFeatureType : improvementType.landFeatureTypes)
                 if (landFeatureType == Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType())
                     return "yes";

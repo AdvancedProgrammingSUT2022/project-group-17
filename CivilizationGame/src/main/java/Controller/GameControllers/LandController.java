@@ -278,11 +278,6 @@ public class LandController extends Controller {
 
             return map;
         }
-    public static boolean isPairValid(Pair pair){
-        if (pair == null)
-            return false;
-        return pair.x >= 0 && pair.y >= 0 && pair.x < Consts.MAP_SIZE.amount.x && pair.y < Consts.MAP_SIZE.amount.y;
-    }
 
     public static Land getLandByCoordinates(int x, int y){
         return Game.map[x][y];

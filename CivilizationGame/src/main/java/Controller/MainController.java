@@ -3,7 +3,7 @@ package Controller;
 import Controller.GameControllers.GameController;
 import Model.Game;
 import Model.Users.User;
-import Model.Lands.View.Menu;
+import View.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;

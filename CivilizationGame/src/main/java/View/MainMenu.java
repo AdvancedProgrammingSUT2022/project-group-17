@@ -1,4 +1,4 @@
-package Model.Lands.View;
+package View;
 
 import Controller.MainController;
 import Enums.MainCommands;

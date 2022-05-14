@@ -1,6 +1,5 @@
 import Controller.GameControllers.LandController;
 import Model.Game;
-import Model.Lands.View.*;
 import View.*;
 
 import java.util.HashMap;

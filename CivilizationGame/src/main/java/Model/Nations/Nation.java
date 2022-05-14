@@ -43,7 +43,6 @@ public class Nation {
     }
 
     public void initializeTechnologies() {
-
         for (TechnologyType technologyType : TechnologyType.values()) {
             this.technologies.put(technologyType,false);
         }
@@ -147,6 +146,18 @@ public class Nation {
 
     public void addResource(ResourceType resourceType) {
         resourceCellar.put(resourceType, resourceCellar.get(resourceType) + 1);
+    }
+
+    public void setResourceCellar(HashMap<ResourceType, Integer> resourceCellar) {
+        this.resourceCellar = resourceCellar;
+    }
+
+    public void setTechnologies(HashMap<TechnologyType, Boolean> technologies) {
+        this.technologies = technologies;
+    }
+
+    public void setBuildings(HashMap<BuildingType, Boolean> buildings) {
+        this.buildings = buildings;
     }
 
     public void addTechnology(TechnologyType technologyType) {
