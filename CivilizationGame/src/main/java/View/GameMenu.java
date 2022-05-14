@@ -9,6 +9,7 @@ import Enums.GameEnums.GameCommands;
 import Enums.GameEnums.UnitCommands;
 import Enums.GameEnums.WorkerCommands;
 import Model.Game;
+import Model.Improvements.ImprovementType;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -23,6 +24,8 @@ public class GameMenu extends Menu{
     public void run(Scanner scanner) {
         String input = scanner.nextLine();
         Matcher commandMatcher;
+
+        //cheats
         if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.PUT_UNIT)).matches()){
             System.out.println("choose Unit:");
             System.out.println("0: close combat unit");
@@ -33,6 +36,9 @@ public class GameMenu extends Menu{
 
         } else if((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.ADD_TECHNOLOGY)).matches()) {
             System.out.println(cheatController.addTechnology(commandMatcher));
+
+        } else if((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.DESTROY_IMPROVEMENT)).matches()) {
+            System.out.println(cheatController.destroyImprovement(commandMatcher));
 
         } else if (GameCommands.getMatcher(input,GameCommands.MENU_EXIT).matches()){
             setMenuName("MainMenu");
@@ -54,7 +60,7 @@ public class GameMenu extends Menu{
 
         // Improvements
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PASTURE).matches()) {
-            System.out.println(workerController.workerBuildPasture());
+            System.out.println(workerController.workerBuildResourcedImprovement(ImprovementType.PASTURE));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_FARM).matches()) {
             System.out.println(workerController.workerBuildFarm());
@@ -63,28 +69,66 @@ public class GameMenu extends Menu{
             System.out.println(workerController.workerBuildMine());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_CAMP).matches()) {
-            System.out.println(workerController.workerBuildCamp());
+            System.out.println(workerController.workerBuildResourcedImprovement(ImprovementType.CAMP));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_LUMBER_MILL).matches()) {
-            System.out.println(workerController.workerBuildLumberMill());
+            System.out.println(workerController.workerBuildNonResourcedImprovement(ImprovementType.LUMBER_MILL));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PLANTATION).matches()) {
-            System.out.println(workerController.workerBuildPlantation());
+            System.out.println(workerController.workerBuildResourcedImprovement(ImprovementType.PLANTATION));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_QUARRY).matches()) {
-            System.out.println(workerController.workerBuildQuarry());
+            System.out.println(workerController.workerBuildResourcedImprovement(ImprovementType.QUARRY));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_RAILROAD).matches()) {
-            System.out.println(workerController.workerBuildRailroad());
+            System.out.println(workerController.workerBuildRoad(ImprovementType.RAILROAD));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_ROAD).matches()) {
-            System.out.println(workerController.workerBuildRoad());
+            System.out.println(workerController.workerBuildRoad(ImprovementType.ROAD));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_TRADING_POST).matches()) {
-            System.out.println(workerController.workerBuildTradingPost());
+            System.out.println(workerController.workerBuildNonResourcedImprovement(ImprovementType.TRADING_POST));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_FACTORY).matches()) {
-            System.out.println(workerController.workerBuildFactory());
+            System.out.println(workerController.workerBuildNonResourcedImprovement(ImprovementType.FACTORY));
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.REPAIR_IMPROVEMENT).matches()) {
+            System.out.println(workerController.workerRepair());
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.REMOVE_FEATURE).matches()) {
+            System.out.println(workerController.workerRemoveFeature());
+
+        } else if (WorkerCommands.getMatcher(input, WorkerCommands.REMOVE_ROUTE).matches()) {
+            System.out.println(workerController.workerRemoveRoute());
+
+        //info
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_RESEARCH).matches()) {
+            for (String output: gameController.showResearches())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_UNITS).matches()) {
+            for (String output: gameController.showUnits())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_CITIES).matches()) {
+            for (String output: gameController.showCities())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_DEMOGRAPHICS).matches()) {
+            for (String output: gameController.showDemographics())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_DIPLOMACIES).matches()) {
+            for (String output: gameController.showDiplomacies())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_MILITARIES).matches()) {
+            for (String output: gameController.showMilitaries())
+                System.out.println(output);
+
+        } else if (GameCommands.getMatcher(input, GameCommands.SHOW_ECONOMICS).matches()) {
+            for (String output: gameController.showEconomics())
+                System.out.println(output);
 
         } else if (input.length() != 0)
             System.out.println("invalid command !");

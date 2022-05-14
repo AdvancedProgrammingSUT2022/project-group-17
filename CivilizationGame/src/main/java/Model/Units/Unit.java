@@ -22,7 +22,7 @@ public class Unit {
     protected UnitStatus unitStatus;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                int turns, int hp, Nation ownerNation, int x, int y) {
+                int turns, int hp, Nation ownerNation, Pair location, UnitStatus unitStatus) {
         this.ownerNation = ownerNation;
         this.name = name;
         this.cost = cost;
@@ -32,8 +32,8 @@ public class Unit {
         this.turns = turns;
         this.hp = hp;
         this.XP = 0;
-        this.x = x;
-        this.y = y;
+        this.location = location;
+        this.unitStatus = UnitStatus.AWAKE;
     }
 
     public Nation getOwnerNation() {

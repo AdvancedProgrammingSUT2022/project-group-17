@@ -27,7 +27,7 @@ public class LandControllerTester extends Tester{
     @Test
     public void fogOfWarTest(){
         Game.map= LandController.mapInitializer();
-        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),3,3));
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),new Pair(3,3)));
         LandController.printMap(Game.map);
 
         Assert.assertEquals(2, Game.map[3][3].getVisibility());

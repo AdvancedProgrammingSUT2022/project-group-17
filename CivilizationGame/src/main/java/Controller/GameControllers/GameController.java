@@ -11,6 +11,7 @@ import Model.Game;
 import Model.Units.CombatUnit;
 import Model.Users.User;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameController extends Controller {
@@ -41,96 +42,106 @@ public class GameController extends Controller {
         Game.getPlayersInGame().get(playerNum).setNation(nation);
     }
 
-    public void showResearches() {
-        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s technologies:");
-        int i = 0;
-        for (TechnologyType technologyType : TechnologyType.values()) {
-            if (currentTurnUser.getNation().getTechnologies().get(technologyType))
-                System.out.printf("%d- %s\n", i, technologyType.name);
-            i++;
-        }
-        System.out.println();
-    }
-
     public static void setCurrentTurnUser(User currentTurnUser) {
         GameController.currentTurnUser = currentTurnUser;
     }
 
-    public void showUnits() {
-        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s units:");
+    public ArrayList<String> showResearches() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s technologies:");
+        int i = 0;
+        for (TechnologyType technologyType : TechnologyType.values())
+            if (currentTurnUser.getNation().getTechnologies().get(technologyType)) {
+                output.add(i + "- " + technologyType.name);
+                i++;
+            }
+        return output;
+    }
+
+    public ArrayList<String> showUnits() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s units:");
         int i = 1;
         for (Unit unit : currentTurnUser.getNation().getUnits()) {
-            System.out.printf("%d- %s\tLocation: (%d , %d)\tStatus: %s\n", i, unit.getName(), unit.getLocation().x, unit.getLocation().y, unit.getUnitStatus().name);
+            output.add(String.format("%d- %s\tLocation: (%d , %d)\tStatus: %s", i, unit.getName(), unit.getLocation().x, unit.getLocation().y, unit.getUnitStatus().toString()));
             i++;
         }
-        System.out.println();
+        return output;
     }
 
-    public void showCities() {
-        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s cities:");
+    public ArrayList<String> showCities() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s cities:");
         int i = 1;
         for (City city : currentTurnUser.getNation().getCities()) {
-            if (city == currentTurnUser.getNation().getCapital()) System.out.print("(*Capital) ");
-            System.out.printf("%d- %s\tArea Size: %d\tPopulation: %d\n", i, city.getName(), city.getLands().size(), city.getCitizens());
+            if (city == currentTurnUser.getNation().getCapital()) output.add("(*Capital) ");
+            output.add(String.format("%d- %s\tArea Size: %d\tPopulation: %d", i, city.getName(), city.getLands().size(), city.getCitizens()));
             i++;
         }
+        return output;
     }
 
-    public void showDiplomacies() {
-        System.out.println(currentTurnUser.getNation().getNationType().name + "'s friends:");
+    public ArrayList<String> showDiplomacies() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add(currentTurnUser.getNation().getNationType().name + "'s friends:");
         int i = 0;
         for (Nation nation : currentTurnUser.getNation().getFriends()) {
-            System.out.printf("%d- %s\n", i, nation.getNationType().name);
+            output.add(String.format("%d- %s", i, nation.getNationType().name));
             i++;
         }
 
-        System.out.println(currentTurnUser.getNation().getNationType().name + "'s enemies:");
+        output.add(currentTurnUser.getNation().getNationType().name + "'s enemies:");
         i = 0;
         for (Nation nation : currentTurnUser.getNation().getEnemies()) {
-            System.out.printf("%d- %s\n", i, nation.getNationType().name);
+            output.add(String.format("%d- %s", i, nation.getNationType().name));
             i++;
         }
+        return output;
     }
 
-    public void showDemographics() {
-        for (User user : Game.getUsers()) {
-            System.out.println(user.getNation().getNationType().name + " :");
+    public ArrayList<String> showDemographics() {
+        ArrayList<String> output = new ArrayList<>();
+        for (User user : Game.getPlayersInGame()) {
+            output.add(user.getNation().getNationType().name + " :");
             int population = 0;
             for (City city : user.getNation().getCities())
                 population += city.getCitizens();
-            System.out.println("- Population: " + population);
-            System.out.println("- Soldiers: " + user.getNation().getUnits().size());
+            output.add("- Population: " + population);
+            output.add("- Units: " + user.getNation().getUnits().size());
             int lands = 0;
             for (City city : user.getNation().getCities())
                 lands += city.getLands().size();
-            System.out.println("- Lands: " + lands);
+            output.add("- Lands: " + lands);
         }
+        return output;
     }
 
     public void showNotifications() {
 
     }
 
-    public void showMilitaries() {
-        System.out.println("All of " + currentTurnUser.getNation().getNationType().name + "'s combat units:");
+    public ArrayList<String> showMilitaries() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s combat units:");
         int i = 1;
         for (Unit unit : currentTurnUser.getNation().getUnits())
             if (unit instanceof CombatUnit) {
-                System.out.printf("%d- %s\tLocation: (%d , %d)\tStatus: %s\n", i, unit.getName(), unit.getLocation().x, unit.getLocation().y, unit.getUnitStatus().name);
+                output.add(String.format("%d- %s\tLocation: (%d , %d)\tStatus: %s", i, unit.getName(), unit.getLocation().x, unit.getLocation().y, unit.getUnitStatus().toString()));
                 i++;
             }
-        System.out.println();
+        return output;
     }
 
-    public void showEconomics() {
-        System.out.println("Economic Overview:");
+    public ArrayList<String> showEconomics() {
+        ArrayList<String> output = new ArrayList<>();
+        output.add("Economic Overview:");
         int i = 0;
         for(City city : currentTurnUser.getNation().getCities()) {
-            System.out.printf("%d- %s\tLevel: %d\tStrength: %d\tCoin: %d\tFood: %d\tProduction: %d\n" ,
-                    i, city.getName(), city.getLevel(), city.getHP(), city.getCoinGrowth(), city.getFoodGrowth(), city.getProductionGrowth());
+            output.add(String.format("%d- %s\tLevel: %d\tStrength: %d\tCoin: %d\tFood: %d\tProduction: %d" ,
+                    i, city.getName(), city.getLevel(), city.getHP(), city.getCoinGrowth(), city.getFoodGrowth(), city.getProductionGrowth()));
             i++;
         }
-        System.out.println();
+        return output;
     }
     
 
