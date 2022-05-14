@@ -20,6 +20,29 @@ public class GameController extends Controller {
     protected static City selectedCity;
     protected static User currentTurnUser;
 
+    public static CombatUnit getSelectedCombatUnit() {
+        return selectedCombatUnit;
+    }
+
+    public static void setSelectedCombatUnit(CombatUnit selectedCombatUnit) {
+        GameController.selectedCombatUnit = selectedCombatUnit;
+    }
+
+    public static CivilizedUnit getSelectedCivilizedUnit() {
+        return selectedCivilizedUnit;
+    }
+
+    public static void setSelectedCivilizedUnit(CivilizedUnit selectedCivilizedUnit) {
+        GameController.selectedCivilizedUnit = selectedCivilizedUnit;
+    }
+
+    public static City getSelectedCity() {
+        return selectedCity;
+    }
+
+    public static void setSelectedCity(City selectedCity) {
+        GameController.selectedCity = selectedCity;
+    }
 
     public static User getCurrentTurnUser() {
         return currentTurnUser;
