@@ -119,7 +119,7 @@ public class CityController extends GameController {
 
     }
 
-    public void cityDeath(City city){
+    public static void cityDeath(City city){
         Nation nation = city.getOwnerNation();
         nation.removeCity(city);
         for (Improvement improvement : city.getImprovements()) {
@@ -137,7 +137,7 @@ public class CityController extends GameController {
         System.gc();
     }
 
-    public void cityTakeOver(City city, Nation nextNation){
+    public static void cityTakeOver(City city, Nation nextNation){
         Nation previousNation = city.getOwnerNation();
         city.setOwnerNation(nextNation);
         previousNation.removeCity(city);

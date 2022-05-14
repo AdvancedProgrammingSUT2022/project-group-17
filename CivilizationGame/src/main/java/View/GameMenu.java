@@ -47,6 +47,8 @@ public class GameMenu extends Menu{
         } else if (GameCommands.getMatcher(input,GameCommands.NEXT_TURN).matches()){
             gameController.nextPlayerTurn();
 
+        }else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_ATTACK)).matches()){
+            System.out.println(unitController.unitSetCityTarget());
         } else
             System.out.println("invalid command !");
     }

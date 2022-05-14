@@ -168,13 +168,18 @@ public class UnitController extends GameController {
 
     }
 
-    public void unitSetCityTarget(){
+    public String unitSetCityTarget(){
         if (selectedCity != null && selectedCombatUnit != null){
             //if are neighbors
             if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
                 selectedCombatUnit.setTargetCity(selectedCity);
             }
+            else{
+                return "Can't attack owner nation's city";
+            }
         }
+        unitAttackCity(selectedCombatUnit);
+        return "Attack successful";
     }
 
     public void unitAttackCity(CombatUnit combatUnit){
@@ -182,6 +187,9 @@ public class UnitController extends GameController {
         combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
         if (combatUnit.getHp() <= 0){
             unitDeath(combatUnit);
+        }
+        if (combatUnit.getTargetCity().getHP() <= 0){
+            CityController.cityDeath(combatUnit.getTargetCity());
         }
     }
 
