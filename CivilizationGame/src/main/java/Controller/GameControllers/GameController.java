@@ -227,6 +227,14 @@ public class GameController extends Controller {
                 for (User user : Game.getPlayersInGame()) {
                     Nation userNation = user.getNation();
                     for (Unit unit : userNation.getUnits()) {
+                        //check Siege
+                        if (unit instanceof RangedCombatUnit){
+                            if (((RangedCombatUnit) unit).getRangedCombatUnitType().isSiege){
+                                if (unit.getTargetCity() != null){
+                                    UnitController.unitAttackCity((CombatUnit) unit);
+                                }
+                            }
+                        }
                         nextTurnUnitMove(unit);
                         //Create Improvement
                         nextTurnWorkerWorks(unit);

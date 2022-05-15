@@ -175,8 +175,13 @@ public class UnitController extends GameController {
         String path = unit.getPath();
         int neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
         Pair next = LandController.getNeighborIndex(unit.getLocation(), neighbor);
-        Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
-        Game.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
+        if (unit instanceof CombatUnit){
+            Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+            Game.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
+        }else{
+            Game.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+            Game.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
+        }
         unit.setLocation(next);
         unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()));
         unit.setPath(path.substring(1));
@@ -289,13 +294,24 @@ public class UnitController extends GameController {
             }else
                 return "Not in range";
         }
+        if (selectedCombatUnit instanceof RangedCombatUnit){
+            if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().isSiege){
+                return "Siege unit stationed successfully";
+            }
+        }
         unitAttackCity(selectedCombatUnit);
         return "Attack successful";
     }
 
-    public void unitAttackCity(CombatUnit combatUnit){
-        combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
-        combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
+    public static void unitAttackCity(CombatUnit combatUnit){
+        if (combatUnit instanceof CloseCombatUnit){
+            combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
+            combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
+        }else if (combatUnit instanceof RangedCombatUnit){
+            combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getRangedStrength());
+            combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - ((RangedCombatUnit) combatUnit).getRangedStrength());
+        }
+        combatUnit.setTargetCity(null);
         if (combatUnit.getHp() <= 0){
             unitDeath(combatUnit);
         }

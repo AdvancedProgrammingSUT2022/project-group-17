@@ -15,7 +15,7 @@ public class CityController extends GameController {
     public String buildCity(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
-        if (Game.getTurn() != 0 && (selectedCivilizedUnit == null || !selectedCivilizedUnit.getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)))
+        if (currentTurnUser.getNation().getCities().size() > 0 && (selectedCivilizedUnit == null || !selectedCivilizedUnit.getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)))
             return "You need to select a settler first";
         Pair main = new Pair(x, y);
         if (isCityBuildable(main)){
@@ -33,7 +33,7 @@ public class CityController extends GameController {
                 if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
-            if (Game.getTurn() != 0)
+            if (currentTurnUser.getNation().getCities().size() > 0)
                 UnitController.unitDeath(selectedCivilizedUnit);
             return "City built successfully";
         }
