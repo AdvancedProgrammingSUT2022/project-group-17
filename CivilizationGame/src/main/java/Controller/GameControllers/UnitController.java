@@ -11,6 +11,7 @@ import Model.Units.*;
 import Model.Units.Enums.CivilizedUnitType;
 import Model.Units.Enums.CloseCombatUnitType;
 import Model.Units.Enums.RangedCombatUnitType;
+import Model.Units.Enums.UnitStatus;
 
 import java.util.regex.Matcher;
 
@@ -150,41 +151,44 @@ public class UnitController extends GameController {
         unit.setLocation(next);
         unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()));
         unit.setPath(path.substring(1));
+        unit.setWaitingForCommand(false);
+        unit.setUnitStatus(UnitStatus.MOVING);
     }
 
     private void unitMultiTurnMoveTo() {
 
     }
 
-    public void unitSleep() {
-
+    public String unitSleep() {
+        Unit unit;
+        if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
+            unit.setUnitStatus(UnitStatus.SLEEP);
+            unit.setWaitingForCommand(false);
+            return "Slept successfully!";
+        }
+        return "Select a unit first!";
     }
 
-    public void unitAlert() {
-
-    }
-
-    public void unitFortify() {
-
-    }
-
-    public void unitFortifyHeal() {
-
+    public String combatUnitAction(Matcher matcher) {
+        //fortify, alert, fortify until heal
+        String actionName = matcher.group("action");
+        UnitStatus toBeAppliedStatus = null;
+        for (UnitStatus unitStatus : UnitStatus.values()) {
+            if (unitStatus.toString().equalsIgnoreCase(actionName))
+                toBeAppliedStatus = unitStatus;
+        }
+        if (toBeAppliedStatus != null) {
+            if (selectedCombatUnit != null) {
+                selectedCombatUnit.setUnitStatus(toBeAppliedStatus);
+                selectedCombatUnit.setWaitingForCommand(false);
+                return "Actioned successfully!";
+            }
+            return "Select a combat unit first!";
+        }
+        return "action name isn't correct";
     }
 
     public void unitGarrison() {
-
-    }
-
-    public void unitSetup() {
-
-    }
-
-    public void unitAttack(Matcher matcher) {
-
-    }
-
-    public void unitFoundCity() {
 
     }
 
@@ -192,12 +196,34 @@ public class UnitController extends GameController {
 
     }
 
-    public void unitWake() {
-
+    public String unitWake() {
+        Unit unit;
+        if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
+            if (unit.getUnitStatus() == UnitStatus.SLEEP) {
+                unit.setUnitStatus(UnitStatus.AWAKE);
+                unit.setWaitingForCommand(true);
+                return "Waked successfully!";
+            }
+            return "This unit isn't asleep!";
+        }
+        return "Select a unit first!";
     }
 
-    public void unitDelete() {
-
+    public String unitDelete() {
+        Unit unit;
+        if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
+            currentTurnUser.getNation().getUnits().remove(unit);
+            if (unit instanceof CivilizedUnit) {
+                Game.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+                selectedCivilizedUnit = null;
+            }
+            else {
+                Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+                selectedCombatUnit = null;
+            }
+            return "removed successfully!";
+        }
+        return "Select a unit first!";
     }
 
     public String unitSetCityTarget(){

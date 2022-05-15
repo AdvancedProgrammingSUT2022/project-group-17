@@ -15,7 +15,7 @@ public class Unit {
     protected int cost;
     protected int turns;
     protected int XP;
-    protected boolean isWaitingForCommand;
+    protected boolean isWaitingForCommand = true;
     protected TechnologyType technologyType;
     protected ResourceType resourceType;
     protected UnitStatus unitStatus;
@@ -24,7 +24,7 @@ public class Unit {
     protected Unit targetUnit;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                int turns, int hp, Nation ownerNation, Pair location, UnitStatus unitStatus) {
+                int turns, int hp, Nation ownerNation, Pair location) {
         this.ownerNation = ownerNation;
         this.name = name;
         this.cost = cost;
@@ -103,6 +103,10 @@ public class Unit {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public void addHp(int amount) {
+        this.hp += amount;
     }
 
     public void setTurns(int turns) {

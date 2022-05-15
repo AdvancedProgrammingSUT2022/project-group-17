@@ -194,13 +194,25 @@ public class GameController extends Controller {
 
     }
 
-    public void nextPlayerTurn() {
-        currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
-        Game.setSubTurn(Game.getSubTurn() + 1);
-        if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
-            nextGameTurn();
-            Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
+    public String nextPlayerTurn() {
+        if (isReadyForNextTurn()) {
+            currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
+            Game.setSubTurn(Game.getSubTurn() + 1);
+            if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
+                nextGameTurn();
+                Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
+                return "next game turn";
+            }
+            return "next player turn!";
         }
+        return "Order all your units first!";
+    }
+
+    private boolean isReadyForNextTurn() {
+        for (Unit unit : currentTurnUser.getNation().getUnits())
+            if (unit.isWaitingForCommand())
+                return false;
+        return true;
     }
 
     public void nextGameTurn() {
@@ -210,9 +222,12 @@ public class GameController extends Controller {
             Nation userNation = user.getNation();
             for (Unit unit : userNation.getUnits()) {
                nextTurnUnitMove(unit);
-
                //Create Improvement
                nextTurnWorkerWorks(unit);
+
+               checkFortifying(unit);
+
+               setUnitWaitingForCommand(unit);
             }
             //update Currencies Balances
             userNation.getCoin().addGrowthRateToBalance();
@@ -263,6 +278,27 @@ public class GameController extends Controller {
         LandController.printMap(Game.map);
     }
 
+    private void checkFortifying(Unit unit) {
+        if (unit.getUnitStatus() == UnitStatus.FORTIFY) {
+            if (unit.getHp() < 10)
+                unit.addHp(1);
+        } else if (unit.getUnitStatus() == UnitStatus.FORTIFY_UNTIL_HILL) {
+            if (unit.getHp() < 10)
+                unit.addHp(1);
+            else {
+                unit.setUnitStatus(UnitStatus.AWAKE);
+                unit.setWaitingForCommand(true);
+            }
+        }
+    }
+
+    private void setUnitWaitingForCommand(Unit unit) {
+        if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
+        unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HILL && unit.getUnitStatus() != UnitStatus.SLEEP) {
+            unit.setWaitingForCommand(true);
+        }
+    }
+
     public void nextTurnUnitMove(Unit unit){
         if (unit instanceof CivilizedUnit){
             unit.setMP(((CivilizedUnit) unit).getCivilizedUnitType().MP);
@@ -276,6 +312,9 @@ public class GameController extends Controller {
             if (unit.getPath() != ""){
                 while (unit.getMP() > 0)
                     unitController.unitGoForward(unit);
+            } else {
+                unit.setUnitStatus(UnitStatus.AWAKE);
+                unit.setWaitingForCommand(true);
             }
         }
     }
@@ -290,10 +329,14 @@ public class GameController extends Controller {
                     if (((CivilizedUnit) unit).getImprovementType() != null) {
                         workerController.workerBuildImprovement(((CivilizedUnit) unit).getImprovementType());
                         ((CivilizedUnit) unit).setImprovementType(null);
+                        unit.setUnitStatus(UnitStatus.AWAKE);
+                        selectedCivilizedUnit.setWaitingForCommand(true);
                         System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
                     } else if (((CivilizedUnit) unit).getWorkerWorks() != null) {
                         workerController.workerWork(((CivilizedUnit) unit).getWorkerWorks());
                         ((CivilizedUnit) unit).setWorkerWorks(null);
+                        unit.setUnitStatus(UnitStatus.AWAKE);
+                        selectedCivilizedUnit.setWaitingForCommand(false);
                         System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
                     } else System.out.println("ERROR!");
                 }
