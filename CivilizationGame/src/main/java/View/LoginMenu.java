@@ -16,21 +16,21 @@ public class LoginMenu extends Menu {
         String input = scanner.nextLine();
         Matcher commandMatcher;
 
-        if ((commandMatcher = LoginCommands.getMatcher(input, LoginCommands.createUser)).matches()) {
+        if ((commandMatcher = LoginCommands.getMatcher(input, LoginCommands.LOGIN_COMMANDS)).matches()) {
             System.out.println(loginController.createUser(commandMatcher));
 
-        } else if (LoginCommands.getMatcher(input, LoginCommands.listOfUsers).matches()) {
+        } else if (LoginCommands.getMatcher(input, LoginCommands.LIST_OF_USERS).matches()) {
             ArrayList<User> users = Game.getUsers();
             if (users.size() == 0) System.out.println("we have no users right now");
             for (int i = 0; i < users.size(); i++) {
                 System.out.println(i + 1 + "-\t" + users.get(i));
             }
 
-        } else if ((commandMatcher = LoginCommands.getMatcher(input, LoginCommands.loginUser)).matches()) {
+        } else if ((commandMatcher = LoginCommands.getMatcher(input, LoginCommands.LOGIN_USER)).matches()) {
             System.out.println(loginController.loginUser(commandMatcher));
 
 
-        } else if (LoginCommands.getMatcher(input, LoginCommands.exit).matches()) {
+        } else if (LoginCommands.getMatcher(input, LoginCommands.EXIT).matches()) {
             Menu.setMenuName("EXIT");
 
         } else {

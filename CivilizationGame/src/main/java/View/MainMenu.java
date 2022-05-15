@@ -2,9 +2,7 @@ package View;
 
 import Controller.MainController;
 import Enums.MainCommands;
-import Model.Game;
-import Model.Users.User;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -15,7 +13,7 @@ public class MainMenu extends Menu{
     public void run(Scanner scanner) {
         String input = scanner.nextLine();
         Matcher commandMatcher;
-        if ((commandMatcher = MainCommands.getMatcher(input,MainCommands.menuEnter)).matches()){
+        if ((commandMatcher = MainCommands.getMatcher(input,MainCommands.MAIN_COMMANDS)).matches()){
             System.out.println(mainController.menuChange(commandMatcher.group("menuName")));
 
             if(commandMatcher.group("menuName").equals("profile menu"))

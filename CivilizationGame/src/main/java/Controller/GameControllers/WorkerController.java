@@ -54,9 +54,9 @@ public class WorkerController extends GameController {
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes")) {
             if ((Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature() == null &&
-                    Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandType() != LandType.Mountain) ||
-                    (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType() != LandFeatureType.Ice &&
-                            Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType() != LandFeatureType.Watershed)) {
+                    Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandType() != LandType.MOUNTAIN) ||
+                    (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType() != LandFeatureType.ICE &&
+                            Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType() != LandFeatureType.WATERSHED)) {
                 return updateWorkerBuildingStatus(improvementType);
             }
         }
@@ -69,11 +69,11 @@ public class WorkerController extends GameController {
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes")) {
             if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature() == null) {
                 return updateWorkerBuildingStatus(improvementType);
-            } else if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType() != LandFeatureType.Ice) {
+            } else if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType() != LandFeatureType.ICE) {
                 switch (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType()) {
-                    case Jungle -> improvementType = ImprovementType.JUNGLE_FARM;
-                    case Forest -> improvementType = ImprovementType.FOREST_FARM;
-                    case Marsh -> improvementType = ImprovementType.MARSH_FARM;
+                    case JUNGLE -> improvementType = ImprovementType.JUNGLE_FARM;
+                    case FOREST -> improvementType = ImprovementType.FOREST_FARM;
+                    case MARSH -> improvementType = ImprovementType.MARSH_FARM;
                 }
                 if (currentTurnUser.getNation().hasTechnology(improvementType.technology))
                     return updateWorkerBuildingStatus(improvementType);
@@ -91,9 +91,9 @@ public class WorkerController extends GameController {
                 return updateWorkerBuildingStatus(improvementType);
             } else {
                 switch (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType()) {
-                    case Jungle -> improvementType = ImprovementType.JUNGLE_MINE;
-                    case Forest -> improvementType = ImprovementType.FOREST_MINE;
-                    case Marsh -> improvementType = ImprovementType.MARSH_MINE;
+                    case JUNGLE -> improvementType = ImprovementType.JUNGLE_MINE;
+                    case FOREST -> improvementType = ImprovementType.FOREST_MINE;
+                    case MARSH -> improvementType = ImprovementType.MARSH_MINE;
                 }
                 if (currentTurnUser.getNation().hasTechnology(improvementType.technology))
                     return updateWorkerBuildingStatus(improvementType);
@@ -107,15 +107,15 @@ public class WorkerController extends GameController {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature() != null) {
             selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
             switch (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType()) {
-                case Jungle -> {
+                case JUNGLE -> {
                     selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_JUNGLE);
                     selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REMOVE_JUNGLE.turns);
                 }
-                case Forest -> {
+                case FOREST -> {
                     selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_FOREST);
                     selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REMOVE_FOREST.turns);
                 }
-                case Marsh -> {
+                case MARSH -> {
                     selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_MARSH);
                     selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REMOVE_MARSH.turns);
                 }
@@ -217,11 +217,11 @@ public class WorkerController extends GameController {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(improvementType));
         switch (improvementType.currency) {
             //TODO also calculate land's currency's growths for showing them
-            case Coin ->
+            case COIN ->
                     Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addCoinGrowth(improvementType.amount);
-            case Food ->
+            case FOOD ->
                     Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addFoodGrowth(improvementType.amount);
-            case Production ->
+            case PRODUCTION ->
                     Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addProductionGrowth(improvementType.amount);
         }
     }

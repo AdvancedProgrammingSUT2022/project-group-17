@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainCommands {
-    menuEnter("menu enter (?<menuName>.+)"),
+    MAIN_COMMANDS("menu enter (?<menuName>.+)"),
     exit("menu exit"),
     logout("logout"),
     playGame("play game ((?:-p[0-9]+ \\S+(?: )?){2,})");
