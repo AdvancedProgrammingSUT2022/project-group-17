@@ -230,6 +230,10 @@ public class Nation {
         resourceCellar.put(resourceType, resourceCellar.get(resourceType) + 1);
     }
 
+    public void removeResource(ResourceType resourceType){
+        resourceCellar.put(resourceType, resourceCellar.get(resourceType) - 1);
+    }
+
     public void addTechnology(TechnologyType technologyType) {
         technologies.put(technologyType, true);
     }
