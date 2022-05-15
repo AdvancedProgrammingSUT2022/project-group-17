@@ -39,6 +39,7 @@ public class Land {
 
     public Land(LandType landType, int cost) {
         this.landType = landType;
+        this.foodGrowth = landType.foodGrowth;
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
@@ -49,9 +50,9 @@ public class Land {
         if (this.ownerCity != null){
             Nation landOwnerNation = this.ownerCity.getOwnerNation();
 
-            landOwnerNation.getCoin().addBalance(this.coinGrowth);
-            landOwnerNation.getProduction().addBalance(this.productionGrowth);
-            landOwnerNation.getFood().addBalance(this.foodGrowth);
+            landOwnerNation.getCoin().addGrowthRate(this.coinGrowth);
+            landOwnerNation.getProduction().addGrowthRate(this.productionGrowth);
+            landOwnerNation.getFood().addGrowthRate(this.foodGrowth);
         }
     }
     public CivilizedUnit getCivilizedUnit() {

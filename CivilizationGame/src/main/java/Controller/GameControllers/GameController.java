@@ -214,7 +214,7 @@ public class GameController extends Controller {
                //Create Improvement
                nextTurnWorkerWorks(unit);
             }
-            //update Currencies
+            //update Currencies Balances
             userNation.getCoin().addGrowthRateToBalance();
             userNation.getFood().addGrowthRateToBalance();
             userNation.getHappiness().addGrowthRateToBalance();
@@ -237,10 +237,16 @@ public class GameController extends Controller {
                     technologyController.activateTechnology(userNation);
                 }
             }
+
+            //reset GrowthRates
+            userNation.getCoin().setGrowthRate(0);
+            userNation.getProduction().setGrowthRate(0);
+            userNation.getFood().setGrowthRate(0);
+            userNation.getScience().setGrowthRate(0);
+            userNation.getHappiness().setGrowthRate(0);
         }
 
-
-        //update Resources
+        //update GrowthRates
         for (int i = 0; i < Consts.MAP_SIZE.amount.y;i++){
             for (int j = 0; j < Consts.MAP_SIZE.amount.x; j++) {
                 Game.map[i][j].addGrowthToLandOwner();
