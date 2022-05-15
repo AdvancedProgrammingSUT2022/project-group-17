@@ -23,6 +23,7 @@ public class GameController extends Controller {
     protected static CivilizedUnit selectedCivilizedUnit;
     protected static City selectedCity;
     protected static User currentTurnUser;
+    private TechnologyController technologyController;
     private UnitController unitController;
     private WorkerController workerController;
 
@@ -209,6 +210,8 @@ public class GameController extends Controller {
             Nation userNation = user.getNation();
             for (Unit unit : userNation.getUnits()) {
                nextTurnUnitMove(unit);
+
+               //Create Improvement
                nextTurnWorkerWorks(unit);
             }
             //update Currencies
@@ -217,21 +220,32 @@ public class GameController extends Controller {
             userNation.getHappiness().addGrowthRateToBalance();
             userNation.getProduction().addGrowthRateToBalance();
             userNation.getScience().addGrowthRateToBalance();
+
+            //Create Unit => for in cities
+            for (City city : userNation.getCities()) {
+                if (city.hasAnInProgressUnit()){
+                    if (city.getNextUnitTurns() == 0){
+                        unitController.unitCreate(city);
+                    }
+                    city.setNextUnitTurns(city.getNextUnitTurns() - 1);
+                }
+            }
+
+            //update Technology progress
+            if (userNation.getInProgressTechnology() != null){
+                if (userNation.getTechnologyTurns() == 0){
+                    technologyController.activateTechnology(userNation);
+                }
+            }
         }
 
-        //Create Unit => for in cities
-
-        //Create Improvement
 
         //update Resources
         for (int i = 0; i < Consts.MAP_SIZE.amount.y;i++){
             for (int j = 0; j < Consts.MAP_SIZE.amount.x; j++) {
-
                 Game.map[i][j].addGrowthToLandOwner();
             }
         }
-
-        //update Technology progress
 
         LandController.printMap(Game.map);
     }

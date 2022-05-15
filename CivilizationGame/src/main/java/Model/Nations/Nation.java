@@ -32,7 +32,7 @@ public class Nation {
     protected Currency happiness = new Currency(CurrencyType.Happiness);
     protected Currency science = new Currency(CurrencyType.Science);
 
-    protected TechnologyType inProgressTechnology;
+    protected TechnologyType inProgressTechnology = null;
     protected int technologyTurns;
 
 

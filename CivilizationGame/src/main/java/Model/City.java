@@ -31,7 +31,7 @@ public class City {
     protected CivilizedUnitType inProgressCivilizedUnit = null;
     protected CloseCombatUnitType inProgressCloseCombatUnit = null;
     protected RangedCombatUnitType inProgressRangedCombatUnit = null;
-    protected int nextUnitTurns = 0;
+    protected int nextUnitTurns;
     protected Land mainLand;
     protected CloseCombatUnit garrison;
     protected int coinGrowth;
