@@ -4,17 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum WorkerCommands {
-    BUILD_ROAD("worker build road"),
-    BUILD_RAILROAD("worker build railroad"),
-    BUILD_FARM("worker build farm"),
-    BUILD_MINE("worker build mine"),
-    BUILD_TRADING_POST("worker build trading post"),
-    BUILD_LUMBER_MILL("worker build lumberMill"),
-    BUILD_PASTURE("worker build pasture"),
-    BUILD_CAMP("worker build camp"),
-    BUILD_PLANTATION("worker build plantation"),
-    BUILD_QUARRY("worker build quarry"),
-    BUILD_FACTORY("worker build factory"),
+    BUILD_IMPROVEMENT("worker build (?<name>.+)"),
     REPAIR_IMPROVEMENT("worker repair improvement"),
     REMOVE_FEATURE("worker remove feature"),
     REMOVE_ROUTE("worker remove route");

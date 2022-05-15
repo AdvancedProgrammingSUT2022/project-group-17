@@ -10,8 +10,8 @@ public class CivilizedUnit extends Unit {
 
     protected CivilizedUnitType civilizedUnitType;
     protected int turnsLeft;
-    protected ImprovementType improvementType;
-    protected WorkerWorks workerWorks;
+    protected ImprovementType improvementType = null;
+    protected WorkerWorks workerWorks = null;
 
     public CivilizedUnit(CivilizedUnitType civilizedUnitType, Nation ownerNation, Pair location) {
         super(civilizedUnitType.name, civilizedUnitType.cost, civilizedUnitType.MP, civilizedUnitType.resourceType,

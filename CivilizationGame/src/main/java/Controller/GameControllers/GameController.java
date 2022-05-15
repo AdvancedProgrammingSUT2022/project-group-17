@@ -162,10 +162,8 @@ public class GameController extends Controller {
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
         if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null) {
-            if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit().getUnitStatus() != UnitStatus.WORKING) {
-                selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
-                return (selectedCivilizedUnit.getName() + " is now selected");
-            } else return "The civilized unit is busy now!";
+            selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
+            return (selectedCivilizedUnit.getName() + " is now selected");
         }
         return ("There is no civilized unit here!");
     }

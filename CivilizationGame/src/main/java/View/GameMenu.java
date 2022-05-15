@@ -67,38 +67,8 @@ public class GameMenu extends Menu{
             gameController.nextPlayerTurn();
 
         // Improvements
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PASTURE).matches()) {
-            System.out.println(workerController.setWorkerToBuildResourcedImprovement(ImprovementType.PASTURE));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_FARM).matches()) {
-            System.out.println(workerController.setWorkerToBuildFarm());
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_MINE).matches()) {
-            System.out.println(workerController.setWorkerToBuildMine());
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_CAMP).matches()) {
-            System.out.println(workerController.setWorkerToBuildResourcedImprovement(ImprovementType.CAMP));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_LUMBER_MILL).matches()) {
-            System.out.println(workerController.setWorkerToBuildNonResourcedImprovement(ImprovementType.LUMBER_MILL));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_PLANTATION).matches()) {
-            System.out.println(workerController.setWorkerToBuildResourcedImprovement(ImprovementType.PLANTATION));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_QUARRY).matches()) {
-            System.out.println(workerController.setWorkerToBuildResourcedImprovement(ImprovementType.QUARRY));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_RAILROAD).matches()) {
-            System.out.println(workerController.setWorkerToBuildRoad(ImprovementType.RAILROAD));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_ROAD).matches()) {
-            System.out.println(workerController.setWorkerToBuildRoad(ImprovementType.ROAD));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_TRADING_POST).matches()) {
-            System.out.println(workerController.setWorkerToBuildNonResourcedImprovement(ImprovementType.TRADING_POST));
-
-        } else if (WorkerCommands.getMatcher(input, WorkerCommands.BUILD_FACTORY).matches()) {
-            System.out.println(workerController.setWorkerToBuildNonResourcedImprovement(ImprovementType.FACTORY));
+        } else if ((commandMatcher = WorkerCommands.getMatcher(input, WorkerCommands.BUILD_IMPROVEMENT)).matches()) {
+            System.out.println(workerController.setWorkerToBuildImprovement(commandMatcher));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.REPAIR_IMPROVEMENT).matches()) {
             System.out.println(workerController.setWorkerToRepair());
