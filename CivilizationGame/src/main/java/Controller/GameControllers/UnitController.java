@@ -201,14 +201,38 @@ public class UnitController extends GameController {
     }
 
     public String unitSetCityTarget(){
+        int cityX = -1, cityY = -1;
+        main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.map[i][j].equals(selectedCity.getMainLand())){
+                    cityX = i;
+                    cityY = j;
+                    break main;
+                }
+            }
+        }
         if (selectedCity != null && selectedCombatUnit != null){
-            //if are neighbors
-            if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
-                selectedCombatUnit.setTargetCity(selectedCity);
-            }
-            else{
-                return "Can't attack owner nation's city";
-            }
+            if ((selectedCombatUnit instanceof CloseCombatUnit &&
+                    LandController.areNeighbors(new Pair(cityX, cityY), selectedCombatUnit.getLocation()))){
+                if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
+                    selectedCombatUnit.setTargetCity(selectedCity);
+                }
+                else{
+                    return "Can't attack owner nation's city";
+                }
+            }else if(selectedCombatUnit instanceof  RangedCombatUnit){
+                if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <=
+                        Game.dist.get(new LandPair(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y],
+                                selectedCity.getMainLand()))){
+                    if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
+                        selectedCombatUnit.setTargetCity(selectedCity);
+                    }
+                    else{
+                        return "Can't attack owner nation's city";
+                    }
+                }
+            }else
+                return "Not in range";
         }
         unitAttackCity(selectedCombatUnit);
         return "Attack successful";
