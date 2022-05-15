@@ -1,6 +1,7 @@
 package Controller.GameControllers;
 
 import Controller.Controller;
+import Enums.Consts;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Technologies.Technology;
@@ -20,6 +21,7 @@ public class GameController extends Controller {
     protected static CivilizedUnit selectedCivilizedUnit;
     protected static City selectedCity;
     protected static User currentTurnUser;
+    private UnitController unitController;
 
 
     public static User getCurrentTurnUser() {
@@ -189,8 +191,8 @@ public class GameController extends Controller {
     }
 
     public void nextPlayerTurn() {
-        Game.setSubTurn(Game.getSubTurn() + 1);
         currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
+        Game.setSubTurn(Game.getSubTurn() + 1);
         if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
             nextGameTurn();
             Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
@@ -199,6 +201,52 @@ public class GameController extends Controller {
 
     public void nextGameTurn() {
         Game.setTurn(Game.getTurn() + 1);
+
+        for (User user : Game.getPlayersInGame()) {
+            Nation userNation = user.getNation();
+            for (Unit unit : userNation.getUnits()) {
+               nextTurnUnitMove(unit);
+            }
+            //update Currencies
+            userNation.getCoin().addGrowthRateToBalance();
+            userNation.getFood().addGrowthRateToBalance();
+            userNation.getHappiness().addGrowthRateToBalance();
+            userNation.getProduction().addGrowthRateToBalance();
+            userNation.getScience().addGrowthRateToBalance();
+        }
+
+        //Create Unit => for in cities
+
+        //Create Improvement
+
+        //update Resources
+        for (int i = 0; i < Consts.MAP_SIZE.amount.y;i++){
+            for (int j = 0; j < Consts.MAP_SIZE.amount.x; j++) {
+
+                Game.map[i][j].addGrowthToLandOwner();
+            }
+        }
+
+        //update Technology progress
+
+        LandController.printMap(Game.map);
+    }
+
+    public void nextTurnUnitMove(Unit unit){
+        if (unit instanceof CivilizedUnit){
+            unit.setMP(((CivilizedUnit) unit).getCivilizedUnitType().MP);
+        }else if (unit instanceof  CloseCombatUnit){
+            unit.setMP(((CloseCombatUnit) unit).getCloseCombatUnitType().MP);
+        }else if (unit instanceof  RangedCombatUnit){
+            unit.setMP(((RangedCombatUnit) unit).getRangedCombatUnitType().MP);
+        }
+
+        if (unit.getUnitStatus() == UnitStatus.ALERT || unit.getUnitStatus() == UnitStatus.AWAKE || unit.getUnitStatus() == UnitStatus.FORTIFY){
+            if (unit.getPath() != ""){
+                while (unit.getMP() > 0)
+                    unitController.unitGoForward(unit);
+            }
+        }
     }
 
     public void saveGame() {

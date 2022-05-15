@@ -13,6 +13,10 @@ public class Currency {
         this.balance = 0;
     }
 
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     public int getGrowthRate() {
         return growthRate;
     }
@@ -31,5 +35,9 @@ public class Currency {
 
     public void addBalance(int balance) {
         this.balance += balance;
+    }
+
+    public void addGrowthRateToBalance(){
+        this.balance += this.growthRate;
     }
 }
