@@ -229,7 +229,13 @@ public class GameController extends Controller {
                     }
                     city.setNextUnitTurns(city.getNextUnitTurns() - 1);
                 }
+
+                //unhappiness update
+                userNation.getHappiness().addBalance(-city.getCitizens()/3);
             }
+
+            //unhappiness update
+            userNation.getHappiness().addBalance(-userNation.getCities().size());
 
             //update Technology progress
             if (userNation.getInProgressTechnology() != null){
@@ -244,6 +250,7 @@ public class GameController extends Controller {
             userNation.getFood().setGrowthRate(0);
             userNation.getScience().setGrowthRate(0);
             userNation.getHappiness().setGrowthRate(0);
+            
         }
 
         //update GrowthRates

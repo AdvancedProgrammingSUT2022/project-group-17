@@ -42,6 +42,7 @@ public class Nation {
         initializeTechnologies();
         initializeResourceCellar();
         initializeBuildings();
+        this.getHappiness().setBalance(100);
     }
 
     private void initializeTechnologies() {

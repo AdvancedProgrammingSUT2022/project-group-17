@@ -170,6 +170,7 @@ public class CityController extends GameController {
         Nation previousNation = city.getOwnerNation();
         city.setOwnerNation(nextNation);
         previousNation.removeCity(city);
+        nextNation.getHappiness().addBalance(-10);
     }
 
 
