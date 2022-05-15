@@ -2,6 +2,7 @@ package Controller.GameControllers;
 
 import Controller.Controller;
 import Enums.Consts;
+import Model.Improvements.ImprovementType;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Technologies.Technology;
@@ -10,6 +11,7 @@ import Model.Units.*;
 import Model.City;
 import Model.Game;
 import Model.Units.CombatUnit;
+import Model.Units.Enums.CivilizedUnitType;
 import Model.Units.Enums.UnitStatus;
 import Model.Users.User;
 
@@ -22,6 +24,7 @@ public class GameController extends Controller {
     protected static City selectedCity;
     protected static User currentTurnUser;
     private UnitController unitController;
+    private WorkerController workerController;
 
 
     public static User getCurrentTurnUser() {
@@ -206,6 +209,7 @@ public class GameController extends Controller {
             Nation userNation = user.getNation();
             for (Unit unit : userNation.getUnits()) {
                nextTurnUnitMove(unit);
+               nextTurnWorkerWorks(unit);
             }
             //update Currencies
             userNation.getCoin().addGrowthRateToBalance();
@@ -245,6 +249,27 @@ public class GameController extends Controller {
             if (unit.getPath() != ""){
                 while (unit.getMP() > 0)
                     unitController.unitGoForward(unit);
+            }
+        }
+    }
+
+    private void nextTurnWorkerWorks(Unit unit) {
+        if (unit instanceof CivilizedUnit &&
+                ((CivilizedUnit) unit).getCivilizedUnitType() == CivilizedUnitType.WORKER) {
+            if (unit.getUnitStatus() == UnitStatus.WORKING) {
+                if (((CivilizedUnit) unit).getTurnsLeft() != 0) {
+                    ((CivilizedUnit) unit).decreaseTurnsLeft(1);
+                } else {
+                    if (((CivilizedUnit) unit).getImprovementType() != null) {
+                        workerController.workerBuildImprovement(((CivilizedUnit) unit).getImprovementType());
+                        ((CivilizedUnit) unit).setImprovementType(null);
+                        System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
+                    } else if (((CivilizedUnit) unit).getWorkerWorks() != null) {
+                        workerController.workerWork(((CivilizedUnit) unit).getWorkerWorks());
+                        ((CivilizedUnit) unit).setWorkerWorks(null);
+                        System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
+                    } else System.out.println("ERROR!");
+                }
             }
         }
     }

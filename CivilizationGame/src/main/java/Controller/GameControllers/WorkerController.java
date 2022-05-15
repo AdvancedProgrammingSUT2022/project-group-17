@@ -169,6 +169,26 @@ public class WorkerController extends GameController {
     }
 
 
+    public void workerBuildImprovement (ImprovementType improvementType) {
+        switch (improvementType) {
+            case FARM -> workerBuildFarm();
+            case JUNGLE_FARM, FOREST_FARM, MARSH_FARM -> workerBuildSpecialFarm(improvementType);
+            case MINE -> workerBuildMine();
+            case JUNGLE_MINE, FOREST_MINE, MARSH_MINE -> workerBuildSpecialMine(improvementType);
+            case CAMP, PASTURE, PLANTATION, QUARRY -> workerBuildResourcedImprovement(improvementType);
+            case LUMBER_MILL, TRADING_POST, FACTORY -> workerBuildNonResourcedImprovement(improvementType);
+            case ROAD, RAILROAD -> workerBuildRoad(improvementType);
+        }
+    }
+
+    public void workerWork (WorkerWorks workerWorks) {
+        switch (workerWorks) {
+            case REPAIR -> workerRepair();
+            case REMOVE_ROUTE -> workerRemoveRoute();
+            case REMOVE_JUNGLE, REMOVE_FOREST, REMOVE_MARSH -> workerRemoveFeature();
+        }
+    }
+
     public void workerBuildRoad(ImprovementType improvementType) {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setRoute(new Improvement(improvementType));
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setMovementCost(0);
@@ -238,7 +258,7 @@ public class WorkerController extends GameController {
     private String canGenerallyBuildImprovement(ImprovementType improvementType) {
         if (selectedCivilizedUnit != null) {
             if (selectedCivilizedUnit.getCivilizedUnitType() == CivilizedUnitType.WORKER) {
-                if (selectedCivilizedUnit.getWorkerWorks() == null && selectedCivilizedUnit.getImprovementType() == null) {
+                if (selectedCivilizedUnit.getUnitStatus() != UnitStatus.WORKING) {
                     if (currentTurnUser.getNation().hasTechnology(improvementType.technology)) {
                         if (improvementType == ImprovementType.ROAD || improvementType == ImprovementType.RAILROAD) {
                             if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getRoute() == null) {

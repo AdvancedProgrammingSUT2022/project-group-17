@@ -40,6 +40,10 @@ public class CivilizedUnit extends Unit {
         this.turnsLeft = turnsLeft;
     }
 
+    public void decreaseTurnsLeft(int amount) {
+        this.turnsLeft -= amount;
+    }
+
     public void setImprovementType(ImprovementType improvementType) {
         this.improvementType = improvementType;
     }
