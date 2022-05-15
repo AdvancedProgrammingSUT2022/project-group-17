@@ -9,6 +9,10 @@ public enum UnitCommands {
     UNIT_ATTACK("unit attack city"),
     CREATE_UNIT("create a (?<name>\\S+) unit with type (?<type>[a-zA-Z ]+)"),
     PURCHASE_UNIT("purchase a (?<name>\\S+) unit with type (?<type>[a-zA-Z ]+)"),
+    COMBAT_UNIT_ACTION("combat unit -a (?<action>.+)"),
+    UNIT_SLEEP("unit sleep"),
+    UNIT_WAKE("unit wake"),
+    UNIT_DELETE("unit delete"),
     ;
     private final String regex;
 

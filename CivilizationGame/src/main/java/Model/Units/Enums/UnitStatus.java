@@ -7,5 +7,6 @@ public enum UnitStatus {
     ALERT(),
     FORTIFY_UNTIL_HILL(),
     GARRISON(),
-    WORKING();
+    WORKING(),
+    MOVING();
 }

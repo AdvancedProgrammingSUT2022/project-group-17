@@ -24,6 +24,7 @@ public class WorkerController extends GameController {
                 toBeBuiltImprovement = improvementType;
         }
         if (toBeBuiltImprovement != null) {
+            selectedCivilizedUnit.setWaitingForCommand(false);
             switch (name) {
                 case "Farm" -> {
                     return setWorkerToBuildFarm();
@@ -108,6 +109,7 @@ public class WorkerController extends GameController {
     public String setWorkerToRemoveFeature() {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature() != null) {
             selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
+            selectedCivilizedUnit.setWaitingForCommand(false);
             switch (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType()) {
                 case Jungle -> {
                     selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_JUNGLE);
@@ -129,6 +131,7 @@ public class WorkerController extends GameController {
 
     public String setWorkerToRemoveRoute() {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getRoute() != null) {
+            selectedCivilizedUnit.setWaitingForCommand(false);
             selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
             selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_ROUTE);
             selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REMOVE_ROUTE.turns);
@@ -140,6 +143,7 @@ public class WorkerController extends GameController {
     public String setWorkerToRepair() {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getImprovement() != null) {
             if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getImprovement().isBroken()) {
+                selectedCivilizedUnit.setWaitingForCommand(false);
                 selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
                 selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REPAIR);
                 selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REPAIR.turns);
