@@ -135,4 +135,7 @@ public class Unit {
         return targetUnit;
     }
 
+    public void setUnitStatus(UnitStatus unitStatus) {
+        this.unitStatus = unitStatus;
+    }
 }

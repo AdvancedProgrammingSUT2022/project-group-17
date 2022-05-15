@@ -9,6 +9,7 @@ import Model.Units.*;
 import Model.City;
 import Model.Game;
 import Model.Units.CombatUnit;
+import Model.Units.Enums.UnitStatus;
 import Model.Users.User;
 
 import java.util.ArrayList;
