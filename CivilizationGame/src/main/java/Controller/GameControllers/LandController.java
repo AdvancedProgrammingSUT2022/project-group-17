@@ -210,7 +210,7 @@ public class LandController extends Controller {
 
     public static boolean areNeighbors(Pair land1, Pair land2){
         for (int i = 0; i < 6; i++) {
-            if (land2 == getNeighborIndex(land1, i))
+            if (land2.equals(getNeighborIndex(land1, i)))
                 return true;
         }
         return false;
@@ -218,7 +218,7 @@ public class LandController extends Controller {
 
     public static int getIndex(Pair land1, Pair land2){
         for (int i = 0; i < 6; i++) {
-            if (land2 == getNeighborIndex(land1, i))
+            if (land2.equals(getNeighborIndex(land1, i)))
                 return i;
         }
         return -1;
@@ -289,23 +289,35 @@ public class LandController extends Controller {
         return Game.map[x][y];
     }
 
+    public static int getLandNumber(Land land){
+        int num = -1;
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.map[i][j].equals(land))
+                    num = i * Consts.MAP_SIZE.amount.x + j;
+            }
+        }
+        return num;
+    }
+
     public static void initializeDistances(){
-        for (int i1 = 0; i1 < 10; i1++) {
-            for (int j1 = 0; j1 < 10; j1++) {
-                for (int i2 = 0; i2 < 10; i2++) {
-                    for (int j2 = 0; j2 < 10; j2++) {
+        for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
+            for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
+                for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {
+                    for (int j2 = 0; j2 < Consts.MAP_SIZE.amount.y; j2++) {
                         Land land1 = getLandByCoordinates(i1, j1);
                         Land land2 = getLandByCoordinates(i2, j2);
-                        LandPair dist = new LandPair(land1, land2);
-                        if (i1 == i2 && j1 == j2){
-                            Game.dist.put(dist, 0);
-                            Game.path.put(dist, "");
-                        }else   if (areNeighbors(new Pair(i1, j1), new Pair(i2, j2))){
-                            Game.dist.put(dist, land2.getMP());
-                            Game.path.put(dist, "" + getIndex(new Pair(i1, j1), new Pair(i2, j2)));
+                        int num1 = getLandNumber(land1);
+                        int num2 = getLandNumber(land2);
+                        if (num1 == num2){
+                            Game.dist[num1][num2] = 0;
+                            Game.path[num1][num2] = "";
+                        }else if (areNeighbors(new Pair(i1, j1), new Pair(i2, j2))){
+                            Game.dist[num1][num2] = land2.getMP();
+                            Game.path[num1][num2] = "" + getIndex(new Pair(i1, j1), new Pair(i2, j2));
                         }else{
-                            Game.dist.put(dist, 1000);
-                            Game.path.put(dist, "");
+                            Game.dist[num1][num2] = 1000;
+                            Game.path[num1][num2] = "";
                         }
                     }
                 }
@@ -314,21 +326,21 @@ public class LandController extends Controller {
     }
 
     public static void updateDistances(){
-        for (int i1 = 0; i1 < 10; i1++) {
-            for (int j1 = 0; j1 < 10; j1++) {
-                for (int i2 = 0; i2 < 10; i2++) {
-                    for (int j2 = 0; j2 < 10; j2++) {
-                        for (int i3 = 0; i3 < 10; i3++) {
-                            for (int j3 = 0; j3 < 10; j3++) {
+        for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
+            for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
+                for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {
+                    for (int j2 = 0; j2 < Consts.MAP_SIZE.amount.y; j2++) {
+                        for (int i3 = 0; i3 < Consts.MAP_SIZE.amount.x; i3++) {
+                            for (int j3 = 0; j3 < Consts.MAP_SIZE.amount.y; j3++) {
                                 Land firstLand = getLandByCoordinates(i1, j1);
                                 Land secondLand = getLandByCoordinates(i2, j2);
                                 Land thirdLand = getLandByCoordinates(i3, j3);
-                                LandPair firstDist = new LandPair(firstLand, thirdLand);
-                                LandPair secondDist = new LandPair(firstLand, secondLand);
-                                LandPair thirdDist = new LandPair(secondLand, thirdLand);
-                                if (Game.dist.get(firstDist) < Game.dist.get(secondDist) + Game.dist.get(thirdDist)){
-                                    Game.dist.put(firstDist, Game.dist.get(secondDist) + Game.dist.get(thirdDist));
-                                    Game.path.put(firstDist, Game.path.get(secondDist) + Game.path.get(thirdDist));
+                                int num1 = getLandNumber(firstLand);
+                                int num2 = getLandNumber(secondLand);
+                                int num3 = getLandNumber(thirdLand);
+                                if (Game.dist[num1][num2] + Game.dist[num2][num3] < Game.dist[num1][num3]){
+                                    Game.dist[num1][num3] = Game.dist[num1][num2] + Game.dist[num2][num3];
+                                    Game.path[num1][num3] = Game.path[num1][num2] + Game.path[num2][num3];
                                 }
                             }
                         }

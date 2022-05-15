@@ -149,7 +149,7 @@ public class UnitController extends GameController {
         return minPathCost;
     }
 
-    public void unitSetPath(Matcher matcher, int selection){
+    public String unitSetPath(Matcher matcher, int selection){
         Unit selectedUnit;
         if (selection == 1)
             selectedUnit = selectedCombatUnit;
@@ -159,10 +159,16 @@ public class UnitController extends GameController {
         int y = Integer.parseInt(matcher.group("y"));
         Land origin = Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
         Land dest = Game.map[x][y];
-        if (Game.dist.get(new LandPair(origin, dest)) < 1000)
-            selectedUnit.setPath(Game.path.get(new LandPair(origin, dest)));
+        int originNum = LandController.getLandNumber(origin);
+        int destNum = LandController.getLandNumber(dest);
+        System.out.println(Game.path[originNum][destNum] + "   " + selectedUnit.getMP() + "   " + dest.getMP());
+        if (Game.dist[originNum][destNum] < 1000)
+            selectedUnit.setPath(Game.path[originNum][destNum]);
+        else
+            return "Unit can't reach there";
         while (selectedUnit.getMP() > 0)
             unitGoForward(selectedUnit);
+        return "Unit moved successfully";
     }
 
     public static void unitGoForward(Unit unit){
@@ -270,9 +276,9 @@ public class UnitController extends GameController {
                     return "Can't attack owner nation's city";
                 }
             }else if(selectedCombatUnit instanceof  RangedCombatUnit){
-                if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <=
-                        Game.dist.get(new LandPair(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y],
-                                selectedCity.getMainLand()))){
+                int unitNum = LandController.getLandNumber(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
+                int cityNum = LandController.getLandNumber(selectedCity.getMainLand());
+                if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.dist[unitNum][cityNum]){
                     if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
                         selectedCombatUnit.setTargetCity(selectedCity);
                     }
@@ -298,7 +304,7 @@ public class UnitController extends GameController {
         }
     }
 
-    public void unitDeath(Unit unit){
+    public static void unitDeath(Unit unit){
         Nation nation = unit.getOwnerNation();
         nation.removeUnit(unit);
         unit = null;

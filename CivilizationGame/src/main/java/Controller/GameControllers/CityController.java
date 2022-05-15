@@ -6,6 +6,7 @@ import Model.Improvements.Improvement;
 import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Pair;
+import Model.Units.Enums.CivilizedUnitType;
 
 import java.util.regex.Matcher;
 
@@ -14,6 +15,8 @@ public class CityController extends GameController {
     public String buildCity(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
+        if (Game.getTurn() != 0 && (selectedCivilizedUnit == null || !selectedCivilizedUnit.getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)))
+            return "You need to select a settler first";
         Pair main = new Pair(x, y);
         if (isCityBuildable(main)){
             City city = new City(currentTurnUser.getNation());
@@ -30,12 +33,16 @@ public class CityController extends GameController {
                 if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
+            if (Game.getTurn() != 0)
+                UnitController.unitDeath(selectedCivilizedUnit);
             return "City built successfully";
         }
         return "Can't build a city here";
     }
 
     public boolean isCityBuildable(Pair main){
+        if (Game.map[main.x][main.y].getLandType().isWalkable == false)
+            return false;
         Pair neighbors[] = new Pair[6];
         for (int i = 0; i < 6; i++)
             neighbors[i] = LandController.getNeighborIndex(main, i);

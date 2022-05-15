@@ -10,4 +10,5 @@ public class LandPair {
         this.first = first;
         this.second = second;
     }
+
 }

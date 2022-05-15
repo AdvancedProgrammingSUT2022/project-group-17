@@ -49,9 +49,9 @@ public class GameMenu extends Menu {
         } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_CITY)).matches()) {
             System.out.println(gameController.selectCity(commandMatcher));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CIVILIZED_UNIT_MOVE_TO)).matches()){
-            unitController.unitGoToDestination(commandMatcher, 0);
+            System.out.println(unitController.unitSetPath(commandMatcher, 0));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.COMBAT_UNIT_MOVE_TO)).matches()){
-            unitController.unitGoToDestination(commandMatcher, 1);
+            System.out.println(unitController.unitSetPath(commandMatcher, 1));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUILD_CITY)).matches()) {
             System.out.println(cityController.buildCity(commandMatcher));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUY_LAND)).matches()) {

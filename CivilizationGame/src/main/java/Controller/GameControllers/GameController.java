@@ -154,6 +154,8 @@ public class GameController extends Controller {
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
         if (Game.map[selectedLandI][selectedLandJ].getCombatUnit() != null) {
+            if (!Game.map[selectedLandI][selectedLandJ].getCombatUnit().getOwnerNation().equals(currentTurnUser.getNation()))
+                return "You can't select opponent's unit";
             selectedCombatUnit = Game.map[selectedLandI][selectedLandJ].getCombatUnit();
             return (selectedCombatUnit.getName() + " is now selected");
         }
@@ -165,6 +167,8 @@ public class GameController extends Controller {
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
         if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null) {
+            if (!Game.map[selectedLandI][selectedLandJ].getCivilizedUnit().getOwnerNation().equals(currentTurnUser.getNation()))
+                return "You can't select opponent's unit";
             selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
             return (selectedCivilizedUnit.getName() + " is now selected");
         }
@@ -176,6 +180,8 @@ public class GameController extends Controller {
         int y = Integer.parseInt(matcher.group("y"));
 
         if (Game.map[x][y].getOwnerCity() != null) {
+            if (!Game.map[x][y].getOwnerCity().getOwnerNation().equals(currentTurnUser.getNation()))
+                return "You can't select opponent's city";
             selectedCity = Game.map[x][y].getOwnerCity();
             return (selectedCity.getName() + " is now selected");
         }
@@ -193,8 +199,11 @@ public class GameController extends Controller {
 
             public String nextPlayerTurn () {
                 if (isReadyForNextTurn()) {
-                    currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
+                    selectedCity = null;
+                    selectedCivilizedUnit = null;
+                    selectedCombatUnit = null;
                     Game.setSubTurn(Game.getSubTurn() + 1);
+                    currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
                     if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
                         nextGameTurn();
                         Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
@@ -216,7 +225,6 @@ public class GameController extends Controller {
                 Game.setTurn(Game.getTurn() + 1);
 
                 for (User user : Game.getPlayersInGame()) {
-                    System.out.println(user.getUsername());
                     Nation userNation = user.getNation();
                     for (Unit unit : userNation.getUnits()) {
                         nextTurnUnitMove(unit);
@@ -274,7 +282,7 @@ public class GameController extends Controller {
                     }
                 }
 
-                //LandController.updateDistances();
+                LandController.updateDistances();
                 LandController.printMap(Game.map);
             }
 
