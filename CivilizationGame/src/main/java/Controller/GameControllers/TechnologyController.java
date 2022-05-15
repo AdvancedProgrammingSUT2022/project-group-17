@@ -14,9 +14,11 @@ public class TechnologyController extends GameController {
         Nation nation = currentTurnUser.getNation();
         for (TechnologyType technologyType : TechnologyType.values()) {
             if (technologyType.name.equals(type)){
-                for (TechnologyType father : technologyType.fathers) {
-                    if (!nation.hasTechnology(father)){
-                        return "You don't have the required technologies";
+                if (technologyType.fathers != null){
+                    for (TechnologyType father : technologyType.fathers) {
+                        if (!nation.hasTechnology(father)){
+                            return "You don't have the required technologies";
+                        }
                     }
                 }
                 nation.setInProgressTechnology(technologyType);
@@ -27,7 +29,7 @@ public class TechnologyController extends GameController {
         return "invalid command";
     }
 
-    public void activateTechnology(Nation nation){
+    public static void activateTechnology(Nation nation){
         nation.addTechnology(nation.getInProgressTechnology());
         nation.setInProgressTechnology(null);
         nation.setTechnologyTurns(-1);

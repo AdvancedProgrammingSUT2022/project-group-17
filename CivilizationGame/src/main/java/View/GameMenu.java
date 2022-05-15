@@ -49,9 +49,9 @@ public class GameMenu extends Menu{
         } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_CITY)).matches()) {
             System.out.println(gameController.selectCity(commandMatcher));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CIVILIZED_UNIT_MOVE_TO)).matches()){
-            unitController.unitSetPath(commandMatcher, 0);
+            unitController.unitGoToDestination(commandMatcher, 0);
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.COMBAT_UNIT_MOVE_TO)).matches()){
-            unitController.unitSetPath(commandMatcher, 1);
+            unitController.unitGoToDestination(commandMatcher, 1);
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUILD_CITY)).matches()){
             System.out.println(cityController.buildCity(commandMatcher));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUY_LAND)).matches()){
@@ -105,7 +105,7 @@ public class GameMenu extends Menu{
             System.out.println(unitController.unitSetCityTarget());
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()){
             System.out.println(unitController.unitStartCreation(commandMatcher));
-        } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()){
+        } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.PURCHASE_UNIT)).matches()){
             System.out.println(unitController.purchaseUnit(commandMatcher));
         } else if ((commandMatcher = TechnologyCommands.getMatcher(input, TechnologyCommands.ADD_TECHNOLOGY)).matches()){
             System.out.println(technologyController.addTechnology(commandMatcher));

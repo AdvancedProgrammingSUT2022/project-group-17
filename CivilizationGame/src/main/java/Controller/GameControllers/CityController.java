@@ -17,6 +17,7 @@ public class CityController extends GameController {
         Pair main = new Pair(x, y);
         if (isCityBuildable(main)){
             City city = new City(currentTurnUser.getNation());
+            currentTurnUser.getNation().addCity(city);
             Land mainLand = Game.map[x][y];
             mainLand.setCityCenter(true);
             mainLand.setOwnerCity(city);
@@ -90,6 +91,8 @@ public class CityController extends GameController {
     }
 
     public String cityBuyLand(Matcher matcher){
+        if (selectedCity == null)
+            return "you have to select a city first";
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair landPair = new Pair(x, y);
@@ -101,7 +104,7 @@ public class CityController extends GameController {
         boolean canBuy = false;
         for (int i = 0; i < 6; i++) {
             if (Pair.isValid(neighbors[i])){
-                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity))
+                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity() != null && Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity))
                     canBuy = true;
             }
         }

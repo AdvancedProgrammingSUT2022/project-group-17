@@ -23,9 +23,9 @@ public class GameController extends Controller {
     protected static CivilizedUnit selectedCivilizedUnit;
     protected static City selectedCity;
     protected static User currentTurnUser;
-    private TechnologyController technologyController;
-    private UnitController unitController;
-    private WorkerController workerController;
+
+
+
 
 
     public static User getCurrentTurnUser() {
@@ -180,7 +180,7 @@ public class GameController extends Controller {
 
         if (Game.map[x][y].getOwnerCity() != null) {
             selectedCity = Game.map[x][y].getOwnerCity();
-            return (selectedCity + " is now selected");
+            return (selectedCity.getName() + " is now selected");
         }
         return "There is no city here!";
 
@@ -195,8 +195,8 @@ public class GameController extends Controller {
     }
 
     public void nextPlayerTurn() {
-        currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
         Game.setSubTurn(Game.getSubTurn() + 1);
+        currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
         if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
             nextGameTurn();
             Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
@@ -207,6 +207,7 @@ public class GameController extends Controller {
         Game.setTurn(Game.getTurn() + 1);
 
         for (User user : Game.getPlayersInGame()) {
+            System.out.println(user.getUsername());
             Nation userNation = user.getNation();
             for (Unit unit : userNation.getUnits()) {
                nextTurnUnitMove(unit);
@@ -225,7 +226,7 @@ public class GameController extends Controller {
             for (City city : userNation.getCities()) {
                 if (city.hasAnInProgressUnit()){
                     if (city.getNextUnitTurns() == 0){
-                        unitController.unitCreate(city);
+                        UnitController.unitCreate(city);
                     }
                     city.setNextUnitTurns(city.getNextUnitTurns() - 1);
                 }
@@ -240,8 +241,9 @@ public class GameController extends Controller {
             //update Technology progress
             if (userNation.getInProgressTechnology() != null){
                 if (userNation.getTechnologyTurns() == 0){
-                    technologyController.activateTechnology(userNation);
+                    TechnologyController.activateTechnology(userNation);
                 }
+                userNation.setTechnologyTurns(userNation.getTechnologyTurns() - 1);
             }
 
             //reset GrowthRates
@@ -260,6 +262,7 @@ public class GameController extends Controller {
             }
         }
 
+        //LandController.updateDistances();
         LandController.printMap(Game.map);
     }
 
@@ -275,7 +278,7 @@ public class GameController extends Controller {
         if (unit.getUnitStatus() == UnitStatus.ALERT || unit.getUnitStatus() == UnitStatus.AWAKE || unit.getUnitStatus() == UnitStatus.FORTIFY){
             if (unit.getPath() != ""){
                 while (unit.getMP() > 0)
-                    unitController.unitGoForward(unit);
+                    UnitController.unitGoForward(unit);
             }
         }
     }
@@ -288,11 +291,11 @@ public class GameController extends Controller {
                     ((CivilizedUnit) unit).decreaseTurnsLeft(1);
                 } else {
                     if (((CivilizedUnit) unit).getImprovementType() != null) {
-                        workerController.workerBuildImprovement(((CivilizedUnit) unit).getImprovementType());
+                        WorkerController.workerBuildImprovement(((CivilizedUnit) unit).getImprovementType());
                         ((CivilizedUnit) unit).setImprovementType(null);
                         System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
                     } else if (((CivilizedUnit) unit).getWorkerWorks() != null) {
-                        workerController.workerWork(((CivilizedUnit) unit).getWorkerWorks());
+                        WorkerController.workerWork(((CivilizedUnit) unit).getWorkerWorks());
                         ((CivilizedUnit) unit).setWorkerWorks(null);
                         System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
                     } else System.out.println("ERROR!");

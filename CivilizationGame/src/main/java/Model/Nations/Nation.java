@@ -274,4 +274,8 @@ public class Nation {
     public void setTechnologyTurns(int technologyTurns) {
         this.technologyTurns = technologyTurns;
     }
+
+    public void addCity(City city){
+        this.cities.add(city);
+    }
 }
