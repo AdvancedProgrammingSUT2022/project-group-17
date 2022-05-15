@@ -1,5 +1,7 @@
 import Controller.GameControllers.LandController;
 import Model.Game;
+import Model.LandPair;
+import Model.Lands.Land;
 import Model.Pair;
 import View.*;
 
@@ -24,8 +26,7 @@ public class Main {
         String currentMenu = "LoginMenu";
         Scanner scanner = new Scanner(System.in);
         LandController.printMap(Game.map);
-//        LandController.initializeDistances();
-//        LandController.updateDistances();
+        LandController.initializeDistances();
         while (!currentMenu.equals("EXIT")) {
             menus[menuNumbers.get(currentMenu)].run(scanner);
             currentMenu = Menu.getMenuName();
