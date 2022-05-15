@@ -20,6 +20,7 @@ public class CityController extends GameController {
             Land mainLand = Game.map[x][y];
             mainLand.setCityCenter(true);
             mainLand.setOwnerCity(city);
+            city.setMainLand(mainLand);
 
             Pair neighbors[] = new Pair[6];
             for (int i = 0; i < 6; i++)
@@ -170,5 +171,6 @@ public class CityController extends GameController {
         city.setOwnerNation(nextNation);
         previousNation.removeCity(city);
     }
+
 
 }

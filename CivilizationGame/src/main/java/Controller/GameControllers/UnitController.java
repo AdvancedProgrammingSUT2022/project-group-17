@@ -1,12 +1,16 @@
 package Controller.GameControllers;
 
+import Enums.Consts;
+import Model.City;
 import Model.Game;
 import Model.LandPair;
 import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Pair;
-import Model.Units.CombatUnit;
-import Model.Units.Unit;
+import Model.Units.*;
+import Model.Units.Enums.CivilizedUnitType;
+import Model.Units.Enums.CloseCombatUnitType;
+import Model.Units.Enums.RangedCombatUnitType;
 
 import java.util.regex.Matcher;
 
@@ -197,14 +201,38 @@ public class UnitController extends GameController {
     }
 
     public String unitSetCityTarget(){
+        int cityX = -1, cityY = -1;
+        main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.map[i][j].equals(selectedCity.getMainLand())){
+                    cityX = i;
+                    cityY = j;
+                    break main;
+                }
+            }
+        }
         if (selectedCity != null && selectedCombatUnit != null){
-            //if are neighbors
-            if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
-                selectedCombatUnit.setTargetCity(selectedCity);
-            }
-            else{
-                return "Can't attack owner nation's city";
-            }
+            if ((selectedCombatUnit instanceof CloseCombatUnit &&
+                    LandController.areNeighbors(new Pair(cityX, cityY), selectedCombatUnit.getLocation()))){
+                if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
+                    selectedCombatUnit.setTargetCity(selectedCity);
+                }
+                else{
+                    return "Can't attack owner nation's city";
+                }
+            }else if(selectedCombatUnit instanceof  RangedCombatUnit){
+                if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <=
+                        Game.dist.get(new LandPair(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y],
+                                selectedCity.getMainLand()))){
+                    if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
+                        selectedCombatUnit.setTargetCity(selectedCity);
+                    }
+                    else{
+                        return "Can't attack owner nation's city";
+                    }
+                }
+            }else
+                return "Not in range";
         }
         unitAttackCity(selectedCombatUnit);
         return "Attack successful";
@@ -228,4 +256,194 @@ public class UnitController extends GameController {
         System.gc();
     }
 
+    public String purchaseUnit(Matcher matcher){
+        String type = matcher.group("type");
+        String name = matcher.group("name");
+        if (selectedCity == null){
+            return "You have to select a city first";
+        }
+
+        int x = -1, y = -1;
+        main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.map[i][j].equals(selectedCity.getMainLand())){
+                    x = i;
+                    y = j;
+                    break main;
+                }
+            }
+        }
+
+        if (type.equals("civilized unit")){
+            if (selectedCity.getMainLand().getCivilizedUnit() != null){
+                return "There is already a civilized unit in this location";
+            }
+            for (CivilizedUnitType civilizedUnitType : CivilizedUnitType.values()) {
+                if (civilizedUnitType.name.equals(name)){
+                    if (civilizedUnitType.cost > selectedCity.getOwnerNation().getCoin().getBalance()){
+                        return "Not enough coins";
+                    }
+                    CivilizedUnit newCivilizedUnit = new CivilizedUnit(civilizedUnitType,
+                            selectedCity.getOwnerNation(), new Pair(x, y));
+                    selectedCity.getMainLand().setCivilizedUnit(newCivilizedUnit);
+                    selectedCity.getOwnerNation().addUnit(newCivilizedUnit);
+                    selectedCity.getOwnerNation().getCoin().addBalance(-civilizedUnitType.cost);
+                    return "Civilized unit purchased successfully";
+                }
+            }
+        }
+
+        if (type.equals("close combat unit")){
+            if (selectedCity.getMainLand().getCombatUnit() != null){
+                return "There is already a combat unit in this location";
+            }
+            for (CloseCombatUnitType closeCombatUnitType : CloseCombatUnitType.values()) {
+                if (closeCombatUnitType.name.equals(name)){
+                    if (closeCombatUnitType.cost > selectedCity.getOwnerNation().getCoin().getBalance()){
+                        return "Not enough coins";
+                    }
+                    CloseCombatUnit newCloseCombatUnit = new CloseCombatUnit(closeCombatUnitType,
+                            selectedCombatUnit.getOwnerNation(), new Pair(x, y));
+                    selectedCity.getMainLand().setCombatUnit(newCloseCombatUnit);
+                    selectedCombatUnit.getOwnerNation().addUnit(newCloseCombatUnit);
+                    selectedCity.getOwnerNation().getCoin().addBalance(-closeCombatUnitType.cost);
+                    return "Close combat unit purchased successfully";
+                }
+            }
+        }
+
+        if (type.equals("ranged combat unit")){
+            if (selectedCity.getMainLand().getCombatUnit() != null){
+                return "There is already a combat unit in this location";
+            }
+            for (RangedCombatUnitType rangedCombatUnitType : RangedCombatUnitType.values()) {
+                if (rangedCombatUnitType.cost > selectedCity.getOwnerNation().getCoin().getBalance()){
+                    return "Not enough coins";
+                }
+                RangedCombatUnit newRangedCombatUnit = new RangedCombatUnit(rangedCombatUnitType,
+                        selectedCombatUnit.getOwnerNation(), new Pair(x, y));
+                selectedCity.getMainLand().setCombatUnit(newRangedCombatUnit);
+                selectedCombatUnit.getOwnerNation().addUnit(newRangedCombatUnit);
+                selectedCity.getOwnerNation().getCoin().addBalance(-rangedCombatUnitType.cost);
+                return "Ranged combat unit purchased successfully";
+            }
+        }
+
+
+        return "invalid command";
+    }
+
+    public String unitStartCreation(Matcher matcher){
+        String type = matcher.group("type");
+        String name = matcher.group("name");
+        if (selectedCity == null){
+            return "You have to select a city first";
+        }
+
+        if (selectedCity.hasAnInProgressUnit()){
+            return "The city is already creating a unit";
+        }
+
+        if (type.equals("civilized unit")){
+            if (selectedCity.getMainLand().getCivilizedUnit() != null){
+                return "There is already a civilized unit in this location";
+            }
+            for (CivilizedUnitType civilizedUnitType : CivilizedUnitType.values()) {
+                if (civilizedUnitType.name.equals(name)){
+                    selectedCity.setInProgressCivilizedUnit(civilizedUnitType);
+                    selectedCity.setNextUnitTurns(civilizedUnitType.turns);
+                    selectedCity.setHasAnInProgressUnit(true);
+                    return "Civilized unit is set for creation successfully";
+                }
+            }
+        }
+
+        if (type.equals("close combat unit")){
+            if (selectedCity.getMainLand().getCombatUnit() != null){
+                return "There is already a combat unit in this location";
+            }
+            for (CloseCombatUnitType closeCombatUnitType : CloseCombatUnitType.values()) {
+                if (closeCombatUnitType.name.equals(name)){
+                    if (closeCombatUnitType.resourceType != null && selectedCity.getOwnerNation().getResourceCellar().get(closeCombatUnitType.resourceType) == 0){
+                        return "Not enough resources";
+                    }
+                    if (closeCombatUnitType.technologyType != null && selectedCity.getOwnerNation().getTechnologies().get(closeCombatUnitType.technologyType) == false){
+                        return "You don't have the required technology";
+                    }
+                    if (closeCombatUnitType.resourceType != null){
+                        selectedCity.getOwnerNation().removeResource(closeCombatUnitType.resourceType);
+                    }
+                    selectedCity.setInProgressCloseCombatUnit(closeCombatUnitType);
+                    selectedCity.setNextUnitTurns(closeCombatUnitType.turns);
+                    selectedCity.setHasAnInProgressUnit(true);
+                    return "Close combat unit is set for creation successfully";
+                }
+            }
+        }
+
+        if (type.equals("ranged combat unit")){
+            if (selectedCity.getMainLand().getCombatUnit() != null){
+                return "There is already a combat unit in this location";
+            }
+            for (RangedCombatUnitType rangedCombatUnitType : RangedCombatUnitType.values()) {
+                if (rangedCombatUnitType.resourceType != null && selectedCity.getOwnerNation().getResourceCellar().get(rangedCombatUnitType.resourceType) == 0){
+                    return "Not enough resources";
+                }
+                if (rangedCombatUnitType.technologyType != null && selectedCity.getOwnerNation().getTechnologies().get(rangedCombatUnitType.technologyType) == false){
+                    return "You don't have the required technology";
+                }
+                if (rangedCombatUnitType.resourceType != null){
+                    selectedCity.getOwnerNation().removeResource(rangedCombatUnitType.resourceType);
+                }
+                selectedCity.setInProgressRangedCombatUnit(rangedCombatUnitType);
+                selectedCity.setNextUnitTurns(rangedCombatUnitType.turns);
+                selectedCity.setHasAnInProgressUnit(true);
+                return "Ranged combat unit is set for creation successfully";
+            }
+        }
+
+        return "invalid command";
+    }
+
+    public void unitCreate(City city){
+        int x = -1, y = -1;
+        main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.map[i][j].equals(city.getMainLand())){
+                    x = i;
+                    y = j;
+                    break main;
+                }
+            }
+        }
+
+        if (city.getInProgressCivilizedUnit() != null){
+            CivilizedUnit newCivilizedUnit = new CivilizedUnit(city.getInProgressCivilizedUnit(),
+                    city.getOwnerNation(), new Pair(x, y));
+            city.getMainLand().setCivilizedUnit(newCivilizedUnit);
+            city.getOwnerNation().addUnit(newCivilizedUnit);
+            city.setInProgressCivilizedUnit(null);
+            return;
+        }
+
+        if (city.getInProgressCloseCombatUnit() != null){
+            CloseCombatUnit newCloseCombatUnit = new CloseCombatUnit(city.getInProgressCloseCombatUnit(),
+                    city.getOwnerNation(), new Pair(x, y));
+            city.getMainLand().setCombatUnit(newCloseCombatUnit);
+            city.getOwnerNation().addUnit(newCloseCombatUnit);
+            city.setInProgressCloseCombatUnit(null);
+            return;
+        }
+
+        if (city.getInProgressRangedCombatUnit() != null){
+            RangedCombatUnit newRangedCombatUnit = new RangedCombatUnit(city.getInProgressRangedCombatUnit(),
+                    city.getOwnerNation(), new Pair(x, y));
+            city.getMainLand().setCombatUnit(newRangedCombatUnit);
+            city.getOwnerNation().addUnit(newRangedCombatUnit);
+            city.setInProgressRangedCombatUnit(null);
+            return;
+        }
+
+        city.setHasAnInProgressUnit(false);
+    }
 }
