@@ -9,6 +9,7 @@ import Model.Units.*;
 import Model.City;
 import Model.Game;
 import Model.Units.CombatUnit;
+import Model.Units.Enums.UnitStatus;
 import Model.Users.User;
 
 import java.util.ArrayList;
@@ -161,8 +162,10 @@ public class GameController extends Controller {
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
         if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null) {
-            selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
-            return (selectedCivilizedUnit.getName() + " is now selected");
+            if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit().getUnitStatus() != UnitStatus.WORKING) {
+                selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
+                return (selectedCivilizedUnit.getName() + " is now selected");
+            } else return "The civilized unit is busy now!";
         }
         return ("There is no civilized unit here!");
     }
