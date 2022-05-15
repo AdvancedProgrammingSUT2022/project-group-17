@@ -228,4 +228,11 @@ public class UnitController extends GameController {
         System.gc();
     }
 
+    public String unitCreate(Matcher matcher){
+        if (selectedCity == null){
+            return "You have to select a city first";
+        }
+        return "";
+    }
+
 }
