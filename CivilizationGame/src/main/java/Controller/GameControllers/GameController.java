@@ -9,6 +9,7 @@ import Model.Units.*;
 import Model.City;
 import Model.Game;
 import Model.Units.CombatUnit;
+import Model.Units.Enums.UnitStatus;
 import Model.Users.User;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class GameController extends Controller {
     protected static CivilizedUnit selectedCivilizedUnit;
     protected static City selectedCity;
     protected static User currentTurnUser;
+    private UnitController unitController;
 
 
     public static User getCurrentTurnUser() {
@@ -188,8 +190,8 @@ public class GameController extends Controller {
     }
 
     public void nextPlayerTurn() {
-        Game.setSubTurn(Game.getSubTurn() + 1);
         currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
+        Game.setSubTurn(Game.getSubTurn() + 1);
         if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
             nextGameTurn();
             Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
@@ -198,6 +200,42 @@ public class GameController extends Controller {
 
     public void nextGameTurn() {
         Game.setTurn(Game.getTurn() + 1);
+
+        for (User user : Game.getPlayersInGame()) {
+            Nation userNation = user.getNation();
+            for (Unit unit : userNation.getUnits()) {
+               nextTurnUnitMove(unit);
+            }
+        }
+
+        //Create Unit => for in cities
+
+        //Create Improvement
+
+        //update Resources
+
+        //update Currencies
+        
+        //update Technology progress
+
+        LandController.printMap(Game.map);
+    }
+
+    public void nextTurnUnitMove(Unit unit){
+        if (unit instanceof CivilizedUnit){
+            unit.setMP(((CivilizedUnit) unit).getCivilizedUnitType().MP);
+        }else if (unit instanceof  CloseCombatUnit){
+            unit.setMP(((CloseCombatUnit) unit).getCloseCombatUnitType().MP);
+        }else if (unit instanceof  RangedCombatUnit){
+            unit.setMP(((RangedCombatUnit) unit).getRangedCombatUnitType().MP);
+        }
+
+        if (unit.getUnitStatus() == UnitStatus.ALERT || unit.getUnitStatus() == UnitStatus.AWAKE || unit.getUnitStatus() == UnitStatus.FORTIFY){
+            if (unit.getPath() != ""){
+                while (unit.getMP() > 0)
+                    unitController.unitGoForward(unit);
+            }
+        }
     }
 
     public void saveGame() {
