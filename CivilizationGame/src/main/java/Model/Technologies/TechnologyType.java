@@ -60,6 +60,7 @@ public enum TechnologyType {
     public final BuildingType[] buildings;
     public final ImprovementType[] improvements;
     public final UnionType[] units;
+    public final int turns;
 
 
     TechnologyType(String name, int cost, TechnologyType[] fathers, BuildingType[] buildings, ImprovementType[] improvements, UnionType[] units) {
@@ -69,5 +70,6 @@ public enum TechnologyType {
         this.buildings = buildings;
         this.improvements = improvements;
         this.units = units;
+        this.turns = 3;
     }
 }
