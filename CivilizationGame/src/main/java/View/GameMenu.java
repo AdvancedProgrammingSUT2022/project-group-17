@@ -1,15 +1,7 @@
 package View;
 
-import Controller.GameControllers.CheatController;
-import Controller.GameControllers.CityController;
-import Controller.GameControllers.GameController;
-import Controller.GameControllers.UnitController;
-import Controller.GameControllers.WorkerController;
-import Enums.GameEnums.CheatCommands;
-import Enums.GameEnums.CityCommands;
-import Enums.GameEnums.GameCommands;
-import Enums.GameEnums.UnitCommands;
-import Enums.GameEnums.WorkerCommands;
+import Controller.GameControllers.*;
+import Enums.GameEnums.*;
 import Model.Game;
 import Model.Improvements.ImprovementType;
 
@@ -22,6 +14,7 @@ public class GameMenu extends Menu{
     private final UnitController unitController = new UnitController();
     private final WorkerController workerController = new WorkerController();
     private final CityController cityController = new CityController();
+    private final TechnologyController technologyController = new TechnologyController();
 
     @Override
     public void run(Scanner scanner) {
@@ -144,6 +137,8 @@ public class GameMenu extends Menu{
             System.out.println(unitController.unitStartCreation(commandMatcher));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()){
             System.out.println(unitController.purchaseUnit(commandMatcher));
+        } else if ((commandMatcher = TechnologyCommands.getMatcher(input, TechnologyCommands.ADD_TECHNOLOGY)).matches()){
+            System.out.println(technologyController.addTechnology(commandMatcher));
         } else if (input.length() != 0)
             System.out.println("invalid command !");
 

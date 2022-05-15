@@ -32,6 +32,9 @@ public class Nation {
     protected Currency happiness = new Currency(CurrencyType.Happiness);
     protected Currency science = new Currency(CurrencyType.Science);
 
+    protected TechnologyType inProgressTechnology;
+    protected int technologyTurns;
+
 
     public Nation (NationType nationType){
         this.nationType = nationType;
@@ -253,5 +256,21 @@ public class Nation {
 
     public void removeCity(City city){
         cities.remove(city);
+    }
+
+    public TechnologyType getInProgressTechnology() {
+        return inProgressTechnology;
+    }
+
+    public int getTechnologyTurns() {
+        return technologyTurns;
+    }
+
+    public void setInProgressTechnology(TechnologyType inProgressTechnology) {
+        this.inProgressTechnology = inProgressTechnology;
+    }
+
+    public void setTechnologyTurns(int technologyTurns) {
+        this.technologyTurns = technologyTurns;
     }
 }
