@@ -8,6 +8,7 @@ public enum UnitCommands {
     COMBAT_UNIT_MOVE_TO("combat unit move to -x (?<x>\\d+) -y (?<y>\\d+)"),
     UNIT_ATTACK("unit attack city"),
     CREATE_UNIT("create a (?<name>\\S+) unit with type(?<type>\\S+)"),
+    PURCHASE_UNIT("purchase a (?<name>\\S+) unit with type(?<type>\\S+)"),
     ;
     private final String regex;
 

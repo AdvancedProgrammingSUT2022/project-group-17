@@ -142,6 +142,8 @@ public class GameMenu extends Menu{
             System.out.println(unitController.unitSetCityTarget());
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()){
             System.out.println(unitController.unitStartCreation(commandMatcher));
+        } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()){
+            System.out.println(unitController.purchaseUnit(commandMatcher));
         } else if (input.length() != 0)
             System.out.println("invalid command !");
 

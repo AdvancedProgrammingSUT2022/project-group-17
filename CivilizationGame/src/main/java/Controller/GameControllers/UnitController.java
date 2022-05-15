@@ -239,6 +239,17 @@ public class UnitController extends GameController {
             return "You have to select a city first";
         }
 
+        int x = -1, y = -1;
+        main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.map[i][j].equals(selectedCity.getMainLand())){
+                    x = i;
+                    y = j;
+                    break main;
+                }
+            }
+        }
+
         if (type.equals("civilized unit")){
             if (selectedCity.getMainLand().getCivilizedUnit() != null){
                 return "There is already a civilized unit in this location";
@@ -248,6 +259,10 @@ public class UnitController extends GameController {
                     if (civilizedUnitType.cost > selectedCity.getOwnerNation().getCoin().getBalance()){
                         return "Not enough coins";
                     }
+                    CivilizedUnit newCivilizedUnit = new CivilizedUnit(civilizedUnitType,
+                            selectedCity.getOwnerNation(), new Pair(x, y));
+                    selectedCity.getMainLand().setCivilizedUnit(newCivilizedUnit);
+                    selectedCity.getOwnerNation().addUnit(newCivilizedUnit);
                     selectedCity.getOwnerNation().getCoin().addBalance(-civilizedUnitType.cost);
                     return "Civilized unit purchased successfully";
                 }
@@ -263,6 +278,10 @@ public class UnitController extends GameController {
                     if (closeCombatUnitType.cost > selectedCity.getOwnerNation().getCoin().getBalance()){
                         return "Not enough coins";
                     }
+                    CloseCombatUnit newCloseCombatUnit = new CloseCombatUnit(closeCombatUnitType,
+                            selectedCombatUnit.getOwnerNation(), new Pair(x, y));
+                    selectedCity.getMainLand().setCombatUnit(newCloseCombatUnit);
+                    selectedCombatUnit.getOwnerNation().addUnit(newCloseCombatUnit);
                     selectedCity.getOwnerNation().getCoin().addBalance(-closeCombatUnitType.cost);
                     return "Close combat unit purchased successfully";
                 }
@@ -277,6 +296,10 @@ public class UnitController extends GameController {
                 if (rangedCombatUnitType.cost > selectedCity.getOwnerNation().getCoin().getBalance()){
                     return "Not enough coins";
                 }
+                RangedCombatUnit newRangedCombatUnit = new RangedCombatUnit(rangedCombatUnitType,
+                        selectedCombatUnit.getOwnerNation(), new Pair(x, y));
+                selectedCity.getMainLand().setCombatUnit(newRangedCombatUnit);
+                selectedCombatUnit.getOwnerNation().addUnit(newRangedCombatUnit);
                 selectedCity.getOwnerNation().getCoin().addBalance(-rangedCombatUnitType.cost);
                 return "Ranged combat unit purchased successfully";
             }
