@@ -3,6 +3,7 @@ package Model.Lands;
 import Model.City;
 import Model.Improvements.Improvement;
 import Model.LandFeatures.LandFeature;
+import Model.Nations.Nation;
 import Model.Resources.Resource;
 import Model.Units.CivilizedUnit;
 import Model.Units.CombatUnit;
@@ -12,6 +13,7 @@ public class Land {
     protected Improvement improvement;
     protected Improvement route;
     protected LandFeature landFeature;
+
     protected int cost;
     protected City ownerCity = null;
     protected boolean isCityCenter;
@@ -42,6 +44,16 @@ public class Land {
         this.improvement = null;
     }
 
+
+    public void addGrowthToLandOwner(){
+        if (this.ownerCity != null){
+            Nation landOwnerNation = this.ownerCity.getOwnerNation();
+
+            landOwnerNation.getCoin().addBalance(this.coinGrowth);
+            landOwnerNation.getProduction().addBalance(this.productionGrowth);
+            landOwnerNation.getFood().addBalance(this.foodGrowth);
+        }
+    }
     public CivilizedUnit getCivilizedUnit() {
         return civilizedUnit;
     }

@@ -1,6 +1,7 @@
 package Controller.GameControllers;
 
 import Controller.Controller;
+import Enums.Consts;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Technologies.Technology;
@@ -206,6 +207,12 @@ public class GameController extends Controller {
             for (Unit unit : userNation.getUnits()) {
                nextTurnUnitMove(unit);
             }
+            //update Currencies
+            userNation.getCoin().addGrowthRateToBalance();
+            userNation.getFood().addGrowthRateToBalance();
+            userNation.getHappiness().addGrowthRateToBalance();
+            userNation.getProduction().addGrowthRateToBalance();
+            userNation.getScience().addGrowthRateToBalance();
         }
 
         //Create Unit => for in cities
@@ -213,9 +220,13 @@ public class GameController extends Controller {
         //Create Improvement
 
         //update Resources
+        for (int i = 0; i < Consts.MAP_SIZE.amount.y;i++){
+            for (int j = 0; j < Consts.MAP_SIZE.amount.x; j++) {
 
-        //update Currencies
-        
+                Game.map[i][j].addGrowthToLandOwner();
+            }
+        }
+
         //update Technology progress
 
         LandController.printMap(Game.map);
