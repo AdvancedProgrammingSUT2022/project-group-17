@@ -43,6 +43,7 @@ public class Land {
         this.isBuyable = true;
     }
 
+
     public CivilizedUnit getCivilizedUnit() {
         return civilizedUnit;
     }

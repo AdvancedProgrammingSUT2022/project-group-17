@@ -3,12 +3,15 @@ import Controller.GameControllers.LandController;
 import Enums.GameEnums.CityCommands;
 import Model.City;
 import Model.Game;
+import Model.Improvements.Improvement;
+import Model.Improvements.ImprovementType;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Pair;
 import Model.Users.User;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 public class CityControllerTester extends Tester {
@@ -47,5 +50,64 @@ public class CityControllerTester extends Tester {
 
         Assert.assertEquals(city,Game.map[3][4].getOwnerCity());
 
+    }
+
+    @Test
+    public void sendCitizen(){
+        Nation nation = new Nation(NationType.PERSIA);
+        City city = new City(nation);
+
+        CityController.setSelectedCity(city);
+
+        Game.map[3][3].setOwnerCity(city);
+        city.getLands().add(Game.map[3][3]);
+
+        commandMatcher = CityCommands.getMatcher("send citizen to -x 3 -y 3",CityCommands.SEND_CITIZEN);
+        if (commandMatcher.matches()) cityController.sendCitizen(commandMatcher);
+        Assertions.assertTrue(Game.map[3][3].hasCitizen());
+    }
+
+    @Test
+    public void retrieveCitizenTest(){
+        Nation nation = new Nation(NationType.PERSIA);
+        City city = new City(nation);
+
+        CityController.setSelectedCity(city);
+
+        Game.map[3][3].setOwnerCity(city);
+        city.getLands().add(Game.map[3][3]);
+        Game.map[3][3].setCitizen(true);
+        commandMatcher = CityCommands.getMatcher("retrieve citizen from -x 3 -y 3",CityCommands.RETRIEVE_CiTIZEN);
+        if (commandMatcher.matches()) cityController.retrieveCitizen(commandMatcher);
+
+        Assertions.assertFalse(Game.map[3][3].hasCitizen());
+    }
+
+    @Test
+    public void cityDeathTest(){
+        Nation nation = new Nation(NationType.PERSIA);
+        City city = new City(nation);
+
+        CityController.setSelectedCity(city);
+
+        Game.map[3][3].setOwnerCity(city);
+        city.getLands().add(Game.map[3][3]);
+        city.getImprovements().add(new Improvement(ImprovementType.CAMP));
+
+        CityController.cityDeath(city);
+        Assertions.assertNull(Game.map[3][3].getOwnerCity());
+    }
+
+    @Test
+    public void cityTakeOverTest(){
+        Nation nation = new Nation(NationType.PERSIA);
+        City city = new City(nation);
+        Nation doghoozAbad = new Nation(NationType.INCA);
+        CityController.setSelectedCity(city);
+
+        Game.map[3][3].setOwnerCity(city);
+        city.getLands().add(Game.map[3][3]);
+
+        CityController.cityTakeOver(city,doghoozAbad);
     }
 }

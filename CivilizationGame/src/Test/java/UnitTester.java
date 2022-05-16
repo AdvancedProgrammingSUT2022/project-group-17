@@ -3,14 +3,17 @@ import Controller.GameControllers.LandController;
 import Controller.GameControllers.UnitController;
 import Enums.GameEnums.GameCommands;
 import Enums.GameEnums.UnitCommands;
+import Model.City;
 import Model.Game;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Pair;
 import Model.Units.CloseCombatUnit;
+import Model.Units.CombatUnit;
 import Model.Units.Enums.CloseCombatUnitType;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 public class UnitTester extends Tester{
@@ -65,6 +68,33 @@ public class UnitTester extends Tester{
             unitController.unitGoToNeighbor(commandMatcher);
 
         Assert.assertEquals(CloseCombatUnitType.HORSE_MAN.name , Game.map[3][4].getCombatUnit().getName());
+    }
+
+
+    @Test
+    public void unitAttackCityWrongDestination(){
+        Nation iran = new Nation(NationType.PERSIA);
+        City tehran = new City(iran);
+        UnitController.setSelectedCity(tehran);
+        Game.map[3][4].setOwnerCity(tehran);
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
+        UnitController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
+
+        Assertions.assertEquals("Can't attack owner nation's city", unitController.unitSetCityTarget());
+    }
+
+    @Test
+    public void unitAttackCitySuccessfully(){
+        Nation iran = new Nation(NationType.PERSIA);
+        City tehran = new City(iran);
+        City doghozAbad = new City(new Nation(NationType.INCA));
+
+        UnitController.setSelectedCity(doghozAbad);
+        Game.map[3][4].setOwnerCity(doghozAbad);
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
+        UnitController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
+
+        Assertions.assertEquals("Attack successful", unitController.unitSetCityTarget());
     }
 
 //    @Test

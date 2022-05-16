@@ -209,7 +209,7 @@ public class LandController extends Controller {
 
     public static boolean areNeighbors(Pair land1, Pair land2){
         for (int i = 0; i < 6; i++) {
-            if (land2 == getNeighborIndex(land1, i))
+            if (land2.equals(getNeighborIndex(land1, i)))
                 return true;
         }
         return false;
@@ -217,7 +217,7 @@ public class LandController extends Controller {
 
     public static int getIndex(Pair land1, Pair land2){
         for (int i = 0; i < 6; i++) {
-            if (land2 == getNeighborIndex(land1, i))
+            if (land2.equals(getNeighborIndex(land1, i)))
                 return i;
         }
         return -1;

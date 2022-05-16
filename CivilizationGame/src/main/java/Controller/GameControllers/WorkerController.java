@@ -75,7 +75,7 @@ public class WorkerController extends GameController {
                     case Forest -> improvementType = ImprovementType.FOREST_FARM;
                     case Marsh -> improvementType = ImprovementType.MARSH_FARM;
                 }
-                if (currentTurnUser.getNation().hasTechnology(improvementType.technology))
+                if (improvementType.technology == null || currentTurnUser.getNation().hasTechnology(improvementType.technology))
                     return updateWorkerBuildingStatus(improvementType);
                 else return ("You don't have " + improvementType.technology.name + " technology!");
             } else return ("Want to build a farm on ice?!");
@@ -95,7 +95,7 @@ public class WorkerController extends GameController {
                     case Forest -> improvementType = ImprovementType.FOREST_MINE;
                     case Marsh -> improvementType = ImprovementType.MARSH_MINE;
                 }
-                if (currentTurnUser.getNation().hasTechnology(improvementType.technology))
+                if (improvementType.technology == null || currentTurnUser.getNation().hasTechnology(improvementType.technology))
                     return updateWorkerBuildingStatus(improvementType);
                 else return ("You don't have " + improvementType.technology.name + " technology!");
             }
@@ -152,7 +152,7 @@ public class WorkerController extends GameController {
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes") &&
                 (message = isLandSuitable(improvementType)).equals("yes")) {
-            updateWorkerBuildingStatus(improvementType);
+            return updateWorkerBuildingStatus(improvementType);
         }
         return message;
     }
@@ -161,7 +161,7 @@ public class WorkerController extends GameController {
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes") &&
                 (message = hasResourceOfImprovement(improvementType)).equals("yes")) {
-            updateWorkerBuildingStatus(improvementType);
+            return updateWorkerBuildingStatus(improvementType);
         }
         return message;
     }
@@ -179,7 +179,7 @@ public class WorkerController extends GameController {
             currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource().getResourceType());
     }
 
-    private void workerBuildSpecialFarm(ImprovementType improvementType) {
+    public void workerBuildSpecialFarm(ImprovementType improvementType) {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(ImprovementType.FARM));
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addFoodGrowth(1);
         if (hasResourceOfImprovement(ImprovementType.FARM).equals("yes"))
@@ -237,7 +237,7 @@ public class WorkerController extends GameController {
         if (selectedCivilizedUnit != null) {
             if (selectedCivilizedUnit.getCivilizedUnitType() == CivilizedUnitType.WORKER) {
                 if (selectedCivilizedUnit.getWorkerWorks() == null && selectedCivilizedUnit.getImprovementType() == null) {
-                    if (currentTurnUser.getNation().hasTechnology(improvementType.technology)) {
+                    if (improvementType.technology == null || currentTurnUser.getNation().hasTechnology(improvementType.technology)) {
                         if (improvementType == ImprovementType.ROAD || improvementType == ImprovementType.RAILROAD) {
                             if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getRoute() == null) {
                                 return "yes";

@@ -1,17 +1,24 @@
 import Controller.GameControllers.LandController;
 import Model.Game;
+import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Pair;
 import Model.Units.CloseCombatUnit;
 import Model.Units.Enums.CloseCombatUnitType;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 
 public class LandControllerTester extends Tester{
 
+    @BeforeEach
+    public void setup(){
+        Game.map = LandController.mapInitializer();
+    }
     @Test
     public void getAllNeighborsTest(){
         ArrayList<Pair> result = new ArrayList<>();
@@ -33,4 +40,24 @@ public class LandControllerTester extends Tester{
         Assert.assertEquals(2, Game.map[3][3].getVisibility());
     }
 
+
+    @Test
+    public void areLandsNeighborFail(){
+        Assertions.assertFalse(LandController.areNeighbors(new Pair(3,3),new Pair(3,6)));
+    }
+
+    @Test
+    public void areLandsNeighborSuccessful(){
+        Assertions.assertTrue(LandController.areNeighbors(new Pair(3,3),new Pair(3,4)));
+    }
+
+    @Test
+    public void getIndexWithWrongPair(){
+        Assertions.assertEquals(-1,LandController.getIndex(new Pair(3,3),new Pair(3,5)));
+    }
+
+    @Test
+    public void getIndexWithWrongSuccessful(){
+        Assertions.assertEquals(0,LandController.getIndex(new Pair(3,3),new Pair(2,3)));
+    }
 }

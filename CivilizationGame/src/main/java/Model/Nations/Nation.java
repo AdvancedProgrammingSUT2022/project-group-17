@@ -165,7 +165,10 @@ public class Nation {
     }
 
     public boolean hasTechnology(TechnologyType technologyType) {
-        return technologies.get(technologyType);
+        if (this.technologies.get(technologyType) == null)
+            return false;
+
+        return this.technologies.get(technologyType);
     }
 
 

@@ -153,15 +153,13 @@ public class CityController extends GameController {
     public static void cityDeath(City city){
         Nation nation = city.getOwnerNation();
         nation.removeCity(city);
-        for (Improvement improvement : city.getImprovements()) {
-            city.getImprovements().remove(improvement);
-        }
+        city.getImprovements().clear();
         for (Land land : city.getLands()) {
             land.setOwnerCity(null);
             land.setImprovement(null);
             land.setCityCenter(false);
-            city.getLands().remove(land);
         }
+        city.getLands().clear();
         city.setOwnerNation(null);
         city = null;
         System.gc();

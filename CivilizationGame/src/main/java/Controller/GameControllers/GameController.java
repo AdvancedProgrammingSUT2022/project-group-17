@@ -74,7 +74,7 @@ public class GameController extends Controller {
         output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s technologies:");
         int i = 0;
         for (TechnologyType technologyType : TechnologyType.values())
-            if (currentTurnUser.getNation().getTechnologies().get(technologyType)) {
+            if (currentTurnUser.getNation().hasTechnology(technologyType)) {
                 output.add(i + "- " + technologyType.name);
                 i++;
             }

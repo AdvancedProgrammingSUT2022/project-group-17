@@ -12,24 +12,6 @@ import java.util.regex.Matcher;
 
 public class UnitController extends GameController {
 
-    public void unitMoveTo(Matcher matcher) {
-        int destX = Integer.parseInt(matcher.group("x"));
-        int destY = Integer .parseInt(matcher.group("y"));
-        Pair dest = new Pair(destX, destY);
-
-        int minPathCost = findEasiestPath(dest, 0, 1000);
-        if(minPathCost <= selectedCombatUnit.getMP()) {
-            selectedCombatUnit.setLocation(dest);
-            selectedCombatUnit.decreaseMP(minPathCost);
-            selectedCombatUnit.setWaitingForCommand(false);
-            //TODO set isAPartOfPath of all Lands zero
-        } else if(minPathCost < 1000) {
-            unitMultiTurnMoveTo();
-        } else {
-            System.out.println("The unit can't move to this position!");
-        }
-    }
-
     public void unitGoToNeighbor(Matcher matcher){
         int destX = Integer.parseInt(matcher.group("x"));
         int destY = Integer.parseInt(matcher.group("y"));
@@ -100,26 +82,6 @@ public class UnitController extends GameController {
         }
 
         System.out.println(selectedCombatUnit.getLocation().x + " " + selectedCombatUnit.getLocation().y);
-    }
-
-    private int findEasiestPath(Pair dest, int pathCost, int minPathCost) {
-        Pair currentLocation = selectedCombatUnit.getLocation();
-        int tmpPathCost;
-
-        if (!Pair.isValid(currentLocation)) return 1000;
-        if (dest.equals(currentLocation)) return pathCost;
-
-        Pair neighbors[] = new Pair[6];
-        for (int i = 0; i < 6; i++)
-            neighbors[i] = LandController.getNeighborIndex(currentLocation, i);
-
-        for (int i = 0; i < 6; i++) {
-            if ((tmpPathCost = findEasiestPath(dest, pathCost + Game.map[neighbors[i].x][neighbors[i].y].getMP(),
-                    minPathCost)) < minPathCost)
-                minPathCost = tmpPathCost;
-        }
-
-        return minPathCost;
     }
 
     public void unitSetPath(Matcher matcher, int selection){
