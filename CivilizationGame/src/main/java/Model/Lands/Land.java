@@ -13,6 +13,7 @@ public class Land {
     protected Improvement improvement;
     protected Improvement route;
     protected LandFeature landFeature;
+    protected CombatUnit ZOC;
 
     protected int cost;
     protected City ownerCity = null;
@@ -189,5 +190,13 @@ public class Land {
 
     public boolean hasCitizen() {
         return hasCitizen;
+    }
+
+    public CombatUnit getZOC() {
+        return ZOC;
+    }
+
+    public void setZOC(CombatUnit ZOC) {
+        this.ZOC = ZOC;
     }
 }

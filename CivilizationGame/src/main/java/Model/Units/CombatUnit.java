@@ -6,7 +6,6 @@ import Model.Technologies.TechnologyType;
 
 public class CombatUnit extends Unit {
     protected int combatStrength;
-    protected int ZOC;
 
     public CombatUnit(String name, int cost, int combatStrength, int MP, ResourceType resourceType,
                       TechnologyType technologyType, int turns, int hp, Nation ownerNation, Pair location) {

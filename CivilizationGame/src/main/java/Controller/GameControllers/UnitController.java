@@ -170,6 +170,11 @@ public class UnitController extends GameController {
         }
         unit.setLocation(next);
         unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()));
+        if (Game.map[next.x][next.y].getZOC() != null){
+            if (!Game.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
+                unit.setMP(0);
+            }
+        }
         unit.setPath(path.substring(1));
         unit.setWaitingForCommand(false);
         unit.setUnitStatus(UnitStatus.MOVING);

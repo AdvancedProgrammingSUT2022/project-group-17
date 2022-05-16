@@ -3,8 +3,10 @@ package Controller.GameControllers;
 import Controller.Controller;
 import Enums.Consts;
 import Model.Improvements.ImprovementType;
+import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
+import Model.Pair;
 import Model.Resources.Enums.CurrencyType;
 import Model.Resources.Enums.ResourceType;
 import Model.Technologies.Technology;
@@ -225,6 +227,19 @@ public class GameController extends Controller {
 
             public void nextGameTurn () {
                 Game.setTurn(Game.getTurn() + 1);
+
+                //set ZOC
+                for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+                    for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                        Game.map[i][j].setZOC(null);
+                        Pair[] neighbors = new Pair[6];
+                        for (int k = 0; k < 6; k++) {
+                            neighbors[k] = LandController.getNeighborIndex(new Pair(i, j), k);
+                            if (Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit() != null)
+                                Game.map[i][j].setZOC(Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit());
+                        }
+                    }
+                }
 
                 for (User user : Game.getPlayersInGame()) {
                     Nation userNation = user.getNation();
