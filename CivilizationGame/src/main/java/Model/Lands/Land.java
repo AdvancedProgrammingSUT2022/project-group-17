@@ -54,6 +54,10 @@ public class Land {
             landOwnerNation.getCoin().addGrowthRate(this.coinGrowth);
             landOwnerNation.getProduction().addGrowthRate(this.productionGrowth);
             landOwnerNation.getFood().addGrowthRate(this.foodGrowth);
+
+            landOwnerNation.getCoin().addGrowthRate(this.landFeature.getLandFeatureType().goldGrowth);
+            landOwnerNation.getProduction().addGrowthRate(this.landFeature.getLandFeatureType().productionGrowth);
+            landOwnerNation.getFood().addGrowthRate(this.landFeature.getLandFeatureType().foodGrowth);
         }
     }
     public CivilizedUnit getCivilizedUnit() {

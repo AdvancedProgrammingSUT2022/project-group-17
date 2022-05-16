@@ -282,6 +282,9 @@ public class GameController extends Controller {
                         //food consumption
                         userNation.getFood().addBalance(-city.getCitizens() * 2);
 
+                        //science addition
+                        userNation.getScience().addBalance(3 + city.getCitizens());
+
                         //unhappiness update
                         userNation.getHappiness().addBalance(-city.getCitizens() / 3);
                     }
