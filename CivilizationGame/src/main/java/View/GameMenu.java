@@ -15,6 +15,7 @@ public class GameMenu extends Menu {
     private final WorkerController workerController = new WorkerController();
     private final CityController cityController = new CityController();
     private final TechnologyController technologyController = new TechnologyController();
+    private final NationController nationController = new NationController();
 
     @Override
     public void run(Scanner scanner) {
@@ -56,6 +57,10 @@ public class GameMenu extends Menu {
             System.out.println(cityController.buildCity(commandMatcher));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUY_LAND)).matches()) {
             System.out.println(cityController.cityBuyLand(commandMatcher));
+        } else if((commandMatcher = CityCommands.getMatcher(input, CityCommands.SEND_CITIZEN)).matches()){
+            System.out.println(cityController.sendCitizen(commandMatcher));
+        } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.RETRIEVE_CITIZEN)).matches()){
+            System.out.println(cityController.retrieveCitizen(commandMatcher));
         } else if (GameCommands.getMatcher(input, GameCommands.NEXT_TURN).matches()) {
             System.out.println(gameController.nextPlayerTurn());
 
@@ -124,6 +129,8 @@ public class GameMenu extends Menu {
         } else if (UnitCommands.getMatcher(input, UnitCommands.UNIT_DELETE).matches()) {
             System.out.println(unitController.unitDelete());
 
+        } else if ((commandMatcher = NationCommands.getMatcher(input, NationCommands.SHOW_HAPPINESS)).matches()){
+            System.out.println(nationController.showHappiness());
         } else if (input.length() != 0)
             System.out.println("invalid command !");
 

@@ -68,22 +68,27 @@ public class CityController extends GameController {
 
     }
 
-    public void sendCitizen(Matcher matcher){
+    public String sendCitizen(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair dest = new Pair(x, y);
 
         if (selectedCity != null){
+            if (!Game.map[x][y].getOwnerCity().equals(selectedCity))
+                return "This land is not part of your city";
             if (selectedCity.getEmployees() < selectedCity.getCitizens()){
-                selectedCity.setEmployees(selectedCity.getEmployees() + 1);
                 if (!Game.map[x][y].hasCitizen()){
+                    selectedCity.setEmployees(selectedCity.getEmployees() + 1);
                     Game.map[dest.x][dest.y].setCitizen(true);
+                    return "Citizen sent to work successfully";
                 }
+                return "There already is a citizen on this land";
             }
         }
+        return "You have to select a city first";
     }
 
-    public void retrieveCitizen(Matcher matcher){
+    public String retrieveCitizen(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair origin = new Pair(x, y);
@@ -92,9 +97,11 @@ public class CityController extends GameController {
             if (Game.map[x][y].hasCitizen()){
                 Game.map[x][y].setCitizen(false);
                 selectedCity.setEmployees(selectedCity.getEmployees() - 1);
+                return "Citizen retrieved successfully";
             }
+            return "There is no citizen working on this land";
         }
-
+        return "You have to select a city first";
     }
 
     public String cityBuyLand(Matcher matcher){

@@ -5,6 +5,8 @@ import Enums.Consts;
 import Model.Improvements.ImprovementType;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
+import Model.Resources.Enums.CurrencyType;
+import Model.Resources.Enums.ResourceType;
 import Model.Technologies.Technology;
 import Model.Technologies.TechnologyType;
 import Model.Units.*;
@@ -281,6 +283,11 @@ public class GameController extends Controller {
                     userNation.getScience().setGrowthRate(0);
                     userNation.getHappiness().setGrowthRate(0);
 
+                    //happiness for luxury resources
+                    for (ResourceType resourceType : userNation.getResourceCellar().keySet()) {
+                        if (resourceType.currency.equals(CurrencyType.Coin))
+                            userNation.getHappiness().addBalance(userNation.getResourceCellar().get(resourceType));
+                    }
                 }
 
                 //update GrowthRates

@@ -47,7 +47,7 @@ public class Land {
 
 
     public void addGrowthToLandOwner(){
-        if (this.ownerCity != null){
+        if (this.ownerCity != null && this.hasCitizen()){
             Nation landOwnerNation = this.ownerCity.getOwnerNation();
 
             landOwnerNation.getCoin().addGrowthRate(this.coinGrowth);
