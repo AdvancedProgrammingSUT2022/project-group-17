@@ -164,6 +164,11 @@ public class UnitController extends GameController {
         //fixme
         if (!path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
         else {System.out.println("path is empty"); return;}
+
+        boolean river = false;
+        if (Game.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor]){
+            river = true;
+        }
         Pair next = LandController.getNeighborIndex(unit.getLocation(), neighbor);
         if (unit instanceof CombatUnit){
             Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
@@ -181,6 +186,8 @@ public class UnitController extends GameController {
                 unit.setMP(0);
             }
         }
+        if (river)
+            unit.setMP(0);
         unit.setPath(path.substring(1));
         unit.setWaitingForCommand(false);
         unit.setUnitStatus(UnitStatus.MOVING);

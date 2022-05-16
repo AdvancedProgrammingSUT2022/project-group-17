@@ -9,6 +9,7 @@ public enum CityCommands {
     SEND_CITIZEN("send citizen to -x (?<x>\\d+) -y (?<y>\\d+)"),
     RETRIEVE_CITIZEN("retrieve citizen from -x (?<x>\\d+) -y (?<y>\\d+)"),
     SHOW_BANNER("show banner"),
+    CITY_ATTACK("attack unit on -x (?<x>\\d+) -y (?<y>\\d+)"),
     ;
 
     private final String regex;

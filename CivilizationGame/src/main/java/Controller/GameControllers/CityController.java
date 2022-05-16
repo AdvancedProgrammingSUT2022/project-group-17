@@ -6,6 +6,7 @@ import Model.Improvements.Improvement;
 import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Pair;
+import Model.Units.CombatUnit;
 import Model.Units.Enums.CivilizedUnitType;
 
 import java.util.regex.Matcher;
@@ -65,8 +66,37 @@ public class CityController extends GameController {
         return true;
     }
 
-    public void cityRangeAttack(Matcher matcher){
+    public String cityRangeAttack(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
 
+        if (selectedCity == null)
+            return "You have to select a city first";
+        Pair neighbors[] = new Pair[6];
+        for (int i = 0; i < 6; i++)
+            neighbors[i] = LandController.getNeighborIndex(new Pair(x, y), i);
+
+        for (int i = 0; i < 6; i++) {
+            if (Pair.isValid(neighbors[i])){
+                Pair neighbors2[] = new Pair[6];
+                for (int j = 0; j < 6; j++)
+                    neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
+
+                for (int j = 0; j < 6; j++) {
+                    if (Pair.isValid(neighbors2[j])){
+                        if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null){
+                            if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity().equals(selectedCity)){
+                                CombatUnit combatUnit = Game.map[x][y].getCombatUnit();
+                                combatUnit.setHp(combatUnit.getHp() - selectedCity.getRangedStrength());
+                                return "Attack on unit successful";
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        return "Target unit is not in range";
     }
 
     public boolean isCitizenInRange(int x, int y){

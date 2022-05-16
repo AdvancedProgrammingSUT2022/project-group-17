@@ -317,9 +317,6 @@ public class LandController extends Controller {
                             if (land2.getLandFeature() != null)
                                 Game.dist[num1][num2] += land2.getLandFeature().getLandFeatureType().movementCost;
                             Game.path[num1][num2] = "" + getIndex(new Pair(i1, j1), new Pair(i2, j2));
-                            if (land1.getHasRiver()[getIndex(new Pair(i1, j1), new Pair(i2, j2))] == true){
-                                Game.dist[num1][num2] = 999;
-                            }
                         }else{
                             Game.dist[num1][num2] = 1000;
                             Game.path[num1][num2] = "";
