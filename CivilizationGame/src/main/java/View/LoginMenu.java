@@ -16,7 +16,7 @@ public class LoginMenu extends Menu {
         String input = scanner.nextLine();
         Matcher commandMatcher;
 
-        if ((commandMatcher = LoginCommands.getMatcher(input, LoginCommands.LOGIN_COMMANDS)).matches()) {
+        if ((commandMatcher = LoginCommands.getMatcher(input, LoginCommands.CREATE_USER)).matches()) {
             System.out.println(loginController.createUser(commandMatcher));
 
         } else if (LoginCommands.getMatcher(input, LoginCommands.LIST_OF_USERS).matches()) {

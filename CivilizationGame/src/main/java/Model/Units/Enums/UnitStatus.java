@@ -5,7 +5,8 @@ public enum UnitStatus {
     FORTIFY(),
     SLEEP(),
     ALERT(),
-    FORTIFY_UNTIL_HILL(),
+    FORTIFY_UNTIL_HEAL(),
     GARRISON(),
-    WORKING();
+    WORKING(),
+    MOVING();
 }

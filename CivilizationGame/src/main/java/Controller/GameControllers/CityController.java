@@ -6,6 +6,8 @@ import Model.Improvements.Improvement;
 import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Pair;
+import Model.Units.CombatUnit;
+import Model.Units.Enums.CivilizedUnitType;
 
 import java.util.regex.Matcher;
 
@@ -14,12 +16,17 @@ public class CityController extends GameController {
     public String buildCity(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
+        String name = matcher.group("name");
+        if (currentTurnUser.getNation().getCities().size() > 0 && (selectedCivilizedUnit == null || !selectedCivilizedUnit.getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)))
+            return "You need to select a settler first";
         Pair main = new Pair(x, y);
         if (isCityBuildable(main)){
-            City city = new City(currentTurnUser.getNation());
+            City city = new City(currentTurnUser.getNation(), name);
+            currentTurnUser.getNation().addCity(city);
             Land mainLand = Game.map[x][y];
             mainLand.setCityCenter(true);
             mainLand.setOwnerCity(city);
+            city.setMainLand(mainLand);
 
             Pair neighbors[] = new Pair[6];
             for (int i = 0; i < 6; i++)
@@ -28,12 +35,16 @@ public class CityController extends GameController {
                 if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
+            if (currentTurnUser.getNation().getCities().size() > 0 && selectedCivilizedUnit != null)
+                UnitController.unitDeath(selectedCivilizedUnit);
             return "City built successfully";
         }
         return "Can't build a city here";
     }
 
     public boolean isCityBuildable(Pair main){
+        if (Game.map[main.x][main.y].getLandType().isWalkable == false)
+            return false;
         Pair neighbors[] = new Pair[6];
         for (int i = 0; i < 6; i++)
             neighbors[i] = LandController.getNeighborIndex(main, i);
@@ -55,26 +66,77 @@ public class CityController extends GameController {
         return true;
     }
 
-    public void cityRangeAttack(Matcher matcher){
+    public String cityRangeAttack(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        if (selectedCity == null)
+            return "You have to select a city first";
+        Pair neighbors[] = new Pair[6];
+        for (int i = 0; i < 6; i++)
+            neighbors[i] = LandController.getNeighborIndex(new Pair(x, y), i);
+
+        for (int i = 0; i < 6; i++) {
+            if (Pair.isValid(neighbors[i])){
+                Pair neighbors2[] = new Pair[6];
+                for (int j = 0; j < 6; j++)
+                    neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
+
+                for (int j = 0; j < 6; j++) {
+                    if (Pair.isValid(neighbors2[j])){
+                        if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null){
+                            if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity().equals(selectedCity)){
+                                CombatUnit combatUnit = Game.map[x][y].getCombatUnit();
+                                combatUnit.setHp(combatUnit.getHp() - selectedCity.getRangedStrength());
+                                return "Attack on unit successful";
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        return "Target unit is not in range";
+    }
+
+    public boolean isCitizenInRange(int x, int y){
+        Pair[] neighbors = new Pair[6];
+        for (int i = 0; i < 6; i++) {
+            neighbors[i] = LandController.getNeighborIndex(new Pair(x, y), i);
+            Pair[] neighbors2 = new Pair[6];
+            for (int j = 0; j < 6; j++) {
+                neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
+                if (selectedCity.getMainLand().equals(Game.map[neighbors2[j].x][neighbors2[j].y]))
+                    return true;
+            }
+        }
+        return false;
 
     }
 
-    public void sendCitizen(Matcher matcher){
+    public String sendCitizen(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair dest = new Pair(x, y);
 
+        if (!isCitizenInRange(x, y))
+            return "You can't send a citizen that far";
         if (selectedCity != null){
+            if (Game.map[x][y].getOwnerCity() == null || !Game.map[x][y].getOwnerCity().equals(selectedCity))
+                return "This land is not part of your city";
             if (selectedCity.getEmployees() < selectedCity.getCitizens()){
-                selectedCity.setEmployees(selectedCity.getEmployees() + 1);
                 if (!Game.map[x][y].hasCitizen()){
+                    selectedCity.setEmployees(selectedCity.getEmployees() + 1);
                     Game.map[dest.x][dest.y].setCitizen(true);
+                    return "Citizen sent to work successfully";
                 }
+                return "There already is a citizen on this land";
             }
         }
+        return "You have to select a city first";
     }
 
-    public void retrieveCitizen(Matcher matcher){
+    public String retrieveCitizen(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair origin = new Pair(x, y);
@@ -83,12 +145,16 @@ public class CityController extends GameController {
             if (Game.map[x][y].hasCitizen()){
                 Game.map[x][y].setCitizen(false);
                 selectedCity.setEmployees(selectedCity.getEmployees() - 1);
+                return "Citizen retrieved successfully";
             }
+            return "There is no citizen working on this land";
         }
-
+        return "You have to select a city first";
     }
 
     public String cityBuyLand(Matcher matcher){
+        if (selectedCity == null)
+            return "you have to select a city first";
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair landPair = new Pair(x, y);
@@ -100,7 +166,7 @@ public class CityController extends GameController {
         boolean canBuy = false;
         for (int i = 0; i < 6; i++) {
             if (Pair.isValid(neighbors[i])){
-                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity))
+                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity() != null && Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity))
                     canBuy = true;
             }
         }
@@ -169,6 +235,14 @@ public class CityController extends GameController {
         Nation previousNation = city.getOwnerNation();
         city.setOwnerNation(nextNation);
         previousNation.removeCity(city);
+        nextNation.getHappiness().addBalance(-10);
     }
+
+    public String cityShowBanner(){
+        if (selectedCity == null)
+            return "You have to select a city first";
+        return "Name: " + selectedCity.getName() + " CombatStrength: " + selectedCity.getCombatStrength();
+    }
+
 
 }

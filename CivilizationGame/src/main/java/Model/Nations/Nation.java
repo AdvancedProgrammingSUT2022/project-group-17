@@ -32,6 +32,9 @@ public class Nation {
     protected Currency happiness = new Currency(CurrencyType.HAPPINESS);
     protected Currency science = new Currency(CurrencyType.SCIENCE);
 
+    protected TechnologyType inProgressTechnology = null;
+    protected int technologyTurns;
+
 
     public Nation (NationType nationType){
         this.nationType = nationType;
@@ -39,6 +42,8 @@ public class Nation {
         initializeTechnologies();
         initializeResourceCellar();
         initializeBuildings();
+        this.getHappiness().setBalance(100);
+        this.getCoin().setBalance(100);
     }
 
     private void initializeTechnologies() {
@@ -230,6 +235,10 @@ public class Nation {
         resourceCellar.put(resourceType, resourceCellar.get(resourceType) + 1);
     }
 
+    public void removeResource(ResourceType resourceType){
+        resourceCellar.put(resourceType, resourceCellar.get(resourceType) - 1);
+    }
+
     public void addTechnology(TechnologyType technologyType) {
         technologies.put(technologyType, true);
     }
@@ -249,5 +258,25 @@ public class Nation {
 
     public void removeCity(City city){
         cities.remove(city);
+    }
+
+    public TechnologyType getInProgressTechnology() {
+        return inProgressTechnology;
+    }
+
+    public int getTechnologyTurns() {
+        return technologyTurns;
+    }
+
+    public void setInProgressTechnology(TechnologyType inProgressTechnology) {
+        this.inProgressTechnology = inProgressTechnology;
+    }
+
+    public void setTechnologyTurns(int technologyTurns) {
+        this.technologyTurns = technologyTurns;
+    }
+
+    public void addCity(City city){
+        this.cities.add(city);
     }
 }
