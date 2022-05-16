@@ -235,7 +235,6 @@ public class GameController extends Controller {
                         Pair[] neighbors = new Pair[6];
                         for (int k = 0; k < 6; k++) {
                             neighbors[k] = LandController.getNeighborIndex(new Pair(i, j), k);
-                            //fixme null
                             if (LandController.isPairValid(new Pair(neighbors[k].x, neighbors[k].y)) &&
                                     Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit() != null)
                                 Game.map[i][j].setZOC(Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit());
