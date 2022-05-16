@@ -4,6 +4,7 @@ import Model.City;
 import Model.Game;
 import Model.Improvements.Improvement;
 import Model.Lands.Land;
+import Model.Lands.LandType;
 import Model.Nations.Nation;
 import Model.Pair;
 import Model.Units.CombatUnit;
@@ -37,6 +38,8 @@ public class CityController extends GameController {
             }
             if (currentTurnUser.getNation().getCities().size() > 0 && selectedCivilizedUnit != null)
                 UnitController.unitDeath(selectedCivilizedUnit);
+            if (mainLand.getLandType().equals(LandType.HILL))
+                city.setCombatStrength(city.getCombatStrength() + 5);
             return "City built successfully";
         }
         return "Can't build a city here";

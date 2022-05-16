@@ -10,7 +10,10 @@ public enum CheatCommands {
     CHEAT_INCREASE_GOLD("increase --gold (?<amount>\\d+)"),
     CHEAT_INCREASE_TURN("increase --turn (?<amount>\\d+)"),
     CHEAT_INCREASE_FOOD("increase --food (?<amount>\\d+)"),
-    CHEAT_INCREASE_PRODUCTION("increase --production (?<amount>\\d+)");
+    CHEAT_INCREASE_PRODUCTION("increase --production (?<amount>\\d+)"),
+    CHEAT_INCREASE_SCIENCE("increase --science (?<amount>\\d+)"),
+    CHEAT_PUT_IMPROVEMENT("put --improvement (?<type>\\S+) on ")
+    ;
 
     private final String regex;
 

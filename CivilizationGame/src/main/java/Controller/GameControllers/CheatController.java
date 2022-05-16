@@ -68,4 +68,34 @@ public class CheatController extends GameController {
         return "There isn't any Improvement here!";
     }
 
+    public String increaseCoin(Matcher matcher){
+        int amount = Integer.parseInt(matcher.group("amount"));
+        currentTurnUser.getNation().getCoin().addBalance(amount);
+        return amount + " coins added successfully";
+    }
+
+    public String increaseTurn(Matcher matcher){
+        int amount = Integer.parseInt(matcher.group("amount"));
+        while (amount > 0)
+            nextGameTurn();
+        return "Progressed through " + amount + " turns successfully";
+    }
+
+    public String increaseFood(Matcher matcher){
+        int amount = Integer.parseInt(matcher.group("amount"));
+        currentTurnUser.getNation().getFood().addBalance(amount);
+        return amount + " food added successfully";
+    }
+
+    public String increaseProduction(Matcher matcher){
+        int amount = Integer.parseInt(matcher.group("amount"));
+        currentTurnUser.getNation().getProduction().addBalance(amount);
+        return amount + " production added successfully";
+    }
+
+    public String increaseScience(Matcher matcher){
+        int amount = Integer.parseInt(matcher.group("amount"));
+        currentTurnUser.getNation().getScience().addBalance(amount);
+        return amount + " science added successfully";
+    }
 }
