@@ -12,7 +12,8 @@ public enum CheatCommands {
     CHEAT_INCREASE_FOOD("increase --food (?<amount>\\d+)"),
     CHEAT_INCREASE_PRODUCTION("increase --production (?<amount>\\d+)"),
     CHEAT_INCREASE_SCIENCE("increase --science (?<amount>\\d+)"),
-    CHEAT_PUT_IMPROVEMENT("put --improvement (?<type>\\S+) on ")
+    CHEAT_INCREASE_HAPPINESS("increase --happiness (?<amount>\\d+)"),
+    CHEAT_WIN("win game"),
     ;
 
     private final String regex;

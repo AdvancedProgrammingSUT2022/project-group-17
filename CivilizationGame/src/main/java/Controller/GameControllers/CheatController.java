@@ -98,4 +98,14 @@ public class CheatController extends GameController {
         currentTurnUser.getNation().getScience().addBalance(amount);
         return amount + " science added successfully";
     }
+
+    public String increaseHappiness(Matcher matcher){
+        int amount = Integer.parseInt(matcher.group("amount"));
+        currentTurnUser.getNation().getHappiness().addBalance(amount);
+        return amount + " happiness added successfully";
+    }
+
+    public String winGame(){
+        return "You won";
+    }
 }

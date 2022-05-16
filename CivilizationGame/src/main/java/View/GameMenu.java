@@ -135,6 +135,21 @@ public class GameMenu extends Menu {
 
         } else if ((commandMatcher = NationCommands.getMatcher(input, NationCommands.SHOW_HAPPINESS)).matches()){
             System.out.println(nationController.showHappiness());
+        } else if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.CHEAT_INCREASE_FOOD)).matches()){
+            System.out.println(cheatController.increaseFood(commandMatcher));
+        } else if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.CHEAT_INCREASE_GOLD)).matches()){
+            System.out.println(cheatController.increaseCoin(commandMatcher));
+        } else if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.CHEAT_INCREASE_SCIENCE)).matches()){
+            System.out.println(cheatController.increaseScience(commandMatcher));
+        } else if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.CHEAT_INCREASE_PRODUCTION)).matches()){
+            System.out.println(cheatController.increaseProduction(commandMatcher));
+        } else if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.CHEAT_INCREASE_TURN)).matches()){
+            System.out.println(cheatController.increaseTurn(commandMatcher));
+        } else if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.CHEAT_INCREASE_HAPPINESS)).matches()){
+            System.out.println(cheatController.increaseHappiness(commandMatcher));
+        } else if ((commandMatcher = CheatCommands.getMatcher(input, CheatCommands.CHEAT_WIN)).matches()){
+            System.out.println(cheatController.winGame());
+            System.exit(0);
         } else if (input.length() != 0)
             System.out.println("invalid command !");
 
