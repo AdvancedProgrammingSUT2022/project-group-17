@@ -313,7 +313,9 @@ public class LandController extends Controller {
                             Game.dist[num1][num2] = 0;
                             Game.path[num1][num2] = "";
                         }else if (areNeighbors(new Pair(i1, j1), new Pair(i2, j2))){
-                            Game.dist[num1][num2] = land2.getMP() + land2.getLandFeature().getLandFeatureType().movementCost;
+                            Game.dist[num1][num2] = land2.getMP();
+                            if (land2.getLandFeature() != null)
+                                Game.dist[num1][num2] += land2.getLandFeature().getLandFeatureType().movementCost;
                             Game.path[num1][num2] = "" + getIndex(new Pair(i1, j1), new Pair(i2, j2));
                             if (land1.getHasRiver()[getIndex(new Pair(i1, j1), new Pair(i2, j2))] == true){
                                 Game.dist[num1][num2] = 999;
