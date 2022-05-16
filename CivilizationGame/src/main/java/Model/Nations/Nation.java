@@ -27,11 +27,11 @@ public class Nation {
     protected ArrayList<Nation> enemies = new ArrayList<>();
     protected ArrayList<Unit> units = new ArrayList<>();
 
-    protected Currency coin = new Currency(CurrencyType.Coin);
-    protected Currency food = new Currency(CurrencyType.Food);
-    protected Currency production = new Currency(CurrencyType.Production);
-    protected Currency happiness = new Currency(CurrencyType.Happiness);
-    protected Currency science = new Currency(CurrencyType.Science);
+    protected Currency coin = new Currency(CurrencyType.COIN);
+    protected Currency food = new Currency(CurrencyType.FOOD);
+    protected Currency production = new Currency(CurrencyType.PRODUCTION);
+    protected Currency happiness = new Currency(CurrencyType.HAPPINESS);
+    protected Currency science = new Currency(CurrencyType.SCIENCE);
 
     protected TechnologyType inProgressTechnology = null;
     protected int technologyTurns;
@@ -65,7 +65,6 @@ public class Nation {
         for (BuildingType buildingType : BuildingType.values()) {
             this.buildings.put(buildingType,false);
         }
-
     }
 
     public ArrayList<Nation> getFriends() {

@@ -1,22 +1,22 @@
 package Model.Units.Enums;
 import Model.Resources.Enums.ResourceType;
-import Model.Nations.Nation;
 import Model.Technologies.TechnologyType;
-import Model.Units.RangedCombatUnit;
 
 public enum RangedCombatUnitType {
     ARCHER("Archer", 70, 4, 6, 2, 2, null,
-            TechnologyType.Archery, 0, 10, false),
+            TechnologyType.ARCHERY, 0, 10, false),
     CHARIOT_ARCHER("Chariot Archer", 60, 3, 6, 2, 4,
-            ResourceType.Horse, TechnologyType.TheWheel, 0, 10, false),
+            ResourceType.HORSE, TechnologyType.THE_WHEEL, 0, 10, false),
+    CROSSBOWMAN("Crossbowman", 120, 6, 12, 2,2, null,
+            TechnologyType.MACHINERY, 0, 10, false),
     CATAPULT("Catapult", 100, 4, 14, 2, 2,
-            ResourceType.Iron, TechnologyType.Mathematics, 0, 10, true),
+            ResourceType.IRON, TechnologyType.MATHEMATICS, 0, 10, true),
     TREBUCHET("Trebuchet", 170, 6, 20, 2, 2,
-            ResourceType.Iron, TechnologyType.Physics, 0, 10, true),
+            ResourceType.IRON, TechnologyType.PHYSICS, 0, 10, true),
     CANON("Canon", 250, 10, 26, 2, 2,
-            null, TechnologyType.Chemistry, 0, 10, true),
+            null, TechnologyType.CHEMISTRY, 0, 10, true),
     ARTILLERY("Artillery", 420, 16, 32, 3, 2, null,
-            TechnologyType.Dynamite, 0, 10, true);
+            TechnologyType.DYNAMITE, 0, 10, true);
 
     public final String name;
     public final int cost;

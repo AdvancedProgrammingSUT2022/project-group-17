@@ -118,6 +118,7 @@ public class UnitController extends GameController {
             selectedUnit = selectedCombatUnit;
         else
             selectedUnit = selectedCivilizedUnit;
+        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Land origin = Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
@@ -140,14 +141,11 @@ public class UnitController extends GameController {
     public static void unitGoForward(Unit unit){
         String path = unit.getPath();
         int neighbor = 0;
-        //fixme
+
         if (path != null && !path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
+        else {System.out.println("path is empty"); return;}
 
-        else {
-            System.out.println("path is empty");
-            return;
-        }
-
+        boolean river = Game.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor];
         Pair next = LandController.getNeighborIndex(unit.getLocation(), neighbor);
         if (unit instanceof CombatUnit){
             Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
@@ -157,12 +155,17 @@ public class UnitController extends GameController {
             Game.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
         }
         unit.setLocation(next);
-        unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()) - (Game.map[next.x][next.y].getLandFeature() == null ? 0 : Game.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost));
+
+        unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()));
+        if (Game.map[next.x][next.y].getLandFeature() != null)
+            unit.setMP(-Game.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost);
         if (Game.map[next.x][next.y].getZOC() != null){
             if (!Game.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
                 unit.setMP(0);
             }
         }
+        if (river)
+            unit.setMP(0);
         unit.setPath(path.substring(1));
         unit.setWaitingForCommand(false);
         unit.setUnitStatus(UnitStatus.MOVING);
@@ -171,9 +174,11 @@ public class UnitController extends GameController {
     public String unitSleep() {
         Unit unit;
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
-            unit.setUnitStatus(UnitStatus.SLEEP);
-            unit.setWaitingForCommand(false);
-            return "Slept successfully!";
+            if (unit.getUnitStatus() != UnitStatus.WORKING && unit.getUnitStatus() != UnitStatus.SLEEP) {
+                unit.setUnitStatus(UnitStatus.SLEEP);
+                unit.setWaitingForCommand(false);
+                return "Slept successfully!";
+            } else return "can't sleep!";
         }
         return "Select a unit first!";
     }
@@ -235,32 +240,25 @@ public class UnitController extends GameController {
         return "Select a unit first!";
     }
 
-    public String unitSetCityTarget(){
-        int cityX = -1, cityY = -1;
-        main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
-            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.map[i][j].equals(selectedCity.getMainLand())){
-                    cityX = i;
-                    cityY = j;
-                    break main;
-                }
-            }
-        }
-        if (selectedCity != null && selectedCombatUnit != null){
+    public String unitSetCityTarget(Matcher matcher){
+        int cityX = Integer.parseInt(matcher.group("x"));
+        int cityY = Integer.parseInt(matcher.group("y"));
+        City city = Game.map[cityX][cityY].getOwnerCity();
+        if (city != null && selectedCombatUnit != null){
             if ((selectedCombatUnit instanceof CloseCombatUnit &&
                     LandController.areNeighbors(new Pair(cityX, cityY), selectedCombatUnit.getLocation()))){
-                if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
-                    selectedCombatUnit.setTargetCity(selectedCity);
+                if (!selectedCombatUnit.getOwnerNation().equals(city.getOwnerNation())){
+                    selectedCombatUnit.setTargetCity(city);
                 }
                 else{
                     return "Can't attack owner nation's city";
                 }
             }else if(selectedCombatUnit instanceof  RangedCombatUnit){
                 int unitNum = LandController.getLandNumber(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
-                int cityNum = LandController.getLandNumber(selectedCity.getMainLand());
+                int cityNum = LandController.getLandNumber(city.getMainLand());
                 if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.dist[unitNum][cityNum]){
-                    if (!selectedCombatUnit.getOwnerNation().equals(selectedCity.getOwnerNation())){
-                        selectedCombatUnit.setTargetCity(selectedCity);
+                    if (!selectedCombatUnit.getOwnerNation().equals(city.getOwnerNation())){
+                        selectedCombatUnit.setTargetCity(city);
                     }
                     else{
                         return "Can't attack owner nation's city";

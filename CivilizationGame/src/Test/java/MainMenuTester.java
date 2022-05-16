@@ -34,14 +34,14 @@ public class MainMenuTester extends Tester{
 
     @Test
     public void menuChangeTestWrongMenuName(){
-        commandMatcher = MainCommands.getMatcher("menu enter KhoonehHamsaye",MainCommands.menuEnter);
+        commandMatcher = MainCommands.getMatcher("menu enter KhoonehHamsaye",MainCommands.MAIN_COMMANDS);
         if (commandMatcher.matches())
             Assert.assertEquals("invalid menu name\navailable menu names : \"login menu\" \"profile menu\"",mainController.menuChange("kooche Hamsaye"));
     }
 
     @Test
     public void menuChangeTestSuccessful(){
-        commandMatcher = MainCommands.getMatcher("menu enter KhoonehHamsaye",MainCommands.menuEnter);
+        commandMatcher = MainCommands.getMatcher("menu enter KhoonehHamsaye",MainCommands.MAIN_COMMANDS);
         if (commandMatcher.matches())
             Assert.assertEquals("menu changed successfully",mainController.menuChange("profile menu"));
     }

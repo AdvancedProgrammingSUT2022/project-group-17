@@ -165,7 +165,7 @@ public class LandController extends Controller {
 
     private static void lightNeighbors(Pair coordinate) {
         for (Pair pair : getAllNeighborsIndexes(coordinate)) {
-            if (Pair.isValid(pair) && !Game.map[pair.x][pair.y].getLandType().name.equals(LandType.Mountain.name))
+            if (Pair.isValid(pair) && !Game.map[pair.x][pair.y].getLandType().name.equals(LandType.MOUNTAIN.name))
                 Game.map[pair.x][pair.y].setVisibility(2);
         }
 
@@ -231,14 +231,14 @@ public class LandController extends Controller {
                 for (int j = 0; j < 12; j++) {
 
                     LandType landtype = switch (random.nextInt(8)) {
-                        case 0 -> LandType.GrassLand;
-                        case 1 -> LandType.Tundra;
-                        case 2 -> LandType.Desert;
-                        case 3 -> LandType.Hill;
-                        case 4 -> LandType.Mountain;
-                        case 5 -> LandType.Ocean;
-                        case 6 -> LandType.Plain;
-                        default -> LandType.Snow;
+                        case 0 -> LandType.GRASS_LAND;
+                        case 1 -> LandType.TUNDRA;
+                        case 2 -> LandType.DESERT;
+                        case 3 -> LandType.HILL;
+                        case 4 -> LandType.MOUNTAIN;
+                        case 5 -> LandType.OCEAN;
+                        case 6 -> LandType.PLAIN;
+                        default -> LandType.SNOW;
                     };
 
                     map[i][j] = new Land(landtype, random.nextInt(50) + 50);
@@ -311,9 +311,6 @@ public class LandController extends Controller {
                             if (land2.getLandFeature() != null)
                                 Game.dist[num1][num2] += land2.getLandFeature().getLandFeatureType().movementCost;
                             Game.path[num1][num2] = "" + getIndex(new Pair(i1, j1), new Pair(i2, j2));
-                            if (land1.getHasRiver()[getIndex(new Pair(i1, j1), new Pair(i2, j2))] == true){
-                                Game.dist[num1][num2] = 999;
-                            }
                         }else{
                             Game.dist[num1][num2] = 1000;
                             Game.path[num1][num2] = "";

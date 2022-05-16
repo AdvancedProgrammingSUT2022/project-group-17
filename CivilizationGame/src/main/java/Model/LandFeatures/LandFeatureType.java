@@ -3,19 +3,19 @@ package Model.LandFeatures;
 import Model.Resources.Enums.ResourceType;
 
 public enum LandFeatureType {
-    Watershed("Watershed", 2, 0, 0, -33, 1, new ResourceType[]{ResourceType.Wheat, ResourceType.Sugar}, true),
-    Jungle("Jungle", 1, 1, 0, 25, 2, new ResourceType[]{ResourceType.Deer, ResourceType.Silk}, true),
-    Ice("Ice", 0, 0, 0, 0, -1, null, false),
-    Forest("Forest", 1, -1, 0, 25, 2, new ResourceType[]{ResourceType.Banana, ResourceType.Jewel}, true),
-    Marsh("Marsh", -1, 0, 0, -33, 2, new ResourceType[]{ResourceType.Sugar}, true),
-    Oasis("Oasis", 3, 0, 1, -33, 1, null, true),
+    WATERSHED("Watershed", 2, 0, 0, -33, 1, new ResourceType[]{ResourceType.WHEAT, ResourceType.SUGAR}, true),
+    JUNGLE("Jungle", 1, 1, 0, 25, 2, new ResourceType[]{ResourceType.DEER, ResourceType.SILK}, true),
+    ICE("Ice", 0, 0, 0, 0, -1, null, false),
+    FOREST("Forest", 1, -1, 0, 25, 2, new ResourceType[]{ResourceType.BANANA, ResourceType.JEWEL}, true),
+    MARSH("Marsh", -1, 0, 0, -33, 2, new ResourceType[]{ResourceType.SUGAR}, true),
+    OASIS("Oasis", 3, 0, 1, -33, 1, null, true),
     //fixme put sth else other than the number 1000 for movement cost of Rivers
-    RiverTop("RiverTop", 0, 0, 1, 0, 1000, null, true),
-    RiverTopRight("RiverTopRight", 0, 0, 1, 0, 1000, null, true),
-    RiverTopLeft("RiverTopLeft", 0, 0, 1, 0, 1000, null, true),
-    RiverBottom("RiverBottom", 0, 0, 1, 0, 1000, null, true),
-    RiverBottomRight("RiverBottomRight", 0, 0, 1, 0, 1000, null, true),
-    RiverBottomLeft("RiverBottomLeft", 0, 0, 1, 0, 1000, null, true),
+    RIVER_TOP("RiverTop", 0, 0, 1, 0, 1000, null, true),
+    RIVER_TOP_RIGHT("RiverTopRight", 0, 0, 1, 0, 1000, null, true),
+    RIVER_TOP_LEFT("RiverTopLeft", 0, 0, 1, 0, 1000, null, true),
+    RIVER_BOTTOM("RiverBottom", 0, 0, 1, 0, 1000, null, true),
+    RIVER_BOTTOM_RIGHT("RiverBottomRight", 0, 0, 1, 0, 1000, null, true),
+    RIVER_BOTTOM_LEFT("RiverBottomLeft", 0, 0, 1, 0, 1000, null, true),
 
 
     ;

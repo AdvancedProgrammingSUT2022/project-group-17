@@ -2,14 +2,11 @@ package Controller.GameControllers;
 
 import Controller.Controller;
 import Enums.Consts;
-import Model.Improvements.ImprovementType;
-import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Pair;
 import Model.Resources.Enums.CurrencyType;
 import Model.Resources.Enums.ResourceType;
-import Model.Technologies.Technology;
 import Model.Technologies.TechnologyType;
 import Model.Units.*;
 import Model.City;
@@ -214,8 +211,14 @@ public class GameController extends Controller {
         LandController.printMap(Game.map);
     }
 
+    private boolean isReadyForNextTurn () {
+        for (Unit unit : currentTurnUser.getNation().getUnits())
+            if (unit.isWaitingForCommand())
+                return false;
+        return true;
+    }
 
-    public String nextPlayerTurn () {
+    public String nextPlayerTurn() {
         if (isReadyForNextTurn()) {
             selectedCity = null;
             selectedCivilizedUnit = null;
@@ -232,14 +235,8 @@ public class GameController extends Controller {
         return "Order all your units first!";
     }
 
-    private boolean isReadyForNextTurn () {
-        for (Unit unit : currentTurnUser.getNation().getUnits())
-            if (unit.isWaitingForCommand())
-                return false;
-        return true;
-    }
 
-    public void nextGameTurn () {
+    public void nextGameTurn() {
         Game.setTurn(Game.getTurn() + 1);
 
         //set ZOC
@@ -249,8 +246,8 @@ public class GameController extends Controller {
                 Pair[] neighbors = new Pair[6];
                 for (int k = 0; k < 6; k++) {
                     neighbors[k] = LandController.getNeighborIndex(new Pair(i, j), k);
-                    //fixme null
-                    if (Pair.isValid(neighbors[k]) && Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit() != null)
+                    if (Pair.isValid(new Pair(neighbors[k].x, neighbors[k].y)) &&
+                            Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit() != null)
                         Game.map[i][j].setZOC(Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit());
                 }
             }
@@ -259,10 +256,9 @@ public class GameController extends Controller {
         for (User user : Game.getPlayersInGame()) {
             Nation userNation = user.getNation();
             for (Unit unit : userNation.getUnits()) {
-                //check Siege
-                if (unit instanceof RangedCombatUnit){
-                    if (((RangedCombatUnit) unit).getRangedCombatUnitType().isSiege){
-                        if (unit.getTargetCity() != null){
+                if (unit instanceof RangedCombatUnit) {
+                    if (((RangedCombatUnit) unit).getRangedCombatUnitType() != null && ((RangedCombatUnit) unit).getRangedCombatUnitType().isSiege) {
+                        if (unit.getTargetCity() != null) {
                             UnitController.unitAttackCity((CombatUnit) unit);
                         }
                     }
@@ -327,7 +323,7 @@ public class GameController extends Controller {
 
             //happiness for luxury resources
             for (ResourceType resourceType : userNation.getResourceCellar().keySet()) {
-                if (resourceType.currency.equals(CurrencyType.Coin) && userNation.getResourceCellar().get(resourceType) == 1)
+                if (resourceType.currency.equals(CurrencyType.COIN) && userNation.getResourceCellar().get(resourceType) == 1)
                     userNation.getHappiness().addBalance(4);
             }
         }
@@ -347,7 +343,7 @@ public class GameController extends Controller {
         if (unit.getUnitStatus() == UnitStatus.FORTIFY) {
             if (unit.getHp() < 10)
                 unit.addHp(1);
-        } else if (unit.getUnitStatus() == UnitStatus.FORTIFY_UNTIL_HILL) {
+        } else if (unit.getUnitStatus() == UnitStatus.FORTIFY_UNTIL_HEAL) {
             if (unit.getHp() < 10)
                 unit.addHp(1);
             else {
@@ -357,14 +353,15 @@ public class GameController extends Controller {
         }
     }
 
-    private void setUnitWaitingForCommand (Unit unit){
+    private void setUnitWaitingForCommand(Unit unit) {
         if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
-                unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HILL && unit.getUnitStatus() != UnitStatus.SLEEP) {
+                unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HEAL && unit.getUnitStatus() != UnitStatus.SLEEP &&
+                unit.getUnitStatus() != UnitStatus.FORTIFY) {
             unit.setWaitingForCommand(true);
         }
     }
 
-    public void nextTurnUnitMove (Unit unit){
+    public void nextTurnUnitMove(Unit unit) {
         if (unit instanceof CivilizedUnit) {
             unit.setMP(((CivilizedUnit) unit).getCivilizedUnitType().MP);
         } else if (unit instanceof CloseCombatUnit) {
@@ -373,18 +370,19 @@ public class GameController extends Controller {
             unit.setMP(((RangedCombatUnit) unit).getRangedCombatUnitType().MP);
         }
 
-        if (unit.getUnitStatus() == UnitStatus.ALERT || unit.getUnitStatus() == UnitStatus.AWAKE || unit.getUnitStatus() == UnitStatus.FORTIFY) {
-            if (!Objects.equals(unit.getPath(), "")) {
-                while (unit.getMP() > 0)
-                    UnitController.unitGoForward(unit);
-            } else {
-                unit.setUnitStatus(UnitStatus.AWAKE);
+        if (!unit.getPath().equals("")) {
+            while (unit.getMP() > 0)
+                UnitController.unitGoForward(unit);
+        } else {
+            if (unit.getUnitStatus() == UnitStatus.MOVING) unit.setUnitStatus(UnitStatus.AWAKE);
+            if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
+                    unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HEAL && unit.getUnitStatus() != UnitStatus.SLEEP &&
+            unit.getUnitStatus() != UnitStatus.FORTIFY)
                 unit.setWaitingForCommand(true);
-            }
         }
     }
 
-    private void nextTurnWorkerWorks (Unit unit){
+    private void nextTurnWorkerWorks(Unit unit) {
         if (unit instanceof CivilizedUnit &&
                 ((CivilizedUnit) unit).getCivilizedUnitType() == CivilizedUnitType.WORKER) {
             if (unit.getUnitStatus() == UnitStatus.WORKING) {
@@ -392,21 +390,20 @@ public class GameController extends Controller {
                     ((CivilizedUnit) unit).decreaseTurnsLeft(1);
                 } else {
                     if (((CivilizedUnit) unit).getImprovementType() != null) {
-                        WorkerController.workerBuildImprovement(((CivilizedUnit) unit).getImprovementType());
+                        WorkerController.workerBuildImprovement(((CivilizedUnit) unit));
+                        System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
                         ((CivilizedUnit) unit).setImprovementType(null);
                         unit.setUnitStatus(UnitStatus.AWAKE);
-                        selectedCivilizedUnit.setWaitingForCommand(true);
-                        System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
+                        unit.setWaitingForCommand(true);
                     } else if (((CivilizedUnit) unit).getWorkerWorks() != null) {
-                        WorkerController.workerWork(((CivilizedUnit) unit).getWorkerWorks());
+                        WorkerController.workerWork(((CivilizedUnit) unit));
+                        System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
                         ((CivilizedUnit) unit).setWorkerWorks(null);
                         unit.setUnitStatus(UnitStatus.AWAKE);
-                        selectedCivilizedUnit.setWaitingForCommand(false);
-                        System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
+                        unit.setWaitingForCommand(false);
                     } else System.out.println("ERROR!");
                 }
             }
         }
     }
-
 }

@@ -1,28 +1,26 @@
 package Model.Resources.Enums;
 
-import Model.Resources.Resource;
-
 public enum ResourceType {
-    Banana("Banana", CurrencyType.Food, 1),
-    Cow("Cow", CurrencyType.Food, 1),
-    Deer("Deer", CurrencyType.Food, 1),
-    Sheep("Sheep", CurrencyType.Food, 2),
-    Wheat("Wheat", CurrencyType.Food, 1),
+    BANANA("Banana", CurrencyType.FOOD, 1),
+    COW("Cow", CurrencyType.FOOD, 1),
+    DEER("Deer", CurrencyType.FOOD, 1),
+    SHEEP("Sheep", CurrencyType.FOOD, 2),
+    WHEAT("Wheat", CurrencyType.FOOD, 1),
 
-    Coal("Coal", CurrencyType.Production, 1),
-    Horse("Horse", CurrencyType.Production, 1),
-    Iron("Iron", CurrencyType.Production, 1),
+    COAL("Coal", CurrencyType.PRODUCTION, 1),
+    HORSE("Horse", CurrencyType.PRODUCTION, 1),
+    IRON("Iron", CurrencyType.PRODUCTION, 1),
 
-    Cotton("Cotton", CurrencyType.Coin, 2),
-    Fur("Fur", CurrencyType.Coin, 2),
-    Jewel("Jewel", CurrencyType.Coin, 3),
-    Gold("Gold", CurrencyType.Coin, 2),
-    Fumigation("Fumigation", CurrencyType.Coin, 2),
-    Tusk("Tusk", CurrencyType.Coin, 2),
-    Marble("Marble", CurrencyType.Coin, 2),
-    Silk("Silk", CurrencyType.Coin, 2),
-    Silver("Silver", CurrencyType.Coin, 2),
-    Sugar("Sugar", CurrencyType.Coin, 2),
+    COTTON("Cotton", CurrencyType.COIN, 2),
+    FUR("Fur", CurrencyType.COIN, 2),
+    JEWEL("Jewel", CurrencyType.COIN, 3),
+    GOLD("Gold", CurrencyType.COIN, 2),
+    FUMIGATION("Fumigation", CurrencyType.COIN, 2),
+    TUSK("Tusk", CurrencyType.COIN, 2),
+    MARBLE("Marble", CurrencyType.COIN, 2),
+    SILK("Silk", CurrencyType.COIN, 2),
+    SILVER("Silver", CurrencyType.COIN, 2),
+    SUGAR("Sugar", CurrencyType.COIN, 2),
 
 
 

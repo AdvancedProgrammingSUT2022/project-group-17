@@ -6,6 +6,7 @@ import Model.Improvements.Improvement;
 import Model.Lands.Land;
 import Model.Nations.Nation;
 import Model.Pair;
+import Model.Units.CombatUnit;
 import Model.Units.Enums.CivilizedUnitType;
 
 import java.util.regex.Matcher;
@@ -34,7 +35,7 @@ public class CityController extends GameController {
                 if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
-            if (currentTurnUser.getNation().getCities().size() > 0)
+            if (currentTurnUser.getNation().getCities().size() > 0 && selectedCivilizedUnit != null)
                 UnitController.unitDeath(selectedCivilizedUnit);
             return "City built successfully";
         }
@@ -42,15 +43,16 @@ public class CityController extends GameController {
     }
 
     public boolean isCityBuildable(Pair main){
-        if (Game.map[main.x][main.y].getLandType().isWalkable == false)
+        if (!Game.map[main.x][main.y].getLandType().isWalkable)
             return false;
-        Pair neighbors[] = new Pair[6];
+
+        Pair[] neighbors = new Pair[6];
         for (int i = 0; i < 6; i++)
             neighbors[i] = LandController.getNeighborIndex(main, i);
 
         for (int i = 0; i < 6; i++) {
             if (Pair.isValid(neighbors[i])){
-                Pair neighbors2[] = new Pair[6];
+                Pair[] neighbors2 = new Pair[6];
                 for (int j = 0; j < 6; j++)
                     neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
 
@@ -63,6 +65,39 @@ public class CityController extends GameController {
             }
         }
         return true;
+    }
+
+    public String cityRangeAttack(Matcher matcher){
+        int x = Integer.parseInt(matcher.group("x"));
+        int y = Integer.parseInt(matcher.group("y"));
+
+        if (selectedCity == null)
+            return "You have to select a city first";
+        Pair neighbors[] = new Pair[6];
+        for (int i = 0; i < 6; i++)
+            neighbors[i] = LandController.getNeighborIndex(new Pair(x, y), i);
+
+        for (int i = 0; i < 6; i++) {
+            if (Pair.isValid(neighbors[i])){
+                Pair neighbors2[] = new Pair[6];
+                for (int j = 0; j < 6; j++)
+                    neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
+
+                for (int j = 0; j < 6; j++) {
+                    if (Pair.isValid(neighbors2[j])){
+                        if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null){
+                            if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity().equals(selectedCity)){
+                                CombatUnit combatUnit = Game.map[x][y].getCombatUnit();
+                                combatUnit.setHp(combatUnit.getHp() - selectedCity.getRangedStrength());
+                                return "Attack on unit successful";
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        return "Target unit is not in range";
     }
 
 
@@ -89,7 +124,7 @@ public class CityController extends GameController {
         if (!isCitizenInRange(x, y))
             return "You can't send a citizen that far";
         if (selectedCity != null){
-            if (!Game.map[x][y].getOwnerCity().equals(selectedCity))
+            if (Game.map[x][y].getOwnerCity() == null || !Game.map[x][y].getOwnerCity().equals(selectedCity))
                 return "This land is not part of your city";
             if (selectedCity.getEmployees() < selectedCity.getCitizens()){
                 if (!Game.map[x][y].hasCitizen()){

@@ -5,9 +5,12 @@ import Model.City;
 import Model.Game;
 import Model.Improvements.Improvement;
 import Model.Improvements.ImprovementType;
+import Model.Lands.LandType;
 import Model.Nations.Nation;
 import Model.Nations.NationType;
 import Model.Pair;
+import Model.Units.CivilizedUnit;
+import Model.Units.Enums.CivilizedUnitType;
 import Model.Users.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,10 +36,17 @@ public class CityControllerTester extends Tester {
     public void BuildCityTest(){
         CityController.setCurrentTurnUser(new User("","",""));
         CityController.getCurrentTurnUser().setNation(new Nation(NationType.PERSIA));
+
         commandMatcher = CityCommands.getMatcher("build city on -x 3 -y 3",CityCommands.BUILD_CITY);
+        CityController.setSelectedCivilizedUnit(new CivilizedUnit(CivilizedUnitType.SETTLER,CityController.getCurrentTurnUser().getNation(),new Pair(3,3)));
+        Game.map[3][3].setCivilizedUnit(CityController.getSelectedCivilizedUnit());
         if (commandMatcher.matches())
-            cityController.buildCity(commandMatcher);
-        Assert.assertFalse(cityController.isCityBuildable(new Pair(3,2)));
+            System.out.println(cityController.buildCity(commandMatcher));
+
+        CityController.setCurrentTurnUser(new User("","",""));
+        CityController.getCurrentTurnUser().setNation(new Nation(NationType.PERSIA));
+        Game.map[3][3].setLandType(LandType.GRASS_LAND);
+        Assert.assertTrue(cityController.isCityBuildable(new Pair(3,2)));
     }
 
     @Test

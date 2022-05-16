@@ -63,6 +63,8 @@ public class GameMenu extends Menu {
             System.out.println(cityController.retrieveCitizen(commandMatcher));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.SHOW_BANNER)).matches()){
             System.out.println(cityController.cityShowBanner());
+        } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.CITY_ATTACK)).matches()){
+            System.out.println(cityController.cityRangeAttack(commandMatcher));
         } else if (GameCommands.getMatcher(input, GameCommands.NEXT_TURN).matches()) {
             System.out.println(gameController.nextPlayerTurn());
 
@@ -109,7 +111,7 @@ public class GameMenu extends Menu {
                 System.out.println(output);
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_ATTACK)).matches()) {
-            System.out.println(unitController.unitSetCityTarget());
+            System.out.println(unitController.unitSetCityTarget(commandMatcher));
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()) {
             System.out.println(unitController.unitStartCreation(commandMatcher));

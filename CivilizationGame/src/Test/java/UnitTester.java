@@ -2,6 +2,7 @@ import Controller.GameControllers.CityController;
 import Controller.GameControllers.GameController;
 import Controller.GameControllers.LandController;
 import Controller.GameControllers.UnitController;
+import Enums.GameEnums.CityCommands;
 import Enums.GameEnums.GameCommands;
 import Enums.GameEnums.UnitCommands;
 import Model.City;
@@ -108,8 +109,9 @@ public class UnitTester extends Tester{
         Game.map[3][4].setOwnerCity(tehran);
         Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
         UnitController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
+        commandMatcher = UnitCommands.getMatcher("unit attack city on -x 3 -y 4",UnitCommands.UNIT_ATTACK);
 
-        Assertions.assertEquals("Can't attack owner nation's city", unitController.unitSetCityTarget());
+        if (commandMatcher.matches()) Assertions.assertEquals("Can't attack owner nation's city", unitController.unitSetCityTarget(commandMatcher));
     }
 
     @Test
@@ -125,13 +127,13 @@ public class UnitTester extends Tester{
 
         Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
         UnitController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
-
-        Assertions.assertEquals("Attack successful", unitController.unitSetCityTarget());
+        commandMatcher = UnitCommands.getMatcher("unit attack city on -x 3 -y 2",UnitCommands.UNIT_ATTACK);
+        if (commandMatcher.matches()) Assertions.assertEquals("Attack successful", unitController.unitSetCityTarget(commandMatcher));
     }
 
     @Test
     public void unitSetPathTestWrongDestination(){
-        Game.map[3][4].setLandType(LandType.Mountain);
+        Game.map[3][4].setLandType(LandType.MOUNTAIN);
 
         commandMatcher = UnitCommands.getMatcher("combat unit move to -x 3 -y 4",UnitCommands.COMBAT_UNIT_MOVE_TO);
         if (commandMatcher.matches())
@@ -152,7 +154,7 @@ public class UnitTester extends Tester{
 
     @Test
     public void unitGoForwardTest(){
-        Game.map[3][3].setLandType(LandType.GrassLand);
+        Game.map[3][3].setLandType(LandType.GRASS_LAND);
         Game.map[3][3].getCombatUnit().setPath("0");
 
         UnitController.unitGoForward(Game.map[3][3].getCombatUnit());
@@ -210,8 +212,8 @@ public class UnitTester extends Tester{
     public void CreateUnitCloseCombatUnit(){
 
         commandMatcher = UnitCommands.getMatcher("create a Knight unit with type close combat unit",UnitCommands.CREATE_UNIT);
-        nation.addResource(ResourceType.Horse);
-        nation.addTechnology(TechnologyType.Chivalry);
+        nation.addResource(ResourceType.HORSE);
+        nation.addTechnology(TechnologyType.CHIVALRY);
         if (commandMatcher.matches()) Assertions.assertEquals("Close combat unit is set for creation successfully",unitController.unitStartCreation(commandMatcher));
         city.setHasAnInProgressUnit(false);
 
@@ -221,7 +223,7 @@ public class UnitTester extends Tester{
     public void CreateUnitRangedCombatUnit(){
 
         commandMatcher = UnitCommands.getMatcher("create a Archer unit with type ranged combat unit",UnitCommands.CREATE_UNIT);
-        nation.addTechnology(TechnologyType.Archery);
+        nation.addTechnology(TechnologyType.ARCHERY);
         if (commandMatcher.matches()) Assertions.assertEquals("Ranged combat unit is set for creation successfully",unitController.unitStartCreation(commandMatcher));
         city.setHasAnInProgressUnit(false);
 

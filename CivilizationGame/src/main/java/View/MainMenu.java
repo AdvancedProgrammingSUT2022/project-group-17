@@ -13,7 +13,7 @@ public class MainMenu extends Menu{
     public void run(Scanner scanner) {
         String input = scanner.nextLine();
         Matcher commandMatcher;
-        if ((commandMatcher = MainCommands.getMatcher(input,MainCommands.menuEnter)).matches()){
+        if ((commandMatcher = MainCommands.getMatcher(input,MainCommands.MAIN_COMMANDS)).matches()){
             System.out.println(mainController.menuChange(commandMatcher.group("menuName")));
 
             if(commandMatcher.group("menuName").equals("profile menu"))

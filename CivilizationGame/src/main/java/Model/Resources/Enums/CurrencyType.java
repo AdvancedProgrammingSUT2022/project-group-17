@@ -1,13 +1,11 @@
 package Model.Resources.Enums;
 
-import Model.Resources.Currency;
-
 public enum CurrencyType {
-    Coin("Coin"),
-    Food("Food"),
-    Production("Production"),
-    Science("Science"),
-    Happiness("Happiness"),
+    COIN("Coin"),
+    FOOD("Food"),
+    PRODUCTION("Production"),
+    SCIENCE("Science"),
+    HAPPINESS("Happiness"),
 
     ;
     public String name;

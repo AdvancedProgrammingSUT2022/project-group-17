@@ -44,9 +44,9 @@ public class TechnologyTester extends Tester{
 
     @Test
     public void addTechnologyToList(){
-        nation.setInProgressTechnology(TechnologyType.Agriculture);
+        nation.setInProgressTechnology(TechnologyType.AGRICULTURE);
         TechnologyController.activateTechnology(nation);
 
-        Assertions.assertTrue(nation.hasTechnology(TechnologyType.Agriculture));
+        Assertions.assertTrue(nation.hasTechnology(TechnologyType.AGRICULTURE));
     }
 }
