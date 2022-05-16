@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public enum UnitCommands {
     CIVILIZED_UNIT_MOVE_TO("civilized unit move to -x (?<x>\\d+) -y (?<y>\\d+)"), //TODO fill enums
     COMBAT_UNIT_MOVE_TO("combat unit move to -x (?<x>\\d+) -y (?<y>\\d+)"),
-    UNIT_ATTACK("unit attack city"),
+    UNIT_ATTACK("unit attack city on -x (?<x>\\d+) -y (?<y>\\d+)"),
     CREATE_UNIT("create a (?<name>\\S+) unit with type (?<type>[a-zA-Z ]+)"),
     PURCHASE_UNIT("purchase a (?<name>\\S+) unit with type (?<type>[a-zA-Z ]+)"),
     COMBAT_UNIT_ACTION("combat unit -a (?<action>.+)"),
