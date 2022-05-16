@@ -276,6 +276,12 @@ public class GameController extends Controller {
                             city.setNextUnitTurns(city.getNextUnitTurns() - 1);
                         }
 
+                        //production of unemployed
+                        userNation.getProduction().addBalance(city.getCitizens() - city.getEmployees());
+
+                        //food consumption
+                        userNation.getFood().addBalance(-city.getCitizens() * 2);
+
                         //unhappiness update
                         userNation.getHappiness().addBalance(-city.getCitizens() / 3);
                     }

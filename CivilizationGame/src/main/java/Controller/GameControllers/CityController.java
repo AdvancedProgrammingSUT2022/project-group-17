@@ -69,11 +69,28 @@ public class CityController extends GameController {
 
     }
 
+    public boolean isCitizenInRange(int x, int y){
+        Pair[] neighbors = new Pair[6];
+        for (int i = 0; i < 6; i++) {
+            neighbors[i] = LandController.getNeighborIndex(new Pair(x, y), i);
+            Pair[] neighbors2 = new Pair[6];
+            for (int j = 0; j < 6; j++) {
+                neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
+                if (selectedCity.getMainLand().equals(Game.map[neighbors2[j].x][neighbors2[j].y]))
+                    return true;
+            }
+        }
+        return false;
+
+    }
+
     public String sendCitizen(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
         Pair dest = new Pair(x, y);
 
+        if (!isCitizenInRange(x, y))
+            return "You can't send a citizen that far";
         if (selectedCity != null){
             if (!Game.map[x][y].getOwnerCity().equals(selectedCity))
                 return "This land is not part of your city";
