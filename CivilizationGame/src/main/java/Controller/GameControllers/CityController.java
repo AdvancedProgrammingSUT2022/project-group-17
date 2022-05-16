@@ -34,7 +34,7 @@ public class CityController extends GameController {
                 if (Pair.isValid(neighbors[i]))
                     Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
-            if (currentTurnUser.getNation().getCities().size() > 0)
+            if (currentTurnUser.getNation().getCities().size() > 0 && selectedCivilizedUnit != null)
                 UnitController.unitDeath(selectedCivilizedUnit);
             return "City built successfully";
         }

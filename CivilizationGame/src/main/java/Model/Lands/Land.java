@@ -20,7 +20,7 @@ public class Land {
     protected boolean isCityCenter;
     protected CivilizedUnit civilizedUnit = null;
     protected CombatUnit combatUnit = null;
-    protected boolean isBuyable;
+    protected boolean isBuyable = true;
     protected boolean isAPartOfPath = false;
     protected LandType landType;
     protected int visibility = 2;
