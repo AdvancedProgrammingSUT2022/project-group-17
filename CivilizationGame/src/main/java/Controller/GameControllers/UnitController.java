@@ -187,9 +187,11 @@ public class UnitController extends GameController {
     public String unitSleep() {
         Unit unit;
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
-            unit.setUnitStatus(UnitStatus.SLEEP);
-            unit.setWaitingForCommand(false);
-            return "Slept successfully!";
+            if (unit.getUnitStatus() != UnitStatus.WORKING && unit.getUnitStatus() != UnitStatus.SLEEP) {
+                unit.setUnitStatus(UnitStatus.SLEEP);
+                unit.setWaitingForCommand(false);
+                return "Slept successfully!";
+            } else return "can't sleep!";
         }
         return "Select a unit first!";
     }
