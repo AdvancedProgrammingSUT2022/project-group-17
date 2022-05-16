@@ -207,9 +207,9 @@ public class GameController extends Controller {
                     if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
                         nextGameTurn();
                         Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
-                        return "next game turn";
+                        return "next game turn: " + currentTurnUser.getUsername();
                     }
-                    return "next player turn!";
+                    return "next player turn!: " + currentTurnUser.getUsername();
                 }
                 return "Order all your units first!";
             }
