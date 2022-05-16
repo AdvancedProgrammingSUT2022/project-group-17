@@ -2,11 +2,8 @@ package Controller.GameControllers;
 
 public class NationController extends GameController {
 
-    public void nationIncreaseResources(){
-
+    public String showHappiness(){
+        return "" + currentTurnUser.getNation().getHappiness().getBalance();
     }
 
-    public void nationProgressTechnology(){
-
-    }
 }

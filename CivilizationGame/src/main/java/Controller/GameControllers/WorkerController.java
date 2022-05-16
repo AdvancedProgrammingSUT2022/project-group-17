@@ -12,6 +12,8 @@ import Model.Units.Enums.UnitStatus;
 
 import java.util.regex.Matcher;
 
+import java.util.regex.Matcher;
+
 public class WorkerController extends GameController {
 
     public String setWorkerToBuildImprovement(Matcher matcher) {
@@ -22,6 +24,7 @@ public class WorkerController extends GameController {
                 toBeBuiltImprovement = improvementType;
         }
         if (toBeBuiltImprovement != null) {
+            selectedCivilizedUnit.setWaitingForCommand(false);
             switch (name) {
                 case "Farm" -> {
                     return setWorkerToBuildFarm();
@@ -43,7 +46,7 @@ public class WorkerController extends GameController {
         return "Improvement name isn't correct";
     }
 
-    private String updateWorkerBuildingStatus(ImprovementType improvementType) {
+    private static String updateWorkerBuildingStatus(ImprovementType improvementType) {
         selectedCivilizedUnit.setImprovementType(improvementType);
         selectedCivilizedUnit.setTurnsLeft(improvementType.initialTurns);
         selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
@@ -63,7 +66,7 @@ public class WorkerController extends GameController {
         return message;
     }
 
-    private String setWorkerToBuildFarm() {
+    private static String setWorkerToBuildFarm() {
         ImprovementType improvementType = ImprovementType.FARM;
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes")) {
@@ -83,7 +86,7 @@ public class WorkerController extends GameController {
         return message;
     }
 
-    private String setWorkerToBuildMine() {
+    private static String setWorkerToBuildMine() {
         ImprovementType improvementType = ImprovementType.MINE;
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes") && (message = hasResourceOfImprovement(improvementType)).equals("yes")) {
@@ -106,6 +109,7 @@ public class WorkerController extends GameController {
     public String setWorkerToRemoveFeature() {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature() != null) {
             selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
+            selectedCivilizedUnit.setWaitingForCommand(false);
             switch (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature().getLandFeatureType()) {
                 case Jungle -> {
                     selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_JUNGLE);
@@ -127,6 +131,7 @@ public class WorkerController extends GameController {
 
     public String setWorkerToRemoveRoute() {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getRoute() != null) {
+            selectedCivilizedUnit.setWaitingForCommand(false);
             selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
             selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_ROUTE);
             selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REMOVE_ROUTE.turns);
@@ -138,6 +143,7 @@ public class WorkerController extends GameController {
     public String setWorkerToRepair() {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getImprovement() != null) {
             if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getImprovement().isBroken()) {
+                selectedCivilizedUnit.setWaitingForCommand(false);
                 selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
                 selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REPAIR);
                 selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REPAIR.turns);
@@ -167,19 +173,39 @@ public class WorkerController extends GameController {
     }
 
 
-    public void workerBuildRoad(ImprovementType improvementType) {
+    public static void workerBuildImprovement (ImprovementType improvementType) {
+        switch (improvementType) {
+            case FARM -> workerBuildFarm();
+            case JUNGLE_FARM, FOREST_FARM, MARSH_FARM -> workerBuildSpecialFarm(improvementType);
+            case MINE -> workerBuildMine();
+            case JUNGLE_MINE, FOREST_MINE, MARSH_MINE -> workerBuildSpecialMine(improvementType);
+            case CAMP, PASTURE, PLANTATION, QUARRY -> workerBuildResourcedImprovement(improvementType);
+            case LUMBER_MILL, TRADING_POST, FACTORY -> workerBuildNonResourcedImprovement(improvementType);
+            case ROAD, RAILROAD -> workerBuildRoad(improvementType);
+        }
+    }
+
+    public static void workerWork (WorkerWorks workerWorks) {
+        switch (workerWorks) {
+            case REPAIR -> workerRepair();
+            case REMOVE_ROUTE -> workerRemoveRoute();
+            case REMOVE_JUNGLE, REMOVE_FOREST, REMOVE_MARSH -> workerRemoveFeature();
+        }
+    }
+
+    public static void workerBuildRoad(ImprovementType improvementType) {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setRoute(new Improvement(improvementType));
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setMovementCost(0);
     }
 
-    public void workerBuildFarm() {
+    public static void workerBuildFarm() {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(ImprovementType.FARM));
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addFoodGrowth(1);
         if (hasResourceOfImprovement(ImprovementType.FARM).equals("yes"))
             currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource().getResourceType());
     }
 
-    public void workerBuildSpecialFarm(ImprovementType improvementType) {
+    public static void workerBuildSpecialFarm(ImprovementType improvementType) {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(ImprovementType.FARM));
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addFoodGrowth(1);
         if (hasResourceOfImprovement(ImprovementType.FARM).equals("yes"))
@@ -187,13 +213,13 @@ public class WorkerController extends GameController {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setLandFeature(null);
     }
 
-    public void workerBuildMine() {
+    public static void workerBuildMine() {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(ImprovementType.MINE));
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addProductionGrowth(1);
         currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource().getResourceType());
     }
 
-    public void workerBuildSpecialMine(ImprovementType improvementType) {
+    public static void workerBuildSpecialMine(ImprovementType improvementType) {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(ImprovementType.MINE));
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].addProductionGrowth(1);
         currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource().getResourceType());
@@ -201,19 +227,19 @@ public class WorkerController extends GameController {
     }
 
 
-    public void workerRemoveFeature() {
+    public static void workerRemoveFeature() {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setLandFeature(null);
     }
 
-    public void workerRemoveRoute() {
+    public static void workerRemoveRoute() {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setRoute(null);
     }
 
-    public void workerRepair() {
+    public static void workerRepair() {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getImprovement().setBroken(false);
     }
 
-    public void workerBuildNonResourcedImprovement(ImprovementType improvementType) {
+    public static void workerBuildNonResourcedImprovement(ImprovementType improvementType) {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(improvementType));
         switch (improvementType.currency) {
             //TODO also calculate land's currency's growths for showing them
@@ -226,14 +252,14 @@ public class WorkerController extends GameController {
         }
     }
 
-    public void workerBuildResourcedImprovement(ImprovementType improvementType) {
+    public static void workerBuildResourcedImprovement(ImprovementType improvementType) {
         Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].setImprovement(new Improvement(improvementType));
         currentTurnUser.getNation().addResource(Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].
                 getResource().getResourceType());
     }
 
 
-    private String canGenerallyBuildImprovement(ImprovementType improvementType) {
+    private static String canGenerallyBuildImprovement(ImprovementType improvementType) {
         if (selectedCivilizedUnit != null) {
             if (selectedCivilizedUnit.getCivilizedUnitType() == CivilizedUnitType.WORKER) {
                 if (selectedCivilizedUnit.getWorkerWorks() == null && selectedCivilizedUnit.getImprovementType() == null) {
@@ -253,7 +279,8 @@ public class WorkerController extends GameController {
         } else return ("Please select a Worker first!");
     }
 
-    public String hasResourceOfImprovement(ImprovementType improvementType) {
+
+    public static String hasResourceOfImprovement(ImprovementType improvementType) {
         if (Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource() != null)
             for (ResourceType resourceType : improvementType.resourcesGiven)
                 if (resourceType == Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getResource().
@@ -263,7 +290,8 @@ public class WorkerController extends GameController {
         return ("There is not the suitable resource for " + improvementType.name + " here!");
     }
 
-    public String isLandSuitable(ImprovementType improvementType) {
+
+    public static String isLandSuitable(ImprovementType improvementType) {
         if (improvementType.landTypes != null)
             for (LandType landType : improvementType.landTypes)
                 if (landType == Game.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandType())

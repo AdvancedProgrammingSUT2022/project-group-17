@@ -40,7 +40,7 @@ public class CityControllerTester extends Tester {
     @Test
     public void cityBuyLandTest(){
         Nation nation = new Nation(NationType.PERSIA);
-        City city = new City(nation);
+        City city = new City(nation,"tehran");
         nation.increaseCoin(100000);
         Game.map[3][3].setOwnerCity(city);
         CityController.setSelectedCity(city);
@@ -55,10 +55,10 @@ public class CityControllerTester extends Tester {
     @Test
     public void sendCitizen(){
         Nation nation = new Nation(NationType.PERSIA);
-        City city = new City(nation);
+        City city = new City(nation,"tehran");
 
         CityController.setSelectedCity(city);
-
+        city.setMainLand(Game.map[3][3]);
         Game.map[3][3].setOwnerCity(city);
         city.getLands().add(Game.map[3][3]);
 
@@ -70,14 +70,14 @@ public class CityControllerTester extends Tester {
     @Test
     public void retrieveCitizenTest(){
         Nation nation = new Nation(NationType.PERSIA);
-        City city = new City(nation);
+        City city = new City(nation,"tehran");
 
         CityController.setSelectedCity(city);
 
         Game.map[3][3].setOwnerCity(city);
         city.getLands().add(Game.map[3][3]);
         Game.map[3][3].setCitizen(true);
-        commandMatcher = CityCommands.getMatcher("retrieve citizen from -x 3 -y 3",CityCommands.RETRIEVE_CiTIZEN);
+        commandMatcher = CityCommands.getMatcher("retrieve citizen from -x 3 -y 3",CityCommands.RETRIEVE_CITIZEN);
         if (commandMatcher.matches()) cityController.retrieveCitizen(commandMatcher);
 
         Assertions.assertFalse(Game.map[3][3].hasCitizen());
@@ -86,7 +86,7 @@ public class CityControllerTester extends Tester {
     @Test
     public void cityDeathTest(){
         Nation nation = new Nation(NationType.PERSIA);
-        City city = new City(nation);
+        City city = new City(nation,"tehran");
 
         CityController.setSelectedCity(city);
 
@@ -101,7 +101,7 @@ public class CityControllerTester extends Tester {
     @Test
     public void cityTakeOverTest(){
         Nation nation = new Nation(NationType.PERSIA);
-        City city = new City(nation);
+        City city = new City(nation,"tehran");
         Nation doghoozAbad = new Nation(NationType.INCA);
         CityController.setSelectedCity(city);
 

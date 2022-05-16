@@ -3,6 +3,7 @@ package Model.Lands;
 import Model.City;
 import Model.Improvements.Improvement;
 import Model.LandFeatures.LandFeature;
+import Model.Nations.Nation;
 import Model.Resources.Resource;
 import Model.Units.CivilizedUnit;
 import Model.Units.CombatUnit;
@@ -12,6 +13,8 @@ public class Land {
     protected Improvement improvement;
     protected Improvement route;
     protected LandFeature landFeature;
+    protected CombatUnit ZOC;
+
     protected int cost;
     protected City ownerCity = null;
     protected boolean isCityCenter;
@@ -37,13 +40,26 @@ public class Land {
 
     public Land(LandType landType, int cost) {
         this.landType = landType;
+        this.foodGrowth = landType.foodGrowth;
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
         this.isBuyable = true;
     }
 
+    public void addGrowthToLandOwner(){
+        if (this.ownerCity != null && this.hasCitizen()){
+            Nation landOwnerNation = this.ownerCity.getOwnerNation();
 
+            landOwnerNation.getCoin().addGrowthRate(this.coinGrowth);
+            landOwnerNation.getProduction().addGrowthRate(this.productionGrowth);
+            landOwnerNation.getFood().addGrowthRate(this.foodGrowth);
+
+            landOwnerNation.getCoin().addGrowthRate(this.landFeature.getLandFeatureType().goldGrowth);
+            landOwnerNation.getProduction().addGrowthRate(this.landFeature.getLandFeatureType().productionGrowth);
+            landOwnerNation.getFood().addGrowthRate(this.landFeature.getLandFeatureType().foodGrowth);
+        }
+    }
     public CivilizedUnit getCivilizedUnit() {
         return civilizedUnit;
     }
@@ -178,5 +194,13 @@ public class Land {
 
     public boolean hasCitizen() {
         return hasCitizen;
+    }
+
+    public CombatUnit getZOC() {
+        return ZOC;
+    }
+
+    public void setZOC(CombatUnit ZOC) {
+        this.ZOC = ZOC;
     }
 }

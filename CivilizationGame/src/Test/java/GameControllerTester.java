@@ -13,7 +13,7 @@ import Model.Units.Enums.CloseCombatUnitType;
 import Model.Units.Unit;
 import Model.Users.User;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import java.util.ArrayList;
 
@@ -25,7 +25,14 @@ public class GameControllerTester extends Tester{
     @BeforeAll
     public static void setup(){
         Game.map = LandController.mapInitializer();
+        Nation persian = new Nation(NationType.PERSIA);
+        Game.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,persian,new Pair(3,3)));
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,persian,new Pair(3,3)));
+//        GameController.setSelectedCivilizedUnit(Game.map[3][3].getCivilizedUnit());
+//        GameController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
 
+        GameController.setCurrentTurnUser(new User("","",""));
+        GameController.getCurrentTurnUser().setNation(persian);
     }
 
 
@@ -38,7 +45,6 @@ public class GameControllerTester extends Tester{
 
     @Test
     public void combatUnitSelectionTestSuccessful(){
-        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),new Pair(3,3)));
         commandMatcher = GameCommands.getMatcher("select combat unit on -x 3 -y 3",GameCommands.SELECT_COMBAT_UNIT);
         if (commandMatcher.matches())
             Assert.assertEquals(CloseCombatUnitType.KNIGHT.name + " is now selected",gameController.selectCombatUnit(commandMatcher));
@@ -53,7 +59,6 @@ public class GameControllerTester extends Tester{
 
     @Test
     public void civilizedUnitSelectionTestSuccessful(){
-        Game.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,new Nation(NationType.PERSIA),new Pair(3,3)));
         commandMatcher = GameCommands.getMatcher("select civilized unit on -x 3 -y 3",GameCommands.SELECT_CIVILIZED_UNIT);
         if (commandMatcher.matches())
             Assert.assertEquals(CivilizedUnitType.WORKER.name + " is now selected",gameController.selectCivilizedUnit(commandMatcher));
@@ -72,7 +77,7 @@ public class GameControllerTester extends Tester{
         }
         user.getNation().addUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,user.getNation(),new Pair(3,3)));
         ArrayList<City> cities = new ArrayList<>();
-        cities.add(new City(user.getNation()));
+        cities.add(new City(user.getNation(),"city"));
         user.getNation().setCities(cities);
         gameController.showResearches();
         gameController.showCities();

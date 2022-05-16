@@ -1,4 +1,5 @@
 import Controller.GameControllers.LandController;
+import Enums.Consts;
 import Model.Game;
 import View.*;
 
@@ -15,6 +16,8 @@ public class Main {
         String currentMenu = "LoginMenu";
         Scanner scanner = new Scanner(System.in);
         LandController.printMap(Game.map);
+        LandController.initializeDistances();
+        LandController.updateDistances();
         while (!currentMenu.equals("EXIT")) {
             menus[menuNumbers.get(currentMenu)].run(scanner);
             currentMenu = Menu.getMenuName();

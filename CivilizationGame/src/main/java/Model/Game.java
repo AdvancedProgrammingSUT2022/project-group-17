@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.GameControllers.LandController;
+import Enums.Consts;
 import Model.Lands.Land;
 import Model.Users.User;
 import com.google.gson.Gson;
@@ -31,8 +32,8 @@ public class Game {
     }
 
     public static Land[][] map = LandController.mapInitializer();
-    public static HashMap<LandPair, Integer> dist = new HashMap<>();
-    public static HashMap<LandPair, String> path = new HashMap<>();
+    public static int[][] dist = new int[110][110];
+    public static String[][] path = new String[110][110];
 
     public static int getSubTurn() {
         return subTurn;

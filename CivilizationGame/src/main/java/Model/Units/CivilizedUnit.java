@@ -4,7 +4,6 @@ import Model.Improvements.ImprovementType;
 import Model.Nations.Nation;
 import Model.Pair;
 import Model.Units.Enums.CivilizedUnitType;
-import Model.Units.Enums.UnitStatus;
 
 public class CivilizedUnit extends Unit {
 
@@ -13,9 +12,10 @@ public class CivilizedUnit extends Unit {
     protected ImprovementType improvementType = null;
     protected WorkerWorks workerWorks = null;
 
+
     public CivilizedUnit(CivilizedUnitType civilizedUnitType, Nation ownerNation, Pair location) {
         super(civilizedUnitType.name, civilizedUnitType.cost, civilizedUnitType.MP, civilizedUnitType.resourceType,
-                civilizedUnitType.technologyType, civilizedUnitType.turns, civilizedUnitType.hp,ownerNation, location, UnitStatus.AWAKE);
+                civilizedUnitType.technologyType, civilizedUnitType.turns, civilizedUnitType.hp,ownerNation, location);
         this.civilizedUnitType = civilizedUnitType;
     }
 
@@ -37,6 +37,10 @@ public class CivilizedUnit extends Unit {
 
     public void setTurnsLeft(int turnsLeft) {
         this.turnsLeft = turnsLeft;
+    }
+
+    public void decreaseTurnsLeft(int amount) {
+        this.turnsLeft -= amount;
     }
 
     public void setImprovementType(ImprovementType improvementType) {

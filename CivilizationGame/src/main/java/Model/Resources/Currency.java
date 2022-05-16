@@ -5,7 +5,7 @@ import Model.Resources.Enums.ResourceType;
 
 public class Currency {
     protected int balance;
-    protected int growthRate;
+    protected int growthRate = 0;
     protected CurrencyType currencyType;
 
     public Currency(CurrencyType currencyType){
@@ -33,7 +33,15 @@ public class Currency {
         this.growthRate = growthRate;
     }
 
+    public void addGrowthRate(int growthRate){
+        this.growthRate += growthRate;
+    }
+
     public void addBalance(int balance) {
         this.balance += balance;
+    }
+
+    public void addGrowthRateToBalance(){
+        this.balance += this.growthRate;
     }
 }
