@@ -92,7 +92,7 @@ public class CityController extends GameController {
         if (!isCitizenInRange(x, y))
             return "You can't send a citizen that far";
         if (selectedCity != null){
-            if (!Game.map[x][y].getOwnerCity().equals(selectedCity))
+            if (Game.map[x][y].getOwnerCity() == null || !Game.map[x][y].getOwnerCity().equals(selectedCity))
                 return "This land is not part of your city";
             if (selectedCity.getEmployees() < selectedCity.getCitizens()){
                 if (!Game.map[x][y].hasCitizen()){

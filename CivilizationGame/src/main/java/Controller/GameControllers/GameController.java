@@ -247,7 +247,7 @@ public class GameController extends Controller {
                     for (Unit unit : userNation.getUnits()) {
                         //check Siege
                         if (unit instanceof RangedCombatUnit){
-                            if (((RangedCombatUnit) unit).getRangedCombatUnitType().isSiege){
+                            if (((RangedCombatUnit) unit).getRangedCombatUnitType() != null && ((RangedCombatUnit) unit).getRangedCombatUnitType().isSiege){
                                 if (unit.getTargetCity() != null){
                                     UnitController.unitAttackCity((CombatUnit) unit);
                                 }
