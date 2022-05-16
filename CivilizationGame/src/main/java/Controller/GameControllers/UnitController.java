@@ -159,7 +159,10 @@ public class UnitController extends GameController {
 
     public static void unitGoForward(Unit unit){
         String path = unit.getPath();
-        int neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
+        int neighbor = 0;
+        //fixme
+        if (!path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
+        else {System.out.println("path is empty"); return;}
         Pair next = LandController.getNeighborIndex(unit.getLocation(), neighbor);
         if (unit instanceof CombatUnit){
             Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
