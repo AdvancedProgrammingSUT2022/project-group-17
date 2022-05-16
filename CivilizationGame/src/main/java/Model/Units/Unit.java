@@ -13,6 +13,7 @@ public class Unit {
     protected int hp;
     protected int MP;
     protected int cost;
+    protected int maintenance = 1;
     protected int turns;
     protected int XP;
     protected boolean isWaitingForCommand = true;
@@ -139,5 +140,9 @@ public class Unit {
 
     public void setUnitStatus(UnitStatus unitStatus) {
         this.unitStatus = unitStatus;
+    }
+
+    public int getMaintenance() {
+        return maintenance;
     }
 }

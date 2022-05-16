@@ -259,6 +259,9 @@ public class GameController extends Controller {
                         checkFortifying(unit);
 
                         setUnitWaitingForCommand(unit);
+
+                        //maintenance cost for units
+                        userNation.getCoin().addBalance(-unit.getMaintenance());
                     }
                     //update Currencies Balances
                     userNation.getCoin().addGrowthRateToBalance();
