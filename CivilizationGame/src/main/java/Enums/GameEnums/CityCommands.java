@@ -4,10 +4,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum CityCommands {
-    BUILD_CITY("build city on -x (?<x>\\d+) -y (?<y>\\d+)"),
+    BUILD_CITY("build city on -x (?<x>\\d+) -y (?<y>\\d+) named (?<name>\\S+)"),
     BUY_LAND("buy land on -x (?<x>\\d+) -y (?<y>\\d+)"),
     SEND_CITIZEN("send citizen to -x (?<x>\\d+) -y (?<y>\\d+)"),
     RETRIEVE_CITIZEN("retrieve citizen from -x (?<x>\\d+) -y (?<y>\\d+)"),
+    SHOW_BANNER("show banner"),
     ;
 
     private final String regex;

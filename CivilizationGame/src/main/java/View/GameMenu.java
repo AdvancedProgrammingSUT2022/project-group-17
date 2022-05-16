@@ -61,6 +61,8 @@ public class GameMenu extends Menu {
             System.out.println(cityController.sendCitizen(commandMatcher));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.RETRIEVE_CITIZEN)).matches()){
             System.out.println(cityController.retrieveCitizen(commandMatcher));
+        } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.SHOW_BANNER)).matches()){
+            System.out.println(cityController.cityShowBanner());
         } else if (GameCommands.getMatcher(input, GameCommands.NEXT_TURN).matches()) {
             System.out.println(gameController.nextPlayerTurn());
 

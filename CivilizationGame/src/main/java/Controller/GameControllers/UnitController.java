@@ -295,7 +295,6 @@ public class UnitController extends GameController {
             combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
             combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
         }else if (combatUnit instanceof RangedCombatUnit){
-            combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getRangedStrength());
             combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - ((RangedCombatUnit) combatUnit).getRangedStrength());
         }
         combatUnit.setTargetCity(null);

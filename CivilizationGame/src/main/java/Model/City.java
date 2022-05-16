@@ -40,13 +40,14 @@ public class City {
     protected int happinessGrowth;
     protected int scienceGrowth;
 
-    public City(Nation ownerNation){
+    public City(Nation ownerNation, String name){
         this.citizens = 3;
         this.HP = 100;
         this.combatStrength = 20;
         this.rangedStrength = 10;
         this.level = 1;
         this.ownerNation = ownerNation;
+        this.name = name;
     }
 
 

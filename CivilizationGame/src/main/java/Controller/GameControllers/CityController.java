@@ -15,11 +15,12 @@ public class CityController extends GameController {
     public String buildCity(Matcher matcher){
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
+        String name = matcher.group("name");
         if (currentTurnUser.getNation().getCities().size() > 0 && (selectedCivilizedUnit == null || !selectedCivilizedUnit.getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)))
             return "You need to select a settler first";
         Pair main = new Pair(x, y);
         if (isCityBuildable(main)){
-            City city = new City(currentTurnUser.getNation());
+            City city = new City(currentTurnUser.getNation(), name);
             currentTurnUser.getNation().addCity(city);
             Land mainLand = Game.map[x][y];
             mainLand.setCityCenter(true);
@@ -188,6 +189,12 @@ public class CityController extends GameController {
         city.setOwnerNation(nextNation);
         previousNation.removeCity(city);
         nextNation.getHappiness().addBalance(-10);
+    }
+
+    public String cityShowBanner(){
+        if (selectedCity == null)
+            return "You have to select a city first";
+        return "Name: " + selectedCity.getName() + " CombatStrength: " + selectedCity.getCombatStrength();
     }
 
 
