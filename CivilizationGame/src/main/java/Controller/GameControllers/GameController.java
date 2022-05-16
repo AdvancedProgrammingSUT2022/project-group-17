@@ -378,17 +378,17 @@ public class GameController extends Controller {
                             ((CivilizedUnit) unit).decreaseTurnsLeft(1);
                         } else {
                             if (((CivilizedUnit) unit).getImprovementType() != null) {
-                                WorkerController.workerBuildImprovement(((CivilizedUnit) unit).getImprovementType());
+                                WorkerController.workerBuildImprovement(((CivilizedUnit) unit));
+                                System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
                                 ((CivilizedUnit) unit).setImprovementType(null);
                                 unit.setUnitStatus(UnitStatus.AWAKE);
-                                selectedCivilizedUnit.setWaitingForCommand(true);
-                                System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
+                                unit.setWaitingForCommand(true);
                             } else if (((CivilizedUnit) unit).getWorkerWorks() != null) {
-                                WorkerController.workerWork(((CivilizedUnit) unit).getWorkerWorks());
+                                WorkerController.workerWork(((CivilizedUnit) unit));
+                                System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
                                 ((CivilizedUnit) unit).setWorkerWorks(null);
                                 unit.setUnitStatus(UnitStatus.AWAKE);
-                                selectedCivilizedUnit.setWaitingForCommand(false);
-                                System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
+                                unit.setWaitingForCommand(false);
                             } else System.out.println("ERROR!");
                         }
                     }
