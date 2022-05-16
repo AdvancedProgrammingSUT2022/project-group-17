@@ -16,23 +16,6 @@ import Model.Units.Enums.UnitStatus;
 import java.util.regex.Matcher;
 
 public class UnitController extends GameController {
-    public void unitMoveTo(Matcher matcher) {
-        int destX = Integer.parseInt(matcher.group("i"));
-        int destY = Integer .parseInt(matcher.group("j"));
-        Pair dest = new Pair(destX, destY);
-
-        int minPathCost = findEasiestPath(dest, 0, 1000);
-        if(minPathCost <= selectedCombatUnit.getMP()) {
-            selectedCombatUnit.setLocation(dest);
-            selectedCombatUnit.changeMP(minPathCost);
-            selectedCombatUnit.setWaitingForCommand(false);
-            //TODO set isAPartOfPath of all Lands zero
-        } else if(minPathCost < 1000) {
-            unitMultiTurnMoveTo();
-        } else {
-            System.out.println("The unit can't move to this position!");
-        }
-    }
 
     public void unitGoToNeighbor(Matcher matcher){
         int destX = Integer.parseInt(matcher.group("x"));
@@ -161,7 +144,10 @@ public class UnitController extends GameController {
         Land dest = Game.map[x][y];
         int originNum = LandController.getLandNumber(origin);
         int destNum = LandController.getLandNumber(dest);
-        System.out.println(Game.path[originNum][destNum] + "   " + selectedUnit.getMP() + "   " + dest.getMP());
+        if (selection == 1 && dest.getCombatUnit() != null)
+            return "There already is a combat unit in destination";
+        if (selection == 0 && dest.getCivilizedUnit() != null)
+            return "There already is a civilized unit in destination";
         if (Game.dist[originNum][destNum] < 1000)
             selectedUnit.setPath(Game.path[originNum][destNum]);
         else
@@ -187,10 +173,6 @@ public class UnitController extends GameController {
         unit.setPath(path.substring(1));
         unit.setWaitingForCommand(false);
         unit.setUnitStatus(UnitStatus.MOVING);
-    }
-
-    private void unitMultiTurnMoveTo() {
-
     }
 
     public String unitSleep() {

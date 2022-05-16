@@ -21,6 +21,7 @@ public class TechnologyController extends GameController {
                         }
                     }
                 }
+
                 nation.setInProgressTechnology(technologyType);
                 nation.setTechnologyTurns(technologyType.turns);
                 return "Technology added successfully";

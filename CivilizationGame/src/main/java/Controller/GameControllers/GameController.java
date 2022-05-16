@@ -285,8 +285,8 @@ public class GameController extends Controller {
 
                     //happiness for luxury resources
                     for (ResourceType resourceType : userNation.getResourceCellar().keySet()) {
-                        if (resourceType.currency.equals(CurrencyType.Coin))
-                            userNation.getHappiness().addBalance(userNation.getResourceCellar().get(resourceType));
+                        if (resourceType.currency.equals(CurrencyType.Coin) && userNation.getResourceCellar().get(resourceType) == 1)
+                            userNation.getHappiness().addBalance(4);
                     }
                 }
 
