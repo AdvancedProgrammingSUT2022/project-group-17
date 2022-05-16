@@ -65,9 +65,6 @@ public class CityController extends GameController {
         return true;
     }
 
-    public void cityRangeAttack(Matcher matcher){
-
-    }
 
     public boolean isCitizenInRange(int x, int y){
         Pair[] neighbors = new Pair[6];
@@ -154,37 +151,6 @@ public class CityController extends GameController {
 
     }
 
-    public void cityBuyBuilding(Matcher matcher){
-
-    }
-
-    public void cityProduceBuilding(Matcher matcher){
-
-    }
-
-    public void cityProgressBuilding(){
-
-    }
-
-    public void cityBuyUnit(){
-
-    }
-
-    public void cityProduceUnit(){
-
-    }
-
-    public void cityProgressUnit(){
-
-    }
-
-    public void cityChangeState(){
-
-    }
-
-    public void cityLevelUp(City city){
-
-    }
 
     public static void cityDeath(City city){
         Nation nation = city.getOwnerNation();

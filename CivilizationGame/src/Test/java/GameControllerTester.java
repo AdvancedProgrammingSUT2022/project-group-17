@@ -10,11 +10,11 @@ import Model.Units.CivilizedUnit;
 import Model.Units.CloseCombatUnit;
 import Model.Units.Enums.CivilizedUnitType;
 import Model.Units.Enums.CloseCombatUnitType;
-import Model.Units.Unit;
 import Model.Users.User;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 import java.util.ArrayList;
 
 
@@ -22,17 +22,29 @@ public class GameControllerTester extends Tester{
     GameController gameController = new GameController();
 
 
-    @BeforeAll
-    public static void setup(){
+    @BeforeEach
+    public void setup(){
         Game.map = LandController.mapInitializer();
-        Nation persian = new Nation(NationType.PERSIA);
-        Game.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,persian,new Pair(3,3)));
-        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,persian,new Pair(3,3)));
-//        GameController.setSelectedCivilizedUnit(Game.map[3][3].getCivilizedUnit());
-//        GameController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
+        Nation persia = new Nation(NationType.PERSIA);
+        Nation inca = new Nation(NationType.INCA);
+
+        users = new ArrayList<>();
+        users.add(new User("1","1","1"));
+        users.add(new User("2","2","2"));
+        users.get(0).setNation(persia);
+        users.get(1).setNation(inca);
+
+        Game.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,persia,new Pair(3,3)));
+        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,persia,new Pair(3,3)));
+
+        City tehran = new City(persia,"tehran");
+        City doghoozAbad = new City(inca,"doghooz Abad");
+
+        Game.map[4][4].setOwnerCity(tehran);
+        Game.map[5][5].setOwnerCity(doghoozAbad);
 
         GameController.setCurrentTurnUser(new User("","",""));
-        GameController.getCurrentTurnUser().setNation(persian);
+        GameController.getCurrentTurnUser().setNation(persia);
     }
 
 
@@ -87,5 +99,35 @@ public class GameControllerTester extends Tester{
         gameController.showDiplomacies();
         gameController.showEconomics();
 
+    }
+
+    @Test
+    public void selectCityTestFail(){
+
+        commandMatcher = GameCommands.getMatcher("select city on -x 5 -y 5",GameCommands.SELECT_CITY);
+
+        if (commandMatcher.matches()) Assertions.assertEquals("You can't select opponent's city",gameController.selectCity(commandMatcher));
+    }
+
+    @Test
+    public void selectCityTestSuccessful(){
+
+        commandMatcher = GameCommands.getMatcher("select city on -x 4 -y 4",GameCommands.SELECT_CITY);
+
+        if (commandMatcher.matches()) Assertions.assertNotEquals("You can't select opponent's city",gameController.selectCity(commandMatcher));
+
+    }
+
+    @Test
+    public void nextPlayerTurnTest(){
+        Game.setPlayersInGame(users);
+
+        Assertions.assertEquals("next player turn!: 2",gameController.nextPlayerTurn());
+    }
+
+    @Test
+    public void nextGodDamnTurn(){
+        Game.setPlayersInGame(users);
+        gameController.nextGameTurn();
     }
 }

@@ -16,7 +16,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class CityControllerTester extends Tester {
     CityController cityController = new CityController();
-
+    Nation nation = new Nation(NationType.PERSIA);
+    City city = new City(nation,"tehran");
+    Nation doghoozAbad = new Nation(NationType.INCA);
     @BeforeEach
     public void setup(){
         Game.map = LandController.mapInitializer();
@@ -100,14 +102,19 @@ public class CityControllerTester extends Tester {
 
     @Test
     public void cityTakeOverTest(){
-        Nation nation = new Nation(NationType.PERSIA);
-        City city = new City(nation,"tehran");
-        Nation doghoozAbad = new Nation(NationType.INCA);
+
         CityController.setSelectedCity(city);
 
         Game.map[3][3].setOwnerCity(city);
         city.getLands().add(Game.map[3][3]);
 
         CityController.cityTakeOver(city,doghoozAbad);
+    }
+
+    @Test
+    public void cityShowBanner(){
+        CityController.setSelectedCity(city);
+
+        Assertions.assertEquals("Name: " + city.getName() + " CombatStrength: " + city.getCombatStrength(),cityController.cityShowBanner());
     }
 }

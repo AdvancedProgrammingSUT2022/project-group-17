@@ -1,7 +1,5 @@
 package Controller.GameControllers;
 
-import Controller.Controller;
-import Model.Game;
 import Model.Nations.Nation;
 import Model.Technologies.TechnologyType;
 
@@ -35,4 +33,5 @@ public class TechnologyController extends GameController {
         nation.setInProgressTechnology(null);
         nation.setTechnologyTurns(-1);
     }
+
 }

@@ -3,7 +3,7 @@ import Enums.GameEnums.GameCommands;
 import Enums.MainCommands;
 import Model.Game;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import static org.mockito.Mockito.verify;

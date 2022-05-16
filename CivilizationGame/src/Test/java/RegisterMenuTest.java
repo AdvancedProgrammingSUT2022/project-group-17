@@ -2,8 +2,8 @@ import Controller.LoginController;
 import Model.Game;
 import Model.Users.User;
 import org.junit.Assert;
-import org.junit.Test;
 import Enums.LoginCommands;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
