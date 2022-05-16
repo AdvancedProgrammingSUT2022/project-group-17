@@ -18,7 +18,7 @@ public class City {
     protected String name;
     protected Nation ownerNation;
     protected ArrayList<Land> lands = new ArrayList<>();
-    protected int citizens;
+    protected int citizens = 10;
     protected int employees = 0;
     protected int HP;
     protected int combatStrength;
