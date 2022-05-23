@@ -1,5 +1,5 @@
-import Controller.LoginController;
-import Model.Users.User;
+import sut.civilization.Controller.LoginController;
+import sut.civilization.Model.Users.User;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

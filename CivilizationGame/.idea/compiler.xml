@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="CivilizationGame" />
+        <module name="Civilization" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Civilization" target="11" />
+      <module name="CivilizationGame" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

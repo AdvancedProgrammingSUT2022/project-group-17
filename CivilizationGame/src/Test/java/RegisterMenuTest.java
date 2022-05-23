@@ -1,10 +1,9 @@
-import Controller.LoginController;
-import Model.Game;
-import Model.Users.User;
+import sut.civilization.Controller.LoginController;
+import sut.civilization.Model.Game;
+import sut.civilization.Model.Users.User;
 import org.junit.Assert;
-import Enums.LoginCommands;
+import sut.civilization.Enums.LoginCommands;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 public class RegisterMenuTest extends Tester{

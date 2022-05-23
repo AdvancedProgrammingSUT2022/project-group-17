@@ -1,7 +1,6 @@
-import Controller.MainController;
-import Enums.GameEnums.GameCommands;
-import Enums.MainCommands;
-import Model.Game;
+import sut.civilization.Controller.MainController;
+import sut.civilization.Enums.MainCommands;
+import sut.civilization.Model.Game;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;

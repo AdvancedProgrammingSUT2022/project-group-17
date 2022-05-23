@@ -1,12 +1,11 @@
-import Controller.LoginController;
-import Controller.ProfileController;
-import Enums.LoginCommands;
-import Enums.ProfileCommands;
-import Model.Game;
-import Model.Users.User;
+import sut.civilization.Controller.LoginController;
+import sut.civilization.Controller.ProfileController;
+import sut.civilization.Enums.LoginCommands;
+import sut.civilization.Enums.ProfileCommands;
+import sut.civilization.Model.Game;
+import sut.civilization.Model.Users.User;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 public class ProfileMenuTest extends Tester{

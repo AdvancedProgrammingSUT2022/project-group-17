@@ -1,9 +1,9 @@
-import Controller.GameControllers.TechnologyController;
-import Enums.GameEnums.TechnologyCommands;
-import Model.Nations.Nation;
-import Model.Nations.NationType;
-import Model.Technologies.TechnologyType;
-import Model.Users.User;
+import sut.civilization.Controller.GameControllers.TechnologyController;
+import sut.civilization.Enums.GameEnums.TechnologyCommands;
+import sut.civilization.Model.Nations.Nation;
+import sut.civilization.Model.Nations.NationType;
+import sut.civilization.Model.Technologies.TechnologyType;
+import sut.civilization.Model.Users.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

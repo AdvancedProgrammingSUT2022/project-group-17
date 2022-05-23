@@ -1,7 +1,7 @@
-import Controller.GameControllers.NationController;
-import Model.Nations.Nation;
-import Model.Nations.NationType;
-import Model.Users.User;
+import sut.civilization.Controller.GameControllers.NationController;
+import sut.civilization.Model.Nations.Nation;
+import sut.civilization.Model.Nations.NationType;
+import sut.civilization.Model.Users.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
