@@ -1,6 +1,8 @@
 package sut.civilization.Controller;
 
+import javafx.stage.Stage;
 import sut.civilization.Controller.GameControllers.GameController;
+import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.User;
 import sut.civilization.View.NonGraphical.Menu;
@@ -11,9 +13,11 @@ import java.util.regex.Matcher;
 
 public class MainController extends Controller{
 
-    public void logoutUser() {
+    public String logoutUser() {
         Game.setLoggedInUser(null);
         menuChange("login menu");
+        Game.changeScene(Menus.LOGIN_MENU);
+        return "logged out successful";
     }
 
     public String playGame(Matcher matcher) {
@@ -41,5 +45,10 @@ public class MainController extends Controller{
         else Menu.setMenuName("ProfileMenu");
 
         return ("menu changed successfully");
+    }
+
+    public void exitGame(){
+        Game.saveUserListToDatabase();
+        ((Stage) Game.getCurrentScene().getWindow()).close();
     }
 }

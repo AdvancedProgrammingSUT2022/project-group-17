@@ -1,13 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
-
+<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/MainMenu.css"
+            xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sut.civilization.View.Graphical.MainController">
+    <left>
+        <VBox alignment="CENTER" prefHeight="720.0" prefWidth="294.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <Button mnemonicParsing="false" text="Start Game" onMouseClicked="#startGame"/>
+            <Button mnemonicParsing="false" text="Profile" onMouseClicked="#enterProfileMenu"/>
+            <Button alignment="CENTER" mnemonicParsing="false" text="Score Board"
+                    onMouseClicked="#enterScoreBoardMenu"/>
+            <Button alignment="CENTER" mnemonicParsing="false" text="Chat" onMouseClicked="#enterChatMenu"/>
+            <Button mnemonicParsing="false" text="Exit" onMouseClicked="#exit"/>
+        </VBox>
+    </left>
+    <right>
+        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0"
+              BorderPane.alignment="CENTER">
+            <Button mnemonicParsing="false" text="logout" onMouseClicked="#logout">
+                <VBox.margin>
+                    <Insets bottom="50.0"/>
+                </VBox.margin>
+            </Button>
+        </VBox>
+    </right>
+    <top>
+        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
+              BorderPane.alignment="CENTER_RIGHT">
+            <ImageView fitHeight="52.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../Images/volumeIcon.png"/>
+            </ImageView>
+            <Slider onDragDetected="#changeVolume" value="0.5">
+                <HBox.margin>
+                    <Insets right="25.0"/>
+                </HBox.margin>
+            </Slider>
+        </HBox>
+    </top>
 </BorderPane>
