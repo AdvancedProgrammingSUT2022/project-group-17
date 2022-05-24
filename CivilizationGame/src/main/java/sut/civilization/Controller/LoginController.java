@@ -2,14 +2,14 @@ package sut.civilization.Controller;
 
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.User;
-import sut.civilization.View.Menu;
+import sut.civilization.View.NonGraphical.Menu;
 
 import java.util.regex.Matcher;
 
-public class LoginController extends Controller{
+public class LoginController extends Controller {
 
     public String createUser(Matcher matcher) {
-        User newUser = new User(null,null,null);
+        User newUser = new User(null, null, null);
         for (int i = 1; i < 4; i++) {
             if (matcher.group(i).charAt(0) == 'u') {
                 if (newUser.getUsername() != null)
@@ -39,10 +39,22 @@ public class LoginController extends Controller{
         }
 
         Game.addUser(newUser);
-
 //        if (!Game.saveUserListToDatabase()) return ("unable to save users to database");
 
         return ("user successfully created!");
+    }
+
+    public String createUser(User newUser) {
+        for (User user : Game.getUsers()) {
+            if (user.getUsername().equals(newUser.getUsername()))
+                return ("this username already exists!");
+            if (user.getNickname().equals(newUser.getNickname()))
+                return ("this nickname already exists!");
+        }
+
+        Game.addUser(newUser);
+        Game.saveUserListToDatabase();
+        return ("user successfully created.");
     }
 
     public String loginUser(Matcher matcher) {
@@ -51,7 +63,7 @@ public class LoginController extends Controller{
         String userName = null;
         String password = null;
         for (int i = 1; i < 3; i++) {
-            if (matcher.group(i).charAt(0) == 'u'){
+            if (matcher.group(i).charAt(0) == 'u') {
                 if (userName != null)
                     return ("can't enter username field more than once");
 
@@ -68,17 +80,37 @@ public class LoginController extends Controller{
 
         User user = getUserByName(userName);
 
-        if (user == null){
+        if (user == null) {
             return ("user doesn't exists!");
         }
 
-        if (!password.equals(user.getPassword())){
+        if (!password.equals(user.getPassword())) {
             return ("incorrect password!");
         }
 
         Game.setLoggedInUser(user);
         Menu.setMenuName("MainMenu");
         return ("welcome " + user.getNickname() + "!");
+    }
+
+    public String loginUser(User userinfo) {
+        User user = getUserByName(userinfo.getUsername());
+
+        if (user == null) {
+            return ("user doesn't exists!");
+        }
+
+        if (!userinfo.getPassword().equals(user.getPassword())) {
+            return ("incorrect password!");
+        }
+
+        Game.setLoggedInUser(user);
+        return ("welcome " + user.getNickname() + ".");
+    }
+
+    public String enterAsGuest() {
+        Game.setLoggedInUser(new User("", "", ""));
+        return "entered as guest.";
     }
 
 }

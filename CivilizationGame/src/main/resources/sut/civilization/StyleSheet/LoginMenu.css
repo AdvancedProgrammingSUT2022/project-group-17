@@ -1,0 +1,72 @@
+.root{
+    -fx-background-color: #130000;
+}
+
+
+Button:hover{
+    -fx-pref-width: 400;
+    -fx-pref-height: 50;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-text-fill: white;
+    -fx-background-color: rgb(102, 204, 204);
+    -fx-border-color: white;
+
+}
+
+Button {
+    -fx-pref-width: 400;
+    -fx-pref-height: 50;
+    -fx-border-width: 2px;
+    -fx-background-radius: 20;
+    -fx-background-color: white;
+    -fx-cursor: hand;
+    -fx-text-fill: rgb(102, 204, 204);
+    -fx-font-size: 20;
+}
+
+TextField{
+    -fx-max-width: 500;
+    -fx-pref-height: 35;
+    -fx-border-radius: 15;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-background-color: transparent;
+    -fx-cursor: text;
+}
+
+
+#title{
+    -fx-font-size: 30;
+    -fx-font-weight: bolder;
+    -fx-font-family: "Bauhaus 93";
+    -fx-min-height: 50;
+    -fx-alignment: top-center;
+}
+
+PasswordField{
+    -fx-max-width: 500;
+    -fx-pref-height: 35;
+    -fx-border-radius: 15;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-background-color: transparent;
+    -fx-cursor: text;
+}
+
+Label{
+    -fx-font-size: 20;
+    -fx-text-fill: white;
+    -fx-background-radius: 50;
+    -fx-min-width: 500px;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+.Error {
+    -fx-border-color: red;
+}
+
+Separator{
+    -fx-max-height: 500px;
+}

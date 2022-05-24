@@ -2,7 +2,7 @@ package sut.civilization;
 
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.Classes.Game;
-import sut.civilization.View.*;
+import sut.civilization.View.NonGraphical.*;
 
 import java.util.HashMap;
 import java.util.Scanner;

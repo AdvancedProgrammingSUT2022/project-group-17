@@ -1,0 +1,49 @@
+.root {
+    -fx-background-size: auto;
+    -fx-background-position: center;
+    -fx-background-image:
+            url("/images/Wallpaper2.jpg");
+}
+
+Button:hover{
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-text-fill: #fdfdfd;
+    -fx-background-color: rgb(50, 0, 0);
+    -fx-border-color: white;
+
+}
+Button {
+    -fx-pref-width: 200;
+    -fx-pref-height: 30;
+    -fx-border-radius: 10;
+    -fx-background-color: none;
+    -fx-font-family: "Comic Sans MS";
+    -fx-cursor: hand;
+    -fx-border-color: darkred;
+    -fx-text-fill: rgb(50, 0, 0);
+    -fx-font-size: 20;
+}
+
+#title{
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-font-family: "Bauhaus 93";
+    -fx-min-height: 50;
+    -fx-alignment: top-center;
+}
+
+Text{
+    -fx-font-size: 15;
+    -fx-font-family: "Arial";
+    -fx-pref-width: 50;
+}
+
+scoreBoardVox{
+    -fx-background-color: lightgray;
+    -fx-border-radius: 5;
+    -fx-border-color: black;
+    -fx-pref-height: 750;
+    -fx-pref-width: 300;
+
+}

@@ -3,7 +3,7 @@ package sut.civilization.Controller;
 import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.User;
-import sut.civilization.View.Menu;
+import sut.civilization.View.NonGraphical.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;

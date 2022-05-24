@@ -1,4 +1,4 @@
-package sut.civilization.View;
+package sut.civilization.View.NonGraphical;
 
 import java.util.Scanner;
 

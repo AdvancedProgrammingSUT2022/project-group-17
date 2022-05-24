@@ -1,9 +1,12 @@
 package sut.civilization.Model.Classes;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import sut.civilization.Controller.GameControllers.LandController;
+import sut.civilization.Civilization;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import sut.civilization.Enums.Menus;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +16,9 @@ import java.util.ArrayList;
 
 
 public class Game {
+    private static FXMLLoader fxmlLoader;
     private static Scene currentScene;
+
     private static ArrayList<User> users = readUserListFromDatabase();
     private static User loggedInUser;
     private static int turn = 0;
@@ -105,5 +110,44 @@ public class Game {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public static Parent loadScene(Menus menu){
+        fxmlLoader = new FXMLLoader();
+
+        switch (menu) {
+            case GAME_MENU:
+                break;
+            case CHAT_MENU:
+                break;
+            case SCORE_BOARD:
+                fxmlLoader.setLocation(Civilization.class.getResource("fxml/ScoreBoard.fxml"));
+                break;
+            case MAIN_MENU:
+                fxmlLoader.setLocation(Civilization.class.getResource("fxml/MainMenu.fxml"));
+                break;
+            case LOGIN_MENU:
+                fxmlLoader.setLocation(Civilization.class.getResource("fxml/LoginMenu.fxml"));
+                break;
+            case PROFILE_MENU:
+                fxmlLoader.setLocation(Civilization.class.getResource("fxml/ProfileMenu.fxml"));
+                break;
+        }
+        try {
+            return fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void changeScene(Menus menu){
+        currentScene.setRoot(loadScene(menu));
+    }
+
+    public static FXMLLoader getFxmlLoader() {
+        return fxmlLoader;
+    }
+
+    public static void setFxmlLoader(FXMLLoader fxmlLoader) {
+        Game.fxmlLoader = fxmlLoader;
     }
 }

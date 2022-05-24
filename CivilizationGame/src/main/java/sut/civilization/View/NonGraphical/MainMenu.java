@@ -1,4 +1,4 @@
-package sut.civilization.View;
+package sut.civilization.View.NonGraphical;
 
 import sut.civilization.Controller.MainController;
 import sut.civilization.Enums.MainCommands;

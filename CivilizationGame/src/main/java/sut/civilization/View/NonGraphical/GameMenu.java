@@ -1,4 +1,4 @@
-package sut.civilization.View;
+package sut.civilization.View.NonGraphical;
 
 import sut.civilization.Controller.GameControllers.*;
 import sut.civilization.Enums.GameEnums.*;
