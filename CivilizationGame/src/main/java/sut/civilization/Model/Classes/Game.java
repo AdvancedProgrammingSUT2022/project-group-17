@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Game {
@@ -99,6 +101,11 @@ public class Game {
         }
         users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>(){}.getType());
         if (users == null) return new ArrayList<>();
+
+        for (User user : users) {
+            ArrayList<String> avatarLocationTokens= new ArrayList<>(Arrays.asList(user.getAvatarLocation().split("/")));
+            user.setAvatarLocation("sut/civilization/Images/Avatars/" + avatarLocationTokens.get(avatarLocationTokens.size()-1));
+        }
         return users;
     }
 

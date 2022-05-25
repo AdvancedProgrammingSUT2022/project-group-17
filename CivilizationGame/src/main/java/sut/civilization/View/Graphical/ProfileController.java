@@ -81,13 +81,14 @@ public class ProfileController extends ViewController{
         File file = fileChooser.showOpenDialog(null);
         if (file == null)
             return;
+        File temp = new File("src/main/resources/sut/civilization/Images/Avatars/"+ file.getName());
 
         try {
-            Files.copy(file.toPath(), Paths.get("src/main/resources/sut/civilization/Images/Avatars/"+ file.getName()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Files.copy(file.toPath(), Paths.get("src/main/resources/sut/civilization/Images/Avatars/" + file.getName()));
+        } catch (IOException ignored) {
         }
-//        Game.getLoggedInUser().setAvatarLocation("src/main/resources/sut/civilization/Images/Avatars/"+ file.getName());
+
+        Game.getLoggedInUser().setAvatarLocation(String.valueOf(file.toURI()));
         avatarImageView.setImage(new Image(String.valueOf(file.toURI())));
     }
 
