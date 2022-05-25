@@ -9,14 +9,17 @@ import sut.civilization.View.NonGraphical.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.regex.Matcher;
 
 public class MainController extends Controller{
 
     public String logoutUser() {
-        Game.setLoggedInUser(null);
         menuChange("login menu");
         Game.changeScene(Menus.LOGIN_MENU);
+        Game.getLoggedInUser().setLastTimeOnline(new Date(System.currentTimeMillis()));
+        Game.getLoggedInUser().setOnline(false);
+        Game.setLoggedInUser(null);
         return "logged out successful";
     }
 
@@ -48,6 +51,7 @@ public class MainController extends Controller{
     }
 
     public void exitGame(){
+        logoutUser();
         Game.saveUserListToDatabase();
         ((Stage) Game.getCurrentScene().getWindow()).close();
     }

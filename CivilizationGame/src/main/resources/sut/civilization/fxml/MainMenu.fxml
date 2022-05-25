@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+
 <BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/MainMenu.css"
             xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="sut.civilization.View.Graphical.MainController">

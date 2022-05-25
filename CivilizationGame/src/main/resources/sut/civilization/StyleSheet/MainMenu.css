@@ -5,9 +5,10 @@ Button:hover{
     -fx-text-fill: #fdfdfd;
     -fx-background-color: rgb(50, 0, 0);
     -fx-border-color: white;
-
+    -fx-alignment: center;
 }
 Button {
+    -fx-alignment: center;
     -fx-pref-width: 200;
     -fx-pref-height: 30;
     -fx-border-radius: 10;

@@ -1,5 +1,6 @@
 package sut.civilization.Model.Classes;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class User {
@@ -10,11 +11,54 @@ public class User {
     private int score;
     private Nation nation;
 
+    private String avatarLocation;
+
+    private boolean isOnline;
+
+    private Date lastTimeOnline;
+
+    private long lastWinTime;
+
     public User(String username, String password, String nickname){
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.score = 0;
+        this.lastWinTime = 0;
+        this.isOnline = false;
+        this.avatarLocation = "sut/civilization/Images/Avatars/2.jpg";
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
+
+    public String getAvatarLocation() {
+        return avatarLocation;
+    }
+
+    public void setAvatarLocation(String avatarLocation) {
+        this.avatarLocation = avatarLocation;
+    }
+
+    public Date getLastTimeOnline() {
+        return lastTimeOnline;
+    }
+
+    public void setLastTimeOnline(Date lastTimeOnline) {
+        this.lastTimeOnline = lastTimeOnline;
+    }
+
+    public long getLastWinTime() {
+        return lastWinTime;
+    }
+
+    public void setLastWinTime(long lastWinTime) {
+        this.lastWinTime = lastWinTime;
     }
 
     public void setNation(Nation nation) {

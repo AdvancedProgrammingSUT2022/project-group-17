@@ -54,6 +54,7 @@ public class LoginController extends Controller {
 
         Game.addUser(newUser);
         Game.saveUserListToDatabase();
+        Game.setLoggedInUser(newUser);
         return ("user successfully created.");
     }
 
@@ -105,6 +106,7 @@ public class LoginController extends Controller {
         }
 
         Game.setLoggedInUser(user);
+        user.setOnline(true);
         return ("welcome " + user.getNickname() + ".");
     }
 

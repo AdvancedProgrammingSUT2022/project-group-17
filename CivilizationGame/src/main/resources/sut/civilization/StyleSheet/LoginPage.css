@@ -1,11 +1,3 @@
-.root {
-    -fx-background-size: contain;
-    -fx-background-position: center;
-    -fx-background-image:
-            url("/images/Wallpaper3.jpg");
-}
-
-
 Button:hover{
     -fx-background-radius: 20;
     -fx-border-radius: 20;

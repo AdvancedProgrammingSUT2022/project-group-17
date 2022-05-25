@@ -1,6 +1,7 @@
 package sut.civilization.Controller;
 
 import sut.civilization.Model.Classes.Game;
+import sut.civilization.Model.Classes.Pair;
 import sut.civilization.Model.Classes.User;
 
 import java.util.ArrayList;
@@ -18,6 +19,21 @@ public class ProfileController extends Controller {
         return ("nick name successfully changed");
     }
 
+    public String changeNickname(Pair<String,String> newNickname,String oldNickName){
+        if (!newNickname.x.equals(newNickname.y)) return "two nicknames are not identical!";
+
+        if (!Game.getLoggedInUser().getNickname().equals(oldNickName)) return "old nickname is not right! see it idiot it is right there!";
+
+        for (User user : Game.getUsers()) {
+            if (user.getNickname().equals(newNickname.x)){
+                return "this Nickname already exists!";
+            }
+        }
+
+        Game.getLoggedInUser().setNickname(newNickname.x);
+        return "Nickname successfully changed.";
+
+    }
     public String changePassword(User user,Matcher matcher) {
         String oldPassword = null;
         String newPassword = null;
@@ -39,6 +55,17 @@ public class ProfileController extends Controller {
 
         user.setPassword(newPassword);
         return ("password changed successfully");
+    }
+
+    public String changePassword(Pair<String,String> newPassword, String oldPassword) {
+        if (!newPassword.x.equals(newPassword.y)) return "newPasswords are not identical!";
+
+        if (!oldPassword.equals(Game.getLoggedInUser().getPassword())) return "Password is not correct!";
+
+        if (oldPassword.equals(newPassword.x)) return "please enter a new Password!";
+
+        Game.getLoggedInUser().setPassword(newPassword.x);
+        return "password changed successfully.";
     }
 
     public String removeAccount(User user,Matcher matcher) {

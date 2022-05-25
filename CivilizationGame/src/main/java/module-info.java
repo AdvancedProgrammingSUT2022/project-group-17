@@ -25,6 +25,10 @@ module sut.civilization {
 
     opens sut.civilization.fxml;
 
+    opens sut.civilization.Images;
+
+    opens sut.civilization.Images.Avatars;
+
     opens sut.civilization;
     exports sut.civilization;
 }
