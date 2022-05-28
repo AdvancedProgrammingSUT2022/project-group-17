@@ -126,6 +126,7 @@ public class Game {
             case GAME_MENU:
                 break;
             case CHAT_MENU:
+                fxmlLoader.setLocation(Civilization.class.getResource("fxml/ChatMenu.fxml"));
                 break;
             case SCORE_BOARD:
                 fxmlLoader.setLocation(Civilization.class.getResource("fxml/ScoreBoard.fxml"));
