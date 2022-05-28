@@ -23,6 +23,8 @@ public class ScoreBoardController extends ViewController {
     private VBox scoreBoardTable;
 
     public void initialize() {
+        scoreBoardTable.getChildren().clear();
+
         ArrayList<User> users = getSortedUserList();
         for (int i = 0; i < (int) Math.min(9, users.size()); i++) {
             User user = users.get(i);
@@ -37,7 +39,7 @@ public class ScoreBoardController extends ViewController {
             Label numberIndicator = new Label(String.valueOf(i + 1));
             numberIndicator.getStyleClass().add("numberIndicator");
 
-            ImageView avatarImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Avatars/2.jpg")).toExternalForm()));
+            ImageView avatarImage = new ImageView(new Image(user.getAvatarLocation()));
             avatarImage.getStyleClass().add("imageView");
             avatarImage.setFitWidth(50);
             avatarImage.setFitHeight(50);
