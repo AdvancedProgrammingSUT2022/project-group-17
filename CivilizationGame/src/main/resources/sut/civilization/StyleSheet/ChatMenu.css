@@ -6,3 +6,30 @@ Button {
 Button:hover {
     -fx-background-color: gray;
 }
+
+ImageView {
+    -fx-cursor: hand;
+}
+
+.messageBox {
+    -fx-background-image: url("../Images/messageBox.png");
+    -fx-background-size: 300 100;
+    -fx-background-repeat: no-repeat;
+    -fx-pref-width: 300;
+    -fx-pref-height: 100;
+}
+
+.name {
+    -fx-font-weight: bold;
+    -fx-label-padding: 15 0 0 40;
+}
+
+.message {
+    -fx-label-padding: 10 0 0 30;
+    -fx-max-width: 280;
+}
+
+.time {
+    -fx-label-padding: 10 0 0 240;
+    -fx-font-size: 10;
+}

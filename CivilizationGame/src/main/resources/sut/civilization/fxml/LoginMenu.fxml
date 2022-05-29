@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/LoginMenu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.LoginController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/LoginMenu.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.LoginController">
     <top>
         <Label id="title" text="Civilization V" BorderPane.alignment="CENTER">
             <BorderPane.margin>

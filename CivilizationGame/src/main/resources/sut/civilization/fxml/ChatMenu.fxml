@@ -2,65 +2,318 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/ChatMenu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.ChatMenuController">
     <center>
-        <VBox alignment="BOTTOM_CENTER" prefHeight="635.0" prefWidth="806.0" BorderPane.alignment="BOTTOM_CENTER">
+        <VBox alignment="BOTTOM_CENTER" minWidth="-Infinity" prefHeight="720.0" prefWidth="251.0" BorderPane.alignment="BOTTOM_CENTER">
             <children>
-            <VBox prefHeight="83.0" prefWidth="692.0">
-               <children>
-                  <Label text="Label" />
-               </children>
-            </VBox>
-                <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="42.0" prefWidth="662.0" promptText="Write your message...">
+                <VBox fx:id="allMessages">
+                    <children>
+                  <VBox styleClass="messageBox">
+                     <children>
+                        <Label styleClass="name" text="Name" />
+                        <Label maxWidth="280.0" prefWidth="199.0" styleClass="message" text="jflksdajfk;ldsajfkljflkjdsaklfjsdalkfjsdalkfjsda;lkfjsadlkfasjd" />
+                        <Label styleClass="time" text="23:59" />
+                     </children>
+                  </VBox>
+                    </children>
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin></TextField>
+                  <Insets left="30.0" />
+               </VBox.margin>
+                </VBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <TextField fx:id="messageInput" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="42.0" prefWidth="625.0" promptText="Write your message..." />
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true">
+                            <HBox.margin>
+                                <Insets left="20.0" />
+                            </HBox.margin>
+                            <image>
+                                <Image url="@../Images/send.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
             </children>
         </VBox>
     </center>
     <left>
-        <HBox>
+        <HBox prefHeight="720.0" prefWidth="327.0">
             <VBox prefHeight="720.0" prefWidth="58.0" style="border: black;">
+                <HBox.margin>
+                    <Insets />
+                </HBox.margin>
                 <children>
-                    <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="74.0" text="Button" />
-                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="74.0" text="Button" />
-                    <Button layoutX="10.0" layoutY="72.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="74.0" text="Button" />
-                    <Button layoutX="10.0" layoutY="134.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="74.0" text="Button" />
-                    <Button layoutX="10.0" layoutY="196.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="74.0" text="Button" />
+                    <ImageView fitHeight="62.0" fitWidth="55.0" onMouseClicked="#BackToMainMenu" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../Images/back.png" />
+                        </image>
+                        <VBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                    </ImageView>
+                    <Separator prefWidth="200.0" />
+                    <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../Images/user-profile.png" />
+                        </image>
+                        <VBox.margin>
+                            <Insets left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                    </ImageView>
+                    <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../Images/public.png" />
+                        </image>
+                        <VBox.margin>
+                            <Insets left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                    </ImageView>
+                    <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="10.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../Images/global.png" />
+                        </image>
+                        <VBox.margin>
+                            <Insets left="5.0" right="5.0" top="5.0" />
+                        </VBox.margin>
+                    </ImageView>
                 </children>
-            <HBox.margin>
-               <Insets />
-            </HBox.margin>
             </VBox>
-            <VBox style="-fx-border-color: black;">
-            <TextField prefHeight="52.0" prefWidth="308.0" promptText="Search">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin></TextField>
-                <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" prefHeight="674.0" prefWidth="287.0" BorderPane.alignment="CENTER_LEFT">
+            <VBox prefHeight="720.0" prefWidth="267.0" style="-fx-border-color: black;">
+                <HBox prefHeight="60.0" prefWidth="265.0">
+                    <children>
+                        <TextField fx:id="search" prefHeight="36.0" prefWidth="180.0" promptText="Search">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                            <image>
+                                <Image url="@../Images/search.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" prefHeight="662.0" prefWidth="265.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER_LEFT">
                     <content>
-                        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="912.0" prefWidth="340.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="475.0" prefWidth="271.0">
                             <children>
-                                <VBox>
-                                    <children>
-                                        <Button mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="86.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="162.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="238.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="86.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="162.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="238.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="314.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="390.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="466.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="542.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="618.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                        <Button layoutX="10.0" layoutY="694.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="321.0" style="-fx-padding: 30;" text="Button" />
-                                    </children>
+                                <VBox prefHeight="468.0" prefWidth="265.0">
+                                    <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="251.0" style="-fx-border-color: gray; -fx-padding: 5;">
+                                        <ImageView fitHeight="58.0" fitWidth="58.0">
+                                            <image>
+                                                <Image url="@../Images/Avatars/1.jpg" />
+                                            </image>
+                                            <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="10.0" top="4.0" />
+                                            </HBox.margin>
+                                        </ImageView>
+                                        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="131.0">
+                                            <Label prefHeight="44.0" prefWidth="134.0" text="Name">
+                                                <font>
+                                                    <Font size="24.0" />
+                                                </font>
+                                            </Label>
+                                            <Label prefHeight="16.0" prefWidth="205.0" text="Message" />
+                                        </VBox>
+                                        <VBox alignment="CENTER" prefHeight="60.0" prefWidth="39.0">
+                                            <children>
+                                                <Label prefHeight="33.0" prefWidth="20.0" text="99" />
+                                                <Label prefHeight="30.0" prefWidth="36.0" text="20:02">
+                                                    <font>
+                                                        <Font size="10.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <opaqueInsets>
+                                            <Insets />
+                                        </opaqueInsets>
+                                        <VBox.margin>
+                                            <Insets />
+                                        </VBox.margin>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="251.0" style="-fx-border-color: gray; -fx-padding: 5;">
+                                        <opaqueInsets>
+                                            <Insets />
+                                        </opaqueInsets>
+                                        <children>
+                                            <ImageView fitHeight="58.0" fitWidth="58.0">
+                                                <image>
+                                                    <Image url="@../Images/Avatars/1.jpg" />
+                                                </image>
+                                                <HBox.margin>
+                                                    <Insets bottom="4.0" left="4.0" right="10.0" top="4.0" />
+                                                </HBox.margin>
+                                            </ImageView>
+                                            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="131.0">
+                                                <children>
+                                                    <Label prefHeight="44.0" prefWidth="134.0" text="Name">
+                                                        <font>
+                                                            <Font size="24.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label prefHeight="16.0" prefWidth="205.0" text="Message" />
+                                                </children>
+                                            </VBox>
+                                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="39.0">
+                                                <children>
+                                                    <Label prefHeight="33.0" prefWidth="20.0" text="99" />
+                                                    <Label prefHeight="30.0" prefWidth="36.0" text="20:02">
+                                                        <font>
+                                                            <Font size="10.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="88.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="251.0" style="-fx-border-color: gray; -fx-padding: 5;">
+                                        <opaqueInsets>
+                                            <Insets />
+                                        </opaqueInsets>
+                                        <children>
+                                            <ImageView fitHeight="58.0" fitWidth="58.0">
+                                                <image>
+                                                    <Image url="@../Images/Avatars/1.jpg" />
+                                                </image>
+                                                <HBox.margin>
+                                                    <Insets bottom="4.0" left="4.0" right="10.0" top="4.0" />
+                                                </HBox.margin>
+                                            </ImageView>
+                                            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="131.0">
+                                                <children>
+                                                    <Label prefHeight="44.0" prefWidth="134.0" text="Name">
+                                                        <font>
+                                                            <Font size="24.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label prefHeight="16.0" prefWidth="205.0" text="Message" />
+                                                </children>
+                                            </VBox>
+                                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="39.0">
+                                                <children>
+                                                    <Label prefHeight="33.0" prefWidth="20.0" text="99" />
+                                                    <Label prefHeight="30.0" prefWidth="36.0" text="20:02">
+                                                        <font>
+                                                            <Font size="10.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="166.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="251.0" style="-fx-border-color: gray; -fx-padding: 5;">
+                                        <opaqueInsets>
+                                            <Insets />
+                                        </opaqueInsets>
+                                        <children>
+                                            <ImageView fitHeight="58.0" fitWidth="58.0">
+                                                <image>
+                                                    <Image url="@../Images/Avatars/1.jpg" />
+                                                </image>
+                                                <HBox.margin>
+                                                    <Insets bottom="4.0" left="4.0" right="10.0" top="4.0" />
+                                                </HBox.margin>
+                                            </ImageView>
+                                            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="131.0">
+                                                <children>
+                                                    <Label prefHeight="44.0" prefWidth="134.0" text="Name">
+                                                        <font>
+                                                            <Font size="24.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label prefHeight="16.0" prefWidth="205.0" text="Message" />
+                                                </children>
+                                            </VBox>
+                                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="39.0">
+                                                <children>
+                                                    <Label prefHeight="33.0" prefWidth="20.0" text="99" />
+                                                    <Label prefHeight="30.0" prefWidth="36.0" text="20:02">
+                                                        <font>
+                                                            <Font size="10.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="244.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="251.0" style="-fx-border-color: gray; -fx-padding: 5;">
+                                        <opaqueInsets>
+                                            <Insets />
+                                        </opaqueInsets>
+                                        <children>
+                                            <ImageView fitHeight="58.0" fitWidth="58.0">
+                                                <image>
+                                                    <Image url="@../Images/Avatars/1.jpg" />
+                                                </image>
+                                                <HBox.margin>
+                                                    <Insets bottom="4.0" left="4.0" right="10.0" top="4.0" />
+                                                </HBox.margin>
+                                            </ImageView>
+                                            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="131.0">
+                                                <children>
+                                                    <Label prefHeight="44.0" prefWidth="134.0" text="Name">
+                                                        <font>
+                                                            <Font size="24.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label prefHeight="16.0" prefWidth="205.0" text="Message" />
+                                                </children>
+                                            </VBox>
+                                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="39.0">
+                                                <children>
+                                                    <Label prefHeight="33.0" prefWidth="20.0" text="99" />
+                                                    <Label prefHeight="30.0" prefWidth="36.0" text="20:02">
+                                                        <font>
+                                                            <Font size="10.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="322.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="69.0" prefWidth="251.0" style="-fx-border-color: gray; -fx-padding: 5;">
+                                        <opaqueInsets>
+                                            <Insets />
+                                        </opaqueInsets>
+                                        <children>
+                                            <ImageView fitHeight="58.0" fitWidth="58.0">
+                                                <image>
+                                                    <Image url="@../Images/Avatars/1.jpg" />
+                                                </image>
+                                                <HBox.margin>
+                                                    <Insets bottom="4.0" left="4.0" right="10.0" top="4.0" />
+                                                </HBox.margin>
+                                            </ImageView>
+                                            <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="131.0">
+                                                <children>
+                                                    <Label prefHeight="44.0" prefWidth="134.0" text="Name">
+                                                        <font>
+                                                            <Font size="24.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label prefHeight="16.0" prefWidth="205.0" text="Message" />
+                                                </children>
+                                            </VBox>
+                                            <VBox alignment="CENTER" prefHeight="60.0" prefWidth="39.0">
+                                                <children>
+                                                    <Label prefHeight="33.0" prefWidth="20.0" text="99" />
+                                                    <Label prefHeight="30.0" prefWidth="36.0" text="20:02">
+                                                        <font>
+                                                            <Font size="10.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </HBox>
                                 </VBox>
                             </children>
                         </AnchorPane>
