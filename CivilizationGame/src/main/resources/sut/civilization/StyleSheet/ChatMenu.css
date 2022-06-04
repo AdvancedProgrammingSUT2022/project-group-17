@@ -12,21 +12,21 @@ ImageView {
 }
 
 .messageBox {
-    -fx-background-image: url("../Images/messageBox.png");
-    -fx-background-size: 300 100;
-    -fx-background-repeat: no-repeat;
-    -fx-pref-width: 300;
-    -fx-pref-height: 100;
+    -fx-border-color: blue;
+    -fx-border-radius: 40;
+    -fx-padding: 15 20 15 30;
+    -fx-background-color: #66aadd;
+    -fx-background-radius: 40;
 }
 
 .name {
     -fx-font-weight: bold;
-    -fx-label-padding: 15 0 0 40;
 }
 
 .message {
-    -fx-label-padding: 10 0 0 30;
+    -fx-label-padding: 10 0 0 0;
     -fx-max-width: 280;
+    -fx-wrap-text: true;
 }
 
 .time {
