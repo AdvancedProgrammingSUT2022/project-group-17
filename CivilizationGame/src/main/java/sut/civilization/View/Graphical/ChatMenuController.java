@@ -6,15 +6,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.stage.Popup;
+import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Chat;
@@ -23,15 +23,17 @@ import sut.civilization.Model.Classes.Message;
 import sut.civilization.Model.Classes.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ChatMenuController extends ViewController {
+    public BorderPane wholeBorderPane;
     public TextArea messageInput;
     public TextField search;
     public VBox allMessages;
     public ScrollPane messagesScrollPane;
     public VBox allChats;
-    public StackPane centerStackPane;
     private Chat selectedChat = null;
+    private ArrayList<User> selectedMembersForGroup = new ArrayList<>();
 
 
     public void BackToMainMenu() {
@@ -87,14 +89,16 @@ public class ChatMenuController extends ViewController {
 
     public void search() {
         allChats.getChildren().clear();
+        int i = 0;
         for (User user : Game.getUsers()){
             if (user.getUsername().startsWith(search.getText()) && user != Game.getLoggedInUser()) {
-                listAChat(user);
+                listAChat(user, i);
+                i += 2;
             }
         }
     }
 
-    private void listAChat(User user) {
+    private void listAChat(User user, int i) {
         //fixme avatar
         ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")));
         Label name = new Label(user.getUsername());
@@ -120,10 +124,10 @@ public class ChatMenuController extends ViewController {
         allChats.getChildren().add(chatPreview);
         allChats.getChildren().add(new Separator());
 
-        chatPreview.setOnMouseClicked(mouseEvent -> selectChat(user));
+        chatPreview.setOnMouseClicked(mouseEvent -> selectChat(user, i));
     }
 
-    private void selectChat(User user) {
+    private void selectChat(User user, int i) {
         boolean isChatFound = false;
         if (Game.getLoggedInUser().getChats() != null)
             for (Chat chat : Game.getLoggedInUser().getChats())
@@ -140,6 +144,11 @@ public class ChatMenuController extends ViewController {
             user.addChat(selectedChat);
             loadMessages(selectedChat);
         }
+
+        for (int j = 0; j < allChats.getChildren().size(); j++) {
+            allChats.getChildren().get(j).setStyle("-fx-background-color: white;");
+        }
+        allChats.getChildren().get(i).setStyle("-fx-background-color: gray;");
 
     }
 
@@ -180,6 +189,76 @@ public class ChatMenuController extends ViewController {
     }
 
     public void newGroup() {
+        Window window = Game.getCurrentScene().getWindow();
+        Popup createGroupPopup = new Popup();
+        TextField groupSearch = new TextField();
+        groupSearch.setPrefWidth(200);
+        groupSearch.setPadding(new Insets(10));
+        ImageView searchIcon = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/search.png")));
+        searchIcon.setFitHeight(32);
+        searchIcon.setFitWidth(32);
+        HBox searchHBox = new HBox(groupSearch, searchIcon);
+        VBox groupMemberList = new VBox();
+        ScrollPane groupScrollPane = new ScrollPane(groupMemberList);
+        Button cancelButton = new Button("cancel");
+        Button createButton = new Button("Create");
+        cancelButton.setStyle("-fx-background-color: red");
+        createButton.setStyle("-fx-background-color: green");
+        HBox buttonsHBox = new HBox(cancelButton, createButton);
+        VBox popupVBox = new VBox(searchHBox, groupScrollPane, buttonsHBox);
+        popupVBox.setPrefWidth(320);
+        popupVBox.setPrefHeight(400);
 
+
+        createGroupPopup.getContent().add(popupVBox);
+        createGroupPopup.setX(window.getWidth() / 2);
+        createGroupPopup.setY((window.getHeight() / 2) - 200);
+        createGroupPopup.show(window);
+        wholeBorderPane.setEffect(new Lighting());
+
+        searchIcon.setOnMouseClicked(mouseEvent -> {
+            groupMemberList.getChildren().clear();
+            selectedMembersForGroup.clear();
+            int i = 0;
+            for (User user : Game.getUsers()){
+                if (user.getUsername().startsWith(groupSearch.getText()) && user != Game.getLoggedInUser()) {
+                    searchMemberForGroup(user, groupMemberList, i);
+                    i += 2;
+                }
+            }
+        });
+
+        createButton.setOnMouseClicked(mouseEvent -> {
+            createGroupPopup.hide();
+        });
+
+        cancelButton.setOnMouseClicked(mouseEvent -> {
+            createGroupPopup.hide();
+        });
     }
+
+
+    private void searchMemberForGroup(User user, VBox groupMemberList, int i) {
+        //fixme avatar
+        ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")));
+        Label name = new Label(user.getUsername());
+        name.getStyleClass().add("name");
+        name.getStyleClass().add("chatPreview");
+        HBox memberPreview = new HBox(avatar, name);
+        memberPreview.setPrefWidth(300);
+
+        groupMemberList.getChildren().add(memberPreview);
+        groupMemberList.getChildren().add(new Separator());
+
+        memberPreview.setOnMouseClicked(mouseEvent -> {
+            if (selectedMembersForGroup.contains(user)) {
+                groupMemberList.getChildren().get(i).setStyle("-fx-background-color: white;");
+                selectedMembersForGroup.remove(user);
+            } else {
+                groupMemberList.getChildren().get(i).setStyle("-fx-background-color: green;");
+                selectedMembersForGroup.add(user);
+            }
+        });
+    }
+
 }

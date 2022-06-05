@@ -1,6 +1,7 @@
 Button {
     -fx-background-color: white;
-    -fx-border-color: black;
+    -fx-padding: 25;
+    -fx-background-insets: 15;
 }
 
 Button:hover {
