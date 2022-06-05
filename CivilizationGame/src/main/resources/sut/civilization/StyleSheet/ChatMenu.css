@@ -21,6 +21,7 @@ ImageView {
 
 .name {
     -fx-font-weight: bold;
+    -fx-font-size: 15;
 }
 
 .message {
@@ -32,4 +33,15 @@ ImageView {
 .time {
     -fx-label-padding: 10 0 0 240;
     -fx-font-size: 10;
+}
+
+.avatar {
+    -fx-width: 80;
+    -fx-height: 80;
+    -fx-padding: 10;
+}
+
+.chatPreview {
+    -fx-max-width: 120;
+    -fx-label-padding: 10;
 }
