@@ -59,14 +59,6 @@ public class User {
         return chats;
     }
 
-    public Chat getChatByUsername(String username) {
-        for (Chat chat : chats)
-            if (chat.getUser1().getUsername().equals(username) ||
-                    chat.getUser2().getUsername().equals(username))
-                return chat;
-        return null;
-    }
-
     public void addChat(Chat chat) {
         if (chats == null) chats = new ArrayList<>();
         chats.add(chat);

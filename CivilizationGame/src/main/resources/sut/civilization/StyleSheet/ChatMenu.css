@@ -2,6 +2,7 @@ Button {
     -fx-background-color: white;
     -fx-padding: 25;
     -fx-background-insets: 15;
+    -fx-cursor: hand;
 }
 
 Button:hover {

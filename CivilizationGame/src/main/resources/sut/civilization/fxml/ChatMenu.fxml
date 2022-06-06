@@ -10,7 +10,12 @@
     <center>
         <VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" BorderPane.alignment="BOTTOM_CENTER">
             <children>
-            <ScrollPane fx:id="messagesScrollPane" fitToWidth="true" hbarPolicy="NEVER" nodeOrientation="RIGHT_TO_LEFT" prefWidth="729.0" vvalue="1.0">
+            <VBox prefHeight="100.0" prefWidth="729.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+            <ScrollPane fx:id="messagesScrollPane" fitToWidth="true" hbarPolicy="NEVER" maxHeight="500.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="729.0" vvalue="1.0">
                <content>
                       <VBox fx:id="allMessages" alignment="BOTTOM_RIGHT" prefWidth="0.0" />
                </content>
@@ -75,7 +80,7 @@
                 </children>
             </VBox>
             <VBox prefHeight="720.0" prefWidth="267.0" style="-fx-border-color: gray;">
-                <HBox prefHeight="64.0" prefWidth="257.0">
+                <HBox fx:id="searchHBox" prefHeight="64.0" prefWidth="257.0">
                     <children>
                         <TextField fx:id="search" prefHeight="36.0" prefWidth="180.0" promptText="Search...">
                             <HBox.margin>
