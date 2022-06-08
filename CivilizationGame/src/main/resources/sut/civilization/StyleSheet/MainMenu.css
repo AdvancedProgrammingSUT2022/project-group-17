@@ -1,3 +1,9 @@
+.root{
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: contain;
+    -fx-background-image: url("/sut/civilization/Images/BackGround/backGround1.png");
+}
 
 Button:hover{
     -fx-background-radius: 10;

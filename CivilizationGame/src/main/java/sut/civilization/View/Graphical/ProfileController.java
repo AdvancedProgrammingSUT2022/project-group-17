@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import sut.civilization.Civilization;
@@ -25,6 +26,7 @@ import java.util.Objects;
 
 public class ProfileController extends ViewController{
 
+    public HBox allAvatarsContainer;
     @FXML
     private ImageView avatarImageView;
     @FXML
@@ -53,6 +55,16 @@ public class ProfileController extends ViewController{
         userNameText.setText("UserName : " + Game.getLoggedInUser().getUsername());
         nickNameText.setText("NickName : " + Game.getLoggedInUser().getNickname());
         scoreText.setText("Score : " + Game.getLoggedInUser().getScore());
+        allAvatarsContainer.getChildren().clear();
+
+        for (int i = 1; i < 9; i++) {
+            ImageView imageView = new ImageView(new Image("sut/civilization/Images/Avatars/ (" + i + ").png"));
+            imageView.setFitWidth(130);
+            imageView.setFitHeight(130);
+            imageView.setOnMouseClicked(this::changeAvatar);
+            allAvatarsContainer.getChildren().add(imageView);
+
+        }
     }
 
     public void changeUserPassword(MouseEvent mouseEvent) {

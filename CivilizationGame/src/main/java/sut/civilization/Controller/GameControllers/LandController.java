@@ -237,10 +237,10 @@ public class LandController extends Controller {
 
 
     public Land[][] mapInitializer () {
-            Land[][] map = new Land[12][12];
+            Land[][] map = new Land[20][20];
             Random random = new Random(Double.doubleToLongBits(Math.random()));
-            for (int i = 0; i < 12; i++) {
-                for (int j = 0; j < 12; j++) {
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++) {
 
                     LandType landtype;
                     switch (random.nextInt(8)) {
@@ -275,8 +275,8 @@ public class LandController extends Controller {
                 }
             }
 
-            for (int i = 0; i < 12; i++) {
-                for (int j = 0; j < 12; j++) {
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++) {
                     ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
                     LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
                     int randomInt;

@@ -24,7 +24,7 @@ public class User {
         this.score = 0;
         this.lastWinTime = 0;
         this.isOnline = false;
-        this.avatarLocation = "sut/civilization/Images/Avatars/2.jpg";
+        this.avatarLocation = "sut/civilization/Images/Avatars/ (2).png";
     }
 
     public boolean isOnline() {

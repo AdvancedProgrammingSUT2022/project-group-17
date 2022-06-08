@@ -13,6 +13,10 @@ public class Pair <firstClass,secondClass>{
         this.y = y;
     }
 
+    public Pair() {
+
+    }
+
     public static boolean isValid(Pair<Integer,Integer> pair) {
         if (pair == null)
             return false;

@@ -124,6 +124,7 @@ public class Game {
 
         switch (menu) {
             case GAME_MENU:
+                fxmlLoader.setLocation(Civilization.class.getResource("fxml/Game.fxml"));
                 break;
             case CHAT_MENU:
                 fxmlLoader.setLocation(Civilization.class.getResource("fxml/ChatMenu.fxml"));
