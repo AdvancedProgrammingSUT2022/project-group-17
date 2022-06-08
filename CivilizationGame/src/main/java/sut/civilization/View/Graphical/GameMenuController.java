@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.Classes.Game;
@@ -18,10 +19,8 @@ public class GameMenuController extends ViewController{
     private ScrollPane root;
 
     public void initialize(){
-        Game.getCurrentScene().getWindow().setHeight(800);
-        Game.getCurrentScene().getWindow().setWidth(1500);
-        Game.getCurrentScene().getWindow().setX(10);
-        Game.getCurrentScene().getWindow().setY(10);
+        ((Stage) Game.getCurrentScene().getWindow()).setFullScreen(true);
+
         Pane pane = new Pane();
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 10; j++) {
@@ -29,6 +28,8 @@ public class GameMenuController extends ViewController{
                 pane.getChildren().add(landGraphical);
             }
         }
+        root.setMaxHeight(Game.getCurrentScene().getWindow().getHeight());
+        root.setMaxWidth(Game.getCurrentScene().getWindow().getWidth());
         root.setContent(pane);
     }
 }

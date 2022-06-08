@@ -1,7 +1,7 @@
 .root{
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-size: contain;
+    -fx-background-size: auto;
     -fx-background-image: url("/sut/civilization/Images/BackGround/civ_background.png");
 }
 

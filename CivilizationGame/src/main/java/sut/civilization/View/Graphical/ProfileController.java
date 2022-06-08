@@ -1,12 +1,16 @@
 package sut.civilization.View.Graphical;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -26,7 +30,7 @@ import java.util.Objects;
 
 public class ProfileController extends ViewController{
 
-    public HBox allAvatarsContainer;
+    public ScrollPane avatarsScrollPane;
     @FXML
     private ImageView avatarImageView;
     @FXML
@@ -49,8 +53,11 @@ public class ProfileController extends ViewController{
     private TextField newNicknameRepeated;
 
     private final sut.civilization.Controller.ProfileController profileController = new sut.civilization.Controller.ProfileController();
-
     public void initialize(){
+        HBox allAvatarsContainer = new HBox();
+        allAvatarsContainer.setSpacing(10);
+        allAvatarsContainer.setAlignment(Pos.CENTER);
+
         avatarImageView.setImage(new Image(Game.getLoggedInUser().getAvatarLocation()));
         userNameText.setText("UserName : " + Game.getLoggedInUser().getUsername());
         nickNameText.setText("NickName : " + Game.getLoggedInUser().getNickname());
@@ -63,8 +70,10 @@ public class ProfileController extends ViewController{
             imageView.setFitHeight(130);
             imageView.setOnMouseClicked(this::changeAvatar);
             allAvatarsContainer.getChildren().add(imageView);
-
         }
+        avatarsScrollPane.setBackground(Background.EMPTY);
+        allAvatarsContainer.getStyleClass().add("Hbox");
+        avatarsScrollPane.setContent(allAvatarsContainer);
     }
 
     public void changeUserPassword(MouseEvent mouseEvent) {

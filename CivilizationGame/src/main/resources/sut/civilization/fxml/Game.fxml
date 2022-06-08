@@ -12,7 +12,7 @@
             prefHeight="800.0" prefWidth="1500.0"
             stylesheets="@../StyleSheet/Game.css">
 
-    <ScrollPane stylesheets="@../StyleSheet/Game.css" fx:id="root" pannable="true" maxWidth="1500" maxHeight="800" hbarPolicy="NEVER" vbarPolicy="NEVER">
+    <ScrollPane stylesheets="@../StyleSheet/Game.css" fx:id="root" pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
 
     </ScrollPane>
 </AnchorPane>

@@ -1,8 +1,13 @@
 .root{
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-size: contain;
-    -fx-background-image: url("/sut/civilization/Images/BackGround/backGround1.png");
+    -fx-background-size: cover;
+    -fx-background-image: url("/sut/civilization/Images/BackGround/backGround6.jpg");
+}
+
+Label {
+    -fx-font-family: "Segoe Print";
+    -fx-font-size: 13;
 }
 
 Button:hover{
@@ -23,8 +28,16 @@ Button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
     -fx-border-color: #0033ff;
-    -fx-text-fill: rgb(0, 22, 42);
+    -fx-text-fill: #0033ff;
     -fx-font-size: 20;
+}
+
+#backButton:hover{
+    -fx-background-color: #00504d;
+    -fx-cursor: hand;
+    -fx-border-color: #ffffff;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 10;
 }
 
 #backButton{
@@ -34,7 +47,7 @@ Button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
     -fx-border-color: aqua;
-    -fx-text-fill: rgb(0, 22, 42);
+    -fx-text-fill: aqua;
     -fx-font-size: 10;
 }
 
@@ -46,15 +59,18 @@ Button {
     -fx-background-color: transparent;
     -fx-padding: 0px 0px 8px 10px;
     -fx-font-size: 13;
+    -fx-cursor: hand;
 
 }
 
 #informationBox{
-    -fx-border-color: black;
+    -fx-background-radius: 10;
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-border-color: #310000;
     -fx-border-radius: 10;
     -fx-text-fill: #310000;
     -fx-max-height: 400;
-
+    -fx-font-size: 30;
 }
 
 PasswordField{
@@ -81,24 +97,23 @@ TextField{
     -fx-border-color: transparent;
     -fx-font-weight: bold;
 }
-.tab{
-    -fx-cursor: hand;
 
-}
 .tab-pane *.tab-header-area *.tab-header-background {
-    -fx-background-color:transparent;
+    -fx-background-radius: 30;
+    -fx-background-color: rgba(255, 255, 255, 0.3);
     -fx-alignment: center;
 }
 
-
-Label {
-    -fx-font-family: "Segoe Print";
-    -fx-font-size: 13;
-}
-
 #title{
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-min-width: 200;
+    -fx-border-color: black;
+    -fx-background-color: rgba(255, 255, 255, 0.3);
     -fx-font-weight: bolder;
-    -fx-font-size: 20;
+    -fx-alignment: center;
+    -fx-text-fill: black;
+    -fx-font-size: 40;
 }
 
 ImageView{
@@ -108,4 +123,18 @@ ImageView{
 
 .informationText {
     -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+.ScrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+.ScrollPane{
+    -fx-background-color: transparent;
+}
+
+.Hbox{
+
+    -fx-alignment: center;
 }

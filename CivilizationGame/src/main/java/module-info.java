@@ -28,6 +28,8 @@ module sut.civilization {
     opens sut.civilization.Images;
 
     opens sut.civilization.Images.Avatars;
+    opens sut.civilization.Images.BackGround;
+    opens sut.civilization.Images.Icons;
 
     opens sut.civilization;
     exports sut.civilization;
