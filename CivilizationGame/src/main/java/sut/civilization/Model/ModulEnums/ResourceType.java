@@ -1,22 +1,20 @@
 package sut.civilization.Model.ModulEnums;
 
 public enum ResourceType {
-    BANANA("Banana", CurrencyType.FOOD, 1),
-    COW("Cow", CurrencyType.FOOD, 1),
+    BANANA("Bananas", CurrencyType.FOOD, 1),
+    COW("Cattle", CurrencyType.FOOD, 1),
     DEER("Deer", CurrencyType.FOOD, 1),
     SHEEP("Sheep", CurrencyType.FOOD, 2),
     WHEAT("Wheat", CurrencyType.FOOD, 1),
-
     COAL("Coal", CurrencyType.PRODUCTION, 1),
-    HORSE("Horse", CurrencyType.PRODUCTION, 1),
+    HORSE("Horses", CurrencyType.PRODUCTION, 1),
     IRON("Iron", CurrencyType.PRODUCTION, 1),
-
     COTTON("Cotton", CurrencyType.COIN, 2),
-    FUR("Fur", CurrencyType.COIN, 2),
-    JEWEL("Jewel", CurrencyType.COIN, 3),
-    GOLD("Gold", CurrencyType.COIN, 2),
-    FUMIGATION("Fumigation", CurrencyType.COIN, 2),
-    TUSK("Tusk", CurrencyType.COIN, 2),
+    FUR("Furs", CurrencyType.COIN, 2),
+    JEWEL("Jewelry", CurrencyType.COIN, 3),
+    GOLD("Gold Ore", CurrencyType.COIN, 2),
+    FUMIGATION("Incense", CurrencyType.COIN, 2),
+    TUSK("Ivory", CurrencyType.COIN, 2),
     MARBLE("Marble", CurrencyType.COIN, 2),
     SILK("Silk", CurrencyType.COIN, 2),
     SILVER("Silver", CurrencyType.COIN, 2),

@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import sut.civilization.Civilization;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Enums.Menus;
 
 import java.io.FileWriter;
@@ -29,7 +30,7 @@ public class Game {
     private static int subTurn = 0;
     private static ArrayList<User> playersInGame = new ArrayList<>();
 
-    public static Land[][] map;
+    public static Land[][] map = new LandController().mapInitializer();
     public static int[][] dist = new int[110][110];
     public static String[][] path = new String[110][110];
 

@@ -64,14 +64,14 @@ public class ProfileController extends ViewController{
         scoreText.setText("Score : " + Game.getLoggedInUser().getScore());
         allAvatarsContainer.getChildren().clear();
 
-        for (int i = 1; i < 9; i++) {
+        for (int i = 1; i < 19; i++) {
             ImageView imageView = new ImageView(new Image("sut/civilization/Images/Avatars/ (" + i + ").png"));
             imageView.setFitWidth(130);
             imageView.setFitHeight(130);
             imageView.setOnMouseClicked(this::changeAvatar);
             allAvatarsContainer.getChildren().add(imageView);
         }
-        avatarsScrollPane.setBackground(Background.EMPTY);
+
         allAvatarsContainer.getStyleClass().add("Hbox");
         avatarsScrollPane.setContent(allAvatarsContainer);
     }

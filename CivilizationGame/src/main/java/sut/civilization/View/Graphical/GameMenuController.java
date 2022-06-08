@@ -19,17 +19,19 @@ public class GameMenuController extends ViewController{
     private ScrollPane root;
 
     public void initialize(){
-        ((Stage) Game.getCurrentScene().getWindow()).setFullScreen(true);
 
         Pane pane = new Pane();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 LandGraphical landGraphical = new LandGraphical(new Pair<>(i, j));
                 pane.getChildren().add(landGraphical);
+                pane.getChildren().add(landGraphical.getResourceImageView());
             }
         }
+        root.setContent(pane);
+
+        ((Stage) Game.getCurrentScene().getWindow()).setFullScreen(true);
         root.setMaxHeight(Game.getCurrentScene().getWindow().getHeight());
         root.setMaxWidth(Game.getCurrentScene().getWindow().getWidth());
-        root.setContent(pane);
     }
 }

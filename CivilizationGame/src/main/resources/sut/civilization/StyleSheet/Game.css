@@ -1,6 +1,17 @@
+.root{
+    -fx-background-color: blue;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane{
+    -fx-background-color: transparent;
+}
 
 
 .polygon{
-    -fx-stroke: white;
-    -fx-fill: black;
+    -fx-stroke: black;
+    -fx-fill: white;
 }

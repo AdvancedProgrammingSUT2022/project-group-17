@@ -1,21 +1,45 @@
 package sut.civilization.Model.Classes;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
+import sut.civilization.Civilization;
+
+import java.util.Objects;
 
 public class LandGraphical extends Polygon {
 
     private static final Pair<Integer,Integer> tileCount = new Pair<>(10,10);
-    private static final double tileRadius = 100;
+    private static final double tileRadius = 150;
 
+    private final Land land;
     private Pair<Integer,Integer> coordinate;
     private final Pair<Double,Double> centerCoordinate = new Pair<>();
     private final Double[] pointCoords = new Double[12];
 
+    private final ImageView resourceImageView = new ImageView();
+
     public LandGraphical(Pair<Integer,Integer> coordinate){
 
         setCoordinates(coordinate);
+        land = Game.map[coordinate.x][coordinate.y];
+        if (land.getResource() != null)
+            resourceImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/ResourceIcons/" + land.getResource().resourceType.name + ".png")).toExternalForm()));
+        resourceImageView.setX(centerCoordinate.x-113.5);
+        resourceImageView.setY(centerCoordinate.y-37.5);
+
+        resourceImageView.setFitWidth(75);
+        resourceImageView.setFitHeight(75);
 
         this.getStyleClass().add("polygon");
+    }
+
+    public Land getLand() {
+        return land;
+    }
+
+    public ImageView getResourceImageView() {
+        return resourceImageView;
     }
 
     private void setCoordinates(Pair<Integer, Integer> coordinate) {
