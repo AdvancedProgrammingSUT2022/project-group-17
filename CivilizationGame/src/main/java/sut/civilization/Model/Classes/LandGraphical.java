@@ -2,6 +2,8 @@ package sut.civilization.Model.Classes;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import sut.civilization.Civilization;
 
@@ -10,7 +12,7 @@ import java.util.Objects;
 public class LandGraphical extends Polygon {
 
     private static final Pair<Integer,Integer> tileCount = new Pair<>(10,10);
-    private static final double tileRadius = 150;
+    private static final double tileRadius = 100;
 
     private final Land land;
     private Pair<Integer,Integer> coordinate;
@@ -18,20 +20,50 @@ public class LandGraphical extends Polygon {
     private final Double[] pointCoords = new Double[12];
 
     private final ImageView resourceImageView = new ImageView();
+    private final ImageView landFeatureImageView = new ImageView();
+    private final ImageView civilizedUnitImageView = new ImageView();
+    private final ImageView combatUnitImageView = new ImageView();
+    private final ImageView OwnerNationImageView = new ImageView();
 
-    public LandGraphical(Pair<Integer,Integer> coordinate){
+    public LandGraphical(Pair<Integer,Integer> coordinate, Pane pane){
 
         setCoordinates(coordinate);
-        land = Game.map[coordinate.x][coordinate.y];
-        if (land.getResource() != null)
-            resourceImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/ResourceIcons/" + land.getResource().resourceType.name + ".png")).toExternalForm()));
-        resourceImageView.setX(centerCoordinate.x-113.5);
-        resourceImageView.setY(centerCoordinate.y-37.5);
 
-        resourceImageView.setFitWidth(75);
-        resourceImageView.setFitHeight(75);
+        land = Game.map[coordinate.x][coordinate.y];
+
+        this.setFill(new ImagePattern(new Image("sut/civilization/Images/tiles/" + land.getLandType().name + ".png")));
+        if (land.getLandFeature() != null) {
+            landFeatureImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/tiles/" + land.getLandFeature().landFeatureType.name + ".png")).toExternalForm()));
+        }
+        if (land.getResource() != null) {
+            resourceImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/resources/" + land.getResource().resourceType.name + ".png")).toExternalForm()));
+        }
+
+        landFeatureImageView.setFitWidth(tileRadius*2);
+        landFeatureImageView.setFitHeight(tileRadius*2);
+
+        landFeatureImageView.setX(this.centerCoordinate.x - tileRadius);
+        landFeatureImageView.setY(this.centerCoordinate.y - tileRadius);
+
+
+        resourceImageView.setFitWidth(tileRadius*2);
+        resourceImageView.setFitHeight(tileRadius*2);
+
+        resourceImageView.setX(this.centerCoordinate.x - tileRadius);
+        resourceImageView.setY(this.centerCoordinate.y - tileRadius);
+
 
         this.getStyleClass().add("polygon");
+        pane.getChildren().add(this);
+
+        pane.getChildren().add(landFeatureImageView);
+        pane.getChildren().add(resourceImageView);
+
+    }
+
+
+    private void showSelectDialog(){
+
     }
 
     public Land getLand() {
@@ -86,5 +118,21 @@ public class LandGraphical extends Polygon {
 
     public Double[] getPointCoords() {
         return pointCoords;
+    }
+
+    public ImageView getLandFeatureImageView() {
+        return landFeatureImageView;
+    }
+
+    public ImageView getCivilizedUnitImageView() {
+        return civilizedUnitImageView;
+    }
+
+    public ImageView getCombatUnitImageView() {
+        return combatUnitImageView;
+    }
+
+    public ImageView getOwnerNationImageView() {
+        return OwnerNationImageView;
     }
 }

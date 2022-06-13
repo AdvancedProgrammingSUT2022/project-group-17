@@ -9,9 +9,3 @@
 .scroll-pane{
     -fx-background-color: transparent;
 }
-
-
-.polygon{
-    -fx-stroke: black;
-    -fx-fill: white;
-}

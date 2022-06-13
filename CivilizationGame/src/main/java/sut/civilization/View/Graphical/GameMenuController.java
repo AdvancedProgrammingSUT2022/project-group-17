@@ -23,9 +23,7 @@ public class GameMenuController extends ViewController{
         Pane pane = new Pane();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                LandGraphical landGraphical = new LandGraphical(new Pair<>(i, j));
-                pane.getChildren().add(landGraphical);
-                pane.getChildren().add(landGraphical.getResourceImageView());
+                LandGraphical landGraphical = new LandGraphical(new Pair<>(i, j),pane);
             }
         }
         root.setContent(pane);
