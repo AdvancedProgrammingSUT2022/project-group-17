@@ -21,11 +21,12 @@ public class GameMenuController extends ViewController{
     public void initialize(){
 
         Pane pane = new Pane();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 10; j++) {
                 LandGraphical landGraphical = new LandGraphical(new Pair<>(i, j),pane);
             }
         }
+        pane.setStyle("-fx-background-position: center; -fx-background-size: auto; -fx-background-image: url(/sut/civilization/Images/BackGround/gameBackground.png);");
         root.setContent(pane);
 
         ((Stage) Game.getCurrentScene().getWindow()).setFullScreen(true);
