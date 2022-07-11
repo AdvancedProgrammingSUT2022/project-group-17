@@ -2,16 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e8a68f0-3f12-42d1-b4fc-87051b25e3ff" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/main/java/Controller/GameControllers/CityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/src/main/java/Controller/GameControllers/CityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/main/java/Controller/GameControllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/src/main/java/Controller/GameControllers/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/main/java/Enums/GameEnums/CityCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/src/main/java/Enums/GameEnums/CityCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/main/java/Enums/GameEnums/GameCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/src/main/java/Enums/GameEnums/GameCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/main/java/View/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/src/main/java/View/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/classes/Controller/GameControllers/CityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/target/classes/Controller/GameControllers/CityController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/classes/Controller/GameControllers/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/target/classes/Controller/GameControllers/GameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/classes/Enums/GameEnums/CityCommands.class" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/target/classes/Enums/GameEnums/CityCommands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/classes/Enums/GameEnums/GameCommands.class" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/target/classes/Enums/GameEnums/GameCommands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/classes/View/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/target/classes/View/GameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/CheatTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/CityControllerTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/GameControllerTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/LandControllerTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/MainMenuTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/NationTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/ProfileMenuTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/RegisterMenuTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/TechnologyTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/Tester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/UnitTester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/Test/java/WorkerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/src/main/resources/sut/civilization/DataBase/Users.json" beforeDir="false" afterPath="$PROJECT_DIR$/CivilizationGame/src/main/resources/sut/civilization/DataBase/Users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/CheatTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/CityControllerTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/GameControllerTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/LandControllerTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/MainMenuTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/NationTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/ProfileMenuTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/RegisterMenuTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/TechnologyTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/Tester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/UnitTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CivilizationGame/target/test-classes/WorkerTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +60,9 @@
       <option name="presentableId" value="Default" />
       <updated>1652526767628</updated>
       <workItem from="1652535312539" duration="131000" />
+      <workItem from="1654330273823" duration="97000" />
+      <workItem from="1654330515653" duration="21000" />
+      <workItem from="1657466083094" duration="39000" />
     </task>
     <servers />
   </component>
