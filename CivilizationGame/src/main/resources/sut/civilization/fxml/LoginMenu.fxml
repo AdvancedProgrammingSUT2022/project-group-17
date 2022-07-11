@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/LoginMenu.css"
+<BorderPane prefHeight="700.0" prefWidth="1080.0" stylesheets="@../StyleSheet/LoginMenu.css"
             xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="sut.civilization.View.Graphical.LoginController">
     <top>
