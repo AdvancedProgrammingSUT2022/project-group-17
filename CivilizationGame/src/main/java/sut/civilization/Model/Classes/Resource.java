@@ -4,6 +4,7 @@ import sut.civilization.Model.ModulEnums.ResourceType;
 
 public class Resource {
     protected int balance;
+
     protected ResourceType resourceType;
 
     public Resource(ResourceType resourceType){

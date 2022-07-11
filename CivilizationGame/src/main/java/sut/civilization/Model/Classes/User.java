@@ -1,32 +1,31 @@
 package sut.civilization.Model.Classes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
 public class User {
-
     private String username;
     private String password;
     private String nickname;
     private int score;
     private Nation nation;
-
     private String avatarLocation;
-
     private boolean isOnline;
-
     private Date lastTimeOnline;
-
     private long lastWinTime;
+    private ArrayList<Chat> chats;
 
-    public User(String username, String password, String nickname){
+
+    public User(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.score = 0;
         this.lastWinTime = 0;
         this.isOnline = false;
-        this.avatarLocation = "sut/civilization/Images/Avatars/2.jpg";
+        this.avatarLocation = "sut/civilization/Images/Avatars/ (2).png";
+        this.chats = new ArrayList<>();
     }
 
     public boolean isOnline() {
@@ -55,6 +54,15 @@ public class User {
 
     public long getLastWinTime() {
         return lastWinTime;
+    }
+
+    public ArrayList<Chat> getChats() {
+        return chats;
+    }
+
+    public void addChat(Chat chat) {
+        if (chats == null) chats = new ArrayList<>();
+        chats.add(chat);
     }
 
     public void setLastWinTime(long lastWinTime) {

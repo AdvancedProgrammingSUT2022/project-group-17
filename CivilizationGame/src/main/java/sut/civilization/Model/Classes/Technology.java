@@ -4,7 +4,6 @@ import sut.civilization.Model.ModulEnums.TechnologyType;
 
 public class Technology {
 
-
     protected boolean isAvailable;
     protected TechnologyType technologyType;
 

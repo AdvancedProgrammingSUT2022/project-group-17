@@ -2,7 +2,7 @@ package sut.civilization.Model.ModulEnums;
 
 public enum CloseCombatUnitType {
     SCOUT("Scout", 25, 4, 2, null, null, 0, 10),
-    SPEAR_MAN("Spear Man", 50, 7, 2, null, TechnologyType.BRONZE_WORKING,
+    SPEAR_MAN("Spearman", 50, 7, 2, null, TechnologyType.BRONZE_WORKING,
             0, 10),
     WARRIOR("Warrior", 40, 6, 2, null, null, 0, 10),
     HORSE_MAN("Horse Man", 80, 12, 4, ResourceType.HORSE, TechnologyType.HORSEBACK_RIDING,
@@ -11,7 +11,7 @@ public enum CloseCombatUnitType {
             0, 10),
     KNIGHT("Knight", 150, 18, 3, ResourceType.HORSE, TechnologyType.CHIVALRY,
             0, 10),
-    LONG_SWORDS_MAN("Long Swords Man", 150, 18, 3, ResourceType.IRON, TechnologyType.STEEL,
+    LONG_SWORDS_MAN("Longs Words Man", 150, 18, 3, ResourceType.IRON, TechnologyType.STEEL,
             0, 10),
     PIKE_MAN("Pike Man", 100, 10, 2, null, TechnologyType.CIVIL_SERVICE,
             0, 10),

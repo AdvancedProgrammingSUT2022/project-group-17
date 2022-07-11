@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/ScoreBoard.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.ScoreBoardController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/ScoreBoard.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.ScoreBoardController">
    <center>
       <VBox fx:id="scoreBoardTable" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10" stylesheets="@../StyleSheet/ScoreBoard.css" BorderPane.alignment="CENTER">
          <BorderPane.margin>

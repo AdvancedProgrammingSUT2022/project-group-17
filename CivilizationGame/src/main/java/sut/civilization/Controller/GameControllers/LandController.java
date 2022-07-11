@@ -1,15 +1,8 @@
 package sut.civilization.Controller.GameControllers;
 
 import sut.civilization.Controller.Controller;
-import sut.civilization.Model.Classes.ConsoleColors;
-import sut.civilization.Model.Classes.Game;
-import sut.civilization.Model.Classes.LandFeature;
-import sut.civilization.Model.ModulEnums.LandFeatureType;
-import sut.civilization.Model.Classes.Land;
-import sut.civilization.Model.ModulEnums.LandType;
-import sut.civilization.Model.Classes.Pair;
-import sut.civilization.Model.ModulEnums.ResourceType;
-import sut.civilization.Model.Classes.Resource;
+import sut.civilization.Model.Classes.*;
+import sut.civilization.Model.ModulEnums.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -237,10 +230,10 @@ public class LandController extends Controller {
 
 
     public Land[][] mapInitializer () {
-            Land[][] map = new Land[12][12];
+            Land[][] map = new Land[20][20];
             Random random = new Random(Double.doubleToLongBits(Math.random()));
-            for (int i = 0; i < 12; i++) {
-                for (int j = 0; j < 12; j++) {
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++) {
 
                     LandType landtype;
                     switch (random.nextInt(8)) {
@@ -275,8 +268,8 @@ public class LandController extends Controller {
                 }
             }
 
-            for (int i = 0; i < 12; i++) {
-                for (int j = 0; j < 12; j++) {
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++) {
                     ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
                     LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
                     int randomInt;
@@ -303,9 +296,8 @@ public class LandController extends Controller {
                         }
                     }
                 }
-
             }
-
+            map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,new Nation(NationType.PERSIA),new Pair<Integer,Integer>(3,3)));
             return map;
         }
 

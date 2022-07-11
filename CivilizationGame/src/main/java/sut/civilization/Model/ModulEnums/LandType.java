@@ -28,8 +28,6 @@ public enum LandType {
             ResourceType.DEER, ResourceType.SILVER, ResourceType.SILVER, ResourceType.JEWEL, ResourceType.MARBLE,
             ResourceType.FUR}, true),
 
-
-
     ;
 
     public String name;
