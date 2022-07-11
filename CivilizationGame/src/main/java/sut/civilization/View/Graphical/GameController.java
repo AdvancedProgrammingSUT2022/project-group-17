@@ -10,6 +10,8 @@ public class GameController {
     private final sut.civilization.Controller.GameControllers.GameController gameController = new sut.civilization.Controller.GameControllers.GameController();
 
     @FXML
+    private TextField chooseOpponents;
+    @FXML
     private TextField chooseNation;
 
     public void mainMenu(MouseEvent mouseEvent) {
@@ -17,11 +19,20 @@ public class GameController {
     }
 
     public void startGame(MouseEvent mouseEvent) {
-        if (Integer.parseInt(chooseNation.getText())>= 0 && Integer.parseInt(chooseNation.getText()) <= 8){
+        if (canGameStart()){
             gameController.chooseNation(Integer.parseInt(chooseNation.getText()), 0);
         }
     }
 
     public void loadGame(MouseEvent mouseEvent) {
+    }
+
+    public boolean canGameStart(){
+        int nationNumber = Integer.parseInt(chooseNation.getText());
+        int opponentsNumber = Integer.parseInt(chooseOpponents.getText());
+        if (nationNumber < 0 || nationNumber > 8)
+            return false;
+        if (opponentsNumber < 0 || opponentsNumber > 3)
+            return false;
     }
 }

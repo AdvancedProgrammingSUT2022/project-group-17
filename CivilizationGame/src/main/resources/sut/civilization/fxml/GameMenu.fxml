@@ -15,8 +15,9 @@
     <VBox>
         <Button text="Start Game" onMouseClicked="#startGame"/>
         <TextField fx:id="chooseNation" promptText="Choose Your Nation Number"/>
-        <Button text="Main Menu" onMouseClicked="#mainMenu"/>
+        <TextField fx:id="chooseOpponents" promptText="Choose The Number Of Opponents"/>
         <Button text="Load Game" onMouseClicked="#loadGame"/>
+        <Button text="Main Menu" onMouseClicked="#mainMenu"/>
     </VBox>
 </center>
 
