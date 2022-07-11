@@ -48,37 +48,32 @@ public class LandGraphical extends Polygon {
 
         landFeatureImageView.setFitWidth(tileRadius*1.5);
         landFeatureImageView.setFitHeight(tileRadius*1.5);
-
         landFeatureImageView.setX(this.centerCoordinate.x - tileRadius*0.75);
         landFeatureImageView.setY(this.centerCoordinate.y - tileRadius*0.75);
-
+//        landFeatureImageView.setOnMouseEntered();
 
         resourceImageView.setFitWidth(tileRadius*0.5);
         resourceImageView.setFitHeight(tileRadius*0.5);
-
         resourceImageView.setX(this.centerCoordinate.x - tileRadius*0.25);
         resourceImageView.setY(this.centerCoordinate.y - tileRadius*0.75);
 
-
         combatUnitImageView.setFitWidth(tileRadius*0.5);
         combatUnitImageView.setFitHeight(tileRadius*0.5);
-
-        combatUnitImageView.setX(this.centerCoordinate.x + tileRadius*0.75);
-        combatUnitImageView.setY(this.centerCoordinate.y + tileRadius*0.25);
+        combatUnitImageView.setX(this.centerCoordinate.x + tileRadius*0.25);
+        combatUnitImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
 
         civilizedUnitImageView.setFitWidth(tileRadius*0.5);
         civilizedUnitImageView.setFitHeight(tileRadius*0.5);
-
         civilizedUnitImageView.setX(this.centerCoordinate.x - tileRadius*0.75);
         civilizedUnitImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
 
-        this.getStyleClass().add("polygon");
         if (land.getLandType() != LandType.OCEAN)
             pane.getChildren().add(this);
 
         pane.getChildren().add(landFeatureImageView);
         pane.getChildren().add(resourceImageView);
-
+        pane.getChildren().add(civilizedUnitImageView);
+        pane.getChildren().add(combatUnitImageView);
     }
 
 

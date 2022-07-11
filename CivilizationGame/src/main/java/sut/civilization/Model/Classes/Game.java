@@ -15,13 +15,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class Game {
     private static FXMLLoader fxmlLoader;
     private static Scene currentScene;
-
     private static ArrayList<User> users = readUserListFromDatabase();
     private static User loggedInUser;
     private static int turn = 0;
@@ -32,6 +30,7 @@ public class Game {
 
     public static Land[][] map = new LandController().mapInitializer();
     public static int[][] dist = new int[110][110];
+
     public static String[][] path = new String[110][110];
 
     public static Scene getCurrentScene() {
@@ -116,6 +115,7 @@ public class Game {
             fileWriter.write(new Gson().toJson(Game.getUsers()));
             fileWriter.close();
         } catch (IOException exception) {
+            System.out.println("cannot write user list to dataBase mate :(\nthe stack trace is in below :");
             exception.printStackTrace();
         }
     }
@@ -146,9 +146,12 @@ public class Game {
         try {
             return fxmlLoader.load();
         } catch (IOException e) {
+            System.err.println("cannot load fxml file for " + menu + " menu");
+
             throw new RuntimeException(e);
         }
     }
+
     public static void changeScene(Menus menu){
         currentScene.setRoot(loadScene(menu));
     }

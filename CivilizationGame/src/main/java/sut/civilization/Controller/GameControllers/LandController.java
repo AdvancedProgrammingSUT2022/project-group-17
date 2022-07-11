@@ -1,15 +1,8 @@
 package sut.civilization.Controller.GameControllers;
 
 import sut.civilization.Controller.Controller;
-import sut.civilization.Model.Classes.ConsoleColors;
-import sut.civilization.Model.Classes.Game;
-import sut.civilization.Model.Classes.LandFeature;
-import sut.civilization.Model.ModulEnums.LandFeatureType;
-import sut.civilization.Model.Classes.Land;
-import sut.civilization.Model.ModulEnums.LandType;
-import sut.civilization.Model.Classes.Pair;
-import sut.civilization.Model.ModulEnums.ResourceType;
-import sut.civilization.Model.Classes.Resource;
+import sut.civilization.Model.Classes.*;
+import sut.civilization.Model.ModulEnums.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -303,9 +296,8 @@ public class LandController extends Controller {
                         }
                     }
                 }
-
             }
-
+            map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,new Nation(NationType.PERSIA),new Pair<Integer,Integer>(3,3)));
             return map;
         }
 
