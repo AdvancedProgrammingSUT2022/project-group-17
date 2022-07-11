@@ -11,14 +11,24 @@
             fx:controller="sut.civilization.View.Graphical.GameController"
             prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/GameMenu.css">
 
-<center>
-    <VBox>
-        <Button text="Start Game" onMouseClicked="#startGame"/>
-        <TextField fx:id="chooseNation" promptText="Choose Your Nation Number"/>
-        <TextField fx:id="chooseOpponents" promptText="Choose The Number Of Opponents"/>
-        <Button text="Load Game" onMouseClicked="#loadGame"/>
-        <Button text="Main Menu" onMouseClicked="#mainMenu"/>
-    </VBox>
-</center>
+    <center>
+        <VBox alignment="CENTER">
+            <Button text="Start Game" onMouseClicked="#startGame"/>
+            <HBox alignment="CENTER">
+                <VBox alignment="BASELINE_LEFT">
+                    <TextField fx:id="chooseOpponents1" promptText="Choose The Number Of Opponents" alignment="CENTER"/>
+                    <Label fx:id="chooseNation1" text="Choose Your Nation Number" alignment="CENTER"/>
+                    <ChoiceBox fx:id="nations1"/>
+                </VBox>
+                <VBox alignment="BASELINE_RIGHT">
+                    <TextField fx:id="chooseOpponents2" promptText="Choose The Number Of Opponents" alignment="CENTER"/>
+                    <Label fx:id="chooseNation2" text="Choose Your Nation Number" alignment="CENTER"/>
+                    <ChoiceBox fx:id="nations2"/>
+                </VBox>
+            </HBox>
+            <Button text="Load Game" onMouseClicked="#loadGame"/>
+            <Button text="Main Menu" onMouseClicked="#mainMenu"/>
+        </VBox>
+    </center>
 
 </BorderPane>
