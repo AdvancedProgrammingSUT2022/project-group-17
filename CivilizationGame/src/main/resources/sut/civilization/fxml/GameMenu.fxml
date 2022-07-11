@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sut.civilization.View.Graphical.GameController"
+            prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/GameMenu.css">
+
+<center>
+    <VBox>
+        <Button text="Start Game" onMouseClicked="#startGame"/>
+        <TextField fx:id="chooseNation" promptText="Choose Your Nation Number"/>
+        <Button text="Main Menu" onMouseClicked="#mainMenu"/>
+        <Button text="Load Game" onMouseClicked="#loadGame"/>
+    </VBox>
+</center>
+
+</BorderPane>
