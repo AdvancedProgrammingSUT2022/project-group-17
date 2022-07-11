@@ -11,7 +11,7 @@ public enum RangedCombatUnitType {
             ResourceType.IRON, TechnologyType.MATHEMATICS, 0, 10, true),
     TREBUCHET("Trebuchet", 170, 6, 20, 2, 2,
             ResourceType.IRON, TechnologyType.PHYSICS, 0, 10, true),
-    CANON("Canon", 250, 10, 26, 2, 2,
+    CANON("Cannon", 250, 10, 26, 2, 2,
             null, TechnologyType.CHEMISTRY, 0, 10, true),
     ARTILLERY("Artillery", 420, 16, 32, 3, 2, null,
             TechnologyType.DYNAMITE, 0, 10, true);

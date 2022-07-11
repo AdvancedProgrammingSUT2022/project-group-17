@@ -14,7 +14,7 @@ public class User {
     private boolean isOnline;
     private Date lastTimeOnline;
     private long lastWinTime;
-    private ArrayList<Chat> chats = new ArrayList<>();
+    private ArrayList<Chat> chats;
 
 
     public User(String username, String password, String nickname) {
@@ -24,7 +24,8 @@ public class User {
         this.score = 0;
         this.lastWinTime = 0;
         this.isOnline = false;
-        this.avatarLocation = "sut/civilization/Images/Avatars/2.jpg";
+        this.avatarLocation = "sut/civilization/Images/Avatars/ (2).png";
+        this.chats = new ArrayList<>();
     }
 
     public boolean isOnline() {
