@@ -3,6 +3,7 @@ package sut.civilization.Model.Classes;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import sut.civilization.Civilization;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -124,6 +125,9 @@ public class Game {
         fxmlLoader = new FXMLLoader();
 
         switch (menu) {
+            case SELECTION_MENU:
+                fxmlLoader.setLocation(Civilization.class.getResource("fxml/GameMenu.fxml"));
+                break;
             case GAME_MENU:
                 fxmlLoader.setLocation(Civilization.class.getResource("fxml/Game.fxml"));
                 break;

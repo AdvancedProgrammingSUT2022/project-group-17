@@ -2,6 +2,7 @@ package sut.civilization.View.Graphical;
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Game;
 
@@ -9,7 +10,7 @@ public class MainController extends ViewController{
     sut.civilization.Controller.MainController mainController = new sut.civilization.Controller.MainController();
 
     public void startGame(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.GAME_MENU);
+        Game.changeScene(Menus.SELECTION_MENU);
     }
 
     public void enterProfileMenu(MouseEvent mouseEvent) {
