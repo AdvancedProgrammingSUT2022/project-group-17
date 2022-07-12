@@ -8,7 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sut.civilization.View.Graphical.GameController"
+            fx:controller="sut.civilization.View.Graphical.GameMenuController"
             prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/GameMenu.css">
 
     <center>

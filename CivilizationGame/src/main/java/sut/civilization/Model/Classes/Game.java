@@ -29,7 +29,7 @@ public class Game {
     private static int subTurn = 0;
     private static ArrayList<User> playersInGame = new ArrayList<>();
 
-    public static Land[][] map = new LandController().mapInitializer();
+    public static Land[][] map;
     public static int[][] dist = new int[110][110];
 
     public static String[][] path = new String[110][110];

@@ -1,5 +1,5 @@
 //import sut.civilization.Controller.GameControllers.CityController;
-//import sut.civilization.Controller.GameControllers.GameController;
+//import sut.civilization.Controller.GameControllers.GameMenuController;
 //import sut.civilization.Controller.GameControllers.LandController;
 //import sut.civilization.Controller.GameControllers.UnitController;
 //import sut.civilization.Enums.GameEnums.GameCommands;
@@ -25,7 +25,7 @@
 //
 //public class UnitTester extends Tester{
 //    UnitController unitController = new UnitController();
-//    GameController gameController = new GameController();
+//    GameMenuController gameController = new GameMenuController();
 //    Nation nation = new Nation(NationType.PERSIA);
 //    City city = new City(nation,"city");
 //
@@ -34,10 +34,10 @@
 //        Game.map = LandController.mapInitializer();
 //        User user = new User("","","");
 //        user.setNation(nation);
-//        GameController.setCurrentTurnUser(user);
+//        GameMenuController.setCurrentTurnUser(user);
 //        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
 //        Game.map[3][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
-//        GameController.setSelectedCombatUnit(Game.map[3][4].getCombatUnit());
+//        GameMenuController.setSelectedCombatUnit(Game.map[3][4].getCombatUnit());
 //        UnitController.setSelectedCombatUnit(Game.map[3][4].getCombatUnit());
 //        nation.getCoin().setBalance(10000);
 //        city.setMainLand(Game.map[2][3]);

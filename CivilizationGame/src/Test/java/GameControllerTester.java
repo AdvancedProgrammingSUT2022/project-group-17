@@ -1,4 +1,4 @@
-//import sut.civilization.Controller.GameControllers.GameController;
+//import sut.civilization.Controller.GameControllers.GameMenuController;
 //import sut.civilization.Controller.GameControllers.LandController;
 //import sut.civilization.Enums.GameEnums.GameCommands;
 //import sut.civilization.Model.City;
@@ -19,7 +19,7 @@
 //
 //
 //public class GameControllerTester extends Tester{
-//    GameController gameController = new GameController();
+//    GameMenuController gameController = new GameMenuController();
 //
 //
 //    @BeforeEach
@@ -43,8 +43,8 @@
 //        Game.map[4][4].setOwnerCity(tehran);
 //        Game.map[5][5].setOwnerCity(doghoozAbad);
 //
-//        GameController.setCurrentTurnUser(new User("","",""));
-//        GameController.getCurrentTurnUser().setNation(persia);
+//        GameMenuController.setCurrentTurnUser(new User("","",""));
+//        GameMenuController.getCurrentTurnUser().setNation(persia);
 //    }
 //
 //
@@ -82,7 +82,7 @@
 //        ArrayList<User> users = new ArrayList<>();
 //        users.add(user);
 //        Game.setPlayersInGame(users);
-//        GameController.setCurrentTurnUser(Game.getPlayersInGame().get(0));
+//        GameMenuController.setCurrentTurnUser(Game.getPlayersInGame().get(0));
 //        Game.setUsers(users);
 //        for (int i = 0; i < 9; i++) {
 //            gameController.chooseNation(i,0);

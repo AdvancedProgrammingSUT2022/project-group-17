@@ -24,14 +24,14 @@ public class infoPanelController extends ViewController{
 
     public void showUnits() {
 
-//        int unitsNumber = GameController.getCurrentTurnUser().getNation().getUnits().size();
+//        int unitsNumber = GameMenuController.getCurrentTurnUser().getNation().getUnits().size();
         int unitsNumber = 15;
         HBox[] eachUnitHBox = new HBox[unitsNumber];
 //        int i = 0;
-//        for (Unit unit : GameController.getCurrentTurnUser().getNation().getUnits()) {
+//        for (Unit unit : GameMenuController.getCurrentTurnUser().getNation().getUnits()) {
         for (int j = 0; j < unitsNumber; j++) {
             ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")
+                    Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")
             ));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -119,7 +119,7 @@ public class infoPanelController extends ViewController{
         VBox allNationsVBox = new VBox();
         for (int i = 0; i < friendsNumber; i++) {
             ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")
+                    Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")
             ));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -138,7 +138,7 @@ public class infoPanelController extends ViewController{
 
         for (int i = 0; i < enemiesNumber; i++) {
             ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")
+                    Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")
             ));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -165,7 +165,7 @@ public class infoPanelController extends ViewController{
         HBox[] eachNationHBox = new HBox[nationNumber];
         for (int j = 0; j < nationNumber; j++) {
             ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")
+                    Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")
             ));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -255,7 +255,7 @@ public class infoPanelController extends ViewController{
     private void scrollPanePopup(VBox vBox) {
         Window window = Game.getCurrentScene().getWindow();
         ImageView ex = new ImageView(new Image(
-                Civilization.class.getResourceAsStream("/sut/civilization/Images/ex.png")
+                Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/ex.png")
         ));
         ex.setFitWidth(20);
         ex.setFitHeight(20);

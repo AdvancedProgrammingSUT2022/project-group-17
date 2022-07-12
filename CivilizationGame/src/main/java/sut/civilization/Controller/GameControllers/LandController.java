@@ -297,7 +297,21 @@ public class LandController extends Controller {
                     }
                 }
             }
-            map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,new Nation(NationType.PERSIA),new Pair<Integer,Integer>(3,3)));
+            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER,new Nation(NationType.PERSIA),new Pair<Integer,Integer>(3,3));
+            map[3][3].setCivilizedUnit(civilizedUnit);
+            GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
+
+            City city = new City(GameController.getCurrentTurnUser().getNation(), "Mashhad");
+            GameController.getCurrentTurnUser().getNation().getCities().add(city);
+            city.setCitizens(77);
+            city.setFoodGrowth(15);
+            city.setProductionGrowth(25);
+            city.setCoinGrowth(80);
+
+            GameController.getCurrentTurnUser().getNation().getFriends().add(new Nation(NationType.PERSIA));
+            GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
+            GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.ANCIENT_EGYPT));
+
             return map;
         }
 
