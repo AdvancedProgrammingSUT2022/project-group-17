@@ -21,8 +21,8 @@ public class UnitController extends GameController {
 
         Pair<Integer,Integer> neighbor = new Pair<Integer,Integer>(destX, destY);
 
-        Game.map[neighbor.x][neighbor.y].setCombatUnit(selectedCombatUnit);
-        Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
+        Land.map[neighbor.x][neighbor.y].setCombatUnit(selectedCombatUnit);
+        Land.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y].setCombatUnit(null);
         selectedCombatUnit.setLocation(neighbor);
 
         System.out.println(selectedCombatUnit.getLocation().x + " " + selectedCombatUnit.getLocation().y);
@@ -47,20 +47,20 @@ public class UnitController extends GameController {
                 neighbors[i] = landController.getNeighborIndex(unit.getLocation(), i);
 
             for (int i = 0; i < 6; i++) {
-                if (Pair.isValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() <= unit.getMP() && ((type == 1 && Game.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null) || (type == 0 && Game.map[neighbors[i].x][neighbors[i].y].getCivilizedUnit() == null))){
+                if (Pair.isValid(neighbors[i]) && Land.map[neighbors[i].x][neighbors[i].y].getMP() <= unit.getMP() && ((type == 1 && Land.map[neighbors[i].x][neighbors[i].y].getCombatUnit() == null) || (type == 0 && Land.map[neighbors[i].x][neighbors[i].y].getCivilizedUnit() == null))){
                     if (Math.abs(neighbors[i].x - dest.x) < Math.abs(unit.getLocation().x - dest.x) &&
                             Math.abs(neighbors[i].y - dest.y) < Math.abs(unit.getLocation().y - dest.y)){
 
                         if (type == 1)
-                            Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+                            Land.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
                         else
-                            Game.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+                            Land.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
                         unit.setLocation(neighbors[i]);
-                        unit.decreaseMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        unit.decreaseMP(Land.map[neighbors[i].x][neighbors[i].y].getMP());
                         if (type == 1)
-                            Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) unit);
+                            Land.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) unit);
                         else
-                            Game.map[neighbors[i].x][neighbors[i].y].setCivilizedUnit((CivilizedUnit) unit);
+                            Land.map[neighbors[i].x][neighbors[i].y].setCivilizedUnit((CivilizedUnit) unit);
                         continue main;
                     }
 
@@ -68,15 +68,15 @@ public class UnitController extends GameController {
                             Objects.equals(neighbors[i].y, unit.getLocation().y)){
 
                         if (type == 1)
-                            Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+                            Land.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
                         else
-                            Game.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+                            Land.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
                         unit.setLocation(neighbors[i]);
-                        unit.decreaseMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        unit.decreaseMP(Land.map[neighbors[i].x][neighbors[i].y].getMP());
                         if (type == 1)
-                            Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) unit);
+                            Land.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) unit);
                         else
-                            Game.map[neighbors[i].x][neighbors[i].y].setCivilizedUnit((CivilizedUnit) unit);
+                            Land.map[neighbors[i].x][neighbors[i].y].setCivilizedUnit((CivilizedUnit) unit);
                         continue main;
                     }
 
@@ -85,18 +85,18 @@ public class UnitController extends GameController {
 
 
                         if (type == 1)
-                            Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+                            Land.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
                         else
-                            Game.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+                            Land.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
                         unit.setLocation(neighbors[i]);
-                        unit.decreaseMP(Game.map[neighbors[i].x][neighbors[i].y].getMP());
+                        unit.decreaseMP(Land.map[neighbors[i].x][neighbors[i].y].getMP());
                         if (type == 1)
-                            Game.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) unit);
+                            Land.map[neighbors[i].x][neighbors[i].y].setCombatUnit((CombatUnit) unit);
                         else
-                            Game.map[neighbors[i].x][neighbors[i].y].setCivilizedUnit((CivilizedUnit) unit);
+                            Land.map[neighbors[i].x][neighbors[i].y].setCivilizedUnit((CivilizedUnit) unit);
                         continue main;
                     }
-                } else if (Pair.isValid(neighbors[i]) && Game.map[neighbors[i].x][neighbors[i].y].getMP() > unit.getMP())
+                } else if (Pair.isValid(neighbors[i]) && Land.map[neighbors[i].x][neighbors[i].y].getMP() > unit.getMP())
                     System.out.println("your move Points is not enough!");
 
             }
@@ -116,8 +116,8 @@ public class UnitController extends GameController {
         if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
-        Land origin = Game.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
-        Land dest = Game.map[x][y];
+        Land origin = Land.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
+        Land dest = Land.map[x][y];
         int originNum = landController.getLandNumber(origin);
         int destNum = landController.getLandNumber(dest);
         if (selection == 1 && dest.getCombatUnit() != null)
@@ -140,22 +140,22 @@ public class UnitController extends GameController {
         if (path != null && !path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
         else {System.out.println("path is empty"); return;}
 
-        boolean river = Game.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor];
+        boolean river = Land.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor];
         Pair<Integer,Integer> next = landController.getNeighborIndex(unit.getLocation(), neighbor);
         if (unit instanceof CombatUnit){
-            Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
-            Game.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
+            Land.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+            Land.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
         }else{
-            Game.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
-            Game.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
+            Land.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+            Land.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
         }
         unit.setLocation(next);
 
-        unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()));
-        if (Game.map[next.x][next.y].getLandFeature() != null)
-            unit.setMP(-Game.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost);
-        if (Game.map[next.x][next.y].getZOC() != null){
-            if (!Game.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
+        unit.setMP(Math.max(0, unit.getMP() - Land.map[next.x][next.y].getMP()));
+        if (Land.map[next.x][next.y].getLandFeature() != null)
+            unit.setMP(-Land.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost);
+        if (Land.map[next.x][next.y].getZOC() != null){
+            if (!Land.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
                 unit.setMP(0);
             }
         }
@@ -223,11 +223,11 @@ public class UnitController extends GameController {
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
             currentTurnUser.getNation().getUnits().remove(unit);
             if (unit instanceof CivilizedUnit) {
-                Game.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+                Land.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
                 selectedCivilizedUnit = null;
             }
             else {
-                Game.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+                Land.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
                 selectedCombatUnit = null;
             }
             return "removed successfully!";
@@ -238,7 +238,7 @@ public class UnitController extends GameController {
     public String unitSetCityTarget(Matcher matcher){
         int cityX = Integer.parseInt(matcher.group("x"));
         int cityY = Integer.parseInt(matcher.group("y"));
-        City city = Game.map[cityX][cityY].getOwnerCity();
+        City city = Land.map[cityX][cityY].getOwnerCity();
         if (city != null && selectedCombatUnit != null){
             if ((selectedCombatUnit instanceof CloseCombatUnit &&
                     landController.areNeighbors(new Pair<Integer,Integer>(cityX, cityY), selectedCombatUnit.getLocation()))){
@@ -249,7 +249,7 @@ public class UnitController extends GameController {
                     return "Can't attack owner nation's city";
                 }
             }else if(selectedCombatUnit instanceof  RangedCombatUnit){
-                int unitNum = landController.getLandNumber(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
+                int unitNum = landController.getLandNumber(Land.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
                 int cityNum = landController.getLandNumber(city.getMainLand());
                 if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.dist[unitNum][cityNum]){
                     if (!selectedCombatUnit.getOwnerNation().equals(city.getOwnerNation())){
@@ -304,7 +304,7 @@ public class UnitController extends GameController {
         int x = -1, y = -1;
         main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.map[i][j].equals(selectedCity.getMainLand())){
+                if (Land.map[i][j].equals(selectedCity.getMainLand())){
                     x = i;
                     y = j;
                     break main;
@@ -447,7 +447,7 @@ public class UnitController extends GameController {
         int x = -1, y = -1;
         main: for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.map[i][j].equals(city.getMainLand())){
+                if (Land.map[i][j].equals(city.getMainLand())){
                     x = i;
                     y = j;
                     break main;

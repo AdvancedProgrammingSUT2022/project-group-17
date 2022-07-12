@@ -81,12 +81,8 @@ public class Game {
         Game.loggedInUser = user;
     }
 
-    public static Land[][] getMap() {
-        return map;
-    }
-
     public static void setMap(Land[][] map) {
-        Game.map = map;
+        Land.map = map;
     }
 
     public static void addUser(User user){

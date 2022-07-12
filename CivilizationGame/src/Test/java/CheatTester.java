@@ -102,7 +102,7 @@
 //
 //    @Test
 //    public void destroyImprovementCheatRightPlace(){
-//        Game.map[3][3].setImprovement(new Improvement(ImprovementType.FARM));
+//        Land.map[3][3].setImprovement(new Improvement(ImprovementType.FARM));
 //        commandMatcher = CheatCommands.getMatcher("destroy improvement on -x 3 -y 3",CheatCommands.DESTROY_IMPROVEMENT);
 //        if (commandMatcher.matches())
 //            Assert.assertEquals("The improvement is now broken!",cheatController.destroyImprovement(commandMatcher));

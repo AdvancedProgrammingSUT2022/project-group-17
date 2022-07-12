@@ -31,17 +31,25 @@
 //
 //    @BeforeEach
 //    public void setup(){
-//        Game.map = LandController.mapInitializer();
+//        Land.map = LandController.mapInitializer();
 //        User user = new User("","","");
 //        user.setNation(nation);
+<<<<<<< HEAD
 //        GameMenuController.setCurrentTurnUser(user);
 //        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
 //        Game.map[3][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
 //        GameMenuController.setSelectedCombatUnit(Game.map[3][4].getCombatUnit());
 //        UnitController.setSelectedCombatUnit(Game.map[3][4].getCombatUnit());
+=======
+//        GameController.setCurrentTurnUser(user);
+//        Land.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
+//        Land.map[3][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
+//        GameController.setSelectedCombatUnit(Land.map[3][4].getCombatUnit());
+//        UnitController.setSelectedCombatUnit(Land.map[3][4].getCombatUnit());
+>>>>>>> 53b21ab8b24dbc98b0fae4e0ac5ec0a391104caf
 //        nation.getCoin().setBalance(10000);
-//        city.setMainLand(Game.map[2][3]);
-//        Game.map[2][3].setOwnerCity(city);
+//        city.setMainLand(Land.map[2][3]);
+//        Land.map[2][3].setOwnerCity(city);
 //        CityController.setSelectedCity(city);
 //        UnitController.setSelectedCity(city);
 //
@@ -49,8 +57,8 @@
 //
 //    @AfterEach
 //    public void clearUp(){
-//        Game.map[2][3].setCivilizedUnit(null);
-//        Game.map[2][3].setCombatUnit(null);
+//        Land.map[2][3].setCivilizedUnit(null);
+//        Land.map[2][3].setCombatUnit(null);
 //    }
 //
 //    @Test
@@ -65,7 +73,7 @@
 //        if (commandMatcher.matches())
 //            unitController.unitGoToDestination(commandMatcher,1);
 //
-//        Assert.assertEquals(CloseCombatUnitType.HORSE_MAN.name,Game.map[3][4].getCombatUnit().getName());
+//        Assert.assertEquals(CloseCombatUnitType.HORSE_MAN.name,Land.map[3][4].getCombatUnit().getName());
 //    }
 //
 //    @Test
@@ -78,7 +86,7 @@
 //        if (commandMatcher.matches())
 //            unitController.unitGoToDestination(commandMatcher,1);
 //
-//        Assert.assertNull(Game.map[6][6].getCombatUnit());
+//        Assert.assertNull(Land.map[6][6].getCombatUnit());
 //    }
 //
 //    @Test
@@ -91,7 +99,7 @@
 //        if (commandMatcher.matches())
 //            unitController.unitGoToNeighbor(commandMatcher);
 //
-//        Assert.assertEquals(CloseCombatUnitType.HORSE_MAN.name , Game.map[3][4].getCombatUnit().getName());
+//        Assert.assertEquals(CloseCombatUnitType.HORSE_MAN.name , Land.map[3][4].getCombatUnit().getName());
 //    }
 //
 //
@@ -101,10 +109,10 @@
 //        City tehran = new City(iran,"tehran");
 //
 //        UnitController.setSelectedCity(tehran);
-//        tehran.setMainLand(Game.map[3][4]);
-//        Game.map[3][4].setOwnerCity(tehran);
-//        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
-//        UnitController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
+//        tehran.setMainLand(Land.map[3][4]);
+//        Land.map[3][4].setOwnerCity(tehran);
+//        Land.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
+//        UnitController.setSelectedCombatUnit(Land.map[3][3].getCombatUnit());
 //        commandMatcher = UnitCommands.getMatcher("unit attack city on -x 3 -y 4",UnitCommands.UNIT_ATTACK);
 //
 //        if (commandMatcher.matches()) Assertions.assertEquals("Can't attack owner nation's city", unitController.unitSetCityTarget(commandMatcher));
@@ -116,20 +124,20 @@
 //        City tehran = new City(iran,"tehran");
 //        City doghozAbad = new City(new Nation(NationType.INCA),"doghoozAbad");
 //
-//        doghozAbad.setMainLand(Game.map[3][2]);
+//        doghozAbad.setMainLand(Land.map[3][2]);
 //
 //        UnitController.setSelectedCity(doghozAbad);
-//        Game.map[3][2].setOwnerCity(doghozAbad);
+//        Land.map[3][2].setOwnerCity(doghozAbad);
 //
-//        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
-//        UnitController.setSelectedCombatUnit(Game.map[3][3].getCombatUnit());
+//        Land.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,iran,new Pair(3,3)));
+//        UnitController.setSelectedCombatUnit(Land.map[3][3].getCombatUnit());
 //        commandMatcher = UnitCommands.getMatcher("unit attack city on -x 3 -y 2",UnitCommands.UNIT_ATTACK);
 //        if (commandMatcher.matches()) Assertions.assertEquals("Attack successful", unitController.unitSetCityTarget(commandMatcher));
 //    }
 //
 //    @Test
 //    public void unitSetPathTestWrongDestination(){
-//        Game.map[3][4].setLandType(LandType.MOUNTAIN);
+//        Land.map[3][4].setLandType(LandType.MOUNTAIN);
 //
 //        commandMatcher = UnitCommands.getMatcher("combat unit move to -x 3 -y 4",UnitCommands.COMBAT_UNIT_MOVE_TO);
 //        if (commandMatcher.matches())
@@ -139,8 +147,8 @@
 //
 ////    @Test
 ////    public void unitSetPathTestSuccessfulDestination(){
-////        Game.map[3][4].setLandType(LandType.GrassLand);
-////        Game.map[3][4].setCombatUnit(null);
+////        Land.map[3][4].setLandType(LandType.GrassLand);
+////        Land.map[3][4].setCombatUnit(null);
 ////
 ////        commandMatcher = UnitCommands.getMatcher("combat unit move to -x 3 -y 4",UnitCommands.COMBAT_UNIT_MOVE_TO);
 ////        if (commandMatcher.matches())
@@ -150,11 +158,11 @@
 //
 //    @Test
 //    public void unitGoForwardTest(){
-//        Game.map[3][3].setLandType(LandType.GRASS_LAND);
-//        Game.map[3][3].getCombatUnit().setPath("0");
+//        Land.map[3][3].setLandType(LandType.GRASS_LAND);
+//        Land.map[3][3].getCombatUnit().setPath("0");
 //
-//        UnitController.unitGoForward(Game.map[3][3].getCombatUnit());
-//        Assertions.assertEquals(CloseCombatUnitType.HORSE_MAN.name,Game.map[2][3].getCombatUnit().getName());
+//        UnitController.unitGoForward(Land.map[3][3].getCombatUnit());
+//        Assertions.assertEquals(CloseCombatUnitType.HORSE_MAN.name,Land.map[2][3].getCombatUnit().getName());
 //    }
 //
 //    @Test
@@ -171,7 +179,7 @@
 //    @Test
 //    public void unitRemove(){
 //        Assertions.assertEquals("removed successfully!",unitController.unitDelete());
-//        Game.map[3][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,4)));
+//        Land.map[3][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,4)));
 //    }
 //
 //    @Test
@@ -229,8 +237,8 @@
 //        city.setInProgressCivilizedUnit(CivilizedUnitType.WORKER);
 //        city.setInProgressCloseCombatUnit(CloseCombatUnitType.KNIGHT);
 //        UnitController.unitCreate(city);
-//        LandController.printMap(Game.map);
-//        Assertions.assertEquals(CloseCombatUnitType.KNIGHT.name+CivilizedUnitType.WORKER.name,Game.map[2][3].getCombatUnit().getName() + Game.map[2][3].getCivilizedUnit().getName());
+//        LandController.printMap(Land.map);
+//        Assertions.assertEquals(CloseCombatUnitType.KNIGHT.name+CivilizedUnitType.WORKER.name,Land.map[2][3].getCombatUnit().getName() + Land.map[2][3].getCivilizedUnit().getName());
 //
 //    }
 //}

@@ -1,8 +1,11 @@
 package sut.civilization.Model.Classes;
 
+import javafx.scene.shape.Polygon;
 import sut.civilization.Model.ModulEnums.LandType;
 
 public class Land {
+
+    public static Land[][] map;
 
     protected Improvement improvement;
     protected Improvement route;

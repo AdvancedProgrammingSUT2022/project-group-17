@@ -152,17 +152,17 @@ public class LandController extends Controller {
     private void updateLandVisibility() {
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.map[i][j].getVisibility() == 2) {
-                    Game.map[i][j].setVisibility(1);
+                if (Land.map[i][j].getVisibility() == 2) {
+                    Land.map[i][j].setVisibility(1);
                 }
             }
         }
 
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.map[i][j].getCivilizedUnit() != null || Game.map[i][j].getCombatUnit() != null || Game.map[i][j].getOwnerCity() != null) {
+                if (Land.map[i][j].getCivilizedUnit() != null || Land.map[i][j].getCombatUnit() != null || Land.map[i][j].getOwnerCity() != null) {
                     lightNeighbors(new Pair<Integer,Integer>(i, j));
-                    Game.map[i][j].setVisibility(2);
+                    Land.map[i][j].setVisibility(2);
                 }
             }
         }
@@ -170,8 +170,8 @@ public class LandController extends Controller {
 
     private void lightNeighbors(Pair<Integer,Integer> coordinate) {
         for (Pair<Integer,Integer> pair : getAllNeighborsIndexes(coordinate)) {
-            if (Pair.isValid(pair) && !Game.map[pair.x][pair.y].getLandType().name.equals(LandType.MOUNTAIN.name))
-                Game.map[pair.x][pair.y].setVisibility(2);
+            if (Pair.isValid(pair) && !Land.map[pair.x][pair.y].getLandType().name.equals(LandType.MOUNTAIN.name))
+                Land.map[pair.x][pair.y].setVisibility(2);
         }
 
     }
@@ -316,14 +316,14 @@ public class LandController extends Controller {
         }
 
     public Land getLandByCoordinates(int x, int y){
-        return Game.map[x][y];
+        return Land.map[x][y];
     }
 
     public int getLandNumber(Land land){
         int num = -1;
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.map[i][j].equals(land))
+                if (Land.map[i][j].equals(land))
                     num = i * Consts.MAP_SIZE.amount.x + j;
             }
         }
