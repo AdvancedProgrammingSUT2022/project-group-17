@@ -24,7 +24,7 @@
 //
 //    @BeforeEach
 //    public void setup(){
-//        Game.map = LandController.mapInitializer();
+//        Land.map = LandController.mapInitializer();
 //        Nation persia = new Nation(NationType.PERSIA);
 //        Nation inca = new Nation(NationType.INCA);
 //
@@ -34,14 +34,14 @@
 //        users.get(0).setNation(persia);
 //        users.get(1).setNation(inca);
 //
-//        Game.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,persia,new Pair(3,3)));
-//        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,persia,new Pair(3,3)));
+//        Land.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,persia,new Pair(3,3)));
+//        Land.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,persia,new Pair(3,3)));
 //
 //        City tehran = new City(persia,"tehran");
 //        City doghoozAbad = new City(inca,"doghooz Abad");
 //
-//        Game.map[4][4].setOwnerCity(tehran);
-//        Game.map[5][5].setOwnerCity(doghoozAbad);
+//        Land.map[4][4].setOwnerCity(tehran);
+//        Land.map[5][5].setOwnerCity(doghoozAbad);
 //
 //        GameController.setCurrentTurnUser(new User("","",""));
 //        GameController.getCurrentTurnUser().setNation(persia);

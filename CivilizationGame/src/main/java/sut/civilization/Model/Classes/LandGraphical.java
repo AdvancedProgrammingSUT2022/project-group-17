@@ -29,7 +29,7 @@ public class LandGraphical extends Polygon {
 
         setCoordinates(coordinate);
 
-        land = Game.map[coordinate.x][coordinate.y];
+        land = Land.map[coordinate.x][coordinate.y];
 
         this.setFill(new ImagePattern(new Image("sut/civilization/Images/tiles/" + land.getLandType().name + ".png")));
 

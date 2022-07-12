@@ -21,6 +21,7 @@ import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.Classes.Game;
+import sut.civilization.Model.Classes.Land;
 import sut.civilization.Model.Classes.LandGraphical;
 import sut.civilization.Model.Classes.Pair;
 
@@ -33,7 +34,7 @@ public class GameMenuController extends ViewController{
     private Popup popup = new Popup();
 
     public void initialize(){
-
+        Land.map = new LandController().mapInitializer();
         Pane pane = new Pane();
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 10; j++) {

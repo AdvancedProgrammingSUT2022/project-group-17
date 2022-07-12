@@ -16,7 +16,7 @@
 //
 //    @BeforeEach
 //    public void setup(){
-//        Game.map = LandController.mapInitializer();
+//        Land.map = LandController.mapInitializer();
 //    }
 //    @Test
 //    public void getAllNeighborsTest(){
@@ -32,11 +32,11 @@
 //
 //    @Test
 //    public void fogOfWarTest(){
-//        Game.map = LandController.mapInitializer();
-//        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),new Pair(3,3)));
-//        LandController.printMap(Game.map);
+//        Land.map = LandController.mapInitializer();
+//        Land.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),new Pair(3,3)));
+//        LandController.printMap(Land.map);
 //
-//        Assert.assertEquals(2, Game.map[3][3].getVisibility());
+//        Assert.assertEquals(2, Land.map[3][3].getVisibility());
 //    }
 //
 //
