@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -13,17 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Model.Classes.*;
-
-import java.util.Stack;
 
 import static javafx.scene.paint.Color.WHITE;
 
@@ -31,7 +25,8 @@ public class GamePlayController extends ViewController{
     @FXML
     private ScrollPane root;
     public AnchorPane anchorPane;
-    private Popup popup = new Popup();
+    private Popup infoPopup = new Popup();
+    private Popup unitPopup = new Popup();
 
     public void initialize(){
         Pane pane = new Pane();
@@ -294,66 +289,69 @@ public class GamePlayController extends ViewController{
         ));
         ex.setFitWidth(20);
         ex.setFitHeight(20);
-        ex.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                popup.hide();
-                anchorPane.setEffect(null);
-            }
+        ex.setOnMouseClicked(mouseEvent -> {
+            infoPopup.hide();
+            anchorPane.setEffect(null);
         });
         vBox.getChildren().add(0, ex);
         ScrollPane scrollPane = new ScrollPane(vBox);
-        scrollPane.setLayoutY(150);
+//        scrollPane.setLayoutY(150);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(scrollPane);
+        borderPane.setTop(ex);
 
-        popup.getContent().clear();
-        popup.getContent().add(scrollPane);
-        popup.setX(200);
-        popup.setY(0);
-        popup.show(window);
+        unitPopup.hide();
+        infoPopup.getContent().clear();
+        infoPopup.getContent().add(borderPane);
+        infoPopup.show(window);
         anchorPane.setEffect(new Lighting());
 
     }
 
     public void showSelectedUnitInfo() {
+        if (unitPopup.isShowing()) {
+            unitPopup.hide();
+            return;
+        }
         Window window = Game.getCurrentScene().getWindow();
-        ImageView unitBox = new ImageView(new Image(
-                Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/unitBox.png")
+//        ImageView unitBox = new ImageView(new Image(
+//                Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/unitBox.png")
+//        ));
+//        unitBox.setFitWidth(300);
+//        unitBox.setFitHeight(200);
+        ImageView unitImage = new ImageView(new Image(
+                Civilization.class.getResourceAsStream("/sut/civilization/Images/worker.png")
         ));
-        unitBox.setLayoutX(15);
-        unitBox.setLayoutY(580);
-        unitBox.setFitWidth(300);
-        unitBox.setFitHeight(200);
-        ImageView unit = new ImageView(new Image(
-                Civilization.class.getResourceAsStream("/sut/civilization/Images/Icons/UnitIcons/Archer.png")
-        ));
-        unit.setLayoutX(25);
-        unit.setLayoutY(640);
-        unit.setFitWidth(70);
-        unit.setFitHeight(70);
+        unitImage.setFitWidth(150);
+        unitImage.setFitHeight(150);
 
 
         Label unitName = new Label("Archer");
         unitName.setTextFill(WHITE);
-        unitName.setStyle("-fx-font-size: 24; -fx-label-padding: 5 0 20; -fx-font-weight: bold");
+        unitName.setStyle("-fx-font-size: 24; -fx-label-padding: 10; -fx-font-weight: bold");
         Label unitStrength = new Label("Strength: 12");
         unitStrength.setTextFill(WHITE);
         unitStrength.setStyle("-fx-label-padding: 10");
         Label unitMovement = new Label("Movement: 2/2");
         unitMovement.setTextFill(WHITE);
         unitMovement.setStyle("-fx-label-padding: 10");
-        VBox unitInfoVBox = new VBox(unitName, unitStrength, unitMovement);
+        VBox unitInfoVBox = new VBox(unitStrength, unitMovement);
         unitInfoVBox.setAlignment(Pos.CENTER);
-        HBox infoHBox = new HBox(unit, unitInfoVBox);
+        HBox infoHBox = new HBox(unitImage, unitInfoVBox);
         infoHBox.setAlignment(Pos.CENTER);
+        VBox wholeUnit = new VBox(unitName, infoHBox);
+        wholeUnit.setStyle("-fx-background-color: black;");
+        wholeUnit.setAlignment(Pos.CENTER);
+        wholeUnit.setPrefSize(400, 200);
 
-        StackPane stackPane = new StackPane(unitBox, infoHBox);
-
-        popup.getContent().clear();
-        popup.getContent().add(stackPane);
-        popup.setX(15);
-        popup.setY(580);
-        popup.show(window);
+        infoPopup.hide();
+        anchorPane.setEffect(null);
+        unitPopup.getContent().clear();
+        unitPopup.getContent().add(wholeUnit);
+        unitPopup.setX(0);
+        unitPopup.setY(600);
+        unitPopup.show(window);
     }
 
 }

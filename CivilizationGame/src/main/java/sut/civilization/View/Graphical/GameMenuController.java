@@ -76,15 +76,20 @@ public class GameMenuController {
         VBox usernames = new VBox();
         VBox opponentsNations = new VBox();
         usernames.setPrefWidth(200);
-        usernames.setPrefHeight(400);
+        usernames.setPrefHeight(50);
         for (User user : Game.getUsers()) {
             Button button = new Button(user.getUsername());
             button.setPrefHeight(50);
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    button.setStyle("-fx-background-color: red");
-                    opponents.add(button.getText());
+                    if (!opponents.contains(button.getText())) {
+                        button.setStyle("-fx-background-color: red");
+                        opponents.add(button.getText());
+                    } else {
+                        button.setStyle("-fx-background-color: white");
+                        opponents.remove(button.getText());
+                    }
                 }
             });
             usernames.getChildren().add(button);

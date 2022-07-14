@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sut.civilization.View.Graphical.GameMenuController"
-            prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/GameMenu.css"
-fx:id="root">
+<BorderPane fx:id="root" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/GameMenu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.GameMenuController">
 
     <center>
         <VBox alignment="CENTER">
-            <Button text="Start Game" onMouseClicked="#startGame"/>
-            <HBox alignment="CENTER">
-                <VBox alignment="BASELINE_LEFT">
-                    <Label fx:id="chooseNation1" text="Choose Your Nation Number" alignment="CENTER"/>
-                    <ChoiceBox fx:id="nations1"/>
+            <Button onMouseClicked="#startGame" style="-fx-padding: 10;" text="Start Game">
+            <VBox.margin>
+               <Insets top="20.0" />
+            </VBox.margin></Button>
+            <HBox alignment="CENTER" fillHeight="false">
+                <VBox alignment="CENTER" fillWidth="false" prefHeight="117.0" prefWidth="528.0">
+                    <Label fx:id="chooseNation1" alignment="CENTER" text="Choose Your Nation">
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin></Label>
+                    <ChoiceBox fx:id="nations1" prefHeight="39.0" prefWidth="511.0" />
                 </VBox>
                 <ScrollPane fx:id="scrollPane">
-
-                </ScrollPane>
+               <HBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </HBox.margin></ScrollPane>
             </HBox>
-            <Button text="Load Game" onMouseClicked="#loadGame"/>
-            <Button text="Main Menu" onMouseClicked="#mainMenu"/>
+            <Button onMouseClicked="#loadGame" style="-fx-padding: 10;" text="Load Game">
+            <VBox.margin>
+               <Insets top="20.0" />
+            </VBox.margin></Button>
+            <Button onMouseClicked="#mainMenu" style="-fx-padding: 10;" text="Main Menu">
+            <VBox.margin>
+               <Insets top="20.0" />
+            </VBox.margin></Button>
         </VBox>
     </center>
 

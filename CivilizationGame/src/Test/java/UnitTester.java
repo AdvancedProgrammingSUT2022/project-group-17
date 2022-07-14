@@ -34,19 +34,19 @@
 //        Land.map = LandController.mapInitializer();
 //        User user = new User("","","");
 //        user.setNation(nation);
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //        GameMenuController.setCurrentTurnUser(user);
 //        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
 //        Game.map[3][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
 //        GameMenuController.setSelectedCombatUnit(Game.map[3][4].getCombatUnit());
 //        UnitController.setSelectedCombatUnit(Game.map[3][4].getCombatUnit());
-=======
+//=======
 //        GameController.setCurrentTurnUser(user);
 //        Land.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
 //        Land.map[3][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.HORSE_MAN,nation,new Pair(3,3)));
 //        GameController.setSelectedCombatUnit(Land.map[3][4].getCombatUnit());
 //        UnitController.setSelectedCombatUnit(Land.map[3][4].getCombatUnit());
->>>>>>> 53b21ab8b24dbc98b0fae4e0ac5ec0a391104caf
+//>>>>>>> 53b21ab8b24dbc98b0fae4e0ac5ec0a391104caf
 //        nation.getCoin().setBalance(10000);
 //        city.setMainLand(Land.map[2][3]);
 //        Land.map[2][3].setOwnerCity(city);

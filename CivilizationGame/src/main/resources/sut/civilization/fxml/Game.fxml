@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" stylesheets="@../StyleSheet/Game.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.GamePlayController">
+<AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" stylesheets="@../StyleSheet/Game.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.GamePlayController">
 
-    <ScrollPane fx:id="root" hbarPolicy="NEVER" pannable="true" stylesheets="@../StyleSheet/Game.css" vbarPolicy="NEVER">
+    <ScrollPane fx:id="root" hbarPolicy="NEVER" pannable="true" prefWidth="1500" stylesheets="@../StyleSheet/Game.css" vbarPolicy="NEVER">
 
     </ScrollPane>
 <!--    <AnchorPane prefHeight="800.0" prefWidth="1500.0" stylesheets="@../StyleSheet/infoPanel.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" />-->
@@ -29,11 +29,11 @@
               </ImageView>
           </children>
       </VBox>
-      <HBox alignment="TOP_RIGHT" layoutX="322.0" prefHeight="26.0" prefWidth="841.0" style="-fx-background-color: #212121;">
+      <HBox alignment="TOP_RIGHT" layoutX="322.0" prefHeight="30.0" prefWidth="841.0" style="-fx-background-color: #212121;">
           <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="427.0" style="-fx-background-color: #212121;">
                 <children>
-                      <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#showDiplomacies" pickOnBounds="true" preserveRatio="true">
+                      <ImageView fitHeight="20.0" fitWidth="294.0" onMouseClicked="#showDiplomacies" pickOnBounds="true" preserveRatio="true">
                           <image>
                               <Image url="@../Images/otherIcons/diplomacy.png" />
                           </image>
@@ -75,12 +75,12 @@
                       </ImageView>
                 </children>
             </HBox>
-              <Label prefHeight="26.0" prefWidth="58.0" style="-fx-label-padding: 10 5 5 5;" text="Turn 54" textFill="WHITE">
+              <Label prefHeight="26.0" prefWidth="58.0" style="-fx-label-padding: 5 5 5 5;" text="Turn 54" textFill="WHITE">
                   <font>
                       <Font size="9.0" />
                   </font>
               </Label>
-              <Label layoutX="422.0" layoutY="10.0" prefHeight="26.0" prefWidth="54.0" style="-fx-label-padding: 10 5 5 5;" text="4000 BC" textFill="WHITE">
+              <Label layoutX="422.0" layoutY="10.0" prefHeight="26.0" prefWidth="54.0" style="-fx-label-padding: 5 5 5 5;" text="4000 BC" textFill="WHITE">
                   <font>
                       <Font size="9.0" />
                   </font>
@@ -95,46 +95,47 @@
       </HBox>
       <HBox prefHeight="26.0" prefWidth="324.0" style="-fx-background-color: #212121;">
           <children>
-              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <HBox.margin>
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </HBox.margin>
                   <image>
-                      <Image url="@../Images/otherIcons/coin.png" />
+                      <Image url="@../Images/gold.png" />
                   </image>
               </ImageView>
-              <Label prefHeight="10.0" prefWidth="46.0" style="-fx-label-padding: 8 10 0 0;" text="20(+5)" textFill="WHITE">
+              <Label style="-fx-label-padding: 8 10 0 0;" text="792 (+76)" textFill="#fff715">
                   <font>
-                      <Font size="9.0" />
+                      <Font size="11.0" />
                   </font>
               </Label>
-              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <HBox.margin>
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </HBox.margin>
                   <image>
-                      <Image url="@../Images/otherIcons/science.png" />
+                      <Image url="@../Images/science.png" />
                   </image>
               </ImageView>
-         <Label layoutX="35.0" layoutY="10.0" prefHeight="10.0" prefWidth="46.0" style="-fx-label-padding: 8 10 0 0;" text="20(+5)" textFill="WHITE">
+         <Label layoutX="35.0" layoutY="10.0" style="-fx-label-padding: 8 10 0 0;" text="+150" textFill="#25fbff">
             <font>
-               <Font size="9.0" />
+               <Font size="11.0" />
             </font>
          </Label>
-              <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="102.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+              <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="102.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                      <Image url="@../Images/otherIcons/happiness.png" />
+                      <Image url="@../Images/happiness.png" />
                   </image>
                   <HBox.margin>
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </HBox.margin>
               </ImageView>
-         <Label layoutX="111.0" layoutY="10.0" prefHeight="10.0" prefWidth="46.0" style="-fx-label-padding: 8 10 0 0;" text="20(+5)" textFill="WHITE">
+         <Label layoutX="111.0" layoutY="10.0" style="-fx-label-padding: 8 10 0 0;" text="18" textFill="#49ff1b">
             <font>
-               <Font size="9.0" />
+               <Font size="11.0" />
             </font>
          </Label>
           </children>
       </HBox>
+   <VBox layoutY="600.0" prefHeight="200.0" prefWidth="400.0" />
 
 </AnchorPane>
