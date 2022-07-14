@@ -140,10 +140,10 @@ public class LandController extends Controller {
         }
     }
 
-    public ArrayList<Pair<Integer,Integer>> getAllNeighborsIndexes(Pair<Integer,Integer> coordinate) {
-        ArrayList<Pair<Integer,Integer>> neighborPairs = new ArrayList<>();
+    public ArrayList<Pair<Integer, Integer>> getAllNeighborsIndexes(Pair<Integer, Integer> coordinate) {
+        ArrayList<Pair<Integer, Integer>> neighborPairs = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            neighborPairs.add(getNeighborIndex(new Pair<Integer,Integer>(coordinate.x, coordinate.y), i));
+            neighborPairs.add(getNeighborIndex(new Pair<Integer, Integer>(coordinate.x, coordinate.y), i));
         }
 
         return neighborPairs;
@@ -161,58 +161,58 @@ public class LandController extends Controller {
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 if (Land.map[i][j].getCivilizedUnit() != null || Land.map[i][j].getCombatUnit() != null || Land.map[i][j].getOwnerCity() != null) {
-                    lightNeighbors(new Pair<Integer,Integer>(i, j));
+                    lightNeighbors(new Pair<Integer, Integer>(i, j));
                     Land.map[i][j].setVisibility(2);
                 }
             }
         }
     }
 
-    private void lightNeighbors(Pair<Integer,Integer> coordinate) {
-        for (Pair<Integer,Integer> pair : getAllNeighborsIndexes(coordinate)) {
+    private void lightNeighbors(Pair<Integer, Integer> coordinate) {
+        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(coordinate)) {
             if (Pair.isValid(pair) && !Land.map[pair.x][pair.y].getLandType().name.equals(LandType.MOUNTAIN.name))
                 Land.map[pair.x][pair.y].setVisibility(2);
         }
 
     }
 
-    public Pair<Integer,Integer> getNeighborIndex(Pair<Integer,Integer> coordinate, int position) {
+    public Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
         if (coordinate.y % 2 == 0) {
             switch (position) {
                 case 0:
-                    return new Pair<Integer,Integer>(coordinate.x - 1, coordinate.y);
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
                 case 1:
-                    return new Pair<Integer,Integer>(coordinate.x - 1, coordinate.y + 1);
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y + 1);
                 case 2:
-                    return new Pair<Integer,Integer>(coordinate.x, coordinate.y - 1);
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
                 case 3:
-                    return new Pair<Integer,Integer>(coordinate.x + 1, coordinate.y);
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
                 case 4:
-                    return new Pair<Integer,Integer>(coordinate.x, coordinate.y + 1);
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
                 case 5:
-                    return new Pair<Integer,Integer>(coordinate.x - 1, coordinate.y - 1);
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y - 1);
             }
         } else {
             switch (position) {
                 case 0:
-                    return new Pair<Integer,Integer>(coordinate.x - 1, coordinate.y);
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
                 case 1:
-                    return new Pair<Integer,Integer>(coordinate.x, coordinate.y + 1);
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
                 case 2:
-                    return new Pair<Integer,Integer>(coordinate.x + 1, coordinate.y - 1);
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y - 1);
                 case 3:
-                    return new Pair<Integer,Integer>(coordinate.x + 1, coordinate.y);
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
                 case 4:
-                    return new Pair<Integer,Integer>(coordinate.x + 1, coordinate.y + 1);
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y + 1);
                 case 5:
-                    return new Pair<Integer,Integer>(coordinate.x, coordinate.y - 1);
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
             }
         }
         return null;
     }
 
 
-    public boolean areNeighbors(Pair<Integer,Integer> land1, Pair<Integer,Integer> land2){
+    public boolean areNeighbors(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
         for (int i = 0; i < 6; i++) {
             if (land2.equals(getNeighborIndex(land1, i)))
                 return true;
@@ -220,7 +220,7 @@ public class LandController extends Controller {
         return false;
     }
 
-    public int getIndex(Pair<Integer,Integer> land1, Pair<Integer,Integer> land2){
+    public int getIndex(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
         for (int i = 0; i < 6; i++) {
             if (land2.equals(getNeighborIndex(land1, i)))
                 return i;
@@ -229,97 +229,99 @@ public class LandController extends Controller {
     }
 
 
-    public Land[][] mapInitializer () {
-            Land[][] map = new Land[20][20];
-            Random random = new Random(Double.doubleToLongBits(Math.random()));
-            for (int i = 0; i < 20; i++) {
-                for (int j = 0; j < 20; j++) {
+    public Land[][] mapInitializer() {
+        Land[][] map = new Land[20][20];
+        Random random = new Random(Double.doubleToLongBits(Math.random()));
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
 
-                    LandType landtype;
-                    switch (random.nextInt(8)) {
-                        case 0:
-                            landtype = LandType.GRASS_LAND;
-                            break;
-                        case 1:
-                            landtype = LandType.TUNDRA;
-                            break;
-                        case 2:
-                            landtype = LandType.DESERT;
-                            break;
-                        case 3:
-                            landtype = LandType.HILL;
-                            break;
-                        case 4:
-                            landtype = LandType.MOUNTAIN;
-                            break;
-                        case 5:
-                            landtype = LandType.OCEAN;
-                            break;
-                        case 6:
-                            landtype = LandType.PLAIN;
-                            break;
-                        default:
-                            landtype = LandType.SNOW;
-                            break;
-                    }
-                    ;
-
-                    map[i][j] = new Land(landtype, random.nextInt(50) + 50);
+                LandType landtype;
+                switch (random.nextInt(8)) {
+                    case 0:
+                        landtype = LandType.GRASS_LAND;
+                        break;
+                    case 1:
+                        landtype = LandType.TUNDRA;
+                        break;
+                    case 2:
+                        landtype = LandType.DESERT;
+                        break;
+                    case 3:
+                        landtype = LandType.HILL;
+                        break;
+                    case 4:
+                        landtype = LandType.MOUNTAIN;
+                        break;
+                    case 5:
+                        landtype = LandType.OCEAN;
+                        break;
+                    case 6:
+                        landtype = LandType.PLAIN;
+                        break;
+                    default:
+                        landtype = LandType.SNOW;
+                        break;
                 }
+                ;
+
+                map[i][j] = new Land(landtype, random.nextInt(50) + 50);
             }
-
-            for (int i = 0; i < 20; i++) {
-                for (int j = 0; j < 20; j++) {
-                    ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
-                    LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
-                    int randomInt;
-
-                    if (landFeatureTypes != null && landFeatureTypes.length != 0) {
-                        if (random.nextInt(landFeatureTypes.length) % 2 == 0) {
-                            randomInt = random.nextInt(landFeatureTypes.length);
-                            map[i][j].setLandFeature(new LandFeature(landFeatureTypes[randomInt]));
-                        }
-                    }
-
-                    if (availableResources != null && availableResources.length != 0) {
-                        if (random.nextInt(availableResources.length) % 3 == 0) {
-                            randomInt = random.nextInt(availableResources.length);
-                            map[i][j].setResource(new Resource(availableResources[randomInt]));
-                        }
-                    }
-
-                    for (int k = 0; k < 6; k++) {
-                        if (random.nextInt() % 15 == 0) {
-                            map[i][j].setRiver(k, true);
-                            if (Pair.isValid(getNeighborIndex(new Pair<Integer,Integer>(i, j), k)))
-                                map[Objects.requireNonNull(getNeighborIndex(new Pair<>(i, j), k)).x][Objects.requireNonNull(getNeighborIndex(new Pair<>(i, j), k)).y].setRiver((k + 3) % 6, true);
-                        }
-                    }
-                }
-            }
-            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER,new Nation(NationType.PERSIA),new Pair<Integer,Integer>(3,3));
-            map[3][3].setCivilizedUnit(civilizedUnit);
-            GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
-
-            City city = new City(GameController.getCurrentTurnUser().getNation(), "Mashhad");
-            GameController.getCurrentTurnUser().getNation().getCities().add(city);
-            city.setCitizens(77);
-            city.setFoodGrowth(15);
-            city.setProductionGrowth(25);
-            city.setCoinGrowth(80);
-
-            GameController.getCurrentTurnUser().getNation().getFriends().add(new Nation(NationType.PERSIA));
-            GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
-            GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.ANCIENT_EGYPT));
-
-            return map;
         }
 
-    public Land getLandByCoordinates(int x, int y){
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
+                LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
+                int randomInt;
+
+                if (landFeatureTypes != null && landFeatureTypes.length != 0) {
+                    if (random.nextInt(landFeatureTypes.length) % 2 == 0) {
+                        randomInt = random.nextInt(landFeatureTypes.length);
+                        map[i][j].setLandFeature(new LandFeature(landFeatureTypes[randomInt]));
+                    }
+                }
+
+                if (availableResources != null && availableResources.length != 0) {
+                    if (random.nextInt(availableResources.length) % 3 == 0) {
+                        randomInt = random.nextInt(availableResources.length);
+                        map[i][j].setResource(new Resource(availableResources[randomInt]));
+                    }
+                }
+
+                for (int k = 0; k < 6; k++) {
+                    if (random.nextInt() % 15 == 0) {
+                        map[i][j].setRiver(k, true);
+                        if (Pair.isValid(getNeighborIndex(new Pair<Integer, Integer>(i, j), k)))
+                            map[Objects.requireNonNull(getNeighborIndex(new Pair<>(i, j), k)).x][Objects.requireNonNull(getNeighborIndex(new Pair<>(i, j), k)).y].setRiver((k + 3) % 6, true);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER, new Nation(NationType.PERSIA), new Pair<Integer, Integer>(3, 3));
+            map[i][i].setCivilizedUnit(civilizedUnit);
+            GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
+        }
+
+        City city = new City(GameController.getCurrentTurnUser().getNation(), "Mashhad");
+        GameController.getCurrentTurnUser().getNation().getCities().add(city);
+        city.setCitizens(77);
+        city.setFoodGrowth(15);
+        city.setProductionGrowth(25);
+        city.setCoinGrowth(80);
+
+        GameController.getCurrentTurnUser().getNation().getFriends().add(new Nation(NationType.PERSIA));
+        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
+        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.ANCIENT_EGYPT));
+
+        return map;
+    }
+
+    public Land getLandByCoordinates(int x, int y) {
         return Land.map[x][y];
     }
 
-    public int getLandNumber(Land land){
+    public int getLandNumber(Land land) {
         int num = -1;
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
@@ -330,7 +332,7 @@ public class LandController extends Controller {
         return num;
     }
 
-    public void initializeDistances(){
+    public void initializeDistances() {
         for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
             for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
                 for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {
@@ -339,15 +341,15 @@ public class LandController extends Controller {
                         Land land2 = getLandByCoordinates(i2, j2);
                         int num1 = getLandNumber(land1);
                         int num2 = getLandNumber(land2);
-                        if (num1 == num2){
+                        if (num1 == num2) {
                             Game.dist[num1][num2] = 0;
                             Game.path[num1][num2] = "";
-                        }else if (areNeighbors(new Pair<Integer,Integer>(i1, j1), new Pair<Integer,Integer>(i2, j2))){
+                        } else if (areNeighbors(new Pair<Integer, Integer>(i1, j1), new Pair<Integer, Integer>(i2, j2))) {
                             Game.dist[num1][num2] = land2.getMP();
                             if (land2.getLandFeature() != null)
                                 Game.dist[num1][num2] += land2.getLandFeature().getLandFeatureType().movementCost;
-                            Game.path[num1][num2] = "" + getIndex(new Pair<Integer,Integer>(i1, j1), new Pair<Integer,Integer>(i2, j2));
-                        }else{
+                            Game.path[num1][num2] = "" + getIndex(new Pair<Integer, Integer>(i1, j1), new Pair<Integer, Integer>(i2, j2));
+                        } else {
                             Game.dist[num1][num2] = 1000;
                             Game.path[num1][num2] = "";
                         }
@@ -357,7 +359,7 @@ public class LandController extends Controller {
         }
     }
 
-    public void updateDistances(){
+    public void updateDistances() {
         for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
             for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
                 for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {
@@ -370,7 +372,7 @@ public class LandController extends Controller {
                                 int num1 = getLandNumber(firstLand);
                                 int num2 = getLandNumber(secondLand);
                                 int num3 = getLandNumber(thirdLand);
-                                if (Game.dist[num1][num2] + Game.dist[num2][num3] < Game.dist[num1][num3]){
+                                if (Game.dist[num1][num2] + Game.dist[num2][num3] < Game.dist[num1][num3]) {
                                     Game.dist[num1][num3] = Game.dist[num1][num2] + Game.dist[num2][num3];
                                     Game.path[num1][num3] = Game.path[num1][num2] + Game.path[num2][num3];
                                 }

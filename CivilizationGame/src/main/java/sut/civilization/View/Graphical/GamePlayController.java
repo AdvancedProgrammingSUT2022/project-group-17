@@ -4,9 +4,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.print.Printer;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,19 +26,20 @@ import sut.civilization.Model.ModulEnums.RangedCombatUnitType;
 import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import static javafx.scene.paint.Color.WHITE;
+import static sut.civilization.Model.ModulEnums.TechnologyType.AGRICULTURE;
 
-public class GamePlayController extends ViewController{
+public class GamePlayController extends ViewController {
     @FXML
     private ScrollPane root;
     public AnchorPane anchorPane;
     private Popup infoPopup = new Popup();
     private Popup unitPopup = new Popup();
 
-    public void initialize(){
+    public void initialize() {
         Pane pane = new Pane();
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 10; j++) {
-                LandGraphical landGraphical = new LandGraphical(new Pair<>(i, j),pane);
+                LandGraphical landGraphical = new LandGraphical(new Pair<>(i, j), pane);
             }
         }
         pane.setStyle("-fx-background-position: center; -fx-background-size: auto; -fx-background-image: url(/sut/civilization/Images/BackGround/gameBackground.png);");
@@ -58,10 +63,10 @@ public class GamePlayController extends ViewController{
             avatar.setFitHeight(70);
             Label unitType;
             if (unit instanceof RangedCombatUnit)
-                unitType  = new Label(((RangedCombatUnit)unit).getRangedCombatUnitType().name);
+                unitType = new Label(((RangedCombatUnit) unit).getRangedCombatUnitType().name);
             else if (unit instanceof CloseCombatUnit)
-                unitType  = new Label(((CloseCombatUnit)unit).getCloseCombatUnitType().name);
-            else unitType  = new Label(((CivilizedUnit)unit).getCivilizedUnitType().name);
+                unitType = new Label(((CloseCombatUnit) unit).getCloseCombatUnitType().name);
+            else unitType = new Label(((CivilizedUnit) unit).getCivilizedUnitType().name);
 
             Label unitLocation = new Label("(" + unit.getLocation().x + "," + unit.getLocation().y + ")");
             Label unitStatus = new Label(unit.getUnitStatus().name());
@@ -98,7 +103,7 @@ public class GamePlayController extends ViewController{
         HBox[] eachCityHBox = new HBox[citiesNumber];
         int i = 0;
         for (City city : GameController.getCurrentTurnUser().getNation().getCities()) {
-            Label cityName= new Label(city.getName());
+            Label cityName = new Label(city.getName());
             cityName.setPrefWidth(200);
             cityName.setPrefHeight(100);
             cityName.getStyleClass().add("unitInfo");
@@ -190,7 +195,7 @@ public class GamePlayController extends ViewController{
             ImageView avatar = new ImageView(new Image(user.getAvatarLocation()));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
-            Label nationName= new Label(user.getNation().getNationType().name);
+            Label nationName = new Label(user.getNation().getNationType().name);
             nationName.setPrefWidth(200);
             nationName.setPrefHeight(100);
             nationName.getStyleClass().add("unitInfo");
@@ -238,7 +243,7 @@ public class GamePlayController extends ViewController{
 
         int i = 0;
         for (City city : GameController.getCurrentTurnUser().getNation().getCities()) {
-            Label cityName= new Label(city.getName());
+            Label cityName = new Label(city.getName());
             cityName.setPrefWidth(100);
             cityName.setPrefHeight(100);
             cityName.getStyleClass().add("unitInfo");
@@ -307,7 +312,8 @@ public class GamePlayController extends ViewController{
         infoPopup.getContent().clear();
         infoPopup.getContent().add(borderPane);
         infoPopup.show(window);
-        anchorPane.setEffect(new Lighting());
+        Effect effect = new Lighting(new Light.Distant());
+        anchorPane.setEffect(effect);
 
     }
 
@@ -354,6 +360,104 @@ public class GamePlayController extends ViewController{
         unitPopup.setX(0);
         unitPopup.setY(570);
         unitPopup.show(window);
+    }
+
+
+    public void showTechnologyPanel() {
+        HBox[] eachFloor = new HBox[12];
+        VBox[] eachTechnology = new VBox[46];
+        for (int i = 0; i < 12; i++) {
+            eachFloor[i] = new HBox();
+            eachFloor[i].setAlignment(Pos.CENTER);
+        }
+        for (int i = 0; i < 46; i++) {
+            eachTechnology[i] = new VBox();
+            eachTechnology[i].setAlignment(Pos.CENTER);
+        }
+        int i = 0;
+        for (TechnologyType technologyType: TechnologyType.values()) {
+            if (i == 0) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[0].getChildren().add(eachTechnology[i]);
+            } else if (i < 5) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[1].getChildren().add(eachTechnology[i]);
+            } else if (i < 11) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[2].getChildren().add(eachTechnology[i]);
+            } else if (i < 16) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[3].getChildren().add(eachTechnology[i]);
+            } else if (i < 21) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[4].getChildren().add(eachTechnology[i]);
+            } else if (i < 26) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[5].getChildren().add(eachTechnology[i]);
+            } else if (i < 30) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[6].getChildren().add(eachTechnology[i]);
+            } else if (i < 33) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[7].getChildren().add(eachTechnology[i]);
+            } else if (i < 38) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[8].getChildren().add(eachTechnology[i]);
+            } else if (i < 40) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[9].getChildren().add(eachTechnology[i]);
+            } else if (i < 44) {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[10].getChildren().add(eachTechnology[i]);
+            } else {
+                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
+                Label name = new Label(technologyType.name);
+                
+                eachTechnology[i].getChildren().add(name);
+                eachFloor[11].getChildren().add(eachTechnology[i]);
+            }
+            i++;
+        }
+
+        VBox wholeTechTree = new VBox(eachFloor);
+        wholeTechTree.setPrefWidth(1200);
+        wholeTechTree.setPrefHeight(700);
+        wholeTechTree.getStyleClass().add("unitList");
+        wholeTechTree.setAlignment(Pos.CENTER);
+
+        scrollPanePopup(wholeTechTree);
     }
 
 }

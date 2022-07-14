@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" stylesheets="@../StyleSheet/Game.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.GamePlayController">
@@ -137,6 +139,29 @@
          </Label>
           </children>
       </HBox>
-   <VBox layoutY="600.0" prefHeight="200.0" prefWidth="400.0" />
+   <VBox alignment="TOP_CENTER" layoutY="30.0" style="-fx-background-color: #212121;">
+      <children>
+         <Label alignment="CENTER" onMouseClicked="#showTechnologyPanel" style="-fx-label-padding: 10;" text="Agriculture" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="22.0" />
+            </font>
+         </Label>
+         <ImageView fitHeight="129.0" fitWidth="143.0" onMouseClicked="#showTechnologyPanel" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/technologies/Agriculture.png" />
+            </image>
+         </ImageView>
+         <ProgressBar prefHeight="24.0" prefWidth="200.0" progress="0.54">
+            <VBox.margin>
+               <Insets bottom="5.0" left="15.0" right="15.0" top="15.0" />
+            </VBox.margin>
+         </ProgressBar>
+         <Label text="50%" textFill="WHITE">
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </Label>
+      </children>
+   </VBox>
 
 </AnchorPane>
