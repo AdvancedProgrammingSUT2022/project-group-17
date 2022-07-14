@@ -67,8 +67,10 @@ public class LandGraphical extends Polygon {
         civilizedUnitImageView.setX(this.centerCoordinate.x - tileRadius*0.75);
         civilizedUnitImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
 
+
         if (land.getLandType() != LandType.OCEAN)
             pane.getChildren().add(this);
+
 
         pane.getChildren().add(landFeatureImageView);
         pane.getChildren().add(resourceImageView);
