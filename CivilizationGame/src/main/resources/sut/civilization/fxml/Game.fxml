@@ -9,8 +9,9 @@
 <AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1500.0" stylesheets="@../StyleSheet/Game.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.GamePlayController">
 
     <ScrollPane fx:id="root" hbarPolicy="NEVER" pannable="true" prefWidth="1500" stylesheets="@../StyleSheet/Game.css" vbarPolicy="NEVER">
-
-    </ScrollPane>
+      <content>
+         <HBox prefHeight="100.0" prefWidth="200.0" />
+      </content></ScrollPane>
 <!--    <AnchorPane prefHeight="800.0" prefWidth="1500.0" stylesheets="@../StyleSheet/infoPanel.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" />-->
       <VBox alignment="BOTTOM_RIGHT" layoutX="990.0" layoutY="453.0" prefHeight="216.0" prefWidth="174.0" style="-fx-background-color: gray;">
           <children>
@@ -33,7 +34,7 @@
           <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="427.0" style="-fx-background-color: #212121;">
                 <children>
-                      <ImageView fitHeight="20.0" fitWidth="294.0" onMouseClicked="#showDiplomacies" pickOnBounds="true" preserveRatio="true">
+                      <ImageView fitHeight="28.0" fitWidth="45.0" onMouseClicked="#showDiplomacies" pickOnBounds="true" preserveRatio="true">
                           <image>
                               <Image url="@../Images/otherIcons/diplomacy.png" />
                           </image>
@@ -41,7 +42,7 @@
                      <Insets right="20.0" />
                   </HBox.margin>
                       </ImageView>
-                      <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#showCities" pickOnBounds="true" preserveRatio="true">
+                      <ImageView fitHeight="30.0" fitWidth="41.0" onMouseClicked="#showCities" pickOnBounds="true" preserveRatio="true">
                           <image>
                               <Image url="@../Images/otherIcons/city.png" />
                           </image>
@@ -49,7 +50,7 @@
                      <Insets right="20.0" />
                   </HBox.margin>
                       </ImageView>
-                      <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#showDemographics" pickOnBounds="true" preserveRatio="true">
+                      <ImageView fitHeight="30.0" fitWidth="34.0" onMouseClicked="#showDemographics" pickOnBounds="true" preserveRatio="true">
                           <image>
                               <Image url="@../Images/otherIcons/demographic.png" />
                           </image>
@@ -57,7 +58,7 @@
                      <Insets right="20.0" />
                   </HBox.margin>
                       </ImageView>
-                      <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#showUnits" pickOnBounds="true" preserveRatio="true">
+                      <ImageView fitHeight="30.0" fitWidth="43.0" onMouseClicked="#showUnits" pickOnBounds="true" preserveRatio="true">
                           <image>
                               <Image url="@../Images/otherIcons/unit.png" />
                           </image>
@@ -100,7 +101,7 @@
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </HBox.margin>
                   <image>
-                      <Image url="@../Images/gold.png" />
+                      <Image url="@../Images/currencies/gold.png" />
                   </image>
               </ImageView>
               <Label style="-fx-label-padding: 8 10 0 0;" text="792 (+76)" textFill="#fff715">
@@ -113,7 +114,7 @@
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </HBox.margin>
                   <image>
-                      <Image url="@../Images/science.png" />
+                      <Image url="@../Images/currencies/science.png" />
                   </image>
               </ImageView>
          <Label layoutX="35.0" layoutY="10.0" style="-fx-label-padding: 8 10 0 0;" text="+150" textFill="#25fbff">
@@ -123,7 +124,7 @@
          </Label>
               <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="102.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                      <Image url="@../Images/happiness.png" />
+                      <Image url="@../Images/currencies/happiness.png" />
                   </image>
                   <HBox.margin>
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

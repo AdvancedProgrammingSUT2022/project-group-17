@@ -1,5 +1,7 @@
 package sut.civilization.Model.ModulEnums;
 
+import javafx.scene.image.Image;
+import sut.civilization.Civilization;
 import sut.civilization.Model.Classes.Unit;
 
 public enum TechnologyType {
@@ -11,7 +13,7 @@ public enum TechnologyType {
     POTTERY("Pottery", 35, new TechnologyType[]{AGRICULTURE}, null, null, null),
     CALENDAR("Calendar", 70, new TechnologyType[]{POTTERY}, null, null, null),
     MASONRY("Masonry", 55, new TechnologyType[]{MINING}, null, null, null),
-    THE_WHEEL("TheWheel", 55, new TechnologyType[]{ANIMAL_HUSBANDRY}, null, null, null),
+    THE_WHEEL("The Wheel", 55, new TechnologyType[]{ANIMAL_HUSBANDRY}, null, null, null),
     TRAPPING("Trapping", 55, new TechnologyType[]{ANIMAL_HUSBANDRY}, null, null, null),
     WRITING("Writing", 55, new TechnologyType[]{POTTERY}, null, null, null),
     CONSTRUCTION("Construction", 100, new TechnologyType[]{MASONRY}, null, null, null),
@@ -58,6 +60,7 @@ public enum TechnologyType {
     public final ImprovementType[] improvements;
     public final Unit[] units;
     public final int turns;
+    public final String imageAddress;
 
 
     TechnologyType(String name, int cost, TechnologyType[] fathers, BuildingType[] buildings, ImprovementType[] improvements, Unit[] units) {
@@ -68,5 +71,6 @@ public enum TechnologyType {
         this.improvements = improvements;
         this.units = units;
         this.turns = 3;
+        this.imageAddress = "/sut/civilization/Images/technologies/" + name + ".png";
     }
 }

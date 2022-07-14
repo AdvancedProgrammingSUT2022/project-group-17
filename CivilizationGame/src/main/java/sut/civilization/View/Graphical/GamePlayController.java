@@ -18,6 +18,8 @@ import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Model.Classes.*;
+import sut.civilization.Model.ModulEnums.RangedCombatUnitType;
+import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import static javafx.scene.paint.Color.WHITE;
 
@@ -321,10 +323,10 @@ public class GamePlayController extends ViewController{
 //        unitBox.setFitWidth(300);
 //        unitBox.setFitHeight(200);
         ImageView unitImage = new ImageView(new Image(
-                Civilization.class.getResourceAsStream("/sut/civilization/Images/worker.png")
+                Civilization.class.getResourceAsStream(RangedCombatUnitType.ARCHER.imageAddress)
         ));
-        unitImage.setFitWidth(150);
-        unitImage.setFitHeight(150);
+        unitImage.setFitWidth(180);
+        unitImage.setFitHeight(180);
 
 
         Label unitName = new Label("Archer");
@@ -332,25 +334,25 @@ public class GamePlayController extends ViewController{
         unitName.setStyle("-fx-font-size: 24; -fx-label-padding: 10; -fx-font-weight: bold");
         Label unitStrength = new Label("Strength: 12");
         unitStrength.setTextFill(WHITE);
-        unitStrength.setStyle("-fx-label-padding: 10");
+        unitStrength.setStyle("-fx-label-padding: 10 0 0 30");
         Label unitMovement = new Label("Movement: 2/2");
         unitMovement.setTextFill(WHITE);
-        unitMovement.setStyle("-fx-label-padding: 10");
+        unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
         VBox unitInfoVBox = new VBox(unitStrength, unitMovement);
         unitInfoVBox.setAlignment(Pos.CENTER);
         HBox infoHBox = new HBox(unitImage, unitInfoVBox);
-        infoHBox.setAlignment(Pos.CENTER);
+        infoHBox.setAlignment(Pos.CENTER_LEFT);
         VBox wholeUnit = new VBox(unitName, infoHBox);
         wholeUnit.setStyle("-fx-background-color: black;");
         wholeUnit.setAlignment(Pos.CENTER);
-        wholeUnit.setPrefSize(400, 200);
+        wholeUnit.setPrefSize(380, 230);
 
         infoPopup.hide();
         anchorPane.setEffect(null);
         unitPopup.getContent().clear();
         unitPopup.getContent().add(wholeUnit);
         unitPopup.setX(0);
-        unitPopup.setY(600);
+        unitPopup.setY(570);
         unitPopup.show(window);
     }
 
