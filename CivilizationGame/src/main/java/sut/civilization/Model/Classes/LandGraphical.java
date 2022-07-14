@@ -19,11 +19,12 @@ public class LandGraphical extends Polygon {
     private final Pair<Double,Double> centerCoordinate = new Pair<>();
     private final Double[] pointCoords = new Double[12];
 
-    private final ImageView resourceImageView = new ImageView();
-    private final ImageView landFeatureImageView = new ImageView();
-    private final ImageView civilizedUnitImageView = new ImageView();
-    private final ImageView combatUnitImageView = new ImageView();
-    private final ImageView OwnerNationImageView = new ImageView();
+    private ImageView resourceImageView = new ImageView();
+    private ImageView landFeatureImageView = new ImageView();
+    private Pair<ImageView,ImageView> civilizedUnitImageView = new Pair<>(new ImageView(),new ImageView());
+    private Pair<ImageView,ImageView> combatUnitImageView = new Pair<>(new ImageView(),new ImageView());
+
+    private ImageView cityImageView = new ImageView();
 
     public LandGraphical(Pair<Integer,Integer> coordinate, Pane pane){
 
@@ -33,47 +34,87 @@ public class LandGraphical extends Polygon {
 
         this.setFill(new ImagePattern(new Image("sut/civilization/Images/tiles/" + land.getLandType().name + ".png")));
 
-        if (land.getLandFeature() != null) {
-            landFeatureImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/tiles/" + land.getLandFeature().landFeatureType.name + ".png")).toExternalForm()));
-        }
-        if (land.getResource() != null) {
-            resourceImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/ResourceIcons/" + land.getResource().resourceType.name + ".png")).toExternalForm()));
-        }
-        if (land.getCombatUnit() != null){
-            combatUnitImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/UnitIcons/" + land.getCombatUnit().name + ".png")).toExternalForm()));
-        }
-        if (land.getCivilizedUnit() != null){
-            civilizedUnitImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/UnitIcons/" + land.getCivilizedUnit().name + ".png")).toExternalForm()));
-        }
+        updateMap();
+
 
         landFeatureImageView.setFitWidth(tileRadius*1.5);
         landFeatureImageView.setFitHeight(tileRadius*1.5);
         landFeatureImageView.setX(this.centerCoordinate.x - tileRadius*0.75);
         landFeatureImageView.setY(this.centerCoordinate.y - tileRadius*0.75);
-//        landFeatureImageView.setOnMouseEntered();
 
         resourceImageView.setFitWidth(tileRadius*0.5);
         resourceImageView.setFitHeight(tileRadius*0.5);
         resourceImageView.setX(this.centerCoordinate.x - tileRadius*0.25);
         resourceImageView.setY(this.centerCoordinate.y - tileRadius*0.75);
 
-        combatUnitImageView.setFitWidth(tileRadius*0.5);
-        combatUnitImageView.setFitHeight(tileRadius*0.5);
-        combatUnitImageView.setX(this.centerCoordinate.x + tileRadius*0.25);
-        combatUnitImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
+        combatUnitImageView.x.setFitWidth(tileRadius*0.5);
+        combatUnitImageView.x.setFitHeight(tileRadius*0.5);
+        combatUnitImageView.x.setX(this.centerCoordinate.x + tileRadius*0.25);
+        combatUnitImageView.x.setY(this.centerCoordinate.y - tileRadius*0.25);
 
-        civilizedUnitImageView.setFitWidth(tileRadius*0.5);
-        civilizedUnitImageView.setFitHeight(tileRadius*0.5);
-        civilizedUnitImageView.setX(this.centerCoordinate.x - tileRadius*0.75);
-        civilizedUnitImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
+        civilizedUnitImageView.x.setFitWidth(tileRadius*0.5);
+        civilizedUnitImageView.x.setFitHeight(tileRadius*0.5);
+        civilizedUnitImageView.x.setX(this.centerCoordinate.x - tileRadius*0.75);
+        civilizedUnitImageView.x.setY(this.centerCoordinate.y - tileRadius*0.25);
+
+        combatUnitImageView.y.setFitWidth(tileRadius*0.5);
+        combatUnitImageView.y.setFitHeight(tileRadius*0.5);
+        combatUnitImageView.y.setX(this.centerCoordinate.x + tileRadius*0.25);
+        combatUnitImageView.y.setY(this.centerCoordinate.y - tileRadius*0.25);
+
+        civilizedUnitImageView.y.setFitWidth(tileRadius*0.5);
+        civilizedUnitImageView.y.setFitHeight(tileRadius*0.5);
+        civilizedUnitImageView.y.setX(this.centerCoordinate.x - tileRadius*0.75);
+        civilizedUnitImageView.y.setY(this.centerCoordinate.y - tileRadius*0.25);
+
+        cityImageView.setFitWidth(tileRadius*0.5);
+        cityImageView.setFitHeight(tileRadius*0.5);
+        cityImageView.setX(this.centerCoordinate.x - tileRadius*0.25);
+        cityImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
 
         if (land.getLandType() != LandType.OCEAN)
             pane.getChildren().add(this);
 
         pane.getChildren().add(landFeatureImageView);
         pane.getChildren().add(resourceImageView);
-        pane.getChildren().add(civilizedUnitImageView);
-        pane.getChildren().add(combatUnitImageView);
+        pane.getChildren().add(civilizedUnitImageView.y);
+        pane.getChildren().add(civilizedUnitImageView.x);
+        pane.getChildren().add(combatUnitImageView.y);
+        pane.getChildren().add(combatUnitImageView.x);
+
+        pane.getChildren().add(cityImageView);
+    }
+
+    public void updateMap() {
+
+        if (land.getLandFeature() != null) {
+            landFeatureImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/tiles/" + land.getLandFeature().landFeatureType.name + ".png")).toExternalForm()));
+        }
+        else landFeatureImageView.setImage(null);
+
+        if (land.getResource() != null) {
+            resourceImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/ResourceIcons/" + land.getResource().resourceType.name + ".png")).toExternalForm()));
+        } else resourceImageView.setImage(null);
+
+        if (land.getCombatUnit() != null){
+            combatUnitImageView.x.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/UnitIcons/" + land.getCombatUnit().name + ".png")).toExternalForm()));
+            combatUnitImageView.y.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/NationIcons/" + land.getCombatUnit().getOwnerNation().nationType.name + ".png")).toExternalForm()));
+        } else {
+            combatUnitImageView.x.setImage(null);
+            combatUnitImageView.y.setImage(null);
+        }
+
+        if (land.getCivilizedUnit() != null){
+            civilizedUnitImageView.x.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/UnitIcons/" + land.getCivilizedUnit().name + ".png")).toExternalForm()));
+            civilizedUnitImageView.y.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/NationIcons/" + land.getCivilizedUnit().getOwnerNation().nationType.name + ".png")).toExternalForm()));
+        } else {
+            civilizedUnitImageView.x.setImage(null);
+            civilizedUnitImageView.y.setImage(null);
+        }
+
+        if (land.getOwnerCity() != null) {
+            cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/NationIcons/" + land.getOwnerCity().getOwnerNation().nationType.name + ".png")).toExternalForm()));
+        } else cityImageView.setImage(null);
     }
 
 
@@ -139,15 +180,4 @@ public class LandGraphical extends Polygon {
         return landFeatureImageView;
     }
 
-    public ImageView getCivilizedUnitImageView() {
-        return civilizedUnitImageView;
-    }
-
-    public ImageView getCombatUnitImageView() {
-        return combatUnitImageView;
-    }
-
-    public ImageView getOwnerNationImageView() {
-        return OwnerNationImageView;
-    }
 }

@@ -298,6 +298,9 @@ public class LandController extends Controller {
                 }
             }
             map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,new Nation(NationType.PERSIA),new Pair<Integer,Integer>(3,3)));
+            map[4][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.LANCER,new Nation(NationType.PERSIA),new Pair<>(4,4)));
+            map[4][5].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),new Pair<>(4,4)));
+            map[6][6].setOwnerCity(new City(new Nation(NationType.ANCIENT_GREECE),"OlaghAbad!"));
             return map;
         }
 
