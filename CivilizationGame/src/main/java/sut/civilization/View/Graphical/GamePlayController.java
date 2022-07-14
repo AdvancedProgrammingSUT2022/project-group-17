@@ -1,21 +1,16 @@
 package sut.civilization.View.Graphical;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.print.Printer;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
-import javafx.scene.effect.Effect;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -26,7 +21,6 @@ import sut.civilization.Model.ModulEnums.RangedCombatUnitType;
 import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import static javafx.scene.paint.Color.WHITE;
-import static sut.civilization.Model.ModulEnums.TechnologyType.AGRICULTURE;
 
 public class GamePlayController extends ViewController {
     @FXML
@@ -312,8 +306,9 @@ public class GamePlayController extends ViewController {
         infoPopup.getContent().clear();
         infoPopup.getContent().add(borderPane);
         infoPopup.show(window);
-        Effect effect = new Lighting(new Light.Distant());
-        anchorPane.setEffect(effect);
+        Light light = new Light.Distant();
+        light.setColor(new Color(0.4, 0.4, 0.4, 0.5));
+        anchorPane.setEffect(new Lighting(light));
 
     }
 
