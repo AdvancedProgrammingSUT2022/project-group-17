@@ -314,6 +314,10 @@ public class LandController extends Controller {
         GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
         GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.ANCIENT_EGYPT));
 
+        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.AGRICULTURE);
+        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.ANIMAL_HUSBANDRY);
+        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.POTTERY);
+
         return map;
     }
 

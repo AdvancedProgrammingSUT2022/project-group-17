@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -371,76 +372,40 @@ public class GamePlayController extends ViewController {
         }
         int i = 0;
         for (TechnologyType technologyType: TechnologyType.values()) {
+
+            ImageView technologyImage = new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress)));
+            Label name = new Label(technologyType.name);
+            eachTechnology[i].getChildren().add(technologyImage);
+            eachTechnology[i].getChildren().add(name);
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setSaturation(-1);
+            if (!GameController.getCurrentTurnUser().getNation().getTechnologies().get(technologyType)) {
+                technologyImage.setEffect(colorAdjust);
+            }
+
             if (i == 0) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[0].getChildren().add(eachTechnology[i]);
             } else if (i < 5) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[1].getChildren().add(eachTechnology[i]);
             } else if (i < 11) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[2].getChildren().add(eachTechnology[i]);
             } else if (i < 16) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[3].getChildren().add(eachTechnology[i]);
             } else if (i < 21) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[4].getChildren().add(eachTechnology[i]);
             } else if (i < 26) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[5].getChildren().add(eachTechnology[i]);
             } else if (i < 30) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[6].getChildren().add(eachTechnology[i]);
             } else if (i < 33) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
-                eachFloor[7].getChildren().add(eachTechnology[i]);
+                 eachFloor[7].getChildren().add(eachTechnology[i]);
             } else if (i < 38) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
-                eachFloor[8].getChildren().add(eachTechnology[i]);
+                 eachFloor[8].getChildren().add(eachTechnology[i]);
             } else if (i < 40) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
-                eachFloor[9].getChildren().add(eachTechnology[i]);
+                 eachFloor[9].getChildren().add(eachTechnology[i]);
             } else if (i < 44) {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[10].getChildren().add(eachTechnology[i]);
             } else {
-                eachTechnology[i].getChildren().add(new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
-                Label name = new Label(technologyType.name);
-                
-                eachTechnology[i].getChildren().add(name);
                 eachFloor[11].getChildren().add(eachTechnology[i]);
             }
             i++;
