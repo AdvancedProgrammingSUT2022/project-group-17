@@ -298,7 +298,7 @@ public class LandController extends Controller {
             }
         }
         for (int i = 0; i < 10; i++) {
-            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER, new Nation(NationType.PERSIA), new Pair<Integer, Integer>(3, 3));
+            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER, new Nation(NationType.PERSIA), new Pair<>(i, i));
             map[i][i].setCivilizedUnit(civilizedUnit);
             GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
         }
@@ -312,11 +312,12 @@ public class LandController extends Controller {
 
         GameController.getCurrentTurnUser().getNation().getFriends().add(new Nation(NationType.PERSIA));
         GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
-        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.ANCIENT_EGYPT));
+        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.EGYPT));
 
         GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.AGRICULTURE);
         GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.ANIMAL_HUSBANDRY);
         GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.POTTERY);
+        GameController.getCurrentTurnUser().getNation().setInProgressTechnology(TechnologyType.BRONZE_WORKING);
 
         return map;
     }

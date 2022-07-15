@@ -54,22 +54,22 @@ public class GameController extends Controller {
 
         switch (chosenNumber) {
             case 0:
-                nation = new Nation(NationType.INDUS_VALLEY);
+                nation = new Nation(NationType.FRANCE);
                 break;
             case 1:
                 nation = new Nation(NationType.MAYA);
                 break;
             case 2:
-                nation = new Nation(NationType.ANCIENT_GREECE);
+                nation = new Nation(NationType.GREECE);
                 break;
             case 3:
                 nation = new Nation(NationType.PERSIA);
                 break;
             case 4:
-                nation = new Nation(NationType.ANCIENT_EGYPT);
+                nation = new Nation(NationType.EGYPT);
                 break;
             case 5:
-                nation = new Nation(NationType.MESOPOTAMIAN);
+                nation = new Nation(NationType.INDIA);
                 break;
             case 6:
                 nation = new Nation(NationType.ROME);

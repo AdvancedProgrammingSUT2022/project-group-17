@@ -3,6 +3,7 @@ package sut.civilization.View.NonGraphical;
 import sut.civilization.Controller.GameControllers.*;
 import sut.civilization.Enums.GameEnums.*;
 import sut.civilization.Model.Classes.Game;
+import sut.civilization.Model.ModulEnums.NationType;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -159,15 +160,11 @@ public class GameMenu extends Menu {
         int chosenNumber;
         for (int i = 0; i < Game.getPlayersInGame().size(); i++) {
             System.out.println("Enter number of your chosen nation : (player : " + Game.getPlayersInGame().get(i).getNickname() + " )");
-            System.out.println("0- Indus Valley");
-            System.out.println("1- Maya");
-            System.out.println("2- Ancient Greece");
-            System.out.println("3- Persia");
-            System.out.println("4- Ancient Egypt");
-            System.out.println("5- Mesopotamian");
-            System.out.println("6- Rome");
-            System.out.println("7- Aztec");
-            System.out.println("8- Inca");
+            int j = 0;
+            for (NationType nationType : NationType.values()) {
+                System.out.println(j + "- " + nationType.name);
+                j++;
+            }
 
             chosenNumber = scanner.nextInt();
             if (chosenNumber > civilizationOptionsNumber) {

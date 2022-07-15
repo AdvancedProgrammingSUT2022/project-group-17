@@ -9,6 +9,8 @@ import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.User;
+import sut.civilization.Model.ModulEnums.NationType;
+import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,8 +66,12 @@ public class GameMenuController {
     }
 
     public void initialize(){
-        String[] nations = {"0- Indus Valley", "1- Maya", "2- Ancient Greece", "3- Persia", "4- Ancient Egypt", "5- Mesopotamian",
-                "6- Rome", "7- Aztec", "8- Inca"};
+        String[] nations = new String[9];
+        int j = 0;
+        for (NationType nationType : NationType.values()) {
+            nations[j] = j + "- " + nationType.name;
+            j++;
+        }
         for (int i = 0; i < 9; i++) {
             Label label = new Label(nations[i]);
             nations1.getItems().add(label.getText());

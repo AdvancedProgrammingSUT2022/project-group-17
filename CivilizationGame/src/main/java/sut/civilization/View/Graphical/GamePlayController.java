@@ -29,6 +29,8 @@ public class GamePlayController extends ViewController {
     public AnchorPane anchorPane;
     private Popup infoPopup = new Popup();
     private Popup unitPopup = new Popup();
+    public Label inProgressTechnologyName;
+    public ImageView inProgressTechnologyImage;
 
     public void initialize() {
         Pane pane = new Pane();
@@ -41,9 +43,17 @@ public class GamePlayController extends ViewController {
         root.setContent(pane);
 
         ((Stage) Game.getCurrentScene().getWindow()).setFullScreen(true);
-        root.setMaxHeight(Game.getCurrentScene().getWindow().getHeight());
-        root.setMaxWidth(Game.getCurrentScene().getWindow().getWidth());
+        root.setMaxHeight(768);
+        root.setMaxWidth(1366);
+
+
+        TechnologyType inProgressTechnology = GameController.getCurrentTurnUser().getNation().getInProgressTechnology();
+        inProgressTechnologyName.setText(inProgressTechnology.name);
+        inProgressTechnologyImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                inProgressTechnology.imageAddress
+        )));
     }
+
 
     public void showUnits() {
 
@@ -51,17 +61,20 @@ public class GamePlayController extends ViewController {
         HBox[] eachUnitHBox = new HBox[unitsNumber];
         int i = 0;
         for (Unit unit : GameController.getCurrentTurnUser().getNation().getUnits()) {
-            ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")
-            ));
+            ImageView avatar = new ImageView();
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
             Label unitType;
-            if (unit instanceof RangedCombatUnit)
+            if (unit instanceof RangedCombatUnit) {
                 unitType = new Label(((RangedCombatUnit) unit).getRangedCombatUnitType().name);
-            else if (unit instanceof CloseCombatUnit)
+                avatar.setImage(new Image(Civilization.class.getResourceAsStream(((RangedCombatUnit) unit).getRangedCombatUnitType().imageAddress)));
+            } else if (unit instanceof CloseCombatUnit) {
                 unitType = new Label(((CloseCombatUnit) unit).getCloseCombatUnitType().name);
-            else unitType = new Label(((CivilizedUnit) unit).getCivilizedUnitType().name);
+                avatar.setImage(new Image(Civilization.class.getResourceAsStream(((CloseCombatUnit) unit).getCloseCombatUnitType().imageAddress)));
+            } else {
+                unitType = new Label(((CivilizedUnit) unit).getCivilizedUnitType().name);
+                avatar.setImage(new Image(Civilization.class.getResourceAsStream(((CivilizedUnit) unit).getCivilizedUnitType().imageAddress)));
+            }
 
             Label unitLocation = new Label("(" + unit.getLocation().x + "," + unit.getLocation().y + ")");
             Label unitStatus = new Label(unit.getUnitStatus().name());
@@ -84,8 +97,8 @@ public class GamePlayController extends ViewController {
         }
 
         VBox allUnitsVBox = new VBox(eachUnitHBox);
-        allUnitsVBox.setPrefWidth(620);
-        allUnitsVBox.setPrefHeight(420);
+        allUnitsVBox.setPrefWidth(800);
+        allUnitsVBox.setPrefHeight(500);
         allUnitsVBox.getStyleClass().add("unitList");
 
         scrollPanePopup(allUnitsVBox);
@@ -120,8 +133,8 @@ public class GamePlayController extends ViewController {
         }
 
         VBox allUnitsVBox = new VBox(eachCityHBox);
-        allUnitsVBox.setPrefWidth(620);
-        allUnitsVBox.setPrefHeight(420);
+        allUnitsVBox.setPrefWidth(800);
+        allUnitsVBox.setPrefHeight(500);
         allUnitsVBox.getStyleClass().add("unitList");
 
         scrollPanePopup(allUnitsVBox);
@@ -138,7 +151,7 @@ public class GamePlayController extends ViewController {
         int i = 0;
         for (Nation nation : GameController.getCurrentTurnUser().getNation().getFriends()) {
             ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")
+                    Civilization.class.getResourceAsStream(nation.getNationType().nationImageAddress)
             ));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -159,7 +172,7 @@ public class GamePlayController extends ViewController {
         i = 0;
         for (Nation nation : GameController.getCurrentTurnUser().getNation().getEnemies()) {
             ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")
+                    Civilization.class.getResourceAsStream(nation.getNationType().nationImageAddress)
             ));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -175,8 +188,8 @@ public class GamePlayController extends ViewController {
             i++;
         }
 
-        allNationsVBox.setPrefWidth(620);
-        allNationsVBox.setPrefHeight(420);
+        allNationsVBox.setPrefWidth(800);
+        allNationsVBox.setPrefHeight(500);
         allNationsVBox.getStyleClass().add("unitList");
 
         scrollPanePopup(allNationsVBox);
@@ -187,7 +200,7 @@ public class GamePlayController extends ViewController {
         HBox[] eachNationHBox = new HBox[nationNumber];
         int i = 0;
         for (User user : Game.getPlayersInGame()) {
-            ImageView avatar = new ImageView(new Image(user.getAvatarLocation()));
+            ImageView avatar = new ImageView(new Image(user.getNation().getNationType().leaderImageAddress));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
             Label nationName = new Label(user.getNation().getNationType().name);
@@ -224,8 +237,8 @@ public class GamePlayController extends ViewController {
         }
 
         VBox allUnitsVBox = new VBox(eachNationHBox);
-        allUnitsVBox.setPrefWidth(620);
-        allUnitsVBox.setPrefHeight(420);
+        allUnitsVBox.setPrefWidth(800);
+        allUnitsVBox.setPrefHeight(500);
         allUnitsVBox.getStyleClass().add("unitList");
 
         scrollPanePopup(allUnitsVBox);
@@ -276,8 +289,8 @@ public class GamePlayController extends ViewController {
         }
 
         VBox allUnitsVBox = new VBox(eachCityHBox);
-        allUnitsVBox.setPrefWidth(620);
-        allUnitsVBox.setPrefHeight(420);
+        allUnitsVBox.setPrefWidth(800);
+        allUnitsVBox.setPrefHeight(500);
         allUnitsVBox.getStyleClass().add("unitList");
 
         scrollPanePopup(allUnitsVBox);
@@ -319,11 +332,6 @@ public class GamePlayController extends ViewController {
             return;
         }
         Window window = Game.getCurrentScene().getWindow();
-//        ImageView unitBox = new ImageView(new Image(
-//                Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/unitBox.png")
-//        ));
-//        unitBox.setFitWidth(300);
-//        unitBox.setFitHeight(200);
         ImageView unitImage = new ImageView(new Image(
                 Civilization.class.getResourceAsStream(RangedCombatUnitType.ARCHER.imageAddress)
         ));
@@ -345,7 +353,7 @@ public class GamePlayController extends ViewController {
         HBox infoHBox = new HBox(unitImage, unitInfoVBox);
         infoHBox.setAlignment(Pos.CENTER_LEFT);
         VBox wholeUnit = new VBox(unitName, infoHBox);
-        wholeUnit.setStyle("-fx-background-color: black;");
+        wholeUnit.setStyle("-fx-background-color: black; -fx-background-radius: 0 40 0 0;");
         wholeUnit.setAlignment(Pos.CENTER);
         wholeUnit.setPrefSize(380, 230);
 
