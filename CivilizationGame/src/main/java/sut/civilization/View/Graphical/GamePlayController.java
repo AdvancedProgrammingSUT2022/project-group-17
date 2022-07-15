@@ -1,6 +1,7 @@
 package sut.civilization.View.Graphical;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -18,6 +19,7 @@ import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Model.Classes.*;
+import sut.civilization.Model.ModulEnums.CurrencyType;
 import sut.civilization.Model.ModulEnums.RangedCombatUnitType;
 import sut.civilization.Model.ModulEnums.TechnologyType;
 
@@ -379,7 +381,7 @@ public class GamePlayController extends ViewController {
             eachTechnology[i].setAlignment(Pos.CENTER);
         }
         int i = 0;
-        for (TechnologyType technologyType: TechnologyType.values()) {
+        for (TechnologyType technologyType : TechnologyType.values()) {
 
             ImageView technologyImage = new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress)));
             Label name = new Label(technologyType.name);
@@ -406,11 +408,11 @@ public class GamePlayController extends ViewController {
             } else if (i < 30) {
                 eachFloor[6].getChildren().add(eachTechnology[i]);
             } else if (i < 33) {
-                 eachFloor[7].getChildren().add(eachTechnology[i]);
+                eachFloor[7].getChildren().add(eachTechnology[i]);
             } else if (i < 38) {
-                 eachFloor[8].getChildren().add(eachTechnology[i]);
+                eachFloor[8].getChildren().add(eachTechnology[i]);
             } else if (i < 40) {
-                 eachFloor[9].getChildren().add(eachTechnology[i]);
+                eachFloor[9].getChildren().add(eachTechnology[i]);
             } else if (i < 44) {
                 eachFloor[10].getChildren().add(eachTechnology[i]);
             } else {
@@ -426,6 +428,66 @@ public class GamePlayController extends ViewController {
         wholeTechTree.setAlignment(Pos.CENTER);
 
         scrollPanePopup(wholeTechTree);
+    }
+
+
+    public void showCityPanel() {
+        anchorPane.getChildren().get(4).setVisible(false);
+        anchorPane.getChildren().get(1).setVisible(false);
+
+        City city = GameController.getCurrentTurnUser().getNation().getCities().get(0);
+
+        Label population = new Label(city.getCitizens() + " Citizens");
+        population.setStyle("-fx-label-padding: 0 0 20 0; -fx-font-size: 18; -fx-font-weight: bold;");
+        population.setTextFill(WHITE);
+
+        ImageView[] currenciesIcons = new ImageView[5];
+        Label[] currenciesNames = new Label[5];
+        Label[] currenciesAmounts = new Label[5];
+
+        int i = 0;
+        for (CurrencyType currencyType : CurrencyType.values()) {
+            currenciesIcons[i] = new ImageView(new Image(currencyType.imageAddress));
+            VBox.setMargin(currenciesIcons[i], new Insets(5,5,5,5));
+            currenciesNames[i] = new Label(currencyType.name);
+            currenciesNames[i].setTextFill(currencyType.color);
+            VBox.setMargin(currenciesNames[i], new Insets(7,7,7,7));
+            switch (currencyType) {
+                case FOOD:
+                    currenciesAmounts[i] = new Label(String.valueOf(city.getFoodGrowth()));
+                    break;
+                case GOLD:
+                    currenciesAmounts[i] = new Label(String.valueOf(city.getCoinGrowth()));
+                    break;
+                case SCIENCE:
+                    currenciesAmounts[i] = new Label(String.valueOf(city.getScienceGrowth()));
+                    break;
+                case HAPPINESS:
+                    currenciesAmounts[i] = new Label(String.valueOf(city.getHappinessGrowth()));
+                    break;
+                case PRODUCTION:
+                    currenciesAmounts[i] = new Label(String.valueOf(city.getProductionGrowth()));
+                    break;
+            }
+            currenciesAmounts[i].setTextFill(currencyType.color);
+            VBox.setMargin(currenciesAmounts[i], new Insets(7,7,7,7));
+            i++;
+        }
+
+        VBox currenciesIconsVBox = new VBox(currenciesIcons);
+        VBox currenciesNamesVBox = new VBox(currenciesNames);
+        VBox currenciesAmountsVBox = new VBox(currenciesAmounts);
+
+        HBox currenciesInfosHBox = new HBox(currenciesIconsVBox, currenciesNamesVBox, currenciesAmountsVBox);
+
+        VBox wholeCurrenciesInfosVBox = new VBox(population, currenciesInfosHBox);
+        wholeCurrenciesInfosVBox.setAlignment(Pos.TOP_CENTER);
+        wholeCurrenciesInfosVBox.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 0 20 0;");
+        wholeCurrenciesInfosVBox.setPadding(new Insets(10,20,20,10));
+        wholeCurrenciesInfosVBox.setLayoutX(0);
+        wholeCurrenciesInfosVBox.setLayoutY(30);
+
+        anchorPane.getChildren().add(wholeCurrenciesInfosVBox);
     }
 
 }

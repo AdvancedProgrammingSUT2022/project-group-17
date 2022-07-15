@@ -24,7 +24,7 @@ public class Nation {
     protected ArrayList<Nation> enemies = new ArrayList<>();
     protected ArrayList<Unit> units = new ArrayList<>();
 
-    protected Currency coin = new Currency(CurrencyType.COIN);
+    protected Currency coin = new Currency(CurrencyType.GOLD);
     protected Currency food = new Currency(CurrencyType.FOOD);
     protected Currency production = new Currency(CurrencyType.PRODUCTION);
     protected Currency happiness = new Currency(CurrencyType.HAPPINESS);

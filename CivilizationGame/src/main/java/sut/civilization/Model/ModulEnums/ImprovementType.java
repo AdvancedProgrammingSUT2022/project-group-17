@@ -39,7 +39,7 @@ public enum ImprovementType {
     QUARRY("Quarry", null, 0, new ResourceType[]{ResourceType.MARBLE},
             TechnologyType.MASONRY, new LandType[]{LandType.PLAIN, LandType.DESERT, LandType.GRASS_LAND, LandType.TUNDRA,
             LandType.HILL}, null, 6),
-    TRADING_POST("Trading Post", CurrencyType.COIN, 1, null, TechnologyType.TRAPPING,
+    TRADING_POST("Trading Post", CurrencyType.GOLD, 1, null, TechnologyType.TRAPPING,
             new LandType[]{LandType.DESERT, LandType.PLAIN, LandType.GRASS_LAND, LandType.TUNDRA}, null, 6),
     FACTORY("Factory", CurrencyType.PRODUCTION, 2, null, TechnologyType.ENGINEERING,
             new LandType[]{LandType.PLAIN, LandType.DESERT, LandType.GRASS_LAND, LandType.TUNDRA, LandType.SNOW},

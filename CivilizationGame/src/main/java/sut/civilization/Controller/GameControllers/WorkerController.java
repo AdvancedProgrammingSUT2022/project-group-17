@@ -1,7 +1,6 @@
 package sut.civilization.Controller.GameControllers;
 
 import sut.civilization.Enums.GameEnums.WorkerWorks;
-import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.Improvement;
 import sut.civilization.Model.Classes.Land;
 import sut.civilization.Model.ModulEnums.ImprovementType;
@@ -294,7 +293,7 @@ public class WorkerController extends GameController {
         Land.map[worker.getLocation().x][worker.getLocation().y].setImprovement(new Improvement(improvementType));
         //TODO also calculate land's currency's growths for showing them
         switch (improvementType.currency) {
-            case COIN:
+            case GOLD:
                 Land.map[worker.getLocation().x][worker.getLocation().y].addCoinGrowth(improvementType.amount);
                 break;
             case FOOD:

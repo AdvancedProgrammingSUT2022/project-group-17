@@ -43,11 +43,13 @@ public enum BuildingType {
     public int cost;
     public int maintenance;
     public int initialTurns;
+    public String imageAddress;
 
     BuildingType(String name, int cost, int maintenance, int initialTurns) {
         this.name = name;
         this.cost = cost;
         this.maintenance = maintenance;
         this.initialTurns = initialTurns;
+        this.imageAddress = "/sut/civilization/Images/buildings/" + name + ".png";
     }
 }
