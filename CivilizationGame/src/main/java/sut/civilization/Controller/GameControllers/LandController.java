@@ -152,17 +152,17 @@ public class LandController extends Controller {
     private void updateLandVisibility() {
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Land.map[i][j].getVisibility() == 2) {
-                    Land.map[i][j].setVisibility(1);
+                if (Game.instance.map[i][j].getVisibility() == 2) {
+                    Game.instance.map[i][j].setVisibility(1);
                 }
             }
         }
 
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Land.map[i][j].getCivilizedUnit() != null || Land.map[i][j].getCombatUnit() != null || Land.map[i][j].getOwnerCity() != null) {
+                if (Game.instance.map[i][j].getCivilizedUnit() != null || Game.instance.map[i][j].getCombatUnit() != null || Game.instance.map[i][j].getOwnerCity() != null) {
                     lightNeighbors(new Pair<Integer, Integer>(i, j));
-                    Land.map[i][j].setVisibility(2);
+                    Game.instance.map[i][j].setVisibility(2);
                 }
             }
         }
@@ -170,8 +170,8 @@ public class LandController extends Controller {
 
     private void lightNeighbors(Pair<Integer, Integer> coordinate) {
         for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(coordinate)) {
-            if (Pair.isValid(pair) && !Land.map[pair.x][pair.y].getLandType().name.equals(LandType.MOUNTAIN.name))
-                Land.map[pair.x][pair.y].setVisibility(2);
+            if (Pair.isValid(pair) && !Game.instance.map[pair.x][pair.y].getLandType().name.equals(LandType.MOUNTAIN.name))
+                Game.instance.map[pair.x][pair.y].setVisibility(2);
         }
 
     }
@@ -325,14 +325,14 @@ public class LandController extends Controller {
     }
 
     public Land getLandByCoordinates(int x, int y) {
-        return Land.map[x][y];
+        return Game.instance.map[x][y];
     }
 
     public int getLandNumber(Land land) {
         int num = -1;
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Land.map[i][j].equals(land))
+                if (Game.instance.map[i][j].equals(land))
                     num = i * Consts.MAP_SIZE.amount.x + j;
             }
         }
@@ -349,16 +349,16 @@ public class LandController extends Controller {
                         int num1 = getLandNumber(land1);
                         int num2 = getLandNumber(land2);
                         if (num1 == num2) {
-                            Game.dist[num1][num2] = 0;
-                            Game.path[num1][num2] = "";
+                            Game.instance.dist[num1][num2] = 0;
+                            Game.instance.path[num1][num2] = "";
                         } else if (areNeighbors(new Pair<Integer, Integer>(i1, j1), new Pair<Integer, Integer>(i2, j2))) {
-                            Game.dist[num1][num2] = land2.getMP();
+                            Game.instance.dist[num1][num2] = land2.getMP();
                             if (land2.getLandFeature() != null)
-                                Game.dist[num1][num2] += land2.getLandFeature().getLandFeatureType().movementCost;
-                            Game.path[num1][num2] = "" + getIndex(new Pair<Integer, Integer>(i1, j1), new Pair<Integer, Integer>(i2, j2));
+                                Game.instance.dist[num1][num2] += land2.getLandFeature().getLandFeatureType().movementCost;
+                            Game.instance.path[num1][num2] = "" + getIndex(new Pair<Integer, Integer>(i1, j1), new Pair<Integer, Integer>(i2, j2));
                         } else {
-                            Game.dist[num1][num2] = 1000;
-                            Game.path[num1][num2] = "";
+                            Game.instance.dist[num1][num2] = 1000;
+                            Game.instance.path[num1][num2] = "";
                         }
                     }
                 }
@@ -379,9 +379,9 @@ public class LandController extends Controller {
                                 int num1 = getLandNumber(firstLand);
                                 int num2 = getLandNumber(secondLand);
                                 int num3 = getLandNumber(thirdLand);
-                                if (Game.dist[num1][num2] + Game.dist[num2][num3] < Game.dist[num1][num3]) {
-                                    Game.dist[num1][num3] = Game.dist[num1][num2] + Game.dist[num2][num3];
-                                    Game.path[num1][num3] = Game.path[num1][num2] + Game.path[num2][num3];
+                                if (Game.instance.dist[num1][num2] + Game.instance.dist[num2][num3] < Game.instance.dist[num1][num3]) {
+                                    Game.instance.dist[num1][num3] = Game.instance.dist[num1][num2] + Game.instance.dist[num2][num3];
+                                    Game.instance.path[num1][num3] = Game.instance.path[num1][num2] + Game.instance.path[num2][num3];
                                 }
                             }
                         }

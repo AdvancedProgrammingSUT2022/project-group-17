@@ -158,8 +158,8 @@ public class GameMenu extends Menu {
     public void startingGame(Scanner scanner) {
         int civilizationOptionsNumber = 8;
         int chosenNumber;
-        for (int i = 0; i < Game.getPlayersInGame().size(); i++) {
-            System.out.println("Enter number of your chosen nation : (player : " + Game.getPlayersInGame().get(i).getNickname() + " )");
+        for (int i = 0; i < Game.instance.getPlayersInGame().size(); i++) {
+            System.out.println("Enter number of your chosen nation : (player : " + Game.instance.getPlayersInGame().get(i).getNickname() + " )");
             int j = 0;
             for (NationType nationType : NationType.values()) {
                 System.out.println(j + "- " + nationType.name);

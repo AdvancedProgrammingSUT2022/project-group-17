@@ -31,35 +31,35 @@ public class LoginController extends Controller {
             }
         }
 
-        for (User user : Game.getUsers()) {
+        for (User user : Game.instance.getUsers()) {
             if (user.getUsername().equals(newUser.getUsername()))
                 return ("this username already exists");
             if (user.getNickname().equals(newUser.getNickname()))
                 return ("this nickname already exists");
         }
 
-        Game.addUser(newUser);
-//        if (!Game.saveUserListToDatabase()) return ("unable to save users to database");
+        Game.instance.addUser(newUser);
+//        if (!Game.instance.saveUserListToDatabase()) return ("unable to save users to database");
 
         return ("user successfully created!");
     }
 
     public String createUser(User newUser) {
-        for (User user : Game.getUsers()) {
+        for (User user : Game.instance.getUsers()) {
             if (user.getUsername().equals(newUser.getUsername()))
                 return ("this username already exists!");
             if (user.getNickname().equals(newUser.getNickname()))
                 return ("this nickname already exists!");
         }
 
-        Game.addUser(newUser);
-        Game.saveUserListToDatabase();
-        Game.setLoggedInUser(newUser);
+        Game.instance.addUser(newUser);
+        Game.instance.saveUserListToDatabase();
+        Game.instance.setLoggedInUser(newUser);
         return ("user successfully created.");
     }
 
     public String loginUser(Matcher matcher) {
-//        if (Game.getLoggedInUser() != null) return ("please logout in main menu first!");
+//        if (Game.instance.getLoggedInUser() != null) return ("please logout in main menu first!");
 
         String userName = null;
         String password = null;
@@ -89,7 +89,7 @@ public class LoginController extends Controller {
             return ("incorrect password!");
         }
 
-        Game.setLoggedInUser(user);
+        Game.instance.setLoggedInUser(user);
         Menu.setMenuName("MainMenu");
         return ("welcome " + user.getNickname() + "!");
     }
@@ -105,13 +105,13 @@ public class LoginController extends Controller {
             return ("incorrect password!");
         }
 
-        Game.setLoggedInUser(user);
+        Game.instance.setLoggedInUser(user);
         user.setOnline(true);
         return ("welcome " + user.getNickname() + ".");
     }
 
     public String enterAsGuest() {
-        Game.setLoggedInUser(new User("", "", ""));
+        Game.instance.setLoggedInUser(new User("", "", ""));
         return "entered as guest.";
     }
 

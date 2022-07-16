@@ -58,10 +58,10 @@ public class ProfileController extends ViewController{
         allAvatarsContainer.setSpacing(10);
         allAvatarsContainer.setAlignment(Pos.CENTER);
 
-        avatarImageView.setImage(new Image(Game.getLoggedInUser().getAvatarLocation()));
-        userNameText.setText("UserName : " + Game.getLoggedInUser().getUsername());
-        nickNameText.setText("NickName : " + Game.getLoggedInUser().getNickname());
-        scoreText.setText("Score : " + Game.getLoggedInUser().getScore());
+        avatarImageView.setImage(new Image(Game.instance.getLoggedInUser().getAvatarLocation()));
+        userNameText.setText("UserName : " + Game.instance.getLoggedInUser().getUsername());
+        nickNameText.setText("NickName : " + Game.instance.getLoggedInUser().getNickname());
+        scoreText.setText("Score : " + Game.instance.getLoggedInUser().getScore());
         allAvatarsContainer.getChildren().clear();
 
         for (int i = 1; i < 19; i++) {
@@ -78,7 +78,7 @@ public class ProfileController extends ViewController{
 
     public void changeUserPassword(MouseEvent mouseEvent) {
         resultMessage = profileController.changePassword(new Pair<>(newPassword.getText(),newPasswordRepeated.getText()),oldPassword.getText());
-        showPopUp(Game.getCurrentScene().getWindow(),resultMessage);
+        showPopUp(Game.instance.getCurrentScene().getWindow(),resultMessage);
         newPasswordRepeated.setText("");
         newPassword.setText("");
         oldPassword.setText("");
@@ -86,14 +86,14 @@ public class ProfileController extends ViewController{
 
     public void changeUserNickname(MouseEvent mouseEvent) {
         resultMessage = profileController.changeNickname(new Pair<>(newNickname.getText(),newNicknameRepeated.getText()),oldNickname.getText());
-        showPopUp(Game.getCurrentScene().getWindow(),resultMessage);
+        showPopUp(Game.instance.getCurrentScene().getWindow(),resultMessage);
         newNickname.setText("");
         newNicknameRepeated.setText("");
         oldNickname.setText("");
     }
 
     public void backToMainMenu(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.MAIN_MENU);
+        Game.instance.changeScene(Menus.MAIN_MENU);
     }
 
     public void chooseAvatarFromComputer(MouseEvent mouseEvent) {
@@ -109,13 +109,13 @@ public class ProfileController extends ViewController{
         } catch (IOException ignored) {
         }
 
-        Game.getLoggedInUser().setAvatarLocation(String.valueOf(file.toURI()));
+        Game.instance.getLoggedInUser().setAvatarLocation(String.valueOf(file.toURI()));
         avatarImageView.setImage(new Image(String.valueOf(file.toURI())));
     }
 
     public void changeAvatar(MouseEvent mouseEvent) {
         ImageView imageView = (ImageView) mouseEvent.getSource();
         avatarImageView.setImage(imageView.getImage());
-        Game.getLoggedInUser().setAvatarLocation(imageView.getImage().getUrl());
+        Game.instance.getLoggedInUser().setAvatarLocation(imageView.getImage().getUrl());
     }
 }

@@ -1,13 +1,11 @@
 package sut.civilization.Model.Classes;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
 import sut.civilization.Civilization;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Enums.Menus;
 
 import java.io.FileWriter;
@@ -19,97 +17,98 @@ import java.util.Arrays;
 
 
 public class Game {
-    private static FXMLLoader fxmlLoader;
-    private static Scene currentScene;
-    private static ArrayList<User> users = readUserListFromDatabase();
-    private static User loggedInUser;
-    private static int turn = 0;
+    public transient static Game instance = new Game();
 
+    public Land[][] map;
+    public int[][] dist = new int[110][110];
+    public String[][] path = new String[110][110];
+    private ArrayList<User> users = readUserListFromDatabase();
+    private transient FXMLLoader fxmlLoader;
+    private transient Scene currentScene;
+    private User loggedInUser;
+    private int turn = 0;
     // a number between 0 and players count in order to know witch user have to play
-    private static int subTurn = 0;
-    private static ArrayList<User> playersInGame = new ArrayList<>();
+    private int subTurn = 0;
+    private ArrayList<User> playersInGame = new ArrayList<>();
 
-    public static Land[][] map;
-    public static int[][] dist = new int[110][110];
-
-    public static String[][] path = new String[110][110];
-
-    public static Scene getCurrentScene() {
+    public Scene getCurrentScene() {
         return currentScene;
     }
 
-    public static void setCurrentScene(Scene currentScene) {
-        Game.currentScene = currentScene;
+    public void setCurrentScene(Scene currentScene) {
+        Game.instance.currentScene = currentScene;
     }
 
-    public static int getSubTurn() {
+    public int getSubTurn() {
         return subTurn;
     }
 
-    public static void setSubTurn(int subTurn) {
-        Game.subTurn = subTurn;
+    public void setSubTurn(int subTurn) {
+        Game.instance.subTurn = subTurn;
     }
 
-    public static int getTurn() {
+    public int getTurn() {
         return turn;
     }
 
-    public static void setTurn(int turn) {
-        Game.turn = turn;
+    public void setTurn(int turn) {
+        Game.instance.turn = turn;
     }
 
-    public static ArrayList<User> getPlayersInGame() {
+    public ArrayList<User> getPlayersInGame() {
         return playersInGame;
     }
 
-    public static void setPlayersInGame(ArrayList<User> playersInGame) {
-        Game.playersInGame = playersInGame;
+    public void setPlayersInGame(ArrayList<User> playersInGame) {
+        Game.instance.playersInGame = playersInGame;
     }
 
-    public static void setUsers(ArrayList<User> users) {
-        Game.users = users;
-    }
-    public static ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public static User getLoggedInUser() {
+    public void setUsers(ArrayList<User> users) {
+        Game.instance.users = users;
+    }
+
+    public User getLoggedInUser() {
         return loggedInUser;
     }
 
-    public static void setLoggedInUser(User user){
-        Game.loggedInUser = user;
+    public void setLoggedInUser(User user) {
+        Game.instance.loggedInUser = user;
     }
 
-    public static void setMap(Land[][] map) {
-        Land.map = map;
+    public void setMap(Land[][] map) {
+        Game.instance.map = map;
     }
 
-    public static void addUser(User user){
-        Game.users.add(user);
+    public void addUser(User user) {
+        Game.instance.users.add(user);
     }
 
-    public static ArrayList<User> readUserListFromDatabase(){
+    public ArrayList<User> readUserListFromDatabase() {
         String json = null;
         try {
             json = new String(Files.readAllBytes(Paths.get("src/main/resources/sut/civilization/DataBase/Users.json")));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>(){}.getType());
+        users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>() {
+        }.getType());
         if (users == null) return new ArrayList<>();
 
         for (User user : users) {
-            ArrayList<String> avatarLocationTokens= new ArrayList<>(Arrays.asList(user.getAvatarLocation().split("/")));
-            user.setAvatarLocation("sut/civilization/Images/Avatars/" + avatarLocationTokens.get(avatarLocationTokens.size()-1));
+            ArrayList<String> avatarLocationTokens = new ArrayList<>(Arrays.asList(user.getAvatarLocation().split("/")));
+            user.setAvatarLocation("sut/civilization/Images/Avatars/" + avatarLocationTokens.get(avatarLocationTokens.size() - 1));
         }
         return users;
     }
 
-    public static void saveUserListToDatabase(){
+    public void saveUserListToDatabase() {
         try {
             FileWriter fileWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/Users.json");
-            fileWriter.write(new Gson().toJson(Game.getUsers()));
+            fileWriter.write(new Gson().toJson(Game.instance.getUsers()));
             fileWriter.close();
         } catch (IOException exception) {
             System.out.println("cannot write user list to dataBase mate :(\nthe stack trace is in below :");
@@ -117,7 +116,7 @@ public class Game {
         }
     }
 
-    public static Parent loadScene(Menus menu){
+    public Parent loadScene(Menus menu) {
         fxmlLoader = new FXMLLoader();
 
         switch (menu) {
@@ -152,15 +151,17 @@ public class Game {
         }
     }
 
-    public static void changeScene(Menus menu){
+    public void changeScene(Menus menu) {
         currentScene.setRoot(loadScene(menu));
     }
 
-    public static FXMLLoader getFxmlLoader() {
+    public FXMLLoader getFxmlLoader() {
         return fxmlLoader;
     }
 
-    public static void setFxmlLoader(FXMLLoader fxmlLoader) {
-        Game.fxmlLoader = fxmlLoader;
+    public void setFxmlLoader(FXMLLoader fxmlLoader) {
+        Game.instance.fxmlLoader = fxmlLoader;
     }
+
+
 }

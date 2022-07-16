@@ -12,7 +12,7 @@
 //
 //    @BeforeAll
 //    public static void setup(){
-//        Game.setUsers(Game.readUserListFromDatabase());
+//        Game.instance.setUsers(Game.instance.readUserListFromDatabase());
 //    }
 //
 //    @Test

@@ -16,10 +16,10 @@ public class MainController extends Controller{
 
     public String logoutUser() {
         menuChange("login menu");
-        Game.changeScene(Menus.LOGIN_MENU);
-        Game.getLoggedInUser().setLastTimeOnline(new Date(System.currentTimeMillis()));
-        Game.getLoggedInUser().setOnline(false);
-        Game.setLoggedInUser(null);
+        Game.instance.changeScene(Menus.LOGIN_MENU);
+        Game.instance.getLoggedInUser().setLastTimeOnline(new Date(System.currentTimeMillis()));
+        Game.instance.getLoggedInUser().setOnline(false);
+        Game.instance.setLoggedInUser(null);
         return "logged out successful";
     }
 
@@ -32,8 +32,8 @@ public class MainController extends Controller{
             else players.add(getUserByName(token));
         }
 
-        Game.setPlayersInGame(players);
-        GameController.setCurrentTurnUser(Game.getPlayersInGame().get(0));
+        Game.instance.setPlayersInGame(players);
+        GameController.setCurrentTurnUser(Game.instance.getPlayersInGame().get(0));
         Menu.setMenuName("GameMenu");
         return "game successfully started!";
     }
@@ -52,7 +52,7 @@ public class MainController extends Controller{
 
     public void exitGame(){
         logoutUser();
-        Game.saveUserListToDatabase();
-        ((Stage) Game.getCurrentScene().getWindow()).close();
+        Game.instance.saveUserListToDatabase();
+        ((Stage) Game.instance.getCurrentScene().getWindow()).close();
     }
 }

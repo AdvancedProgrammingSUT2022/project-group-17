@@ -34,15 +34,15 @@ public class LoginController extends ViewController {
             registerUserNameField.getStyleClass().clear();
             registerPasswordField.getStyleClass().clear();
             registerNickNameField.getStyleClass().clear();
-            Game.changeScene(Menus.MAIN_MENU);
+            Game.instance.changeScene(Menus.MAIN_MENU);
         }
-        showPopUp(Game.getCurrentScene().getWindow(), resultMessage);
+        showPopUp(Game.instance.getCurrentScene().getWindow(), resultMessage);
     }
 
     public void enterAsGuest(MouseEvent mouseEvent) {
         resultMessage = loginController.enterAsGuest();
-        Game.changeScene(Menus.MAIN_MENU);
-        showPopUp(Game.getCurrentScene().getWindow(), resultMessage);
+        Game.instance.changeScene(Menus.MAIN_MENU);
+        showPopUp(Game.instance.getCurrentScene().getWindow(), resultMessage);
     }
 
     public void loginUser(MouseEvent mouseEvent) {
@@ -57,9 +57,9 @@ public class LoginController extends ViewController {
         } else {
             loginPasswordField.getStyleClass().clear();
             loginUserNameField.getStyleClass().clear();
-            Game.changeScene(Menus.MAIN_MENU);
+            Game.instance.changeScene(Menus.MAIN_MENU);
         }
 
-        showPopUp(Game.getCurrentScene().getWindow(), resultMessage);
+        showPopUp(Game.instance.getCurrentScene().getWindow(), resultMessage);
     }
 }

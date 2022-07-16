@@ -30,12 +30,11 @@ public class LandGraphical extends Polygon {
 
         setCoordinates(coordinate);
 
-        land = Land.map[coordinate.x][coordinate.y];
+        land = Game.instance.map[coordinate.x][coordinate.y];
 
         this.setFill(new ImagePattern(new Image("sut/civilization/Images/tiles/" + land.getLandType().name + ".png")));
 
         updateMap();
-
 
         landFeatureImageView.setFitWidth(tileRadius*1.5);
         landFeatureImageView.setFitHeight(tileRadius*1.5);
@@ -71,7 +70,6 @@ public class LandGraphical extends Polygon {
         cityImageView.setFitHeight(tileRadius*0.5);
         cityImageView.setX(this.centerCoordinate.x - tileRadius*0.25);
         cityImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
-
 
         if (land.getLandType() != LandType.OCEAN)
             pane.getChildren().add(this);

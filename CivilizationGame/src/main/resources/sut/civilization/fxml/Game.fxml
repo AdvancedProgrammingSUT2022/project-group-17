@@ -18,21 +18,17 @@
     </ScrollPane>
     <VBox alignment="BOTTOM_RIGHT" layoutX="1192.0" layoutY="552.0" prefHeight="216.0" prefWidth="174.0"
           style="-fx-background-color: gray;">
-        <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="124.0" text="Next Turn">
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="20.0" top="10.0"/>
-                </VBox.margin>
-            </Button>
-            <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@../Images/otherIcons/map.png"/>
-                </image>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="20.0" top="10.0"/>
-                </VBox.margin>
-            </ImageView>
-        </children>
+        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="124.0" text="Next Turn" onMouseClicked="#nextTurn">
+            <VBox.margin>
+                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0"/>
+            </VBox.margin>
+        </Button>
+        <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0"/>
+            </VBox.margin>
+            <Image url="@../Images/otherIcons/map.png"/>
+        </ImageView>
     </VBox>
     <HBox alignment="CENTER_RIGHT" layoutX="619.0" prefHeight="30.0" prefWidth="747.0"
           style="-fx-background-color: #212121;">
