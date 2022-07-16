@@ -1,8 +1,10 @@
 package sut.civilization.View.Graphical;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -11,6 +13,7 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
@@ -435,8 +438,11 @@ public class GamePlayController extends ViewController {
         anchorPane.getChildren().get(4).setVisible(false);
         anchorPane.getChildren().get(1).setVisible(false);
 
+        AnchorPane CityAnchorPane = new AnchorPane();
+
         City city = GameController.getCurrentTurnUser().getNation().getCities().get(0);
 
+        // top-left box
         Label population = new Label(city.getCitizens() + " Citizens");
         population.setStyle("-fx-label-padding: 0 0 20 0; -fx-font-size: 18; -fx-font-weight: bold;");
         population.setTextFill(WHITE);
@@ -454,19 +460,19 @@ public class GamePlayController extends ViewController {
             VBox.setMargin(currenciesNames[i], new Insets(7,7,7,7));
             switch (currencyType) {
                 case FOOD:
-                    currenciesAmounts[i] = new Label(String.valueOf(city.getFoodGrowth()));
+                    currenciesAmounts[i] = new Label(String.format("%+d", city.getFoodGrowth()));
                     break;
                 case GOLD:
-                    currenciesAmounts[i] = new Label(String.valueOf(city.getCoinGrowth()));
+                    currenciesAmounts[i] = new Label(String.format("%+d", city.getCoinGrowth()));
                     break;
                 case SCIENCE:
-                    currenciesAmounts[i] = new Label(String.valueOf(city.getScienceGrowth()));
+                    currenciesAmounts[i] = new Label(String.format("%+d", city.getScienceGrowth()));
                     break;
                 case HAPPINESS:
-                    currenciesAmounts[i] = new Label(String.valueOf(city.getHappinessGrowth()));
+                    currenciesAmounts[i] = new Label(String.format("%+d", city.getHappinessGrowth()));
                     break;
                 case PRODUCTION:
-                    currenciesAmounts[i] = new Label(String.valueOf(city.getProductionGrowth()));
+                    currenciesAmounts[i] = new Label(String.format("%+d", city.getProductionGrowth()));
                     break;
             }
             currenciesAmounts[i].setTextFill(currencyType.color);
@@ -488,6 +494,109 @@ public class GamePlayController extends ViewController {
         wholeCurrenciesInfosVBox.setLayoutY(30);
 
         anchorPane.getChildren().add(wholeCurrenciesInfosVBox);
+
+
+        //city-name
+        Label cityName = new Label(city.getName());
+        cityName.setStyle(
+                "-fx-background-color: #212121; -fx-background-radius: 20; -fx-font-size: 24; -fx-font-weight: bold"
+        );
+        cityName.setAlignment(Pos.CENTER);
+        cityName.setTextFill(WHITE);
+        cityName.setPadding(new Insets(10, 0, 10, 0));
+        cityName.setPrefWidth(350);
+        cityName.setLayoutX(508);
+        cityName.setLayoutY(75);
+
+        anchorPane.getChildren().add(cityName);
+
+
+        //bottom-left box
+        ImageView productImage = new ImageView();
+        Label productName = new Label("No product is creating!");
+        Label productTurnsLeft = new Label(" Turns left...");
+        Label productCost = new Label("Cost: ");
+        Label productMaintenance = new Label("Maintenance: ");
+
+
+        if (city.getInProgressBuilding() != null) {
+            Building building = city.getInProgressBuilding();
+            productImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                    building.getBuildingType().imageAddress
+            )));
+            productName.setText(building.getBuildingType().name);
+            productTurnsLeft.setText(building.getTurns() + productTurnsLeft.getText());
+            productCost.setText(productCost.getText() + building.getBuildingType().cost);
+            productMaintenance.setText(productMaintenance.getText() + building.getBuildingType().maintenance);
+
+            //TODO complete other products...
+        } else if (city.getInProgressCivilizedUnit() != null) {
+            productImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                    city.getInProgressCivilizedUnit().imageAddress
+            )));
+        } else if (city.getInProgressCloseCombatUnit() != null) {
+            productImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                    city.getInProgressCloseCombatUnit().imageAddress
+            )));
+        } else if (city.getInProgressRangedCombatUnit() != null) {
+            productImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                    city.getInProgressRangedCombatUnit().imageAddress
+            )));
+        } else {
+            productImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                    "/sut/civilization/Images/productBorder.png"
+            )));
+        }
+        productImage.setFitWidth(180);
+        productImage.setFitHeight(180);
+
+        productName.setTextFill(WHITE);
+        productName.setStyle("-fx-font-size: 24; -fx-label-padding: 10; -fx-font-weight: bold");
+
+        productTurnsLeft.setTextFill(WHITE);
+        productTurnsLeft.setStyle("-fx-label-padding: 10 0 0 30");
+
+        productCost.setTextFill(WHITE);
+        productCost.setStyle("-fx-label-padding: 10 0 0 30");
+
+        productMaintenance.setTextFill(WHITE);
+        productMaintenance.setStyle("-fx-label-padding: 10 0 0 30");
+
+        VBox productInfoVBox = new VBox(productTurnsLeft, productCost, productMaintenance);
+        productInfoVBox.setAlignment(Pos.CENTER);
+        HBox infoHBox = new HBox(productImage, productInfoVBox);
+        infoHBox.setAlignment(Pos.CENTER_LEFT);
+        VBox wholeProduct = new VBox(productName, infoHBox);
+        wholeProduct.setStyle("-fx-background-color: black; -fx-background-radius: 0 40 0 0;");
+        wholeProduct.setAlignment(Pos.CENTER);
+        wholeProduct.setPrefSize(380, 230);
+        wholeProduct.setLayoutY(538);
+
+        anchorPane.getChildren().add(wholeProduct);
+
+        // product buttons
+        Button purchaseButton = new Button("Purchase");
+        Button setProductButton = new Button("Set/Change Product");
+
+        HBox productButtons = new HBox(purchaseButton, setProductButton);
+        productButtons.setLayoutY(498);
+
+        anchorPane.getChildren().add(productButtons);
+
+        // two center buttons
+        Button buyATile = new Button("Buy a tile");
+        Button returnToMap = new Button("Return to map");
+        returnToMap.setOnMouseClicked(mouseEvent -> {
+
+        });
+
+        VBox centerButtons = new VBox(buyATile, returnToMap);
+        VBox.setMargin(buyATile, new Insets(0,0,20,0));
+        centerButtons.setLayoutX(593);
+        centerButtons.setLayoutY(560);
+
+        anchorPane.getChildren().add(centerButtons);
+
     }
 
 }

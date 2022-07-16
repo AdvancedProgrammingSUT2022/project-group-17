@@ -1,11 +1,27 @@
-.root{
-
-}
-
 .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
 
 .scroll-pane{
     -fx-background-color: transparent;
+}
+
+Button:hover{
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-background-color: rgb(19, 135, 135);
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-background-color: white;
+    -fx-text-fill: rgb(33, 33, 33);
+}
+
+Button {
+    -fx-pref-width: 180;
+    -fx-pref-height: 40;
+    -fx-border-width: 2px;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-background-color: rgb(33, 33, 33);
+    -fx-text-fill: white;
 }

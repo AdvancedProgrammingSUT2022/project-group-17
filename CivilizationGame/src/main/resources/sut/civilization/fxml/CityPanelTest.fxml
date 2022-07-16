@@ -218,27 +218,33 @@
          <Insets bottom="20.0" left="10.0" right="20.0" top="10.0" />
       </padding></VBox>
    <VBox layoutX="1074.0" layoutY="29.0" prefHeight="763.0" prefWidth="292.0" style="-fx-background-color: #212121;" />
-   <VBox alignment="CENTER" layoutX="558.0" layoutY="555.0" prefHeight="150.0" prefWidth="250.0">
+   <VBox alignment="CENTER" layoutX="593.0" layoutY="562.0">
       <children>
-         <Button mnemonicParsing="false" style="-fx-padding: 15; -fx-background-radius: 20;" text="Buy a tile">
+         <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-padding: 15; -fx-background-radius: 20;" text="Buy a tile">
             <VBox.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               <Insets bottom="20.0" />
             </VBox.margin>
          </Button>
-         <Button mnemonicParsing="false" style="-fx-padding: 15; -fx-background-radius: 20;" text="Return to map">
+         <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-padding: 15; -fx-background-radius: 20;" text="Return to map">
             <VBox.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               <Insets />
             </VBox.margin>
          </Button>
       </children>
    </VBox>
-   <Label alignment="CENTER" layoutX="533.0" layoutY="72.0" prefWidth="300.0" style="-fx-background-color: #212121; -fx-background-radius: 20;" text="Mashhad" textFill="WHITE">
+   <Label alignment="CENTER" layoutX="508.0" layoutY="76.0" prefWidth="350.0" style="-fx-background-color: #212121; -fx-background-radius: 20;" text="Mashhad" textFill="WHITE">
       <padding>
-         <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+         <Insets bottom="10.0" top="10.0" />
       </padding>
       <font>
          <Font name="System Bold" size="24.0" />
       </font>
    </Label>
-   <VBox layoutY="593.0" prefHeight="199.0" prefWidth="345.0" style="-fx-background-color: #212121;" />
+   <VBox layoutY="562.0" prefHeight="230.0" prefWidth="380.0" style="-fx-background-color: #212121;" />
+   <HBox layoutY="512.0" prefHeight="50.0">
+      <children>
+         <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Purchase" />
+         <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" text="Button" />
+      </children>
+   </HBox>
 </AnchorPane>

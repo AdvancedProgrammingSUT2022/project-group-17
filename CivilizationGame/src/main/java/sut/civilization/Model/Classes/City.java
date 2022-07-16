@@ -18,7 +18,7 @@ public class City {
     protected int level;
     protected ArrayList<Building> buildings = new ArrayList<>();
     protected ArrayList<Improvement> improvements = new ArrayList<>();
-    protected Building inProgressBuilding;
+    protected Building inProgressBuilding = null;
     protected boolean hasAnInProgressUnit = false;
     protected CivilizedUnitType inProgressCivilizedUnit = null;
     protected CloseCombatUnitType inProgressCloseCombatUnit = null;

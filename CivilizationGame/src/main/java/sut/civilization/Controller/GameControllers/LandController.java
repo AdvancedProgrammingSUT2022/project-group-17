@@ -319,6 +319,8 @@ public class LandController extends Controller {
         GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.POTTERY);
         GameController.getCurrentTurnUser().getNation().setInProgressTechnology(TechnologyType.BRONZE_WORKING);
 
+//        GameController.getCurrentTurnUser().getNation().getCities().get(0).setInProgressBuilding(new Building(BuildingType.BANK));
+
         return map;
     }
 
