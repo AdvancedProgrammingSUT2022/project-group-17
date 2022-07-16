@@ -1,6 +1,5 @@
 package sut.civilization.View.Graphical;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,7 +12,6 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
@@ -22,8 +20,8 @@ import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Model.Classes.*;
+import sut.civilization.Model.ModulEnums.CivilizedUnitType;
 import sut.civilization.Model.ModulEnums.CurrencyType;
-import sut.civilization.Model.ModulEnums.RangedCombatUnitType;
 import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import static javafx.scene.paint.Color.WHITE;
@@ -32,16 +30,30 @@ public class GamePlayController extends ViewController {
     @FXML
     private ScrollPane root;
     public AnchorPane anchorPane;
+    private final static LandGraphical[][] graphicalMap = new LandGraphical[20][20];
     private Popup infoPopup = new Popup();
     private Popup unitPopup = new Popup();
     public Label inProgressTechnologyName;
     public ImageView inProgressTechnologyImage;
+    private static GamePlayController gamePlayController;
+
+    public static GamePlayController getInstance() {
+        if (gamePlayController == null)
+            gamePlayController = new GamePlayController();
+        return gamePlayController;
+    }
 
     public void initialize() {
         Pane pane = new Pane();
+
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 10; j++) {
-                LandGraphical landGraphical = new LandGraphical(new Pair<>(i, j), pane);
+                final int finalI = i;
+                final int finalJ = j;
+                graphicalMap[i][j] = new LandGraphical(new Pair<>(i, j), pane);
+//                graphicalMap[i][j].getCivilizedUnitImageView().x.setOnMouseClicked(mouseEvent -> {
+//                    showSelectedCivilizedUnitInfo();
+//                });
             }
         }
         pane.setStyle("-fx-background-position: center; -fx-background-size: auto; -fx-background-image: url(/sut/civilization/Images/BackGround/gameBackground.png);");
@@ -58,7 +70,6 @@ public class GamePlayController extends ViewController {
                 inProgressTechnology.imageAddress
         )));
     }
-
 
     public void showUnits() {
 
@@ -331,29 +342,44 @@ public class GamePlayController extends ViewController {
 
     }
 
-    public void showSelectedUnitInfo() {
+    public void showSelectedCivilizedUnitInfo() {
         if (unitPopup.isShowing()) {
             unitPopup.hide();
             return;
         }
+        CivilizedUnitType civilizedUnitType = GameController.getSelectedCivilizedUnit().getCivilizedUnitType();
         Window window = Game.getCurrentScene().getWindow();
-        ImageView unitImage = new ImageView(new Image(
-                Civilization.class.getResourceAsStream(RangedCombatUnitType.ARCHER.imageAddress)
+        ImageView unitImage = new ImageView();
+//        if (GameController.getSelectedCivilizedUnit() != null) {
+        unitImage.setImage(new Image(
+                Civilization.class.getResourceAsStream(civilizedUnitType.imageAddress)
         ));
+//        } else if (GameController.getSelectedCombatUnit() != null) {
+//            if (GameController.getSelectedCombatUnit() instanceof CloseCombatUnit) {
+//                unitImage.setImage(new Image(
+//                        Civilization.class.getResourceAsStream(((CloseCombatUnit) GameController.getSelectedCombatUnit()).getCloseCombatUnitType().imageAddress)
+//                ));
+//            } else {
+//                unitImage.setImage(new Image(
+//                        Civilization.class.getResourceAsStream(((RangedCombatUnit) GameController.getSelectedCombatUnit()).getRangedCombatUnitType().imageAddress)
+//                ));
+//            }
+//        }
         unitImage.setFitWidth(180);
         unitImage.setFitHeight(180);
 
 
-        Label unitName = new Label("Archer");
+        Label unitName = new Label(civilizedUnitType.name);
         unitName.setTextFill(WHITE);
         unitName.setStyle("-fx-font-size: 24; -fx-label-padding: 10; -fx-font-weight: bold");
-        Label unitStrength = new Label("Strength: 12");
-        unitStrength.setTextFill(WHITE);
-        unitStrength.setStyle("-fx-label-padding: 10 0 0 30");
-        Label unitMovement = new Label("Movement: 2/2");
+        Label unitHP = new Label("Health: " + civilizedUnitType.hp);
+        unitHP.setTextFill(WHITE);
+        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+        //fixme MPs
+        Label unitMovement = new Label("Movement: " + civilizedUnitType.MP);
         unitMovement.setTextFill(WHITE);
         unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
-        VBox unitInfoVBox = new VBox(unitStrength, unitMovement);
+        VBox unitInfoVBox = new VBox(unitHP, unitMovement);
         unitInfoVBox.setAlignment(Pos.CENTER);
         HBox infoHBox = new HBox(unitImage, unitInfoVBox);
         infoHBox.setAlignment(Pos.CENTER_LEFT);
@@ -363,7 +389,66 @@ public class GamePlayController extends ViewController {
         wholeUnit.setPrefSize(380, 230);
 
         infoPopup.hide();
-        anchorPane.setEffect(null);
+//        anchorPane.setEffect(null);
+        unitPopup.getContent().clear();
+        unitPopup.getContent().add(wholeUnit);
+        unitPopup.setX(0);
+        unitPopup.setY(570);
+        unitPopup.show(window);
+    }
+
+    public void showSelectedCombatUnitInfo() {
+        if (unitPopup.isShowing()) {
+            unitPopup.hide();
+            return;
+        }
+        CombatUnit combatUnit = GameController.getSelectedCombatUnit();
+        Window window = Game.getCurrentScene().getWindow();
+        ImageView unitImage = new ImageView();
+        Label unitName = new Label();
+        Label unitHP = new Label();
+        Label unitMovement = new Label();
+
+
+        if (GameController.getSelectedCombatUnit() instanceof CloseCombatUnit) {
+            unitImage.setImage(new Image(
+                    Civilization.class.getResourceAsStream(((CloseCombatUnit) combatUnit).getCloseCombatUnitType().imageAddress)
+            ));
+            unitName.setText(((CloseCombatUnit) combatUnit).getCloseCombatUnitType().name);
+            unitHP.setText(String.valueOf(((CloseCombatUnit) combatUnit).getCloseCombatUnitType().hp));
+            unitMovement.setText(String.valueOf(((CloseCombatUnit) combatUnit).getCloseCombatUnitType().MP));
+        } else {
+            unitImage.setImage(new Image(
+                    Civilization.class.getResourceAsStream(((RangedCombatUnit) combatUnit).getRangedCombatUnitType().imageAddress)
+            ));
+            unitName.setText(((RangedCombatUnit) combatUnit).getRangedCombatUnitType().name);
+            unitHP.setText(String.valueOf(((RangedCombatUnit) combatUnit).getRangedCombatUnitType().hp));
+            unitMovement.setText(String.valueOf(((RangedCombatUnit) combatUnit).getRangedCombatUnitType().MP));
+        }
+        unitImage.setFitWidth(180);
+        unitImage.setFitHeight(180);
+
+
+        unitName.setTextFill(WHITE);
+        unitName.setStyle("-fx-font-size: 24; -fx-label-padding: 10; -fx-font-weight: bold");
+
+        unitHP.setTextFill(WHITE);
+        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+        //fixme MPs
+
+        unitMovement.setTextFill(WHITE);
+        unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
+        VBox unitInfoVBox = new VBox(unitHP, unitMovement);
+        unitInfoVBox.setAlignment(Pos.CENTER);
+        HBox infoHBox = new HBox(unitImage, unitInfoVBox);
+        infoHBox.setAlignment(Pos.CENTER_LEFT);
+        VBox wholeUnit = new VBox(unitName, infoHBox);
+        wholeUnit.setStyle("-fx-background-color: black; -fx-background-radius: 0 40 0 0;");
+        wholeUnit.setAlignment(Pos.CENTER);
+        wholeUnit.setPrefSize(380, 230);
+
+        infoPopup.hide();
+//        anchorPane.setEffect(null);
         unitPopup.getContent().clear();
         unitPopup.getContent().add(wholeUnit);
         unitPopup.setX(0);
@@ -454,10 +539,10 @@ public class GamePlayController extends ViewController {
         int i = 0;
         for (CurrencyType currencyType : CurrencyType.values()) {
             currenciesIcons[i] = new ImageView(new Image(currencyType.imageAddress));
-            VBox.setMargin(currenciesIcons[i], new Insets(5,5,5,5));
+            VBox.setMargin(currenciesIcons[i], new Insets(5, 5, 5, 5));
             currenciesNames[i] = new Label(currencyType.name);
             currenciesNames[i].setTextFill(currencyType.color);
-            VBox.setMargin(currenciesNames[i], new Insets(7,7,7,7));
+            VBox.setMargin(currenciesNames[i], new Insets(7, 7, 7, 7));
             switch (currencyType) {
                 case FOOD:
                     currenciesAmounts[i] = new Label(String.format("%+d", city.getFoodGrowth()));
@@ -476,7 +561,7 @@ public class GamePlayController extends ViewController {
                     break;
             }
             currenciesAmounts[i].setTextFill(currencyType.color);
-            VBox.setMargin(currenciesAmounts[i], new Insets(7,7,7,7));
+            VBox.setMargin(currenciesAmounts[i], new Insets(7, 7, 7, 7));
             i++;
         }
 
@@ -489,7 +574,7 @@ public class GamePlayController extends ViewController {
         VBox wholeCurrenciesInfosVBox = new VBox(population, currenciesInfosHBox);
         wholeCurrenciesInfosVBox.setAlignment(Pos.TOP_CENTER);
         wholeCurrenciesInfosVBox.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 0 20 0;");
-        wholeCurrenciesInfosVBox.setPadding(new Insets(10,20,20,10));
+        wholeCurrenciesInfosVBox.setPadding(new Insets(10, 20, 20, 10));
         wholeCurrenciesInfosVBox.setLayoutX(0);
         wholeCurrenciesInfosVBox.setLayoutY(30);
 
@@ -591,7 +676,7 @@ public class GamePlayController extends ViewController {
         });
 
         VBox centerButtons = new VBox(buyATile, returnToMap);
-        VBox.setMargin(buyATile, new Insets(0,0,20,0));
+        VBox.setMargin(buyATile, new Insets(0, 0, 20, 0));
         centerButtons.setLayoutX(593);
         centerButtons.setLayoutY(560);
 

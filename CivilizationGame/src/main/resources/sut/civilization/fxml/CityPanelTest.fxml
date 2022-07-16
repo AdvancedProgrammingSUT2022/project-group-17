@@ -65,7 +65,7 @@
             </font>
          </Label>
          <Separator layoutX="408.0" layoutY="10.0" opacity="0.34" orientation="VERTICAL" prefHeight="39.0" prefWidth="1.0" />
-         <Label layoutX="422.0" layoutY="10.0" onMouseClicked="#showSelectedUnitInfo" style="-fx-label-padding: 0 8;" text="Menu" textFill="WHITE">
+         <Label layoutX="422.0" layoutY="10.0" onMouseClicked="#showSelectedCivilizedUnitInfo" style="-fx-label-padding: 0 8;" text="Menu" textFill="WHITE">
             <font>
                <Font size="9.0" />
             </font>

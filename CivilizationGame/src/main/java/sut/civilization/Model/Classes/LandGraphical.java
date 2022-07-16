@@ -1,12 +1,16 @@
 package sut.civilization.Model.Classes;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import sut.civilization.Civilization;
+import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Model.ModulEnums.LandType;
+import sut.civilization.View.Graphical.GamePlayController;
 
 import java.util.Objects;
 
@@ -72,6 +76,17 @@ public class LandGraphical extends Polygon {
         cityImageView.setX(this.centerCoordinate.x - tileRadius*0.25);
         cityImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
 
+        civilizedUnitImageView.x.setOnMouseClicked(mouseEvent -> {
+            GameController.setSelectedCivilizedUnit(land.getCivilizedUnit());
+            GameController.setSelectedCombatUnit(null);
+            GamePlayController.getInstance().showSelectedCivilizedUnitInfo();
+        });
+        combatUnitImageView.x.setOnMouseClicked(mouseEvent -> {
+            GameController.setSelectedCombatUnit(land.getCombatUnit());
+            GameController.setSelectedCivilizedUnit(null);
+            GamePlayController.getInstance().showSelectedCombatUnitInfo();
+        });
+
 
         if (land.getLandType() != LandType.OCEAN)
             pane.getChildren().add(this);
@@ -100,7 +115,7 @@ public class LandGraphical extends Polygon {
 
         if (land.getCombatUnit() != null){
             combatUnitImageView.x.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/UnitIcons/" + land.getCombatUnit().name + ".png")).toExternalForm()));
-            combatUnitImageView.y.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/NationIcons/" + land.getCombatUnit().getOwnerNation().nationType.name + ".png")).toExternalForm()));
+            combatUnitImageView.y.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getCombatUnit().getOwnerNation().nationType.nationImageAddress).toExternalForm())));
         } else {
             combatUnitImageView.x.setImage(null);
             combatUnitImageView.y.setImage(null);
@@ -108,7 +123,7 @@ public class LandGraphical extends Polygon {
 
         if (land.getCivilizedUnit() != null){
             civilizedUnitImageView.x.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/UnitIcons/" + land.getCivilizedUnit().name + ".png")).toExternalForm()));
-            civilizedUnitImageView.y.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/NationIcons/" + land.getCivilizedUnit().getOwnerNation().nationType.name + ".png")).toExternalForm()));
+            civilizedUnitImageView.y.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getCivilizedUnit().getOwnerNation().nationType.nationImageAddress)).toExternalForm()));
         } else {
             civilizedUnitImageView.x.setImage(null);
             civilizedUnitImageView.y.setImage(null);
@@ -182,4 +197,15 @@ public class LandGraphical extends Polygon {
         return landFeatureImageView;
     }
 
+    public Pair<ImageView, ImageView> getCivilizedUnitImageView() {
+        return civilizedUnitImageView;
+    }
+
+    public Pair<ImageView, ImageView> getCombatUnitImageView() {
+        return combatUnitImageView;
+    }
+
+    public ImageView getCityImageView() {
+        return cityImageView;
+    }
 }

@@ -297,10 +297,13 @@ public class LandController extends Controller {
                 }
             }
         }
-        for (int i = 0; i < 10; i++) {
-            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER, new Nation(NationType.PERSIA), new Pair<>(i, i));
+        for (int i = 0; i < 7; i++) {
+            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.SETTLER, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
+            CloseCombatUnit closeCombatUnit = new CloseCombatUnit(CloseCombatUnitType.KNIGHT, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
             map[i][i].setCivilizedUnit(civilizedUnit);
+            map[i][i].setCombatUnit(closeCombatUnit);
             GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
+            GameController.getCurrentTurnUser().getNation().getUnits().add(closeCombatUnit);
         }
 
         City city = new City(GameController.getCurrentTurnUser().getNation(), "Mashhad");
