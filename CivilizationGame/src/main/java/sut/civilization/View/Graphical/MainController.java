@@ -10,19 +10,19 @@ public class MainController extends ViewController{
     sut.civilization.Controller.MainController mainController = new sut.civilization.Controller.MainController();
 
     public void startGame(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.SELECTION_MENU);
+        Game.instance.changeScene(Menus.SELECTION_MENU);
     }
 
     public void enterProfileMenu(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.PROFILE_MENU);
+        Game.instance.changeScene(Menus.PROFILE_MENU);
     }
 
     public void enterScoreBoardMenu(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.SCORE_BOARD);
+        Game.instance.changeScene(Menus.SCORE_BOARD);
     }
 
     public void enterChatMenu(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.CHAT_MENU);
+        Game.instance.changeScene(Menus.CHAT_MENU);
     }
 
     public void exit(MouseEvent mouseEvent) {
@@ -30,7 +30,7 @@ public class MainController extends ViewController{
     }
 
     public void logout(MouseEvent mouseEvent) {
-        showPopUp(Game.getCurrentScene().getWindow(),mainController.logoutUser());
+        showPopUp(Game.instance.getCurrentScene().getWindow(),mainController.logoutUser());
     }
 
     public void changeVolume(MouseEvent mouseEvent) {

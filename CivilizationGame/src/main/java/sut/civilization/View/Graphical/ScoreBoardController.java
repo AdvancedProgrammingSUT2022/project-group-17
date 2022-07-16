@@ -47,7 +47,7 @@ public class ScoreBoardController extends ViewController {
             String lastWin = (user.getLastWinTime() == 0 ? "N/A" : new Date(user.getLastWinTime()).toString().substring(0,new Date(user.getLastWinTime()).toString().length()-10));
 
             Label information = new Label(user.getNickname() + " /  lastWin : " + lastWin + " / score : " + user.getScore());
-            if (user.equals(Game.getLoggedInUser())) {
+            if (user.equals(Game.instance.getLoggedInUser())) {
                 hbox.getStyleClass().add("onlineUserBorder");
                 information.getStyleClass().add("onlineUserText");
                 numberIndicator.getStyleClass().add("onlineUserText");
@@ -64,13 +64,13 @@ public class ScoreBoardController extends ViewController {
     }
 
     public void backToMainMenu(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.MAIN_MENU);
+        Game.instance.changeScene(Menus.MAIN_MENU);
     }
 
     private ArrayList<User> getSortedUserList() {
         Comparator<User> comparator = Comparator.comparing(User::getScore).reversed().thenComparing(User::getLastWinTime).thenComparing(User::getNickname);
 
-        ArrayList<User> temp = new ArrayList<>(Game.getUsers());
+        ArrayList<User> temp = new ArrayList<>(Game.instance.getUsers());
         temp.sort(comparator);
 
         return temp;

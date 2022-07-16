@@ -24,7 +24,7 @@
 //    Nation doghoozAbad = new Nation(NationType.INCA);
 //    @BeforeEach
 //    public void setup(){
-//        Land.map = LandController.mapInitializer();
+//        Game.instance.map = LandController.mapInitializer();
 //    }
 //
 //    @Test
@@ -39,13 +39,13 @@
 //
 //        commandMatcher = CityCommands.getMatcher("build city on -x 3 -y 3",CityCommands.BUILD_CITY);
 //        CityController.setSelectedCivilizedUnit(new CivilizedUnit(CivilizedUnitType.SETTLER,CityController.getCurrentTurnUser().getNation(),new Pair(3,3)));
-//        Land.map[3][3].setCivilizedUnit(CityController.getSelectedCivilizedUnit());
+//        Game.instance.map[3][3].setCivilizedUnit(CityController.getSelectedCivilizedUnit());
 //        if (commandMatcher.matches())
 //            System.out.println(cityController.buildCity(commandMatcher));
 //
 //        CityController.setCurrentTurnUser(new User("","",""));
 //        CityController.getCurrentTurnUser().setNation(new Nation(NationType.PERSIA));
-//        Land.map[3][3].setLandType(LandType.GRASS_LAND);
+//        Game.instance.map[3][3].setLandType(LandType.GRASS_LAND);
 //        Assert.assertTrue(cityController.isCityBuildable(new Pair(3,2)));
 //    }
 //
@@ -54,13 +54,13 @@
 //        Nation nation = new Nation(NationType.PERSIA);
 //        City city = new City(nation,"tehran");
 //        nation.increaseCoin(100000);
-//        Land.map[3][3].setOwnerCity(city);
+//        Game.instance.map[3][3].setOwnerCity(city);
 //        CityController.setSelectedCity(city);
 //        commandMatcher = CityCommands.getMatcher("buy land on -x 3 -y 4",CityCommands.BUY_LAND);
 //        if (commandMatcher.matches())
 //            System.out.println(cityController.cityBuyLand(commandMatcher));
 //
-//        Assert.assertEquals(city,Land.map[3][4].getOwnerCity());
+//        Assert.assertEquals(city,Game.instance.map[3][4].getOwnerCity());
 //
 //    }
 //
@@ -70,13 +70,13 @@
 //        City city = new City(nation,"tehran");
 //
 //        CityController.setSelectedCity(city);
-//        city.setMainLand(Land.map[3][3]);
-//        Land.map[3][3].setOwnerCity(city);
-//        city.getLands().add(Land.map[3][3]);
+//        city.setMainLand(Game.instance.map[3][3]);
+//        Game.instance.map[3][3].setOwnerCity(city);
+//        city.getLands().add(Game.instance.map[3][3]);
 //
 //        commandMatcher = CityCommands.getMatcher("send citizen to -x 3 -y 3",CityCommands.SEND_CITIZEN);
 //        if (commandMatcher.matches()) cityController.sendCitizen(commandMatcher);
-//        Assertions.assertTrue(Land.map[3][3].hasCitizen());
+//        Assertions.assertTrue(Game.instance.map[3][3].hasCitizen());
 //    }
 //
 //    @Test
@@ -86,13 +86,13 @@
 //
 //        CityController.setSelectedCity(city);
 //
-//        Land.map[3][3].setOwnerCity(city);
-//        city.getLands().add(Land.map[3][3]);
-//        Land.map[3][3].setCitizen(true);
+//        Game.instance.map[3][3].setOwnerCity(city);
+//        city.getLands().add(Game.instance.map[3][3]);
+//        Game.instance.map[3][3].setCitizen(true);
 //        commandMatcher = CityCommands.getMatcher("retrieve citizen from -x 3 -y 3",CityCommands.RETRIEVE_CITIZEN);
 //        if (commandMatcher.matches()) cityController.retrieveCitizen(commandMatcher);
 //
-//        Assertions.assertFalse(Land.map[3][3].hasCitizen());
+//        Assertions.assertFalse(Game.instance.map[3][3].hasCitizen());
 //    }
 //
 //    @Test
@@ -102,12 +102,12 @@
 //
 //        CityController.setSelectedCity(city);
 //
-//        Land.map[3][3].setOwnerCity(city);
-//        city.getLands().add(Land.map[3][3]);
+//        Game.instance.map[3][3].setOwnerCity(city);
+//        city.getLands().add(Game.instance.map[3][3]);
 //        city.getImprovements().add(new Improvement(ImprovementType.CAMP));
 //
 //        CityController.cityDeath(city);
-//        Assertions.assertNull(Land.map[3][3].getOwnerCity());
+//        Assertions.assertNull(Game.instance.map[3][3].getOwnerCity());
 //    }
 //
 //    @Test
@@ -115,8 +115,8 @@
 //
 //        CityController.setSelectedCity(city);
 //
-//        Land.map[3][3].setOwnerCity(city);
-//        city.getLands().add(Land.map[3][3]);
+//        Game.instance.map[3][3].setOwnerCity(city);
+//        city.getLands().add(Game.instance.map[3][3]);
 //
 //        CityController.cityTakeOver(city,doghoozAbad);
 //    }

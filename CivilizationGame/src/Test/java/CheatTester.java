@@ -19,12 +19,12 @@
 //    @BeforeEach
 //    public void setup() {
 //        user.setNation(new Nation(NationType.PERSIA));
-//        Game.setSubTurn(0);
-//        Game.getPlayersInGame().add(user);
-//        Game.getPlayersInGame().add(new User("","",""));
-//        Game.getPlayersInGame().get(1).setNation(new Nation(NationType.PERSIA));
-//        Game.getPlayersInGame().get(Game.getSubTurn()).setNation(new Nation(NationType.PERSIA));
-//        Game.setLoggedInUser(user);
+//        Game.instance.setSubTurn(0);
+//        Game.instance.getPlayersInGame().add(user);
+//        Game.instance.getPlayersInGame().add(new User("","",""));
+//        Game.instance.getPlayersInGame().get(1).setNation(new Nation(NationType.PERSIA));
+//        Game.instance.getPlayersInGame().get(Game.instance.getSubTurn()).setNation(new Nation(NationType.PERSIA));
+//        Game.instance.setLoggedInUser(user);
 //        CheatController.setCurrentTurnUser(user);
 //    }
 //
@@ -102,7 +102,7 @@
 //
 //    @Test
 //    public void destroyImprovementCheatRightPlace(){
-//        Land.map[3][3].setImprovement(new Improvement(ImprovementType.FARM));
+//        Game.instance.map[3][3].setImprovement(new Improvement(ImprovementType.FARM));
 //        commandMatcher = CheatCommands.getMatcher("destroy improvement on -x 3 -y 3",CheatCommands.DESTROY_IMPROVEMENT);
 //        if (commandMatcher.matches())
 //            Assert.assertEquals("The improvement is now broken!",cheatController.destroyImprovement(commandMatcher));

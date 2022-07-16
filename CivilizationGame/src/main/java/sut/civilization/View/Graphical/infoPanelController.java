@@ -253,7 +253,7 @@ public class infoPanelController extends ViewController{
 
 
     private void scrollPanePopup(VBox vBox) {
-        Window window = Game.getCurrentScene().getWindow();
+        Window window = Game.instance.getCurrentScene().getWindow();
         ImageView ex = new ImageView(new Image(
                 Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/ex.png")
         ));

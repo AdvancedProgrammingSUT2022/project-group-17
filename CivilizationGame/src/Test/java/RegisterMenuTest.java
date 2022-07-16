@@ -15,7 +15,7 @@
 //        users.add(new User("Hamed_Saboor_Yaraghi", "HamedSY007", "matal"));
 //        users.add(new User("Amir_Hossein_Ravan_Nakhjavani", "AmirAmir", "tootoole"));
 //        users.add(new User("Ali", "Ali1234", "Ali Hastam"));
-//        Game.setUsers(Game.getUsers());
+//        Game.instance.setUsers(Game.instance.getUsers());
 //    }
 //
 //    @Test
@@ -85,7 +85,7 @@
 //    public void LoginSwipingFlags() {
 //        commandMatcher = LoginCommands.getMatcher("user login -p Ali1234 -u Ali", LoginCommands.LOGIN_USER);
 //        if (commandMatcher.matches())
-//            Assert.assertEquals("welcome " + Game.getUserByName("Ali").getNickname() + "!", loginController.loginUser(commandMatcher));
+//            Assert.assertEquals("welcome " + Game.instance.getUserByName("Ali").getNickname() + "!", loginController.loginUser(commandMatcher));
 //        else
 //            Assert.assertEquals("5", "10");
 //    }

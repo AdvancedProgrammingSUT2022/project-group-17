@@ -1,5 +1,7 @@
 package sut.civilization.View.Graphical;
 
+import com.google.gson.Gson;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +14,7 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
@@ -24,13 +27,16 @@ import sut.civilization.Model.ModulEnums.CivilizedUnitType;
 import sut.civilization.Model.ModulEnums.CurrencyType;
 import sut.civilization.Model.ModulEnums.TechnologyType;
 
+import java.lang.reflect.GenericSignatureFormatError;
+
 import static javafx.scene.paint.Color.WHITE;
 
 public class GamePlayController extends ViewController {
     @FXML
     private ScrollPane root;
-    public AnchorPane anchorPane;
+
     private final static LandGraphical[][] graphicalMap = new LandGraphical[20][20];
+    public AnchorPane anchorPane;
     private Popup infoPopup = new Popup();
     private Popup unitPopup = new Popup();
     public Label inProgressTechnologyName;
@@ -48,18 +54,13 @@ public class GamePlayController extends ViewController {
 
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 10; j++) {
-                final int finalI = i;
-                final int finalJ = j;
                 graphicalMap[i][j] = new LandGraphical(new Pair<>(i, j), pane);
-//                graphicalMap[i][j].getCivilizedUnitImageView().x.setOnMouseClicked(mouseEvent -> {
-//                    showSelectedCivilizedUnitInfo();
-//                });
             }
         }
         pane.setStyle("-fx-background-position: center; -fx-background-size: auto; -fx-background-image: url(/sut/civilization/Images/BackGround/gameBackground.png);");
         root.setContent(pane);
 
-        ((Stage) Game.getCurrentScene().getWindow()).setFullScreen(true);
+        ((Stage) Game.instance.getCurrentScene().getWindow()).setFullScreen(true);
         root.setMaxHeight(768);
         root.setMaxWidth(1366);
 
@@ -212,10 +213,10 @@ public class GamePlayController extends ViewController {
     }
 
     public void showDemographics() {
-        int nationNumber = Game.getPlayersInGame().size();
+        int nationNumber = Game.instance.getPlayersInGame().size();
         HBox[] eachNationHBox = new HBox[nationNumber];
         int i = 0;
-        for (User user : Game.getPlayersInGame()) {
+        for (User user : Game.instance.getPlayersInGame()) {
             ImageView avatar = new ImageView(new Image(user.getNation().getNationType().leaderImageAddress));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -314,7 +315,7 @@ public class GamePlayController extends ViewController {
 
 
     private void scrollPanePopup(VBox vBox) {
-        Window window = Game.getCurrentScene().getWindow();
+        Window window = Game.instance.getCurrentScene().getWindow();
         ImageView ex = new ImageView(new Image(
                 Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/ex.png")
         ));
@@ -348,7 +349,7 @@ public class GamePlayController extends ViewController {
             return;
         }
         CivilizedUnitType civilizedUnitType = GameController.getSelectedCivilizedUnit().getCivilizedUnitType();
-        Window window = Game.getCurrentScene().getWindow();
+        Window window = Game.instance.getCurrentScene().getWindow();
         ImageView unitImage = new ImageView();
 //        if (GameController.getSelectedCivilizedUnit() != null) {
         unitImage.setImage(new Image(
@@ -403,7 +404,7 @@ public class GamePlayController extends ViewController {
             return;
         }
         CombatUnit combatUnit = GameController.getSelectedCombatUnit();
-        Window window = Game.getCurrentScene().getWindow();
+        Window window = Game.instance.getCurrentScene().getWindow();
         ImageView unitImage = new ImageView();
         Label unitName = new Label();
         Label unitHP = new Label();
@@ -684,4 +685,56 @@ public class GamePlayController extends ViewController {
 
     }
 
+    public ScrollPane getRoot() {
+        return root;
+    }
+
+    public void setRoot(ScrollPane root) {
+        this.root = root;
+    }
+
+    public AnchorPane getAnchorPane() {
+        return anchorPane;
+    }
+
+    public void setAnchorPane(AnchorPane anchorPane) {
+        this.anchorPane = anchorPane;
+    }
+
+    public Popup getInfoPopup() {
+        return infoPopup;
+    }
+
+    public void setInfoPopup(Popup infoPopup) {
+        this.infoPopup = infoPopup;
+    }
+
+    public Popup getUnitPopup() {
+        return unitPopup;
+    }
+
+    public void setUnitPopup(Popup unitPopup) {
+        this.unitPopup = unitPopup;
+    }
+
+    public Label getInProgressTechnologyName() {
+        return inProgressTechnologyName;
+    }
+
+    public void setInProgressTechnologyName(Label inProgressTechnologyName) {
+        this.inProgressTechnologyName = inProgressTechnologyName;
+    }
+
+    public ImageView getInProgressTechnologyImage() {
+        return inProgressTechnologyImage;
+    }
+
+    public void setInProgressTechnologyImage(ImageView inProgressTechnologyImage) {
+        this.inProgressTechnologyImage = inProgressTechnologyImage;
+    }
+
+    public void nextTurn(MouseEvent mouseEvent) {
+        System.out.println(new Gson().toJson(Game.instance));
+
+    }
 }

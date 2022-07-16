@@ -26,27 +26,27 @@ public class GameMenuController {
 
 
     public void mainMenu(MouseEvent mouseEvent) {
-        Game.changeScene(Menus.MAIN_MENU);
+        Game.instance.changeScene(Menus.MAIN_MENU);
     }
 
     public void startGame(MouseEvent mouseEvent) {
         if (canGameStart()){
             int nation_one = Integer.parseInt(String.valueOf(nations1.getValue().toString().charAt(0)));
-            Game.getPlayersInGame().add(Game.getLoggedInUser());
-            sut.civilization.Controller.GameControllers.GameController.setCurrentTurnUser(Game.getLoggedInUser());
+            Game.instance.getPlayersInGame().add(Game.instance.getLoggedInUser());
+            sut.civilization.Controller.GameControllers.GameController.setCurrentTurnUser(Game.instance.getLoggedInUser());
             gameController.chooseNation(nation_one, 0);
             int i = 1;
             for (String opponent : opponents) {
-                Game.getPlayersInGame().add(gameController.getUserByName(opponent));
+                Game.instance.getPlayersInGame().add(gameController.getUserByName(opponent));
                 int nationNumber = Integer.parseInt(String.valueOf((selectedNations.get(opponent).getValue().toString().charAt(0))));
                 gameController.chooseNation(nationNumber, i++);
             }
-            for (User user : Game.getPlayersInGame()) {
+            for (User user : Game.instance.getPlayersInGame()) {
                 System.out.println(user.getNation().getNationType().name);
                 System.out.println(user.getUsername());
             }
-            Game.setMap(new LandController().mapInitializer());
-            Game.changeScene(Menus.GAME_MENU);
+            Game.instance.setMap(new LandController().mapInitializer());
+            Game.instance.changeScene(Menus.GAME_MENU);
         }
     }
 
@@ -83,7 +83,7 @@ public class GameMenuController {
         VBox opponentsNations = new VBox();
         usernames.setPrefWidth(200);
         usernames.setPrefHeight(50);
-        for (User user : Game.getUsers()) {
+        for (User user : Game.instance.getUsers()) {
             Button button = new Button(user.getUsername());
             button.setPrefHeight(50);
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {

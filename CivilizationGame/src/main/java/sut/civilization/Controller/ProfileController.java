@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 public class ProfileController extends Controller {
 
     public String changeNickname(User user,Matcher matcher) {
-        for (User oldUser : Game.getUsers()) {
+        for (User oldUser : Game.instance.getUsers()) {
             if (oldUser.getNickname().equals(matcher.group("nickName")))
                 return ("user with nickname " + matcher.group("nickName") + " already exists.");
         }
@@ -22,15 +22,15 @@ public class ProfileController extends Controller {
     public String changeNickname(Pair<String,String> newNickname,String oldNickName){
         if (!newNickname.x.equals(newNickname.y)) return "two nicknames are not identical!";
 
-        if (!Game.getLoggedInUser().getNickname().equals(oldNickName)) return "old nickname is not right! see it idiot it is right there!";
+        if (!Game.instance.getLoggedInUser().getNickname().equals(oldNickName)) return "old nickname is not right! see it idiot it is right there!";
 
-        for (User user : Game.getUsers()) {
+        for (User user : Game.instance.getUsers()) {
             if (user.getNickname().equals(newNickname.x)){
                 return "this Nickname already exists!";
             }
         }
 
-        Game.getLoggedInUser().setNickname(newNickname.x);
+        Game.instance.getLoggedInUser().setNickname(newNickname.x);
         return "Nickname successfully changed.";
 
     }
@@ -60,11 +60,11 @@ public class ProfileController extends Controller {
     public String changePassword(Pair<String,String> newPassword, String oldPassword) {
         if (!newPassword.x.equals(newPassword.y)) return "newPasswords are not identical!";
 
-        if (!oldPassword.equals(Game.getLoggedInUser().getPassword())) return "Password is not correct!";
+        if (!oldPassword.equals(Game.instance.getLoggedInUser().getPassword())) return "Password is not correct!";
 
         if (oldPassword.equals(newPassword.x)) return "please enter a new Password!";
 
-        Game.getLoggedInUser().setPassword(newPassword.x);
+        Game.instance.getLoggedInUser().setPassword(newPassword.x);
         return "password changed successfully.";
     }
 
@@ -72,7 +72,7 @@ public class ProfileController extends Controller {
         if (!matcher.group("password").equals(user.getPassword()))
             return ("password is incorrect!");
 
-        ArrayList<User> users = Game.getUsers();
+        ArrayList<User> users = Game.instance.getUsers();
         for (int i = 0; i < users.size(); i++) {
             User oldUser = users.get(i);
             if (oldUser.getUsername().equals(user.getUsername())) {
@@ -81,7 +81,7 @@ public class ProfileController extends Controller {
             }
         }
 
-        Game.setLoggedInUser(null);
+        Game.instance.setLoggedInUser(null);
         return ("user successfully removed");
     }
 }

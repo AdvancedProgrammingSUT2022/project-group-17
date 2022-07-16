@@ -14,9 +14,9 @@ public class Civilization extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Game.setCurrentScene(new Scene(Game.loadScene(Menus.LOGIN_MENU)));
+        Game.instance.setCurrentScene(new Scene(Game.instance.loadScene(Menus.LOGIN_MENU)));
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("Images/Icons/programIcon.png")).toExternalForm()));
-        stage.setScene(Game.getCurrentScene());
+        stage.setScene(Game.instance.getCurrentScene());
         stage.setTitle("Civilization V");
         stage.show();
     }

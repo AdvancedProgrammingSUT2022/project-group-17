@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class City {
     protected String name;
-    protected Nation ownerNation;
+    protected transient Nation ownerNation;
     protected ArrayList<Land> lands = new ArrayList<>();
     protected int citizens = 10;
     protected int employees = 0;

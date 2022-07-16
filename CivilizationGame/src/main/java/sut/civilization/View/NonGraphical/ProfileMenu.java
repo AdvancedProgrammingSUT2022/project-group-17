@@ -16,21 +16,21 @@ public class ProfileMenu extends Menu{
         Matcher commandMatcher;
 
         if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.CHANGE_PASSWORD)).matches()){
-            System.out.println(profileController.changePassword(Game.getLoggedInUser(),commandMatcher));
+            System.out.println(profileController.changePassword(Game.instance.getLoggedInUser(),commandMatcher));
 
         } else if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.CHANGE_NICKNAME)).matches()){
-            System.out.println(profileController.changeNickname(Game.getLoggedInUser(),commandMatcher));
+            System.out.println(profileController.changeNickname(Game.instance.getLoggedInUser(),commandMatcher));
 
         } else if (ProfileCommands.getMatcher(input,ProfileCommands.INFO_PROFILE).matches()){
             System.out.println("user account details :\n" +
                     "----------------------------------------\n" +
-                    "user name : " + Game.getLoggedInUser().getUsername() + "\n" +
-                    "nick name : " + Game.getLoggedInUser().getNickname() + "\n" +
-                    "score : " + Game.getLoggedInUser().getScore()
+                    "user name : " + Game.instance.getLoggedInUser().getUsername() + "\n" +
+                    "nick name : " + Game.instance.getLoggedInUser().getNickname() + "\n" +
+                    "score : " + Game.instance.getLoggedInUser().getScore()
             );
 
         } else if ((commandMatcher = ProfileCommands.getMatcher(input,ProfileCommands.REMOVE_ACCOUNT)).matches()){
-            System.out.println(profileController.removeAccount(Game.getLoggedInUser(),commandMatcher));
+            System.out.println(profileController.removeAccount(Game.instance.getLoggedInUser(),commandMatcher));
             setMenuName("LoginMenu");
 
         } else if (ProfileCommands.getMatcher(input,ProfileCommands.EXIT).matches()){
