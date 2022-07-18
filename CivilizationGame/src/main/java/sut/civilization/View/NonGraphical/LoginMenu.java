@@ -20,7 +20,7 @@ public class LoginMenu extends Menu {
             System.out.println(loginController.createUser(commandMatcher));
 
         } else if (LoginCommands.getMatcher(input, LoginCommands.LIST_OF_USERS).matches()) {
-            ArrayList<User> users = Game.getUsers();
+            ArrayList<User> users = Game.instance.getUsers();
             if (users.size() == 0) System.out.println("we have no users right now");
             for (int i = 0; i < users.size(); i++) {
                 System.out.println(i + 1 + "-\t" + users.get(i));

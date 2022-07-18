@@ -34,7 +34,7 @@
         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
               BorderPane.alignment="CENTER_RIGHT">
             <ImageView fitHeight="52.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../Images/volumeIcon.png"/>
+                <Image url="@../Images/otherIcons/volumeIcon.png"/>
             </ImageView>
             <Slider onDragDetected="#changeVolume" value="0.5">
                 <HBox.margin>

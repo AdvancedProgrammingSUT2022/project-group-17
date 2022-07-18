@@ -25,7 +25,7 @@ public class CityController extends GameController {
         if (isCityBuildable(main)){
             City city = new City(currentTurnUser.getNation(), name);
             currentTurnUser.getNation().addCity(city);
-            Land mainLand = Game.map[x][y];
+            Land mainLand = Game.instance.map[x][y];
             mainLand.setCityCenter(true);
             mainLand.setOwnerCity(city);
             city.setMainLand(mainLand);
@@ -35,7 +35,7 @@ public class CityController extends GameController {
                 neighbors[i] = landController.getNeighborIndex(main, i);
             for (int i = 0; i < 6; i++) {
                 if (isValid(neighbors[i]))
-                    Game.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
+                    Game.instance.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
             }
             if (currentTurnUser.getNation().getCities().size() > 0 && selectedCivilizedUnit != null)
                 UnitController.unitDeath(selectedCivilizedUnit);
@@ -47,7 +47,7 @@ public class CityController extends GameController {
     }
 
     public boolean isCityBuildable(Pair<Integer,Integer> main){
-        if (!Game.map[main.x][main.y].getLandType().isWalkable)
+        if (!Game.instance.map[main.x][main.y].getLandType().isWalkable)
             return false;
 
         Pair<Integer,Integer>[] neighbors = new Pair[6];
@@ -62,7 +62,7 @@ public class CityController extends GameController {
 
                 for (int j = 0; j < 6; j++) {
                     if (isValid(neighbors2[j])){
-                        if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null)
+                        if (Game.instance.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null)
                             return false;
                     }
                 }
@@ -89,9 +89,9 @@ public class CityController extends GameController {
 
                 for (int j = 0; j < 6; j++) {
                     if (Pair.isValid(neighbors2[j])){
-                        if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null){
-                            if (Game.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity().equals(selectedCity)){
-                                CombatUnit combatUnit = Game.map[x][y].getCombatUnit();
+                        if (Game.instance.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity() != null){
+                            if (Game.instance.map[neighbors2[j].x][neighbors2[j].y].getOwnerCity().equals(selectedCity)){
+                                CombatUnit combatUnit = Game.instance.map[x][y].getCombatUnit();
                                 combatUnit.setHp(combatUnit.getHp() - selectedCity.getRangedStrength());
                                 return "Attack on unit successful";
                             }
@@ -113,7 +113,7 @@ public class CityController extends GameController {
             Pair<Integer,Integer>[] neighbors2 = new Pair[6];
             for (int j = 0; j < 6; j++) {
                 neighbors2[j] = landController.getNeighborIndex(neighbors[i], j);
-                if (selectedCity.getMainLand().equals(Game.map[neighbors2[j].x][neighbors2[j].y]))
+                if (selectedCity.getMainLand().equals(Game.instance.map[neighbors2[j].x][neighbors2[j].y]))
                     return true;
             }
         }
@@ -129,12 +129,12 @@ public class CityController extends GameController {
         if (!isCitizenInRange(x, y))
             return "You can't send a citizen that far";
         if (selectedCity != null){
-            if (Game.map[x][y].getOwnerCity() == null || !Game.map[x][y].getOwnerCity().equals(selectedCity))
+            if (Game.instance.map[x][y].getOwnerCity() == null || !Game.instance.map[x][y].getOwnerCity().equals(selectedCity))
                 return "This land is not part of your city";
             if (selectedCity.getEmployees() < selectedCity.getCitizens()){
-                if (!Game.map[x][y].hasCitizen()){
+                if (!Game.instance.map[x][y].hasCitizen()){
                     selectedCity.setEmployees(selectedCity.getEmployees() + 1);
-                    Game.map[dest.x][dest.y].setCitizen(true);
+                    Game.instance.map[dest.x][dest.y].setCitizen(true);
                     return "Citizen sent to work successfully";
                 }
                 return "There already is a citizen on this land";
@@ -149,8 +149,8 @@ public class CityController extends GameController {
         Pair<Integer,Integer> origin = new Pair<Integer,Integer>(x, y);
 
         if (selectedCity != null){
-            if (Game.map[x][y].hasCitizen()){
-                Game.map[x][y].setCitizen(false);
+            if (Game.instance.map[x][y].hasCitizen()){
+                Game.instance.map[x][y].setCitizen(false);
                 selectedCity.setEmployees(selectedCity.getEmployees() - 1);
                 return "Citizen retrieved successfully";
             }
@@ -173,13 +173,13 @@ public class CityController extends GameController {
         boolean canBuy = false;
         for (int i = 0; i < 6; i++) {
             if (Pair.isValid(neighbors[i])){
-                if (Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity() != null && Game.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity)){
+                if (Game.instance.map[neighbors[i].x][neighbors[i].y].getOwnerCity() != null && Game.instance.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(selectedCity)){
                     canBuy = true;
                     break;
                 }
             }
         }
-        Land land = Game.map[x][y];
+        Land land = Game.instance.map[x][y];
         if (selectedCity.getOwnerNation().getCoin().getBalance() >= land.getCost()
                 && canBuy && land.isBuyable()){
             land.setOwnerCity(selectedCity);

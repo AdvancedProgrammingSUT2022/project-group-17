@@ -1,4 +1,4 @@
-//import sut.civilization.Controller.GameControllers.GameController;
+//import sut.civilization.Controller.GameControllers.GameMenuController;
 //import sut.civilization.Controller.GameControllers.LandController;
 //import sut.civilization.Enums.GameEnums.GameCommands;
 //import sut.civilization.Model.City;
@@ -19,12 +19,12 @@
 //
 //
 //public class GameControllerTester extends Tester{
-//    GameController gameController = new GameController();
+//    GameMenuController gameController = new GameMenuController();
 //
 //
 //    @BeforeEach
 //    public void setup(){
-//        Game.map = LandController.mapInitializer();
+//        Game.instance.map = LandController.mapInitializer();
 //        Nation persia = new Nation(NationType.PERSIA);
 //        Nation inca = new Nation(NationType.INCA);
 //
@@ -34,17 +34,17 @@
 //        users.get(0).setNation(persia);
 //        users.get(1).setNation(inca);
 //
-//        Game.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,persia,new Pair(3,3)));
-//        Game.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,persia,new Pair(3,3)));
+//        Game.instance.map[3][3].setCivilizedUnit(new CivilizedUnit(CivilizedUnitType.WORKER,persia,new Pair(3,3)));
+//        Game.instance.map[3][3].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,persia,new Pair(3,3)));
 //
 //        City tehran = new City(persia,"tehran");
 //        City doghoozAbad = new City(inca,"doghooz Abad");
 //
-//        Game.map[4][4].setOwnerCity(tehran);
-//        Game.map[5][5].setOwnerCity(doghoozAbad);
+//        Game.instance.map[4][4].setOwnerCity(tehran);
+//        Game.instance.map[5][5].setOwnerCity(doghoozAbad);
 //
-//        GameController.setCurrentTurnUser(new User("","",""));
-//        GameController.getCurrentTurnUser().setNation(persia);
+//        GameMenuController.setCurrentTurnUser(new User("","",""));
+//        GameMenuController.getCurrentTurnUser().setNation(persia);
 //    }
 //
 //
@@ -81,9 +81,9 @@
 //        User user = new User("","","");
 //        ArrayList<User> users = new ArrayList<>();
 //        users.add(user);
-//        Game.setPlayersInGame(users);
-//        GameController.setCurrentTurnUser(Game.getPlayersInGame().get(0));
-//        Game.setUsers(users);
+//        Game.instance.setPlayersInGame(users);
+//        GameMenuController.setCurrentTurnUser(Game.instance.getPlayersInGame().get(0));
+//        Game.instance.setUsers(users);
 //        for (int i = 0; i < 9; i++) {
 //            gameController.chooseNation(i,0);
 //        }
@@ -120,14 +120,14 @@
 //
 //    @Test
 //    public void nextPlayerTurnTest(){
-//        Game.setPlayersInGame(users);
+//        Game.instance.setPlayersInGame(users);
 //
 //        Assertions.assertEquals("next player turn!: 2",gameController.nextPlayerTurn());
 //    }
 //
 //    @Test
 //    public void nextGodDamnTurn(){
-//        Game.setPlayersInGame(users);
+//        Game.instance.setPlayersInGame(users);
 //        gameController.nextGameTurn();
 //    }
 //}

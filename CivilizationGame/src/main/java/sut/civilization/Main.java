@@ -2,6 +2,7 @@ package sut.civilization;
 
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.Classes.Game;
+import sut.civilization.Model.Classes.Land;
 import sut.civilization.View.NonGraphical.*;
 
 import java.util.HashMap;
@@ -19,17 +20,17 @@ public class Main {
         String currentMenu = "LoginMenu";
         Scanner scanner = new Scanner(System.in);
 
-        Game.setMap(landController.mapInitializer());
+        Game.instance.setMap(landController.mapInitializer());
         landController.initializeDistances();
         landController.updateDistances();
 
         while (!currentMenu.equals("EXIT")) {
-            landController.printMap(Game.map);
+            landController.printMap(Game.instance.map);
             menus[menuNumbers.get(currentMenu)].run(scanner);
             currentMenu = Menu.getMenuName();
         }
 
-        Game.saveUserListToDatabase();
+        Game.instance.saveUserListToDatabase();
     }
 
     private static void menuInitializer(Menu[] menus, HashMap<String, Integer> menuNumbers){

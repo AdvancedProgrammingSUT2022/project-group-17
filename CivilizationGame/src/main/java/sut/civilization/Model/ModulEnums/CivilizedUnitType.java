@@ -11,6 +11,7 @@ public enum CivilizedUnitType {
     public final TechnologyType technologyType;
     public final int turns;
     public final int hp;
+    public final String imageAddress;
     CivilizedUnitType(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
                       int turns, int hp) {
         this.name = name;
@@ -20,5 +21,6 @@ public enum CivilizedUnitType {
         this.technologyType = technologyType;
         this.turns = turns;
         this.hp = hp;
+        this.imageAddress = "/sut/civilization/Images/units/" + name + ".png";
     }
 }

@@ -6,31 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/GamePlay.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.GamePlayController">
+<AnchorPane fx:id="anchorPane" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/infoPanel.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.infoPanelController">
     <children>
-        <HBox alignment="CENTER_LEFT" layoutY="572.0" prefHeight="148.0" prefWidth="339.0">
-            <children>
-                <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
-                    <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </HBox.margin>
-                    <image>
-                        <Image url="@../Images/warrior.png" />
-                    </image>
-                </ImageView>
-                <VBox alignment="CENTER_LEFT" prefHeight="148.0" prefWidth="191.0">
-                    <children>
-                        <Label style="-fx-label-padding: 10 10 10 0; -fx-font-weight: bold;" text="Warrior">
-                            <font>
-                                <Font size="22.0" />
-                            </font>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="10.0" style="-fx-label-padding: 10 10 10 0;" text="Strenght" />
-                        <Label layoutX="10.0" layoutY="46.0" style="-fx-label-padding: 10 10 10 0;" text="Movement Cost" />
-                    </children>
-                </VBox>
-            </children>
-        </HBox>
         <HBox prefHeight="30.0" prefWidth="324.0">
             <children>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -38,7 +15,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>
                     <image>
-                        <Image url="@../Images/coin.png" />
+                        <Image url="@../Images/otherIcons/coin.png" />
                     </image>
                 </ImageView>
                 <Label style="-fx-label-padding: 10 10 0 0;" text="20(+5)">
@@ -51,7 +28,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>
                     <image>
-                        <Image url="@../Images/science.png" />
+                        <Image url="@../Images/otherIcons/science.png" />
                     </image>
                 </ImageView>
                 <Label layoutX="44.0" layoutY="10.0" style="-fx-label-padding: 10 10 0 0;" text="20(+5)">
@@ -61,7 +38,7 @@
                 </Label>
                 <ImageView fitHeight="2204.0" fitWidth="20.0" layoutX="102.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Images/happiness.png" />
+                        <Image url="@../Images/otherIcons/happiness.png" />
                     </image>
                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -76,18 +53,18 @@
         </HBox>
         <HBox layoutY="30.0" prefHeight="120.0" prefWidth="257.0">
             <children>
-                <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="128.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                     <image>
-                        <Image url="@../Images/research.png" />
+                        <Image url="@../Images/otherIcons/research.png" />
                     </image>
                 </ImageView>
-                <VBox prefHeight="120.0" prefWidth="133.0">
+                <VBox prefHeight="148.0" prefWidth="186.0">
                     <children>
                         <Label prefHeight="36.0" prefWidth="134.0" style="-fx-label-padding: 10;" text="Agriculture" />
-                        <ProgressBar maxWidth="100.0" prefWidth="200.0" progress="0.52" />
+                        <ProgressBar maxWidth="176.0" prefHeight="20.0" prefWidth="176.0" progress="0.52" />
                     </children>
                     <HBox.margin>
                         <Insets left="10.0" />
@@ -116,56 +93,77 @@
             </Label>
          </children>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="789.0" layoutY="34.0" prefHeight="55.0" prefWidth="291.0">
+      <HBox alignment="CENTER_RIGHT" layoutX="622.0" layoutY="34.0" prefHeight="64.0" prefWidth="458.0">
          <children>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-               <image>
-                  <Image url="@../Images/info.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="251.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/info.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="261.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/info.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="261.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/info.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="141.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/info.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="271.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/info.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-               </HBox.margin>
-            </ImageView>
+            <VBox alignment="CENTER" layoutX="251.0" layoutY="10.0" prefHeight="64.0" prefWidth="74.0" style="-fx-padding: 10;">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="36.0" onMouseClicked="#showEconomics" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/economics.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Economics">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="210.0" layoutY="10.0" prefHeight="64.0" prefWidth="91.0" style="-fx-padding: 10;">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="36.0" onMouseClicked="#showDemographics" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/economics.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Demographics">
+                     <font>
+                        <Font size="8.0" />
+                     </font></Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="251.0" layoutY="10.0" prefHeight="64.0" prefWidth="79.0" style="-fx-padding: 10;">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="36.0" onMouseClicked="#showDiplomacies" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/economics.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" text="Diplomacies">
+                     <font>
+                        <Font size="8.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="201.0" layoutY="10.0" prefHeight="64.0" prefWidth="77.0" style="-fx-padding: 10;">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="36.0" onMouseClicked="#showCities" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/economics.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="14.0" prefWidth="34.0" text="Cities">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="273.0" layoutY="10.0" prefHeight="64.0" prefWidth="82.0" style="-fx-padding: 10;">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="36.0" onMouseClicked="#showUnits" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/economics.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Units">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </HBox>
       <VBox alignment="BOTTOM_RIGHT" layoutX="780.0" layoutY="470.0" prefHeight="250.0" prefWidth="300.0">
@@ -177,7 +175,7 @@
             </Button>
             <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/map.png" />
+                  <Image url="@../Images/otherIcons/map.png" />
                </image>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />

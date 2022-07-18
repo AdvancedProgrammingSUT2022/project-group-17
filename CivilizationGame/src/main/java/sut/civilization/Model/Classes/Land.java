@@ -1,5 +1,6 @@
 package sut.civilization.Model.Classes;
 
+import javafx.scene.shape.Polygon;
 import sut.civilization.Model.ModulEnums.LandType;
 
 public class Land {
@@ -39,7 +40,6 @@ public class Land {
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
-        this.isBuyable = true;
     }
 
     public void addGrowthToLandOwner(){

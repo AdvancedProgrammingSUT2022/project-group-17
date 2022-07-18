@@ -34,15 +34,15 @@ public class ChatMenuController extends ViewController {
 
 
     public void BackToMainMenu() {
-        Game.changeScene(Menus.MAIN_MENU);
+        Game.instance.changeScene(Menus.MAIN_MENU);
     }
 
     @FXML
     private void initialize() {
 
-        if (Game.getLoggedInUser().getChats() != null) {
+        if (Game.instance.getLoggedInUser().getChats() != null) {
             int i = 0;
-            for (Chat chat : Game.getLoggedInUser().getChats()) {
+            for (Chat chat : Game.instance.getLoggedInUser().getChats()) {
                 listAChatByChat(chat, i);
                 i += 2;
             }
@@ -52,7 +52,7 @@ public class ChatMenuController extends ViewController {
     public void send() {
         if (!messageInput.getText().isBlank() && selectedChat != null) {
             VBox messageBox = new VBox();
-            Label name = new Label(Game.getLoggedInUser().getUsername());
+            Label name = new Label(Game.instance.getLoggedInUser().getUsername());
             name.getStyleClass().add("name");
             Label messageText = new Label(messageInput.getText());
             messageText.getStyleClass().add("message");
@@ -66,7 +66,7 @@ public class ChatMenuController extends ViewController {
             messageBox.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
             VBox.setMargin(messageBox, new Insets(10, 0, 0, 0));
 
-            ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")));
+            ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")));
             avatar.getStyleClass().add("avatar");
 
             HBox message = new HBox();
@@ -79,7 +79,7 @@ public class ChatMenuController extends ViewController {
             messageInput.setText("");
             messagesScrollPane.setVvalue(1);
 
-            selectedChat.addMessage(new Message(Game.getLoggedInUser(), messageText.getText(), time.getText()));
+            selectedChat.addMessage(new Message(Game.instance.getLoggedInUser(), messageText.getText(), time.getText()));
         }
     }
 
@@ -90,15 +90,15 @@ public class ChatMenuController extends ViewController {
     public void search() {
         allChats.getChildren().clear();
         int i = 0;
-        for (User user : Game.getUsers()){
-            if (user.getUsername().startsWith(search.getText()) && user != Game.getLoggedInUser()) {
+        for (User user : Game.instance.getUsers()){
+            if (user.getUsername().startsWith(search.getText()) && user != Game.instance.getLoggedInUser()) {
                 listAChatByUser(user, i);
                 i += 2;
             }
         }
 
         searchHBox.getChildren().add(0, new ImageView(new Image(
-                (Civilization.class.getResourceAsStream("/sut/civilization/Images/ex.png")
+                (Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/ex.png")
         ))));
         searchHBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
             allChats.getChildren().clear();
@@ -109,7 +109,7 @@ public class ChatMenuController extends ViewController {
 
     private void listAChatByUser(User user, int i) {
         //fixme avatar
-        ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")));
+        ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")));
         Label name = new Label(user.getUsername());
         name.getStyleClass().add("name");
         name.getStyleClass().add("chatPreview");
@@ -138,11 +138,11 @@ public class ChatMenuController extends ViewController {
         Image image;
         Label name;
         if (chat instanceof ChatRoom) {
-            image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/public.png"));
+            image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/public.png"));
             name = new Label(((ChatRoom) chat).getName());
         } else {
-            image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png"));
-            if (chat.getUsers().get(0) == Game.getLoggedInUser()) name = new Label(chat.getUsers().get(1).getUsername());
+            image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png"));
+            if (chat.getUsers().get(0) == Game.instance.getLoggedInUser()) name = new Label(chat.getUsers().get(1).getUsername());
             else name = new Label(chat.getUsers().get(0).getUsername());
         }
         ImageView avatar = new ImageView(image);
@@ -172,8 +172,8 @@ public class ChatMenuController extends ViewController {
 
     private void selectChatByUser(User user, int i) {
         boolean isChatFound = false;
-        if (Game.getLoggedInUser().getChats() != null)
-            for (Chat chat : Game.getLoggedInUser().getChats())
+        if (Game.instance.getLoggedInUser().getChats() != null)
+            for (Chat chat : Game.instance.getLoggedInUser().getChats())
                 if (chat.getUsers().contains(user) && !(chat instanceof ChatRoom)) {
                     selectedChat = chat;
                     isChatFound = true;
@@ -181,9 +181,9 @@ public class ChatMenuController extends ViewController {
                 }
 
         if (!isChatFound) {
-            ArrayList<User> users = new ArrayList<>(Arrays.asList(Game.getLoggedInUser(), user));
+            ArrayList<User> users = new ArrayList<>(Arrays.asList(Game.instance.getLoggedInUser(), user));
             selectedChat = new Chat(users);
-            Game.getLoggedInUser().addChat(selectedChat);
+            Game.instance.getLoggedInUser().addChat(selectedChat);
             user.addChat(selectedChat);
             loadMessages(selectedChat);
         }
@@ -222,13 +222,13 @@ public class ChatMenuController extends ViewController {
                 messageBox.getChildren().add(messageText);
                 messageBox.getChildren().add(time);
                 messageBox.getStyleClass().add("messageBox");
-                if (message.getSender() != Game.getLoggedInUser()) messageBox.setStyle("-fx-background-color: #cbe6f7;");
+                if (message.getSender() != Game.instance.getLoggedInUser()) messageBox.setStyle("-fx-background-color: #cbe6f7;");
                 messageBox.setMaxWidth(Region.USE_PREF_SIZE);
                 messageBox.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
                 VBox.setMargin(messageBox, new Insets(10, 0, 0, 0));
 
                 //fixme avatar
-                ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")));
+                ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")));
                 avatar.getStyleClass().add("avatar");
 
                 HBox hBox = new HBox();
@@ -244,12 +244,12 @@ public class ChatMenuController extends ViewController {
     }
 
     public void newGroup() {
-        Window window = Game.getCurrentScene().getWindow();
+        Window window = Game.instance.getCurrentScene().getWindow();
         Popup createGroupPopup = new Popup();
         TextField groupSearch = new TextField();
         groupSearch.setPrefWidth(200);
         groupSearch.setPadding(new Insets(10));
-        ImageView searchIcon = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/search.png")));
+        ImageView searchIcon = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/search.png")));
         searchIcon.setFitHeight(32);
         searchIcon.setFitWidth(32);
         HBox searchHBox = new HBox(groupSearch, searchIcon);
@@ -275,8 +275,8 @@ public class ChatMenuController extends ViewController {
             groupMemberList.getChildren().clear();
             selectedMembersForGroup.clear();
             int i = 0;
-            for (User user : Game.getUsers()){
-                if (user.getUsername().startsWith(groupSearch.getText()) && user != Game.getLoggedInUser()) {
+            for (User user : Game.instance.getUsers()){
+                if (user.getUsername().startsWith(groupSearch.getText()) && user != Game.instance.getLoggedInUser()) {
                     searchMemberForGroup(user, groupMemberList, i);
                     i += 2;
                 }
@@ -284,16 +284,16 @@ public class ChatMenuController extends ViewController {
         });
 
         createButton.setOnMouseClicked(mouseEvent -> {
-            if (selectedMembersForGroup.isEmpty()) showPopUp(Game.getCurrentScene().getWindow(), "Select at least one user!");
+            if (selectedMembersForGroup.isEmpty()) showPopUp(Game.instance.getCurrentScene().getWindow(), "Select at least one user!");
             else {
                 //TODO name of the group
-                selectedMembersForGroup.add(Game.getLoggedInUser());
+                selectedMembersForGroup.add(Game.instance.getLoggedInUser());
                 ChatRoom chatRoom = new ChatRoom("group", selectedMembersForGroup);
                 for (User user: selectedMembersForGroup)
                     user.addChat(chatRoom);
                 allChats.getChildren().clear();
                 initialize();
-                selectChatByChat(chatRoom, 2 * Game.getLoggedInUser().getChats().size() - 2);
+                selectChatByChat(chatRoom, 2 * Game.instance.getLoggedInUser().getChats().size() - 2);
                 wholeBorderPane.setEffect(null);
                 createGroupPopup.hide();
                 selectedMembersForGroup.clear();
@@ -308,7 +308,7 @@ public class ChatMenuController extends ViewController {
 
     private void searchMemberForGroup(User user, VBox groupMemberList, int i) {
         //fixme avatar
-        ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/user-profile.png")));
+        ImageView avatar = new ImageView(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png")));
         Label name = new Label(user.getUsername());
         name.getStyleClass().add("name");
         name.getStyleClass().add("chatPreview");

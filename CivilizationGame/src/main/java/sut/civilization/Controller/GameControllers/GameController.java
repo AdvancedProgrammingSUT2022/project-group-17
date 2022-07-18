@@ -54,22 +54,22 @@ public class GameController extends Controller {
 
         switch (chosenNumber) {
             case 0:
-                nation = new Nation(NationType.INDUS_VALLEY);
+                nation = new Nation(NationType.FRANCE);
                 break;
             case 1:
                 nation = new Nation(NationType.MAYA);
                 break;
             case 2:
-                nation = new Nation(NationType.ANCIENT_GREECE);
+                nation = new Nation(NationType.GREECE);
                 break;
             case 3:
                 nation = new Nation(NationType.PERSIA);
                 break;
             case 4:
-                nation = new Nation(NationType.ANCIENT_EGYPT);
+                nation = new Nation(NationType.EGYPT);
                 break;
             case 5:
-                nation = new Nation(NationType.MESOPOTAMIAN);
+                nation = new Nation(NationType.INDIA);
                 break;
             case 6:
                 nation = new Nation(NationType.ROME);
@@ -82,7 +82,7 @@ public class GameController extends Controller {
                 break;
         }
 
-        Game.getPlayersInGame().get(playerNum).setNation(nation);
+        Game.instance.getPlayersInGame().get(playerNum).setNation(nation);
     }
 
     public ArrayList<String> showResearches() {
@@ -140,7 +140,7 @@ public class GameController extends Controller {
 
     public ArrayList<String> showDemographics() {
         ArrayList<String> output = new ArrayList<>();
-        for (User user : Game.getPlayersInGame()) {
+        for (User user : Game.instance.getPlayersInGame()) {
             output.add(user.getNation().getNationType().name + " :");
             int population = 0;
             for (City city : user.getNation().getCities())
@@ -184,10 +184,10 @@ public class GameController extends Controller {
         int selectedLandI = Integer.parseInt(matcher.group("x"));
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
-        if (Game.map[selectedLandI][selectedLandJ].getCombatUnit() != null) {
-            if (!Game.map[selectedLandI][selectedLandJ].getCombatUnit().getOwnerNation().equals(currentTurnUser.getNation()))
+        if (Game.instance.map[selectedLandI][selectedLandJ].getCombatUnit() != null) {
+            if (!Game.instance.map[selectedLandI][selectedLandJ].getCombatUnit().getOwnerNation().equals(currentTurnUser.getNation()))
                 return "You can't select opponent's unit";
-            selectedCombatUnit = Game.map[selectedLandI][selectedLandJ].getCombatUnit();
+            selectedCombatUnit = Game.instance.map[selectedLandI][selectedLandJ].getCombatUnit();
             return (selectedCombatUnit.getName() + " is now selected");
         }
         return ("There is no combat unit here!");
@@ -197,10 +197,10 @@ public class GameController extends Controller {
         int selectedLandI = Integer.parseInt(matcher.group("x"));
         int selectedLandJ = Integer.parseInt(matcher.group("y"));
 
-        if (Game.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null) {
-            if (!Game.map[selectedLandI][selectedLandJ].getCivilizedUnit().getOwnerNation().equals(currentTurnUser.getNation()))
+        if (Game.instance.map[selectedLandI][selectedLandJ].getCivilizedUnit() != null) {
+            if (!Game.instance.map[selectedLandI][selectedLandJ].getCivilizedUnit().getOwnerNation().equals(currentTurnUser.getNation()))
                 return "You can't select opponent's unit";
-            selectedCivilizedUnit = Game.map[selectedLandI][selectedLandJ].getCivilizedUnit();
+            selectedCivilizedUnit = Game.instance.map[selectedLandI][selectedLandJ].getCivilizedUnit();
             return (selectedCivilizedUnit.getName() + " is now selected");
         }
         return ("There is no civilized unit here!");
@@ -211,10 +211,10 @@ public class GameController extends Controller {
         int x = Integer.parseInt(matcher.group("x"));
         int y = Integer.parseInt(matcher.group("y"));
 
-        if (Game.map[x][y].getOwnerCity() != null) {
-            if (!Game.map[x][y].getOwnerCity().getOwnerNation().equals(currentTurnUser.getNation()))
+        if (Game.instance.map[x][y].getOwnerCity() != null) {
+            if (!Game.instance.map[x][y].getOwnerCity().getOwnerNation().equals(currentTurnUser.getNation()))
                 return "You can't select opponent's city";
-            selectedCity = Game.map[x][y].getOwnerCity();
+            selectedCity = Game.instance.map[x][y].getOwnerCity();
             return (selectedCity.getName() + " is now selected");
         }
         return "There is no city here!";
@@ -222,7 +222,7 @@ public class GameController extends Controller {
 
     public void mapShow() {
 
-        new LandController().printMap(Game.map);
+        new LandController().printMap(Game.instance.map);
     }
 
     private boolean isReadyForNextTurn() {
@@ -237,11 +237,11 @@ public class GameController extends Controller {
             selectedCity = null;
             selectedCivilizedUnit = null;
             selectedCombatUnit = null;
-            Game.setSubTurn(Game.getSubTurn() + 1);
-            currentTurnUser = Game.getPlayersInGame().get(Game.getSubTurn() % Game.getPlayersInGame().size());
-            if (Game.getSubTurn() == Game.getPlayersInGame().size()) {
+            Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
+            currentTurnUser = Game.instance.getPlayersInGame().get(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
+            if (Game.instance.getSubTurn() == Game.instance.getPlayersInGame().size()) {
                 nextGameTurn();
-                Game.setSubTurn(Game.getSubTurn() % Game.getPlayersInGame().size());
+                Game.instance.setSubTurn(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
                 return "next game turn: " + currentTurnUser.getUsername();
             }
             return "next player turn!: " + currentTurnUser.getUsername();
@@ -252,23 +252,23 @@ public class GameController extends Controller {
 
     public void nextGameTurn() {
         UnitController unitController = new UnitController();
-        Game.setTurn(Game.getTurn() + 1);
+        Game.instance.setTurn(Game.instance.getTurn() + 1);
 
         //set ZOC
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                Game.map[i][j].setZOC(null);
+                Game.instance.map[i][j].setZOC(null);
                 Pair<Integer,Integer>[] neighbors = new Pair[6];
                 for (int k = 0; k < 6; k++) {
                     neighbors[k] = landController.getNeighborIndex(new Pair<Integer,Integer>(i, j), k);
                     if (Pair.isValid(new Pair<Integer,Integer>(neighbors[k].x, neighbors[k].y)) &&
-                            Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit() != null)
-                        Game.map[i][j].setZOC(Game.map[neighbors[k].x][neighbors[k].y].getCombatUnit());
+                            Game.instance.map[neighbors[k].x][neighbors[k].y].getCombatUnit() != null)
+                        Game.instance.map[i][j].setZOC(Game.instance.map[neighbors[k].x][neighbors[k].y].getCombatUnit());
                 }
             }
         }
 
-        for (User user : Game.getPlayersInGame()) {
+        for (User user : Game.instance.getPlayersInGame()) {
             Nation userNation = user.getNation();
             for (Unit unit : userNation.getUnits()) {
                 if (unit instanceof RangedCombatUnit) {
@@ -338,7 +338,7 @@ public class GameController extends Controller {
 
             //happiness for luxury resources
             for (ResourceType resourceType : userNation.getResourceCellar().keySet()) {
-                if (resourceType.currency.equals(CurrencyType.COIN) && userNation.getResourceCellar().get(resourceType) == 1)
+                if (resourceType.currency.equals(CurrencyType.GOLD) && userNation.getResourceCellar().get(resourceType) == 1)
                     userNation.getHappiness().addBalance(4);
             }
         }
@@ -346,12 +346,12 @@ public class GameController extends Controller {
         //update GrowthRates
         for (int i = 0; i < Consts.MAP_SIZE.amount.y; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.x; j++) {
-                Game.map[i][j].addGrowthToLandOwner();
+                Game.instance.map[i][j].addGrowthToLandOwner();
             }
         }
 
         landController.updateDistances();
-        landController.printMap(Game.map);
+        landController.printMap(Game.instance.map);
     }
 
     private void checkFortifying(Unit unit) {

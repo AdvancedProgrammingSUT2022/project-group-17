@@ -11,7 +11,7 @@ public enum RangedCombatUnitType {
             ResourceType.IRON, TechnologyType.MATHEMATICS, 0, 10, true),
     TREBUCHET("Trebuchet", 170, 6, 20, 2, 2,
             ResourceType.IRON, TechnologyType.PHYSICS, 0, 10, true),
-    CANON("Cannon", 250, 10, 26, 2, 2,
+    CANNON("Cannon", 250, 10, 26, 2, 2,
             null, TechnologyType.CHEMISTRY, 0, 10, true),
     ARTILLERY("Artillery", 420, 16, 32, 3, 2, null,
             TechnologyType.DYNAMITE, 0, 10, true);
@@ -27,6 +27,7 @@ public enum RangedCombatUnitType {
     public final int turns;
     public final int hp;
     public final boolean isSiege;
+    public final String imageAddress;
 
     RangedCombatUnitType(String name, int cost, int combatStrength, int rangedStrength, int range, int MP,
                          ResourceType resourceType, TechnologyType technologyType, int turns, int hp, boolean isSiege) {
@@ -41,5 +42,6 @@ public enum RangedCombatUnitType {
         this.turns = turns;
         this.hp = hp;
         this.isSiege = isSiege;
+        this.imageAddress = "/sut/civilization/Images/units/" + name + ".png";
     }
 }
