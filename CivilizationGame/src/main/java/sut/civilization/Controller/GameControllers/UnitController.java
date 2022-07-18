@@ -258,9 +258,9 @@ public class UnitController extends GameController {
                     else{
                         return "Can't attack owner nation's city";
                     }
-                }
-            }else
-                return "Not in range";
+                }else
+                    return "Not in range";
+            }
         }
         if (selectedCombatUnit instanceof RangedCombatUnit){
             if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().isSiege){
@@ -269,6 +269,46 @@ public class UnitController extends GameController {
         }
         unitAttackCity(selectedCombatUnit);
         return "Attack successful";
+    }
+
+    public String unitSetCombatUnitTarget(Matcher matcher){
+        int unitX = Integer.parseInt(matcher.group("x"));
+        int unitY = Integer.parseInt(matcher.group("y"));
+        Unit underAttack = Game.map[unitX][unitY].getCombatUnit();
+
+        if (selectedCombatUnit == null) return "You have to select a combat unit first";
+        if (underAttack == null)    return "There is no combat unit on this land";
+
+        if ((selectedCombatUnit instanceof CloseCombatUnit &&
+                landController.areNeighbors(new Pair<Integer,Integer>(unitX, unitY), selectedCombatUnit.getLocation()))){
+            if (!selectedCombatUnit.getOwnerNation().equals(underAttack.getOwnerNation())){
+                selectedCombatUnit.setTargetUnit(underAttack);
+            }
+            else{
+                return "Can't attack owner nation's unit";
+            }
+        }else if(selectedCombatUnit instanceof  RangedCombatUnit){
+            int unitNum = landController.getLandNumber(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
+            int underAttackNum = landController.getLandNumber(Game.map[underAttack.getLocation().x][underAttack.getLocation().y]);
+            if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.dist[unitNum][underAttackNum]){
+                if (!selectedCombatUnit.getOwnerNation().equals(underAttack.getOwnerNation())){
+                    selectedCombatUnit.setTargetUnit(underAttack);
+                }
+                else{
+                    return "Can't attack owner nation's unit";
+                }
+            }else
+                return "Not in range";
+        }
+
+        if (selectedCombatUnit instanceof RangedCombatUnit){
+            if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().isSiege){
+                return "Siege unit stationed successfully";
+            }
+        }
+
+        unitAttackUnit(selectedCombatUnit);
+        return "Attack on unit successful";
     }
 
     public void unitAttackCity(CombatUnit combatUnit){
@@ -285,6 +325,63 @@ public class UnitController extends GameController {
             CityController.cityDeath(combatUnit.getTargetCity());
         }
         combatUnit.setTargetCity(null);
+    }
+
+    public void unitAttackUnit(CombatUnit combatUnit){
+        Unit target = combatUnit.getTargetUnit();
+        if (combatUnit instanceof CloseCombatUnit){
+            if (target instanceof CloseCombatUnit){
+                combatUnit.setHp(combatUnit.getHp() - ((CloseCombatUnit) target).getCombatStrength());
+                target.setHp(target.getHp() - combatUnit.getCombatStrength());
+                if (combatUnit.getHp() <= 0){
+                    unitDeath(combatUnit);
+                }
+                if (target.getHp() <= 0){
+                    unitDeath(target);
+                }
+            }else if (target instanceof RangedCombatUnit){
+                combatUnit.setHp(combatUnit.getHp() - ((RangedCombatUnit) target).getCombatStrength());
+                target.setHp(target.getHp() - combatUnit.getCombatStrength());
+                if (combatUnit.getHp() <= 0){
+                    unitDeath(combatUnit);
+                }
+                if (target.getHp() <= 0){
+                    unitDeath(target);
+                }
+            }else if (target instanceof CivilizedUnit){
+                Nation previousOwner = target.getOwnerNation();
+                previousOwner.getUnits().remove(target);
+                combatUnit.getOwnerNation().addUnit(target);
+                target.setOwnerNation(combatUnit.getOwnerNation());
+            }
+        }else if (combatUnit instanceof RangedCombatUnit){
+            if (target instanceof CloseCombatUnit){
+                combatUnit.setHp(combatUnit.getHp() - ((CloseCombatUnit) target).getCombatStrength());
+                target.setHp(target.getHp() - ((RangedCombatUnit) combatUnit).getRangedStrength());
+                if (combatUnit.getHp() <= 0){
+                    unitDeath(combatUnit);
+                }
+                if (target.getHp() <= 0){
+                    unitDeath(target);
+                }
+            }else if (target instanceof RangedCombatUnit){
+                combatUnit.setHp(combatUnit.getHp() - ((RangedCombatUnit) target).getCombatStrength());
+                target.setHp(target.getHp() - ((RangedCombatUnit) combatUnit).getRangedStrength());
+                if (combatUnit.getHp() <= 0){
+                    unitDeath(combatUnit);
+                }
+                if (target.getHp() <= 0){
+                    unitDeath(target);
+                }
+            }else if (target instanceof CivilizedUnit){
+                Nation previousOwner = target.getOwnerNation();
+                previousOwner.getUnits().remove(target);
+                combatUnit.getOwnerNation().addUnit(target);
+                target.setOwnerNation(combatUnit.getOwnerNation());
+            }
+        }
+
+        combatUnit.setTargetUnit(null);
     }
 
     public static void unitDeath(Unit unit){
