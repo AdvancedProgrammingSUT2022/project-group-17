@@ -6,6 +6,7 @@ public class Land {
 
     protected Improvement improvement;
     protected Improvement route;
+    protected Ruin ruin;
     protected LandFeature landFeature;
     protected CombatUnit ZOC;
 
@@ -39,6 +40,7 @@ public class Land {
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
+        this.ruin = null;
         this.isBuyable = true;
     }
 
