@@ -6,8 +6,8 @@ public class Building {
 
     protected int turns;
     protected BuildingType buildingType;
-    //FixMe does making a parents field static impact the child's field in any unwanted way
     protected static boolean isTechnologicallyAvailable = false;
+
 
     public Building(BuildingType buildingType){
         this.turns = buildingType.initialTurns;
