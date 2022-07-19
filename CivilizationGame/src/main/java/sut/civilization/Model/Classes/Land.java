@@ -200,4 +200,12 @@ public class Land {
     public void setZOC(CombatUnit ZOC) {
         this.ZOC = ZOC;
     }
+
+    public Ruin getRuin() {
+        return ruin;
+    }
+
+    public void setRuin(Ruin ruin) {
+        this.ruin = ruin;
+    }
 }

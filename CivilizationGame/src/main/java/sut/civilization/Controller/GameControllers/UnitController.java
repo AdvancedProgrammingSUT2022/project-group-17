@@ -150,6 +150,9 @@ public class UnitController extends GameController {
             Game.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
         }
         unit.setLocation(next);
+        
+        if (Game.map[next.x][next.y].getRuin() != null)
+            unitRetrieveRuin(unit);
 
         unit.setMP(Math.max(0, unit.getMP() - Game.map[next.x][next.y].getMP()));
         if (Game.map[next.x][next.y].getLandFeature() != null)
@@ -480,5 +483,14 @@ public class UnitController extends GameController {
         }
 
         city.setHasAnInProgressUnit(false);
+    }
+
+    public static void unitRetrieveRuin(Unit unit){
+        Land land = Game.map[unit.getLocation().x][unit.getLocation().y];
+        Ruin ruin = land.getRuin();
+        Nation nation = unit.getOwnerNation();
+        ruin.retrieve();
+        nation.getCoin().addBalance(ruin.getGoldAmount());
+        land.setRuin(null);
     }
 }
