@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
+import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
@@ -619,7 +621,6 @@ public class GamePlayController extends ViewController {
             productCost.setText(productCost.getText() + building.getBuildingType().cost);
             productMaintenance.setText(productMaintenance.getText() + building.getBuildingType().maintenance);
 
-            //TODO complete other products...
         } else if (city.getInProgressCivilizedUnit() != null) {
             CivilizedUnit civilizedUnit = city.getInProgressCivilizedUnit();
             productImage.setImage(new Image(Civilization.class.getResourceAsStream(
@@ -864,7 +865,7 @@ public class GamePlayController extends ViewController {
         Button buyATile = new Button("Buy a tile");
         Button returnToMap = new Button("Return to map");
         returnToMap.setOnMouseClicked(mouseEvent -> {
-            cityPopup.getContent().remove(5);
+            cityPopup.getContent().remove(cityPopup.getContent().size() - 1);
             cityPopup.hide();
             GameController.setSelectedCity(null);
         });
@@ -890,6 +891,48 @@ public class GamePlayController extends ViewController {
         cityPopup.show(window);
 
     }
+
+    public void showMenu() {
+        Button continueButton = new Button("Continue");
+        continueButton.setOnMouseClicked(mouseEvent -> {
+            anchorPane.setEffect(null);
+            anchorPane.setDisable(false);
+            infoPopup.hide();
+        });
+        Button saveGame = new Button("Save Game");
+        //TODO Save button is here, Ravan!
+        saveGame.setOnMouseClicked(mouseEvent -> {
+
+        });
+        Button returnToMainMenu = new Button("Return To Main Menu");
+        returnToMainMenu.setOnMouseClicked(mouseEvent -> {
+            anchorPane.setEffect(null);
+            anchorPane.setDisable(false);
+            infoPopup.hide();
+            ((Stage) Game.instance.getCurrentScene().getWindow()).setFullScreen(false);
+            Game.instance.changeScene(Menus.MAIN_MENU);
+        });
+        Button exit = new Button("Exit");
+        exit.setOnMouseClicked(mouseEvent -> ((Stage) Game.instance.getCurrentScene().getWindow()).close());
+
+        VBox menuVBox = new VBox(continueButton, saveGame, returnToMainMenu, exit);
+        menuVBox.getStylesheets().add("/sut/civilization/StyleSheet/LoginMenu.css");
+        for (Node child : menuVBox.getChildren()) {
+            VBox.setMargin(child, new Insets(0,0,20,0));
+        }
+
+        GameController.setSelectedCivilizedUnit(null);
+        GameController.setSelectedCombatUnit(null);
+        unitPopup.hide();
+        infoPopup.getContent().clear();
+        infoPopup.getContent().add(menuVBox);
+        infoPopup.show(Game.instance.getCurrentScene().getWindow());
+        Light light = new Light.Distant();
+        light.setColor(new Color(0.4, 0.4, 0.4, 0.5));
+        anchorPane.setEffect(new Lighting(light));
+        anchorPane.setDisable(true);
+    }
+
 
     public ScrollPane getRoot() {
         return root;
