@@ -7,6 +7,7 @@ public class Land {
 
     protected Improvement improvement;
     protected Improvement route;
+    protected Ruin ruin;
     protected LandFeature landFeature;
     protected CombatUnit ZOC;
 
@@ -44,6 +45,8 @@ public class Land {
         this.improvement = null;
         this.i = i;
         this.j = j;
+        this.ruin = null;
+        this.isBuyable = true;
     }
 
     public void addGrowthToLandOwner(){
@@ -203,6 +206,7 @@ public class Land {
         this.ZOC = ZOC;
     }
 
+
     public int getI() {
         return i;
     }
@@ -217,5 +221,13 @@ public class Land {
 
     public void setJ(int j) {
         this.j = j;
+    }
+
+    public Ruin getRuin() {
+        return ruin;
+    }
+
+    public void setRuin(Ruin ruin) {
+        this.ruin = ruin;
     }
 }

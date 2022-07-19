@@ -332,6 +332,15 @@ public class LandController extends Controller {
 
         GameController.getCurrentTurnUser().getNation().getCities().get(0).setInProgressBuilding(new Building(BuildingType.BANK));
 
+        for (int i1 = 0; i1 < 20; i1++) {
+            for (int j = 0; j < 20; j++) {
+                Land land = map[i1][j];
+                int chance = new Random().nextInt(10);
+                if (chance <= 1)
+                    land.setRuin(new Ruin());
+            }
+        }
+
         return map;
     }
 
@@ -401,4 +410,5 @@ public class LandController extends Controller {
             }
         }
     }
+
 }

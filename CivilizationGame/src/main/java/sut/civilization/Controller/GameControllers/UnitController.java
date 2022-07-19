@@ -151,6 +151,9 @@ public class UnitController extends GameController {
         }
         unit.setLocation(next);
 
+        if (Game.instance.map[next.x][next.y].getRuin() != null)
+            unitRetrieveRuin(unit);
+
         unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getMP()));
         if (Game.instance.map[next.x][next.y].getLandFeature() != null)
             unit.setMP(-Game.instance.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost);
@@ -581,5 +584,14 @@ public class UnitController extends GameController {
         }
 
         city.setHasAnInProgressUnit(false);
+    }
+
+    public static void unitRetrieveRuin(Unit unit){
+        Land land = Game.instance.map[unit.getLocation().x][unit.getLocation().y];
+        Ruin ruin = land.getRuin();
+        Nation nation = unit.getOwnerNation();
+        ruin.retrieve();
+        nation.getCoin().addBalance(ruin.getGoldAmount());
+        land.setRuin(null);
     }
 }
