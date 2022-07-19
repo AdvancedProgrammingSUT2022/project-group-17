@@ -274,7 +274,7 @@ public class UnitController extends GameController {
     public String unitSetCombatUnitTarget(Matcher matcher){
         int unitX = Integer.parseInt(matcher.group("x"));
         int unitY = Integer.parseInt(matcher.group("y"));
-        Unit underAttack = Game.map[unitX][unitY].getCombatUnit();
+        Unit underAttack = Game.instance.map[unitX][unitY].getCombatUnit();
 
         if (selectedCombatUnit == null) return "You have to select a combat unit first";
         if (underAttack == null)    return "There is no combat unit on this land";
@@ -288,9 +288,9 @@ public class UnitController extends GameController {
                 return "Can't attack owner nation's unit";
             }
         }else if(selectedCombatUnit instanceof  RangedCombatUnit){
-            int unitNum = landController.getLandNumber(Game.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
-            int underAttackNum = landController.getLandNumber(Game.map[underAttack.getLocation().x][underAttack.getLocation().y]);
-            if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.dist[unitNum][underAttackNum]){
+            int unitNum = landController.getLandNumber(Game.instance.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
+            int underAttackNum = landController.getLandNumber(Game.instance.map[underAttack.getLocation().x][underAttack.getLocation().y]);
+            if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.instance.dist[unitNum][underAttackNum]){
                 if (!selectedCombatUnit.getOwnerNation().equals(underAttack.getOwnerNation())){
                     selectedCombatUnit.setTargetUnit(underAttack);
                 }
