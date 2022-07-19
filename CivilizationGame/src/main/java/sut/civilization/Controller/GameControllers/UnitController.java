@@ -371,6 +371,7 @@ public class UnitController extends GameController {
         return "invalid command";
     }
 
+    //fixme not using this function
     public String unitStartCreation(Matcher matcher){
         String type = matcher.group("type");
         String name = matcher.group("name");
@@ -388,7 +389,7 @@ public class UnitController extends GameController {
             }
             for (CivilizedUnitType civilizedUnitType : CivilizedUnitType.values()) {
                 if (civilizedUnitType.name.equals(name)){
-                    selectedCity.setInProgressCivilizedUnit(civilizedUnitType);
+//                    selectedCity.setInProgressCivilizedUnit(civilizedUnitType);
                     selectedCity.setNextUnitTurns(civilizedUnitType.turns);
                     selectedCity.setHasAnInProgressUnit(true);
                     return "Civilized unit is set for creation successfully";
@@ -411,7 +412,7 @@ public class UnitController extends GameController {
                     if (closeCombatUnitType.resourceType != null){
                         selectedCity.getOwnerNation().removeResource(closeCombatUnitType.resourceType);
                     }
-                    selectedCity.setInProgressCloseCombatUnit(closeCombatUnitType);
+//                    selectedCity.setInProgressCloseCombatUnit(closeCombatUnitType);
                     selectedCity.setNextUnitTurns(closeCombatUnitType.turns);
                     selectedCity.setHasAnInProgressUnit(true);
                     return "Close combat unit is set for creation successfully";
@@ -433,7 +434,7 @@ public class UnitController extends GameController {
                 if (rangedCombatUnitType.resourceType != null){
                     selectedCity.getOwnerNation().removeResource(rangedCombatUnitType.resourceType);
                 }
-                selectedCity.setInProgressRangedCombatUnit(rangedCombatUnitType);
+//                selectedCity.setInProgressRangedCombatUnit(rangedCombatUnitType);
                 selectedCity.setNextUnitTurns(rangedCombatUnitType.turns);
                 selectedCity.setHasAnInProgressUnit(true);
                 return "Ranged combat unit is set for creation successfully";
@@ -456,24 +457,27 @@ public class UnitController extends GameController {
         }
 
         if (city.getInProgressCivilizedUnit() != null){
-            CivilizedUnit newCivilizedUnit = new CivilizedUnit(city.getInProgressCivilizedUnit(),
-                    city.getOwnerNation(), new Pair<Integer,Integer>(x, y));
+//            CivilizedUnit newCivilizedUnit = new CivilizedUnit(city.getInProgressCivilizedUnit(),
+//                    city.getOwnerNation(), new Pair<Integer,Integer>(x, y));
+            CivilizedUnit newCivilizedUnit = city.getInProgressCivilizedUnit();
             city.getMainLand().setCivilizedUnit(newCivilizedUnit);
             city.getOwnerNation().addUnit(newCivilizedUnit);
             city.setInProgressCivilizedUnit(null);
         }
 
         if (city.getInProgressCloseCombatUnit() != null){
-            CloseCombatUnit newCloseCombatUnit = new CloseCombatUnit(city.getInProgressCloseCombatUnit(),
-                    city.getOwnerNation(), new Pair<Integer,Integer>(x, y));
+//            CloseCombatUnit newCloseCombatUnit = new CloseCombatUnit(city.getInProgressCloseCombatUnit(),
+//                    city.getOwnerNation(), new Pair<Integer,Integer>(x, y));
+            CloseCombatUnit newCloseCombatUnit = city.getInProgressCloseCombatUnit();
             city.getMainLand().setCombatUnit(newCloseCombatUnit);
             city.getOwnerNation().addUnit(newCloseCombatUnit);
             city.setInProgressCloseCombatUnit(null);
         }
 
         if (city.getInProgressRangedCombatUnit() != null){
-            RangedCombatUnit newRangedCombatUnit = new RangedCombatUnit(city.getInProgressRangedCombatUnit(),
-                    city.getOwnerNation(), new Pair<Integer,Integer>(x, y));
+//            RangedCombatUnit newRangedCombatUnit = new RangedCombatUnit(city.getInProgressRangedCombatUnit(),
+//                    city.getOwnerNation(), new Pair<Integer,Integer>(x, y));
+            RangedCombatUnit newRangedCombatUnit = city.getInProgressRangedCombatUnit();
             city.getMainLand().setCombatUnit(newRangedCombatUnit);
             city.getOwnerNation().addUnit(newRangedCombatUnit);
             city.setInProgressRangedCombatUnit(null);

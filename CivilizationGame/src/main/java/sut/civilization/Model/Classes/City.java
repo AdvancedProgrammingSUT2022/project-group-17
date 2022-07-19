@@ -20,9 +20,9 @@ public class City {
     protected ArrayList<Improvement> improvements = new ArrayList<>();
     protected Building inProgressBuilding = null;
     protected boolean hasAnInProgressUnit = false;
-    protected CivilizedUnitType inProgressCivilizedUnit = null;
-    protected CloseCombatUnitType inProgressCloseCombatUnit = null;
-    protected RangedCombatUnitType inProgressRangedCombatUnit = null;
+    protected CivilizedUnit inProgressCivilizedUnit = null;
+    protected CloseCombatUnit inProgressCloseCombatUnit = null;
+    protected RangedCombatUnit inProgressRangedCombatUnit = null;
     protected int nextUnitTurns;
     protected Land mainLand;
     protected CloseCombatUnit garrison;
@@ -32,7 +32,7 @@ public class City {
     protected int happinessGrowth;
     protected int scienceGrowth;
 
-    public City(Nation ownerNation, String name){
+    public City(Nation ownerNation, String name, Land mainLand){
         this.citizens = 3;
         this.HP = 100;
         this.combatStrength = 20;
@@ -40,6 +40,7 @@ public class City {
         this.level = 1;
         this.ownerNation = ownerNation;
         this.name = name;
+        this.mainLand = mainLand;
     }
 
 
@@ -127,10 +128,6 @@ public class City {
         this.citizens += amount;
     }
 
-    public void setInProgressBuilding(Building inProgressBuilding) {
-        this.inProgressBuilding = inProgressBuilding;
-    }
-
     public int getEmployees() {
         return employees;
     }
@@ -179,15 +176,15 @@ public class City {
         this.scienceGrowth = scienceGrowth;
     }
 
-    public CivilizedUnitType getInProgressCivilizedUnit() {
+    public CivilizedUnit getInProgressCivilizedUnit() {
         return inProgressCivilizedUnit;
     }
 
-    public CloseCombatUnitType getInProgressCloseCombatUnit() {
+    public CloseCombatUnit getInProgressCloseCombatUnit() {
         return inProgressCloseCombatUnit;
     }
 
-    public RangedCombatUnitType getInProgressRangedCombatUnit() {
+    public RangedCombatUnit getInProgressRangedCombatUnit() {
         return inProgressRangedCombatUnit;
     }
 
@@ -211,15 +208,31 @@ public class City {
         this.improvements = improvements;
     }
 
-    public void setInProgressCivilizedUnit(CivilizedUnitType inProgressCivilizedUnit) {
+    public void setInProgressCivilizedUnit(CivilizedUnit inProgressCivilizedUnit) {
+        this.inProgressCloseCombatUnit = null;
+        this.inProgressRangedCombatUnit = null;
+        this.inProgressBuilding = null;
         this.inProgressCivilizedUnit = inProgressCivilizedUnit;
     }
 
-    public void setInProgressCloseCombatUnit(CloseCombatUnitType inProgressCloseCombatUnit) {
+    public void setInProgressBuilding(Building inProgressBuilding) {
+        this.inProgressCivilizedUnit = null;
+        this.inProgressRangedCombatUnit = null;
+        this.inProgressCloseCombatUnit = null;
+        this.inProgressBuilding = inProgressBuilding;
+    }
+
+    public void setInProgressCloseCombatUnit(CloseCombatUnit inProgressCloseCombatUnit) {
+        this.inProgressCivilizedUnit = null;
+        this.inProgressBuilding = null;
+        this.inProgressRangedCombatUnit = null;
         this.inProgressCloseCombatUnit = inProgressCloseCombatUnit;
     }
 
-    public void setInProgressRangedCombatUnit(RangedCombatUnitType inProgressRangedCombatUnit) {
+    public void setInProgressRangedCombatUnit(RangedCombatUnit inProgressRangedCombatUnit) {
+        this.inProgressCivilizedUnit = null;
+        this.inProgressCloseCombatUnit = null;
+        this.inProgressBuilding = null;
         this.inProgressRangedCombatUnit = inProgressRangedCombatUnit;
     }
 

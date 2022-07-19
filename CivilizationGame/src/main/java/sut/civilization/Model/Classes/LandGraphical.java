@@ -85,6 +85,13 @@ public class LandGraphical extends Polygon {
             GameController.setSelectedCivilizedUnit(null);
             GamePlayController.getInstance().showSelectedCombatUnitInfo();
         });
+
+        cityImageView.setOnMouseClicked(mouseEvent -> {
+            GameController.setSelectedCity(land.getOwnerCity());
+            GamePlayController.getInstance().showCityPanel();
+        });
+
+
         if (land.getLandType() != LandType.OCEAN)
             pane.getChildren().add(this);
 
@@ -127,7 +134,7 @@ public class LandGraphical extends Polygon {
         }
 
         if (land.getOwnerCity() != null) {
-            cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/NationIcons/" + land.getOwnerCity().getOwnerNation().nationType.name + ".png")).toExternalForm()));
+            cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getOwnerCity().getOwnerNation().getNationType().nationImageAddress)).toExternalForm()));
         } else cityImageView.setImage(null);
     }
 

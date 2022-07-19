@@ -23,9 +23,9 @@ public class CityController extends GameController {
             return "You need to select a settler first";
         Pair<Integer,Integer> main = new Pair<Integer,Integer>(x, y);
         if (isCityBuildable(main)){
-            City city = new City(currentTurnUser.getNation(), name);
-            currentTurnUser.getNation().addCity(city);
             Land mainLand = Game.instance.map[x][y];
+            City city = new City(currentTurnUser.getNation(), name, mainLand);
+            currentTurnUser.getNation().addCity(city);
             mainLand.setCityCenter(true);
             mainLand.setOwnerCity(city);
             city.setMainLand(mainLand);

@@ -33,6 +33,10 @@ public class GameController extends Controller {
         return selectedCivilizedUnit;
     }
 
+    public static City getSelectedCity() {
+        return selectedCity;
+    }
+
     public static void setSelectedCivilizedUnit(CivilizedUnit selectedCivilizedUnit) {
         GameController.selectedCivilizedUnit = selectedCivilizedUnit;
     }
