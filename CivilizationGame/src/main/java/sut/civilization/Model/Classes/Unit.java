@@ -11,7 +11,6 @@ public class Unit {
     protected int MP;
     protected int cost;
     protected int maintenance = 1;
-    protected int turns;
     protected int XP;
     protected boolean isWaitingForCommand = true;
     protected TechnologyType technologyType;
@@ -20,16 +19,16 @@ public class Unit {
     protected String path = "";
     protected City targetCity;
     protected Unit targetUnit;
+    protected int turnsLeft;
 
     public Unit(String name, int cost, int MP, ResourceType resourceType, TechnologyType technologyType,
-                int turns, int hp, Nation ownerNation, Pair<Integer,Integer> location) {
+                int hp, Nation ownerNation, Pair<Integer,Integer> location) {
         this.ownerNation = ownerNation;
         this.name = name;
         this.cost = cost;
         this.MP = MP;
         this.resourceType = resourceType;
         this.technologyType = technologyType;
-        this.turns = turns;
         this.hp = hp;
         this.XP = 0;
 
@@ -109,10 +108,6 @@ public class Unit {
         this.hp += amount;
     }
 
-    public void setTurns(int turns) {
-        this.turns = turns;
-    }
-
     public void setWaitingForCommand(boolean waitingForCommand) {
         isWaitingForCommand = waitingForCommand;
     }
@@ -143,5 +138,17 @@ public class Unit {
 
     public int getMaintenance() {
         return maintenance;
+    }
+
+    public int getTurnsLeft() {
+        return turnsLeft;
+    }
+
+    public void setTurnsLeft(int turnsLeft) {
+        this.turnsLeft = turnsLeft;
+    }
+
+    public void decreaseTurnsLeft(int amount) {
+        this.turnsLeft -= amount;
     }
 }

@@ -32,14 +32,18 @@ public class Land {
     //TODO assign land's movement cost it's landType movement cost when initializing map
     protected int movementCost;
     protected boolean hasCitizen;
+    protected int i;
+    protected int j;
 
 
-    public Land(LandType landType, int cost) {
+    public Land(LandType landType, int cost, int i, int j) {
         this.landType = landType;
         this.foodGrowth = landType.foodGrowth;
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
+        this.i = i;
+        this.j = j;
     }
 
     public void addGrowthToLandOwner(){
@@ -197,5 +201,21 @@ public class Land {
 
     public void setZOC(CombatUnit ZOC) {
         this.ZOC = ZOC;
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    public int getJ() {
+        return j;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public void setJ(int j) {
+        this.j = j;
     }
 }
