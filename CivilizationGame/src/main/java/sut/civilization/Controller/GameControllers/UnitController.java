@@ -150,7 +150,7 @@ public class UnitController extends GameController {
             Game.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
         }
         unit.setLocation(next);
-        
+
         if (Game.map[next.x][next.y].getRuin() != null)
             unitRetrieveRuin(unit);
 

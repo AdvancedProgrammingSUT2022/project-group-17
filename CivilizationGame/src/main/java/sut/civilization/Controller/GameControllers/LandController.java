@@ -301,6 +301,7 @@ public class LandController extends Controller {
             map[4][4].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.LANCER,new Nation(NationType.PERSIA),new Pair<>(4,4)));
             map[4][5].setCombatUnit(new CloseCombatUnit(CloseCombatUnitType.KNIGHT,new Nation(NationType.PERSIA),new Pair<>(4,4)));
             map[6][6].setOwnerCity(new City(new Nation(NationType.ANCIENT_GREECE),"OlaghAbad!"));
+            putRuins();
             return map;
         }
 
@@ -367,6 +368,17 @@ public class LandController extends Controller {
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    public void putRuins(){
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                Land land = Game.map[i][j];
+                int chance = new Random().nextInt(10);
+                if (chance <= 1)
+                    land.setRuin(new Ruin());
             }
         }
     }
