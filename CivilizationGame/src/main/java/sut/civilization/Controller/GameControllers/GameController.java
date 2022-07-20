@@ -333,6 +333,9 @@ public class GameController extends Controller {
                 userNation.setTechnologyTurns(userNation.getTechnologyTurns() - 1);
             }
 
+            //update Technology Tree
+            TechnologyController.updateNextAvailableTechnologies();
+
             //reset GrowthRates
             userNation.getCoin().setGrowthRate(0);
             userNation.getProduction().setGrowthRate(0);
