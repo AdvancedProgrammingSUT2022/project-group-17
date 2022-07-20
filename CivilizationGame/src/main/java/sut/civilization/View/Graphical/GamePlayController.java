@@ -17,16 +17,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
+import sut.civilization.Controller.GameControllers.UnitController;
+import sut.civilization.Enums.Consts;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Matcher;
 
 import static javafx.scene.paint.Color.WHITE;
 
@@ -66,10 +71,17 @@ public class GamePlayController extends ViewController {
 
 
         TechnologyType inProgressTechnology = GameController.getCurrentTurnUser().getNation().getInProgressTechnology();
-        inProgressTechnologyName.setText(inProgressTechnology.name);
-        inProgressTechnologyImage.setImage(new Image(Civilization.class.getResourceAsStream(
-                inProgressTechnology.imageAddress
-        )));
+        if (inProgressTechnology != null) {
+            inProgressTechnologyName.setText(inProgressTechnology.name);
+            inProgressTechnologyImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                    inProgressTechnology.imageAddress
+            )));
+        } else {
+            inProgressTechnologyName.setText("No technology");
+            inProgressTechnologyImage.setImage(new Image(Civilization.class.getResourceAsStream(
+                    "/sut/civilization/Images/productBorder.png"
+            )));
+        }
     }
 
     public void showUnits() {
@@ -314,7 +326,7 @@ public class GamePlayController extends ViewController {
     }
 
 
-    private void scrollPanePopup(VBox vBox) {
+    private void scrollPanePopup(Node node) {
         Window window = Game.instance.getCurrentScene().getWindow();
         ImageView ex = new ImageView(new Image(
                 Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/ex.png")
@@ -326,8 +338,9 @@ public class GamePlayController extends ViewController {
             anchorPane.setEffect(null);
             anchorPane.setDisable(false);
         });
-        vBox.getChildren().add(0, ex);
-        ScrollPane scrollPane = new ScrollPane(vBox);
+        if (node instanceof VBox) ((VBox) node).getChildren().add(0, ex);
+        if (node instanceof StackPane) ((StackPane) node).getChildren().add(0, ex);
+        ScrollPane scrollPane = new ScrollPane(node);
 //        scrollPane.setLayoutY(150);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         BorderPane borderPane = new BorderPane();
@@ -346,8 +359,9 @@ public class GamePlayController extends ViewController {
     }
 
     public void showSelectedCivilizedUnitInfo() {
+        unitPopup.hide();
         if (GameController.getSelectedCivilizedUnit() != null) {
-
+            VBox unitActions = new VBox();
             CivilizedUnitType civilizedUnitType = GameController.getSelectedCivilizedUnit().getCivilizedUnitType();
             Window window = Game.instance.getCurrentScene().getWindow();
             ImageView unitImage = new ImageView();
@@ -369,6 +383,54 @@ public class GamePlayController extends ViewController {
             unitMovement.setTextFill(WHITE);
             unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
 
+            for (UnitActions action : civilizedUnitType.actions) {
+                ImageView actionImage = new ImageView(action.image);
+                switch (action) {
+                    case DELETE:
+                        actionImage.setOnMouseClicked(mouseEvent -> {
+                            String message = unitDelete();
+                            showPopUp(window, message);
+                            if (message.equals("removed successfully!")) unitPopup.hide();
+                        });
+                        break;
+                    case SLEEP:
+                        actionImage.setOnMouseClicked(mouseEvent -> {
+                            String message = unitSleep();
+                            showPopUp(window, message);
+                        });
+                        break;
+                    case WAKE:
+                        actionImage.setOnMouseClicked(mouseEvent -> {
+                            String message = unitWake();
+                            showPopUp(window, message);
+                        });
+                        break;
+                    case MOVE:
+                        actionImage.setOnMousePressed(mouseEvent -> {
+                            for (int i = 0; i < 15; i++) {
+                                for (int j = 0; j < 10; j++) {
+                                    int finalI = i;
+                                    int finalJ = j;
+                                    graphicalMap[i][j].setOnMouseClicked(mouseEvent1 -> {
+                                        String message = unitSetPath(finalI, finalJ, 0);
+                                        showPopUp(window, message);
+                                        graphicalMap[finalI][finalJ].setOnMouseClicked(null);
+                                    });
+                                }
+                            }
+                        });
+                        break;
+                }
+                actionImage.setFitWidth(40);
+                actionImage.setFitHeight(40);
+                VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
+                unitActions.getChildren().add(actionImage);
+            }
+            unitActions.setStyle("-fx-background-color: #212121;");
+            unitActions.setAlignment(Pos.TOP_CENTER);
+            unitActions.setPrefWidth(50);
+            unitActions.setMinHeight(230);
+
             ImageView ex = new ImageView(new Image(
                     Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/ex.png")
             ));
@@ -383,21 +445,34 @@ public class GamePlayController extends ViewController {
             unitInfoVBox.setAlignment(Pos.CENTER);
             HBox infoHBox = new HBox(unitImage, unitInfoVBox);
             infoHBox.setAlignment(Pos.CENTER_LEFT);
-            VBox wholeUnit = new VBox(ex, unitName, infoHBox);
-            wholeUnit.setStyle("-fx-background-color: black; -fx-background-radius: 0 40 0 0;");
+            VBox wholeUnit = new VBox(unitName, infoHBox);
+            wholeUnit.setStyle("-fx-background-color: #212121;");
             wholeUnit.setAlignment(Pos.CENTER);
-            wholeUnit.setPrefSize(380, 250);
+            wholeUnit.setPrefSize(380, 230);
 
-//        anchorPane.setEffect(null);
+            ScrollPane actionsScrollPane = new ScrollPane(unitActions);
+            actionsScrollPane.setPrefHeight(230);
+            actionsScrollPane.setPrefWidth(50);
+            actionsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            actionsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            actionsScrollPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
+
+            BorderPane borderPane = new BorderPane();
+            borderPane.setTop(ex);
+            borderPane.setCenter(wholeUnit);
+            borderPane.setRight(actionsScrollPane);
+            borderPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
+
             unitPopup.setX(0);
-            unitPopup.setY(550);
+            unitPopup.setY(570);
             unitPopup.getContent().clear();
-            unitPopup.getContent().add(wholeUnit);
+            unitPopup.getContent().add(borderPane);
             unitPopup.show(window);
         }
     }
 
     public void showSelectedCombatUnitInfo() {
+        unitPopup.hide();
         if (GameController.getSelectedCombatUnit() != null) {
 
             CombatUnit combatUnit = GameController.getSelectedCombatUnit();
@@ -406,6 +481,7 @@ public class GamePlayController extends ViewController {
             Label unitName = new Label();
             Label unitHP = new Label();
             Label unitMovement = new Label();
+            VBox unitActions = new VBox();
 
 
             if (GameController.getSelectedCombatUnit() instanceof CloseCombatUnit) {
@@ -415,6 +491,13 @@ public class GamePlayController extends ViewController {
                 unitName.setText(((CloseCombatUnit) combatUnit).getCloseCombatUnitType().name);
                 unitHP.setText("Health: " + ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().hp);
                 unitMovement.setText("Movement: " + ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().MP);
+                for (UnitActions action : ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().actions) {
+                    ImageView actionImage = new ImageView(action.image);
+                    actionImage.setFitWidth(40);
+                    actionImage.setFitHeight(40);
+                    VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
+                    unitActions.getChildren().add(actionImage);
+                }
             } else {
                 unitImage.setImage(new Image(
                         Civilization.class.getResourceAsStream(((RangedCombatUnit) combatUnit).getRangedCombatUnitType().imageAddress)
@@ -422,6 +505,13 @@ public class GamePlayController extends ViewController {
                 unitName.setText(((RangedCombatUnit) combatUnit).getRangedCombatUnitType().name);
                 unitHP.setText("Health: " + ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().hp);
                 unitMovement.setText("Movement: " + ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().MP);
+                for (UnitActions action : ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().actions) {
+                    ImageView actionImage = new ImageView(action.image);
+                    actionImage.setFitWidth(40);
+                    actionImage.setFitHeight(40);
+                    VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
+                    unitActions.getChildren().add(actionImage);
+                }
             }
             unitImage.setFitWidth(180);
             unitImage.setFitHeight(180);
@@ -434,6 +524,10 @@ public class GamePlayController extends ViewController {
             //fixme MPs
             unitMovement.setTextFill(WHITE);
             unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
+
+            unitActions.setStyle("-fx-background-color: #212121;");
+            unitActions.setAlignment(Pos.TOP_CENTER);
+            unitActions.setPrefWidth(50);
 
             ImageView ex = new ImageView(new Image(
                     Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/ex.png")
@@ -449,22 +543,36 @@ public class GamePlayController extends ViewController {
             unitInfoVBox.setAlignment(Pos.CENTER);
             HBox infoHBox = new HBox(unitImage, unitInfoVBox);
             infoHBox.setAlignment(Pos.CENTER_LEFT);
-            VBox wholeUnit = new VBox(ex, unitName, infoHBox);
-            wholeUnit.setStyle("-fx-background-color: black; -fx-background-radius: 0 40 0 0;");
+            VBox wholeUnit = new VBox(unitName, infoHBox);
+            wholeUnit.setStyle("-fx-background-color: #212121;");
             wholeUnit.setAlignment(Pos.CENTER);
-            wholeUnit.setPrefSize(380, 250);
+            wholeUnit.setPrefSize(380, 230);
 
-//        anchorPane.setEffect(null);
+            ScrollPane actionsScrollPane = new ScrollPane(unitActions);
+            actionsScrollPane.setPrefHeight(230);
+            actionsScrollPane.setPrefWidth(50);
+            actionsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            actionsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            actionsScrollPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
+
+            BorderPane borderPane = new BorderPane();
+            borderPane.setTop(ex);
+            borderPane.setCenter(wholeUnit);
+            borderPane.setRight(actionsScrollPane);
+            borderPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
+
             unitPopup.setX(0);
-            unitPopup.setY(550);
+            unitPopup.setY(570);
             unitPopup.getContent().clear();
-            unitPopup.getContent().add(wholeUnit);
+            unitPopup.getContent().add(borderPane);
             unitPopup.show(window);
         }
     }
 
 
     public void showTechnologyPanel() {
+        ArrayList<TechnologyType> allTechnologies = new ArrayList<>();
+        ArrayList<Pair<Pair<Double, Double>, Pair<Double, Double>>> pairs = new ArrayList<>();
         HBox[] eachFloor = new HBox[12];
         VBox[] eachTechnology = new VBox[46];
         for (int i = 0; i < 12; i++) {
@@ -478,20 +586,32 @@ public class GamePlayController extends ViewController {
         int i = 0;
         for (TechnologyType technologyType : TechnologyType.values()) {
 
+            allTechnologies.add(technologyType);
             ImageView technologyImage = new ImageView(new Image(Civilization.class.getResourceAsStream(technologyType.imageAddress)));
+            HBox technologyImageHBox = new HBox(technologyImage);
             Label name = new Label(technologyType.name);
-            eachTechnology[i].getChildren().add(technologyImage);
+            eachTechnology[i].getChildren().add(technologyImageHBox);
             eachTechnology[i].getChildren().add(name);
             ColorAdjust colorAdjust = new ColorAdjust();
             colorAdjust.setSaturation(-1);
-            if (!GameController.getCurrentTurnUser().getNation().getTechnologies().get(technologyType)) {
+            if (GameController.getCurrentTurnUser().getNation().getInProgressTechnology() == technologyType) {
+                technologyImageHBox.setStyle("-fx-background-color: blue; -fx-background-radius: 100;");
+            } else if (!GameController.getCurrentTurnUser().getNation().getTechnologies().get(technologyType)) {
                 technologyImage.setEffect(colorAdjust);
+            } else {
+                technologyImageHBox.setStyle("-fx-background-color: green; -fx-background-radius: 100;");
             }
 
             if (i == 0) {
                 eachFloor[0].getChildren().add(eachTechnology[i]);
             } else if (i < 5) {
                 eachFloor[1].getChildren().add(eachTechnology[i]);
+                for (TechnologyType father : technologyType.fathers) {
+                    int index;
+                    if ((index = allTechnologies.indexOf(father)) > -1) {
+
+                    }
+                }
             } else if (i < 11) {
                 eachFloor[2].getChildren().add(eachTechnology[i]);
             } else if (i < 16) {
@@ -523,7 +643,35 @@ public class GamePlayController extends ViewController {
         wholeTechTree.setAlignment(Pos.CENTER);
 
         scrollPanePopup(wholeTechTree);
+
+//        i = 0;
+//        for (TechnologyType technologyType : TechnologyType.values()) {
+//            checkTechnologyFather(pairs, i, allTechnologies, technologyType, eachTechnology);
+//            i++;
+//        }
+//        for (Pair<Pair<Double, Double>, Pair<Double, Double>> pair : pairs) {
+//            stackPane.getChildren().add(new Line(pair.x.x, pair.x.y, pair.y.x, pair.y.y));
+//        }
+//        System.out.println(pairs);
     }
+
+
+//    private void checkTechnologyFather(ArrayList<Pair<Pair<Double, Double>, Pair<Double, Double>>> pairs, int index, ArrayList<TechnologyType> allTechnologies, TechnologyType technologyType, VBox[] eachTechnology) {
+//        for (int i = 0; i < allTechnologies.indexOf(technologyType); i++) {
+//            for (TechnologyType father : technologyType.fathers) {
+//                if (father == allTechnologies.get(i)) {
+//                    Pair<Pair<Double, Double>, Pair<Double, Double>> pair = new Pair<>();
+//                    pair.x = new Pair<>();
+//                    pair.x.x = eachTechnology[index].getLayoutX();
+//                    pair.x.y = eachTechnology[index].getLayoutY();
+//                    pair.y = new Pair<>();
+//                    pair.y.x = eachTechnology[i].getLayoutX();
+//                    pair.y.y = eachTechnology[i].getLayoutY();
+//                    pairs.add(pair);
+//                }
+//            }
+//        }
+//    }
 
 
     public void showCityPanel() {
@@ -918,7 +1066,7 @@ public class GamePlayController extends ViewController {
         VBox menuVBox = new VBox(continueButton, saveGame, returnToMainMenu, exit);
         menuVBox.getStylesheets().add("/sut/civilization/StyleSheet/LoginMenu.css");
         for (Node child : menuVBox.getChildren()) {
-            VBox.setMargin(child, new Insets(0,0,20,0));
+            VBox.setMargin(child, new Insets(0, 0, 20, 0));
         }
 
         GameController.setSelectedCivilizedUnit(null);
@@ -933,6 +1081,162 @@ public class GamePlayController extends ViewController {
         anchorPane.setDisable(true);
     }
 
+    public String unitDelete() {
+        Unit unit;
+        if ((unit = GameController.getSelectedCivilizedUnit()) != null || (unit = GameController.getSelectedCombatUnit()) != null) {
+            GameController.getCurrentTurnUser().getNation().getUnits().remove(unit);
+            if (unit instanceof CivilizedUnit) {
+                Game.instance.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+                GameController.setSelectedCivilizedUnit(null);
+            } else {
+                Game.instance.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+                GameController.setSelectedCombatUnit(null);
+            }
+            graphicalMap[unit.getLocation().x][unit.getLocation().y].updateMap();
+            return "removed successfully!";
+        }
+        return "Select a unit first!";
+    }
+
+    public String unitSleep() {
+        Unit unit;
+        if ((unit = GameController.getSelectedCivilizedUnit()) != null || (unit = GameController.getSelectedCombatUnit()) != null) {
+            if (unit.getUnitStatus() != UnitStatus.WORKING && unit.getUnitStatus() != UnitStatus.SLEEP) {
+                unit.setUnitStatus(UnitStatus.SLEEP);
+                unit.setWaitingForCommand(false);
+                return "Slept successfully!";
+            } else return "can't sleep!";
+        }
+        return "Select a unit first!";
+    }
+
+    public String unitWake() {
+        Unit unit;
+        if ((unit = GameController.getSelectedCivilizedUnit()) != null || (unit = GameController.getSelectedCombatUnit()) != null) {
+            if (unit.getUnitStatus() == UnitStatus.SLEEP) {
+                unit.setUnitStatus(UnitStatus.AWAKE);
+                unit.setWaitingForCommand(true);
+                return "Waked successfully!";
+            }
+            return "This unit isn't asleep!";
+        }
+        return "Select a unit first!";
+    }
+
+    public String unitSetPath(int x, int y, int selection){
+        Unit selectedUnit;
+        if (selection == 1)
+            selectedUnit = GameController.getSelectedCombatUnit();
+        else
+            selectedUnit = GameController.getSelectedCivilizedUnit();
+        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
+        Land origin = Game.instance.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
+        Land dest = Game.instance.map[x][y];
+        int originNum = getLandNumber(origin);
+        int destNum = getLandNumber(dest);
+        if (selection == 1 && dest.getCombatUnit() != null)
+            return "There already is a combat unit in destination";
+        if (selection == 0 && dest.getCivilizedUnit() != null)
+            return "There already is a civilized unit in destination";
+        if (Game.instance.dist[originNum][destNum] < 1000)
+            selectedUnit.setPath(Game.instance.path[originNum][destNum]);
+        else
+            return "Unit can't reach there";
+        while (selectedUnit.getMP() > 0)
+            unitGoForward(selectedUnit);
+        updateWholeMap();
+        return "Unit moved successfully";
+    }
+
+    public void unitGoForward(Unit unit){
+        String path = unit.getPath();
+        int neighbor = 0;
+
+        if (path != null && !path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
+        else {System.out.println("path is empty"); return;}
+
+        boolean river = Game.instance.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor];
+        Pair<Integer,Integer> next = getNeighborIndex(unit.getLocation(), neighbor);
+        if (unit instanceof CombatUnit){
+            Game.instance.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
+            Game.instance.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
+        }else{
+            Game.instance.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
+            Game.instance.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
+        }
+        unit.setLocation(next);
+
+        if (Game.instance.map[next.x][next.y].getRuin() != null)
+            UnitController.unitRetrieveRuin(unit);
+
+        unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getMP()));
+        if (Game.instance.map[next.x][next.y].getLandFeature() != null)
+            unit.setMP(-Game.instance.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost);
+        if (Game.instance.map[next.x][next.y].getZOC() != null){
+            if (!Game.instance.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
+                unit.setMP(0);
+            }
+        }
+        if (river)
+            unit.setMP(0);
+        unit.setPath(path.substring(1));
+        unit.setWaitingForCommand(false);
+        unit.setUnitStatus(UnitStatus.MOVING);
+    }
+
+    public int getLandNumber(Land land) {
+        int num = -1;
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.instance.map[i][j].equals(land))
+                    num = i * Consts.MAP_SIZE.amount.x + j;
+            }
+        }
+        return num;
+    }
+
+    public Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
+        if (coordinate.y % 2 == 0) {
+            switch (position) {
+                case 0:
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
+                case 1:
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y + 1);
+                case 2:
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
+                case 3:
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
+                case 4:
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
+                case 5:
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y - 1);
+            }
+        } else {
+            switch (position) {
+                case 0:
+                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
+                case 1:
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
+                case 2:
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y - 1);
+                case 3:
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
+                case 4:
+                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y + 1);
+                case 5:
+                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
+            }
+        }
+        return null;
+    }
+
+    public void updateWholeMap() {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 10; j++) {
+                graphicalMap[i][j].updateMap();
+            }
+        }
+    }
 
     public ScrollPane getRoot() {
         return root;

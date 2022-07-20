@@ -6,6 +6,7 @@ import sut.civilization.Model.ModulEnums.CivilizedUnitType;
 import sut.civilization.Model.ModulEnums.CloseCombatUnitType;
 import sut.civilization.Model.ModulEnums.RangedCombatUnitType;
 import sut.civilization.Model.ModulEnums.UnitStatus;
+import sut.civilization.View.Graphical.GamePlayController;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

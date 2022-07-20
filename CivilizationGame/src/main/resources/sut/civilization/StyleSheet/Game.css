@@ -23,3 +23,7 @@ Button {
     -fx-background-color: rgb(33, 33, 33);
     -fx-text-fill: white;
 }
+
+ImageView:border{
+
+}
