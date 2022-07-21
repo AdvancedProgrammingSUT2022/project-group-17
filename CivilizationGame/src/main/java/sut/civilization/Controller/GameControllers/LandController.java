@@ -176,7 +176,7 @@ public class LandController extends Controller {
 
     }
 
-    public Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
+    public static Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
         if (coordinate.y % 2 == 0) {
             switch (position) {
                 case 0:
@@ -212,7 +212,7 @@ public class LandController extends Controller {
     }
 
 
-    public boolean areNeighbors(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
+    public static boolean areNeighbors(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
         for (int i = 0; i < 6; i++) {
             if (land2.equals(getNeighborIndex(land1, i)))
                 return true;
@@ -220,7 +220,7 @@ public class LandController extends Controller {
         return false;
     }
 
-    public int getIndex(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
+    public static int getIndex(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
         for (int i = 0; i < 6; i++) {
             if (land2.equals(getNeighborIndex(land1, i)))
                 return i;
@@ -229,7 +229,7 @@ public class LandController extends Controller {
     }
 
 
-    public Land[][] mapInitializer() {
+    public static Land[][] mapInitializer() {
         Land[][] map = new Land[20][20];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
         for (int i = 0; i < 20; i++) {
@@ -346,11 +346,11 @@ public class LandController extends Controller {
         return map;
     }
 
-    public Land getLandByCoordinates(int x, int y) {
+    public static Land getLandByCoordinates(int x, int y) {
         return Game.instance.map[x][y];
     }
 
-    public int getLandNumber(Land land) {
+    public static int getLandNumber(Land land) {
         int num = -1;
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
@@ -361,7 +361,7 @@ public class LandController extends Controller {
         return num;
     }
 
-    public void initializeDistances() {
+    public static void initializeDistances() {
         for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
             for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
                 for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {
@@ -388,7 +388,7 @@ public class LandController extends Controller {
         }
     }
 
-    public void updateDistances() {
+    public static void updateDistances() {
         for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
             for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
                 for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {

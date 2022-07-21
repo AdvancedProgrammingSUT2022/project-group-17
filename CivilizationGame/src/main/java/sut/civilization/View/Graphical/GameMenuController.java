@@ -45,7 +45,10 @@ public class GameMenuController {
 //                System.out.println(user.getNation().getNationType().name);
 //                System.out.println(user.getUsername());
 //            }
-            Game.instance.setMap(new LandController().mapInitializer());
+            Game.instance.setMap(LandController.mapInitializer());
+
+            LandController.initializeDistances();
+            LandController.updateDistances();
             Game.instance.changeScene(Menus.GAME_MENU);
         }
     }

@@ -20,9 +20,9 @@ public class Main {
         String currentMenu = "LoginMenu";
         Scanner scanner = new Scanner(System.in);
 
-        Game.instance.setMap(landController.mapInitializer());
-        landController.initializeDistances();
-        landController.updateDistances();
+        Game.instance.setMap(LandController.mapInitializer());
+        LandController.initializeDistances();
+        LandController.updateDistances();
 
         while (!currentMenu.equals("EXIT")) {
             landController.printMap(Game.instance.map);

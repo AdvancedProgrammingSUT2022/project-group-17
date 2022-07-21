@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
+import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Controller.GameControllers.UnitController;
 import sut.civilization.Enums.Consts;
 import sut.civilization.Enums.Menus;
@@ -55,9 +56,10 @@ public class GamePlayController extends ViewController {
     }
 
     public void initialize() {
+
         Pane pane = new Pane();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 graphicalMap[i][j] = new LandGraphical(new Pair<>(i, j), pane);
             }
@@ -407,14 +409,19 @@ public class GamePlayController extends ViewController {
                         break;
                     case MOVE:
                         actionImage.setOnMousePressed(mouseEvent -> {
-                            for (int i = 0; i < 15; i++) {
+                            for (int i = 0; i < 10; i++) {
                                 for (int j = 0; j < 10; j++) {
                                     int finalI = i;
                                     int finalJ = j;
                                     graphicalMap[i][j].setOnMouseClicked(mouseEvent1 -> {
-                                        String message = unitSetPath(finalI, finalJ, 0);
+                                        String message = UnitController.unitSetPath(finalI, finalJ, 0);
                                         showPopUp(window, message);
-                                        graphicalMap[finalI][finalJ].setOnMouseClicked(null);
+                                        for (int k = 0; k < 10; k++) {
+                                            for (int l = 0; l < 10; l++) {
+                                                graphicalMap[k][l].setOnMouseClicked(null);
+                                            }
+                                        }
+
                                     });
                                 }
                             }
@@ -507,6 +514,47 @@ public class GamePlayController extends ViewController {
                 unitMovement.setText("Movement: " + ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().MP);
                 for (UnitActions action : ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().actions) {
                     ImageView actionImage = new ImageView(action.image);
+                    switch (action) {
+                        case DELETE:
+                            actionImage.setOnMouseClicked(mouseEvent -> {
+                                String message = unitDelete();
+                                showPopUp(window, message);
+                                if (message.equals("removed successfully!")) unitPopup.hide();
+                            });
+                            break;
+                        case SLEEP:
+                            actionImage.setOnMouseClicked(mouseEvent -> {
+                                String message = unitSleep();
+                                showPopUp(window, message);
+                            });
+                            break;
+                        case WAKE:
+                            actionImage.setOnMouseClicked(mouseEvent -> {
+                                String message = unitWake();
+                                showPopUp(window, message);
+                            });
+                            break;
+                        case MOVE:
+                            actionImage.setOnMousePressed(mouseEvent -> {
+                                for (int i = 0; i < 10; i++) {
+                                    for (int j = 0; j < 10; j++) {
+                                        int finalI = i;
+                                        int finalJ = j;
+                                        graphicalMap[i][j].setOnMouseClicked(mouseEvent1 -> {
+                                            String message = UnitController.unitSetPath(finalI, finalJ, 1);
+                                            showPopUp(window, message);
+                                            for (int k = 0; k < 10; k++) {
+                                                for (int l = 0; l < 10; l++) {
+                                                    graphicalMap[k][l].setOnMouseClicked(null);
+                                                }
+                                            }
+
+                                        });
+                                    }
+                                }
+                            });
+                            break;
+                    }
                     actionImage.setFitWidth(40);
                     actionImage.setFitHeight(40);
                     VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
@@ -1122,116 +1170,10 @@ public class GamePlayController extends ViewController {
         }
         return "Select a unit first!";
     }
+    
 
-    public String unitSetPath(int x, int y, int selection){
-        Unit selectedUnit;
-        if (selection == 1)
-            selectedUnit = GameController.getSelectedCombatUnit();
-        else
-            selectedUnit = GameController.getSelectedCivilizedUnit();
-        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
-        Land origin = Game.instance.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
-        Land dest = Game.instance.map[x][y];
-        int originNum = getLandNumber(origin);
-        int destNum = getLandNumber(dest);
-        if (selection == 1 && dest.getCombatUnit() != null)
-            return "There already is a combat unit in destination";
-        if (selection == 0 && dest.getCivilizedUnit() != null)
-            return "There already is a civilized unit in destination";
-        if (Game.instance.dist[originNum][destNum] < 1000)
-            selectedUnit.setPath(Game.instance.path[originNum][destNum]);
-        else
-            return "Unit can't reach there";
-        while (selectedUnit.getMP() > 0)
-            unitGoForward(selectedUnit);
-        updateWholeMap();
-        return "Unit moved successfully";
-    }
-
-    public void unitGoForward(Unit unit){
-        String path = unit.getPath();
-        int neighbor = 0;
-
-        if (path != null && !path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
-        else {System.out.println("path is empty"); return;}
-
-        boolean river = Game.instance.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor];
-        Pair<Integer,Integer> next = getNeighborIndex(unit.getLocation(), neighbor);
-        if (unit instanceof CombatUnit){
-            Game.instance.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
-            Game.instance.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
-        }else{
-            Game.instance.map[unit.getLocation().x][unit.getLocation().y].setCivilizedUnit(null);
-            Game.instance.map[next.x][next.y].setCivilizedUnit((CivilizedUnit) unit);
-        }
-        unit.setLocation(next);
-
-        if (Game.instance.map[next.x][next.y].getRuin() != null)
-            UnitController.unitRetrieveRuin(unit);
-
-        unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getMP()));
-        if (Game.instance.map[next.x][next.y].getLandFeature() != null)
-            unit.setMP(-Game.instance.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost);
-        if (Game.instance.map[next.x][next.y].getZOC() != null){
-            if (!Game.instance.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
-                unit.setMP(0);
-            }
-        }
-        if (river)
-            unit.setMP(0);
-        unit.setPath(path.substring(1));
-        unit.setWaitingForCommand(false);
-        unit.setUnitStatus(UnitStatus.MOVING);
-    }
-
-    public int getLandNumber(Land land) {
-        int num = -1;
-        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
-            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.instance.map[i][j].equals(land))
-                    num = i * Consts.MAP_SIZE.amount.x + j;
-            }
-        }
-        return num;
-    }
-
-    public Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
-        if (coordinate.y % 2 == 0) {
-            switch (position) {
-                case 0:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
-                case 1:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y + 1);
-                case 2:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
-                case 3:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
-                case 4:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
-                case 5:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y - 1);
-            }
-        } else {
-            switch (position) {
-                case 0:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
-                case 1:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
-                case 2:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y - 1);
-                case 3:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
-                case 4:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y + 1);
-                case 5:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
-            }
-        }
-        return null;
-    }
-
-    public void updateWholeMap() {
-        for (int i = 0; i < 15; i++) {
+    public static void updateWholeMap() {
+        for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 graphicalMap[i][j].updateMap();
             }

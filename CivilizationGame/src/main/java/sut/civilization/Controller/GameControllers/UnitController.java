@@ -108,33 +108,36 @@ public class UnitController extends GameController {
         System.out.println(unit.getLocation().x + " " + unit.getLocation().y);
     }
 
-    public String unitSetPath(Matcher matcher, int selection){
+    public static String unitSetPath(int x, int y, int selection){
         Unit selectedUnit;
         if (selection == 1)
             selectedUnit = selectedCombatUnit;
         else
             selectedUnit = selectedCivilizedUnit;
-        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
+//        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
+//        int x = Integer.parseInt(matcher.group("x"));
+//        int y = Integer.parseInt(matcher.group("y"));
         Land origin = Game.instance.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
         Land dest = Game.instance.map[x][y];
-        int originNum = landController.getLandNumber(origin);
-        int destNum = landController.getLandNumber(dest);
+        int originNum = LandController.getLandNumber(origin);
+        int destNum = LandController.getLandNumber(dest);
         if (selection == 1 && dest.getCombatUnit() != null)
             return "There already is a combat unit in destination";
         if (selection == 0 && dest.getCivilizedUnit() != null)
             return "There already is a civilized unit in destination";
-        if (Game.instance.dist[originNum][destNum] < 1000)
+        if (Game.instance.dist[originNum][destNum] < 1000) {
             selectedUnit.setPath(Game.instance.path[originNum][destNum]);
+            System.out.println(selectedUnit.getPath());
+        }
         else
             return "Unit can't reach there";
         while (selectedUnit.getMP() > 0)
             unitGoForward(selectedUnit);
+        GamePlayController.updateWholeMap();
         return "Unit moved successfully";
     }
 
-    public void unitGoForward(Unit unit){
+    public static void unitGoForward(Unit unit){
         String path = unit.getPath();
         int neighbor = 0;
 
@@ -142,7 +145,7 @@ public class UnitController extends GameController {
         else {System.out.println("path is empty"); return;}
 
         boolean river = Game.instance.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor];
-        Pair<Integer,Integer> next = landController.getNeighborIndex(unit.getLocation(), neighbor);
+        Pair<Integer,Integer> next = LandController.getNeighborIndex(unit.getLocation(), neighbor);
         if (unit instanceof CombatUnit){
             Game.instance.map[unit.getLocation().x][unit.getLocation().y].setCombatUnit(null);
             Game.instance.map[next.x][next.y].setCombatUnit((CombatUnit) unit);
