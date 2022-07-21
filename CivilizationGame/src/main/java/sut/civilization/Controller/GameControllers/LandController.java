@@ -230,10 +230,10 @@ public class LandController extends Controller {
 
 
     public static Land[][] mapInitializer() {
-        Land[][] map = new Land[20][20];
+        Land[][] map = new Land[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
 
                 LandType landtype;
                 switch (random.nextInt(8)) {
@@ -268,8 +268,8 @@ public class LandController extends Controller {
             }
         }
 
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
                 LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
                 int randomInt;
@@ -334,8 +334,8 @@ public class LandController extends Controller {
 
         GameController.getCurrentTurnUser().getNation().getCities().get(0).setInProgressBuilding(new Building(BuildingType.BANK));
 
-        for (int i1 = 0; i1 < 20; i1++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 Land land = map[i1][j];
                 int chance = new Random().nextInt(10);
                 if (chance <= 1)

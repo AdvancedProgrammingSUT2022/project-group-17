@@ -127,7 +127,7 @@ public class UnitController extends GameController {
             return "There already is a civilized unit in destination";
         if (Game.instance.dist[originNum][destNum] < 1000) {
             selectedUnit.setPath(Game.instance.path[originNum][destNum]);
-            System.out.println(selectedUnit.getPath());
+//            System.out.println(selectedUnit.getPath());
         }
         else
             return "Unit can't reach there";
@@ -173,7 +173,7 @@ public class UnitController extends GameController {
         unit.setUnitStatus(UnitStatus.MOVING);
     }
 
-    public String unitSleep() {
+    public static String unitSleep() {
         Unit unit;
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
             if (unit.getUnitStatus() != UnitStatus.WORKING && unit.getUnitStatus() != UnitStatus.SLEEP) {
@@ -185,9 +185,8 @@ public class UnitController extends GameController {
         return "Select a unit first!";
     }
 
-    public String combatUnitAction(Matcher matcher) {
+    public static String combatUnitAction(String actionName) {
         //fortify, alert, fortify until heal
-        String actionName = matcher.group("action");
         UnitStatus toBeAppliedStatus = null;
         for (UnitStatus unitStatus : UnitStatus.values()) {
             if (unitStatus.toString().equalsIgnoreCase(actionName))
@@ -212,7 +211,7 @@ public class UnitController extends GameController {
 
     }
 
-    public String unitWake() {
+    public static String unitWake() {
         Unit unit;
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
             if (unit.getUnitStatus() == UnitStatus.SLEEP) {

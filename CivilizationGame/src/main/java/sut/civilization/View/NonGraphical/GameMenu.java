@@ -54,7 +54,7 @@ public class GameMenu extends Menu {
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.COMBAT_UNIT_MOVE_TO)).matches()){
             System.out.println(UnitController.unitSetPath(Integer.parseInt(commandMatcher.group("x")), Integer.parseInt(commandMatcher.group("y")), 1));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUILD_CITY)).matches()) {
-            System.out.println(cityController.buildCity(commandMatcher));
+            System.out.println(cityController.buildCity(commandMatcher.group("name")));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUY_LAND)).matches()) {
             System.out.println(cityController.cityBuyLand(commandMatcher));
         } else if((commandMatcher = CityCommands.getMatcher(input, CityCommands.SEND_CITIZEN)).matches()){
@@ -128,7 +128,7 @@ public class GameMenu extends Menu {
             System.out.println(unitController.unitWake());
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.COMBAT_UNIT_ACTION)).matches()) {
-            System.out.println(unitController.combatUnitAction(commandMatcher));
+            System.out.println(unitController.combatUnitAction(commandMatcher.group("action")));
 
         } else if (UnitCommands.getMatcher(input, UnitCommands.UNIT_DELETE).matches()) {
             System.out.println(unitController.unitDelete());

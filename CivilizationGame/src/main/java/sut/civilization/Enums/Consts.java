@@ -4,7 +4,7 @@ import sut.civilization.Model.Classes.Pair;
 
 public enum Consts {
 
-    MAP_SIZE(new Pair<Integer,Integer>(10,10));
+    MAP_SIZE(new Pair<>(10, 10));
 
     public final Pair<Integer,Integer> amount;
 

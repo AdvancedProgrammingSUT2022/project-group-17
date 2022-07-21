@@ -45,6 +45,6 @@ public enum RangedCombatUnitType {
         this.isSiege = isSiege;
         this.imageAddress = "/sut/civilization/Images/units/" + name + ".png";
         this.actions = new UnitActions[]{UnitActions.MOVE, UnitActions.RANGED_ATTACK, UnitActions.FORTIFY,
-                UnitActions.ALERT, UnitActions.HEAL, UnitActions.SLEEP, UnitActions.WAKE, UnitActions.DELETE};
+                UnitActions.ALERT, UnitActions.FORTIFY_UNTIL_HEAL, UnitActions.SLEEP, UnitActions.WAKE, UnitActions.DELETE};
     }
 }

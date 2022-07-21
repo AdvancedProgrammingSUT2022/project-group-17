@@ -1,11 +1,5 @@
 package sut.civilization.Model.ModulEnums;
 
-import sut.civilization.Model.Classes.Unit;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 public enum CloseCombatUnitType {
     SCOUT("Scout", 25, 4, 2, null, null, 0, 10),
     SPEAR_MAN("Spearman", 50, 7, 2, null, TechnologyType.BRONZE_WORKING,
@@ -59,6 +53,6 @@ public enum CloseCombatUnitType {
         this.hp = hp;
         this.imageAddress = "/sut/civilization/Images/units/" + name + ".png";
         this.actions = new UnitActions[]{UnitActions.MOVE, UnitActions.ATTACK, UnitActions.FORTIFY, UnitActions.ALERT,
-                UnitActions.HEAL, UnitActions.SLEEP, UnitActions.WAKE, UnitActions.DELETE};
+                UnitActions.FORTIFY_UNTIL_HEAL, UnitActions.SLEEP, UnitActions.WAKE, UnitActions.DELETE};
     }
 }

@@ -17,13 +17,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import sut.civilization.Civilization;
+import sut.civilization.Controller.GameControllers.CityController;
 import sut.civilization.Controller.GameControllers.GameController;
-import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Controller.GameControllers.UnitController;
 import sut.civilization.Enums.Consts;
 import sut.civilization.Enums.Menus;
@@ -32,7 +31,6 @@ import sut.civilization.Model.ModulEnums.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.regex.Matcher;
 
 import static javafx.scene.paint.Color.WHITE;
 
@@ -40,7 +38,7 @@ public class GamePlayController extends ViewController {
     @FXML
     private ScrollPane root;
 
-    private final static LandGraphical[][] graphicalMap = new LandGraphical[20][20];
+    private final static LandGraphical[][] graphicalMap = new LandGraphical[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
     public AnchorPane anchorPane;
     private Popup infoPopup = new Popup();
     private Popup unitPopup = new Popup();
@@ -59,8 +57,8 @@ public class GamePlayController extends ViewController {
 
         Pane pane = new Pane();
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 graphicalMap[i][j] = new LandGraphical(new Pair<>(i, j), pane);
             }
         }
@@ -381,7 +379,7 @@ public class GamePlayController extends ViewController {
             unitHP.setTextFill(WHITE);
             unitHP.setStyle("-fx-label-padding: 10 0 0 30");
             //fixme MPs
-            Label unitMovement = new Label("Movement: " + civilizedUnitType.MP);
+            Label unitMovement = new Label("Movement: " + GameController.getSelectedCivilizedUnit().getMP());
             unitMovement.setTextFill(WHITE);
             unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
 
@@ -397,27 +395,30 @@ public class GamePlayController extends ViewController {
                         break;
                     case SLEEP:
                         actionImage.setOnMouseClicked(mouseEvent -> {
-                            String message = unitSleep();
+                            String message = UnitController.unitSleep();
                             showPopUp(window, message);
                         });
                         break;
                     case WAKE:
                         actionImage.setOnMouseClicked(mouseEvent -> {
-                            String message = unitWake();
+                            String message = UnitController.unitWake();
                             showPopUp(window, message);
                         });
                         break;
                     case MOVE:
                         actionImage.setOnMousePressed(mouseEvent -> {
-                            for (int i = 0; i < 10; i++) {
-                                for (int j = 0; j < 10; j++) {
+                            for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+                                for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                                     int finalI = i;
                                     int finalJ = j;
                                     graphicalMap[i][j].setOnMouseClicked(mouseEvent1 -> {
+//                                        System.out.println("finalI : " + finalI);
+//                                        System.out.println("finalJ : " + finalJ);
                                         String message = UnitController.unitSetPath(finalI, finalJ, 0);
                                         showPopUp(window, message);
-                                        for (int k = 0; k < 10; k++) {
-                                            for (int l = 0; l < 10; l++) {
+                                        unitMovement.setText("Movement: " + GameController.getSelectedCivilizedUnit().getMP());
+                                        for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
+                                            for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
                                                 graphicalMap[k][l].setOnMouseClicked(null);
                                             }
                                         }
@@ -425,6 +426,13 @@ public class GamePlayController extends ViewController {
                                     });
                                 }
                             }
+                        });
+                        break;
+                    case FOUND_CITY:
+                        actionImage.setOnMouseClicked(mouseEvent -> {
+                            String message = CityController.buildCity("Tehran");
+                            showPopUp(window, message);
+                            updateWholeMap();
                         });
                         break;
                 }
@@ -497,7 +505,7 @@ public class GamePlayController extends ViewController {
                 ));
                 unitName.setText(((CloseCombatUnit) combatUnit).getCloseCombatUnitType().name);
                 unitHP.setText("Health: " + ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().hp);
-                unitMovement.setText("Movement: " + ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().MP);
+                unitMovement.setText("Movement: " + ((CloseCombatUnit) combatUnit).getMP());
                 for (UnitActions action : ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().actions) {
                     ImageView actionImage = new ImageView(action.image);
                     actionImage.setFitWidth(40);
@@ -511,7 +519,7 @@ public class GamePlayController extends ViewController {
                 ));
                 unitName.setText(((RangedCombatUnit) combatUnit).getRangedCombatUnitType().name);
                 unitHP.setText("Health: " + ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().hp);
-                unitMovement.setText("Movement: " + ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().MP);
+                unitMovement.setText("Movement: " + ((RangedCombatUnit) combatUnit).getMP());
                 for (UnitActions action : ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().actions) {
                     ImageView actionImage = new ImageView(action.image);
                     switch (action) {
@@ -524,27 +532,30 @@ public class GamePlayController extends ViewController {
                             break;
                         case SLEEP:
                             actionImage.setOnMouseClicked(mouseEvent -> {
-                                String message = unitSleep();
+                                String message = UnitController.unitSleep();
                                 showPopUp(window, message);
                             });
                             break;
                         case WAKE:
                             actionImage.setOnMouseClicked(mouseEvent -> {
-                                String message = unitWake();
+                                String message = UnitController.unitWake();
                                 showPopUp(window, message);
                             });
                             break;
                         case MOVE:
                             actionImage.setOnMousePressed(mouseEvent -> {
-                                for (int i = 0; i < 10; i++) {
-                                    for (int j = 0; j < 10; j++) {
+                                for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+                                    for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                                         int finalI = i;
                                         int finalJ = j;
                                         graphicalMap[i][j].setOnMouseClicked(mouseEvent1 -> {
+//                                        System.out.println("finalI : " + finalI);
+//                                        System.out.println("finalJ : " + finalJ);
                                             String message = UnitController.unitSetPath(finalI, finalJ, 1);
                                             showPopUp(window, message);
-                                            for (int k = 0; k < 10; k++) {
-                                                for (int l = 0; l < 10; l++) {
+                                            unitMovement.setText("Movement: " + GameController.getSelectedCivilizedUnit().getMP());
+                                            for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
+                                                for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
                                                     graphicalMap[k][l].setOnMouseClicked(null);
                                                 }
                                             }
@@ -554,6 +565,15 @@ public class GamePlayController extends ViewController {
                                 }
                             });
                             break;
+                        case FORTIFY:
+                        case FORTIFY_UNTIL_HEAL:
+                        case ALERT:
+                            actionImage.setOnMouseClicked(mouseEvent -> {
+                                String message = UnitController.combatUnitAction(action.toString());
+                                showPopUp(window, message);
+                            });
+                            break;
+
                     }
                     actionImage.setFitWidth(40);
                     actionImage.setFitHeight(40);
@@ -1146,35 +1166,10 @@ public class GamePlayController extends ViewController {
         return "Select a unit first!";
     }
 
-    public String unitSleep() {
-        Unit unit;
-        if ((unit = GameController.getSelectedCivilizedUnit()) != null || (unit = GameController.getSelectedCombatUnit()) != null) {
-            if (unit.getUnitStatus() != UnitStatus.WORKING && unit.getUnitStatus() != UnitStatus.SLEEP) {
-                unit.setUnitStatus(UnitStatus.SLEEP);
-                unit.setWaitingForCommand(false);
-                return "Slept successfully!";
-            } else return "can't sleep!";
-        }
-        return "Select a unit first!";
-    }
-
-    public String unitWake() {
-        Unit unit;
-        if ((unit = GameController.getSelectedCivilizedUnit()) != null || (unit = GameController.getSelectedCombatUnit()) != null) {
-            if (unit.getUnitStatus() == UnitStatus.SLEEP) {
-                unit.setUnitStatus(UnitStatus.AWAKE);
-                unit.setWaitingForCommand(true);
-                return "Waked successfully!";
-            }
-            return "This unit isn't asleep!";
-        }
-        return "Select a unit first!";
-    }
-    
 
     public static void updateWholeMap() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 graphicalMap[i][j].updateMap();
             }
         }
