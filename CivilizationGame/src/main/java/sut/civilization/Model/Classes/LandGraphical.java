@@ -76,19 +76,25 @@ public class LandGraphical extends Polygon {
         cityImageView.setY(this.centerCoordinate.y - tileRadius*0.25);
 
         civilizedUnitImageView.x.setOnMouseClicked(mouseEvent -> {
-            GameController.setSelectedCivilizedUnit(land.getCivilizedUnit());
-            GameController.setSelectedCombatUnit(null);
-            GamePlayController.getInstance().showSelectedCivilizedUnitInfo();
+            if (land.getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                GameController.setSelectedCivilizedUnit(land.getCivilizedUnit());
+                GameController.setSelectedCombatUnit(null);
+                GamePlayController.getInstance().showSelectedCivilizedUnitInfo();
+            }
         });
         combatUnitImageView.x.setOnMouseClicked(mouseEvent -> {
-            GameController.setSelectedCombatUnit(land.getCombatUnit());
-            GameController.setSelectedCivilizedUnit(null);
-            GamePlayController.getInstance().showSelectedCombatUnitInfo();
+            if (land.getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                GameController.setSelectedCombatUnit(land.getCombatUnit());
+                GameController.setSelectedCivilizedUnit(null);
+                GamePlayController.getInstance().showSelectedCombatUnitInfo();
+            }
         });
 
         cityImageView.setOnMouseClicked(mouseEvent -> {
-            GameController.setSelectedCity(land.getOwnerCity());
-            GamePlayController.getInstance().showCityPanel();
+            if (land.getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                GameController.setSelectedCity(land.getOwnerCity());
+                GamePlayController.getInstance().showCityPanel();
+            }
         });
 
 

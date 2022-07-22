@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import sut.civilization.Controller.GameControllers.LandController;
+import sut.civilization.Controller.GameControllers.TechnologyController;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.User;
@@ -49,6 +50,7 @@ public class GameMenuController {
 
             LandController.initializeDistances();
             LandController.updateDistances();
+            TechnologyController.updateNextAvailableTechnologies();
             Game.instance.changeScene(Menus.GAME_MENU);
         }
     }

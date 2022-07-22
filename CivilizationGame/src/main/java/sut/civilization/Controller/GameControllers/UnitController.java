@@ -133,7 +133,7 @@ public class UnitController extends GameController {
             return "Unit can't reach there";
         while (selectedUnit.getMP() > 0)
             unitGoForward(selectedUnit);
-        GamePlayController.updateWholeMap();
+        GamePlayController.getInstance().updateWholeMap();
         return "Unit moved successfully";
     }
 

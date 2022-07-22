@@ -325,9 +325,9 @@ public class LandController extends Controller {
 //        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.AGRICULTURE);
 //        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.ANIMAL_HUSBANDRY);
 //        GameController.getCurrentTurnUser().getNation().setInProgressTechnology(TechnologyType.BRONZE_WORKING);
-        for (TechnologyType technologyType : TechnologyType.values()) {
-            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
-        }
+//        for (TechnologyType technologyType : TechnologyType.values()) {
+//            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
+//        }
         for (ResourceType resourceType: ResourceType.values()) {
             GameController.getCurrentTurnUser().getNation().addResource(resourceType);
         }

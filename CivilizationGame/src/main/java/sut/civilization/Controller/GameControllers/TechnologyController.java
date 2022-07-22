@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 
 public class TechnologyController extends GameController {
 
-    public String addTechnology(Matcher matcher){
-        String type = matcher.group("type");
+    public static String addTechnology(String type){
+//        String type = matcher.group("type");
         Nation nation = currentTurnUser.getNation();
         for (TechnologyType technologyType : TechnologyType.values()) {
             if (technologyType.name.equals(type)){

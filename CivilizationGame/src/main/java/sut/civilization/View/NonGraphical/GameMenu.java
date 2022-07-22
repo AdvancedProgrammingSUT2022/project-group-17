@@ -119,7 +119,7 @@ public class GameMenu extends Menu {
             System.out.println(unitController.purchaseUnit(commandMatcher));
 
         } else if ((commandMatcher = TechnologyCommands.getMatcher(input, TechnologyCommands.ADD_TECHNOLOGY)).matches()) {
-            System.out.println(technologyController.addTechnology(commandMatcher));
+            System.out.println(TechnologyController.addTechnology(commandMatcher.group("type")));
 
         } else if (UnitCommands.getMatcher(input, UnitCommands.UNIT_SLEEP).matches()) {
             System.out.println(unitController.unitSleep());
