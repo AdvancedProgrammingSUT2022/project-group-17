@@ -70,10 +70,10 @@ public class GameMenu extends Menu {
 
             // Improvements
         } else if ((commandMatcher = WorkerCommands.getMatcher(input, WorkerCommands.BUILD_IMPROVEMENT)).matches()) {
-            System.out.println(workerController.setWorkerToBuildImprovement(commandMatcher.group("name")));
+            System.out.println(WorkerController.setWorkerToBuildImprovement(commandMatcher.group("name")));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.REPAIR_IMPROVEMENT).matches()) {
-            System.out.println(workerController.setWorkerToRepair());
+            System.out.println(WorkerController.setWorkerToRepair());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.REMOVE_FEATURE).matches()) {
             System.out.println(workerController.setWorkerToRemoveFeature());

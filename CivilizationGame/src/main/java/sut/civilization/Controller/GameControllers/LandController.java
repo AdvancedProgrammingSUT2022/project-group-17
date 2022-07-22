@@ -298,7 +298,7 @@ public class LandController extends Controller {
             }
         }
 
-        int i = 0;
+        int i = 2;
         for (RangedCombatUnitType rangedCombatUnitType: RangedCombatUnitType.values()) {
             CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
             RangedCombatUnit rangedCombatUnit = new RangedCombatUnit(rangedCombatUnitType, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
@@ -307,7 +307,7 @@ public class LandController extends Controller {
             GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
             GameController.getCurrentTurnUser().getNation().getUnits().add(rangedCombatUnit);
             i++;
-            if (i == 10) break;
+            if (i == 4) break;
         }
 
         City city = new City(GameController.getCurrentTurnUser().getNation(), "Mashhad", map[2][2]);

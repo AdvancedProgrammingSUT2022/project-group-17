@@ -1274,7 +1274,8 @@ public class GamePlayController extends ViewController {
     }
 
     public void nextTurn(MouseEvent mouseEvent) {
-        System.out.println(new Gson().toJson(Game.instance));
-
+//        System.out.println(new Gson().toJson(Game.instance));
+        String message = GameController.nextPlayerTurn();
+        showPopUp(Game.instance.getCurrentScene().getWindow(), message);
     }
 }
