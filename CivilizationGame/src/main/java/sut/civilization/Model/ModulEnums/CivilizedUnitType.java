@@ -9,7 +9,7 @@ public enum CivilizedUnitType {
             new UnitActions[]{UnitActions.MOVE, UnitActions.FOUND_CITY, UnitActions.SLEEP,
                     UnitActions.WAKE, UnitActions.DELETE}),
     WORKER("Worker", 70, 2, null, null, 0, 10,
-            new UnitActions[]{UnitActions.MOVE, UnitActions.BUILD_IMPROVEMENT, UnitActions.BUILD_ROUTE,
+            new UnitActions[]{UnitActions.MOVE, UnitActions.BUILD_IMPROVEMENT,
                     UnitActions.REPAIR, UnitActions.SLEEP, UnitActions.WAKE, UnitActions.DELETE});
 
     public final String name;

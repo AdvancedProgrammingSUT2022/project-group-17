@@ -14,7 +14,6 @@ public enum UnitActions {
     FORTIFY_UNTIL_HEAL(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Heal.png"))),
     FOUND_CITY(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Found City.png"))),
     FORTIFY(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Fortify.png"))),
-    BUILD_ROUTE(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Build Route.png"))),
     BUILD_IMPROVEMENT(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Build Improvement.png"))),
     ALERT(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Alert.png")))
     ;

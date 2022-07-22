@@ -24,6 +24,7 @@ import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.CityController;
 import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Controller.GameControllers.UnitController;
+import sut.civilization.Controller.GameControllers.WorkerController;
 import sut.civilization.Enums.Consts;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
@@ -362,6 +363,7 @@ public class GamePlayController extends ViewController {
         unitPopup.hide();
         if (GameController.getSelectedCivilizedUnit() != null) {
             VBox unitActions = new VBox();
+            HBox actionsAndImprovementsHBox = new HBox();
             CivilizedUnitType civilizedUnitType = GameController.getSelectedCivilizedUnit().getCivilizedUnitType();
             Window window = Game.instance.getCurrentScene().getWindow();
             ImageView unitImage = new ImageView();
@@ -435,6 +437,52 @@ public class GamePlayController extends ViewController {
                             updateWholeMap();
                         });
                         break;
+                    case BUILD_IMPROVEMENT:
+                        actionImage.setOnMouseClicked(mouseEvent -> {
+                            VBox improvements = new VBox();
+                            for (ImprovementType improvementType : ImprovementType.values()) {
+                                switch (improvementType) {
+                                    case FOREST_FARM:
+                                    case MARSH_FARM:
+                                    case MARSH_MINE:
+                                    case FOREST_MINE:
+                                    case JUNGLE_FARM:
+                                    case JUNGLE_MINE:
+                                        break;
+                                    default:
+                                        ImageView improvementImage = new ImageView(new Image(Civilization.class.getResourceAsStream(improvementType.imageAddress)));
+                                        improvementImage.setOnMouseClicked(mouseEvent1 -> {
+                                            String message = WorkerController.setWorkerToBuildImprovement(improvementType.name);
+                                            showPopUp(window, message);
+                                        });
+                                        improvementImage.setFitWidth(40);
+                                        improvementImage.setFitHeight(40);
+                                        VBox.setMargin(improvementImage, new Insets(0, 0, 5, 0));
+                                        improvements.getChildren().add(improvementImage);
+                                }
+                            }
+                            improvements.setStyle("-fx-background-color: #212121;");
+                            improvements.setAlignment(Pos.TOP_CENTER);
+                            improvements.setPrefWidth(50);
+                            improvements.setMinHeight(230);
+
+                            ScrollPane improvementsScrollPane = new ScrollPane(improvements);
+                            improvementsScrollPane.setPrefHeight(230);
+                            improvementsScrollPane.setPrefWidth(50);
+                            improvementsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+                            improvementsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+                            improvementsScrollPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
+
+                            actionsAndImprovementsHBox.getChildren().add(improvementsScrollPane);
+//                            String message = WorkerController.setWorkerToBuildImprovement();
+                        });
+                        break;
+                    case REPAIR:
+                        actionImage.setOnMouseClicked(mouseEvent -> {
+                            String message = WorkerController.setWorkerToRepair();
+                            showPopUp(window, message);
+                        });
+                        break;
                 }
                 actionImage.setFitWidth(40);
                 actionImage.setFitHeight(40);
@@ -472,10 +520,12 @@ public class GamePlayController extends ViewController {
             actionsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             actionsScrollPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
 
+            actionsAndImprovementsHBox.getChildren().add(actionsScrollPane);
+
             BorderPane borderPane = new BorderPane();
             borderPane.setTop(ex);
             borderPane.setCenter(wholeUnit);
-            borderPane.setRight(actionsScrollPane);
+            borderPane.setRight(actionsAndImprovementsHBox);
             borderPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
 
             unitPopup.setX(0);

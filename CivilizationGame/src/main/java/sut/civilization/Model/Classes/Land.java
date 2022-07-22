@@ -1,6 +1,7 @@
 package sut.civilization.Model.Classes;
 
 import javafx.scene.shape.Polygon;
+import sut.civilization.Model.ModulEnums.ImprovementType;
 import sut.civilization.Model.ModulEnums.LandType;
 
 public class Land {

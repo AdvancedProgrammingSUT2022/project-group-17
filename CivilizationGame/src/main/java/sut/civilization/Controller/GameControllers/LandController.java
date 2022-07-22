@@ -300,7 +300,7 @@ public class LandController extends Controller {
 
         int i = 0;
         for (RangedCombatUnitType rangedCombatUnitType: RangedCombatUnitType.values()) {
-            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.SETTLER, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
+            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
             RangedCombatUnit rangedCombatUnit = new RangedCombatUnit(rangedCombatUnitType, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
             map[civilizedUnit.getLocation().x][civilizedUnit.getLocation().y].setCivilizedUnit(civilizedUnit);
             map[rangedCombatUnit.getLocation().x][rangedCombatUnit.getLocation().y].setCombatUnit(rangedCombatUnit);
@@ -322,12 +322,12 @@ public class LandController extends Controller {
         GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
         GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.EGYPT));
 
-        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.AGRICULTURE);
-        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.ANIMAL_HUSBANDRY);
+//        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.AGRICULTURE);
+//        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.ANIMAL_HUSBANDRY);
 //        GameController.getCurrentTurnUser().getNation().setInProgressTechnology(TechnologyType.BRONZE_WORKING);
-//        for (TechnologyType technologyType : TechnologyType.values()) {
-//            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
-//        }
+        for (TechnologyType technologyType : TechnologyType.values()) {
+            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
+        }
         for (ResourceType resourceType: ResourceType.values()) {
             GameController.getCurrentTurnUser().getNation().addResource(resourceType);
         }
