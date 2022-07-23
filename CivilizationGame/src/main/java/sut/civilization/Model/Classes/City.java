@@ -1,8 +1,6 @@
 package sut.civilization.Model.Classes;
 
-import sut.civilization.Model.ModulEnums.CivilizedUnitType;
-import sut.civilization.Model.ModulEnums.CloseCombatUnitType;
-import sut.civilization.Model.ModulEnums.RangedCombatUnitType;
+import sut.civilization.Model.ModulEnums.BuildingType;
 
 import java.util.ArrayList;
 
@@ -16,14 +14,14 @@ public class City {
     protected int combatStrength;
     protected int rangedStrength;
     protected int level;
-    protected ArrayList<Building> buildings = new ArrayList<>();
+    protected ArrayList<BuildingType> buildings = new ArrayList<>();
     protected ArrayList<Improvement> improvements = new ArrayList<>();
+    protected boolean hasAnInProgressProduct = false;
     protected Building inProgressBuilding = null;
-    protected boolean hasAnInProgressUnit = false;
     protected CivilizedUnit inProgressCivilizedUnit = null;
     protected CloseCombatUnit inProgressCloseCombatUnit = null;
     protected RangedCombatUnit inProgressRangedCombatUnit = null;
-    protected int nextUnitTurns;
+    protected int nextProductTurns;
     protected Land mainLand;
     protected CloseCombatUnit garrison;
     protected int coinGrowth;
@@ -64,7 +62,7 @@ public class City {
         return citizens;
     }
 
-    public ArrayList<Building> getBuildings() {
+    public ArrayList<BuildingType> getBuildings() {
         return buildings;
     }
 
@@ -116,7 +114,7 @@ public class City {
         return scienceGrowth;
     }
 
-    public void addBuilding(Building building){
+    public void addBuilding(BuildingType building){
         buildings.add(building);
     }
 
@@ -188,8 +186,8 @@ public class City {
         return inProgressRangedCombatUnit;
     }
 
-    public int getNextUnitTurns() {
-        return nextUnitTurns;
+    public int getNextProductTurns() {
+        return nextProductTurns;
     }
 
     public void setName(String name) {
@@ -198,10 +196,6 @@ public class City {
 
     public void setLands(ArrayList<Land> lands) {
         this.lands = lands;
-    }
-
-    public void setBuildings(ArrayList<Building> buildings) {
-        this.buildings = buildings;
     }
 
     public void setImprovements(ArrayList<Improvement> improvements) {
@@ -236,20 +230,20 @@ public class City {
         this.inProgressRangedCombatUnit = inProgressRangedCombatUnit;
     }
 
-    public void setNextUnitTurns(int nextUnitTurns) {
-        this.nextUnitTurns = nextUnitTurns;
+    public void setNextProductTurns(int nextProductTurns) {
+        this.nextProductTurns = nextProductTurns;
     }
 
     public void setGarrison(CloseCombatUnit garrison) {
         this.garrison = garrison;
     }
 
-    public void setHasAnInProgressUnit(boolean hasAnInProgressUnit) {
-        this.hasAnInProgressUnit = hasAnInProgressUnit;
+    public void setHasAnInProgressProduct(boolean hasAnInProgressProduct) {
+        this.hasAnInProgressProduct = hasAnInProgressProduct;
     }
 
-    public boolean hasAnInProgressUnit() {
-        return hasAnInProgressUnit;
+    public boolean hasAnInProgressProduct() {
+        return hasAnInProgressProduct;
     }
 
     public Land getMainLand() {

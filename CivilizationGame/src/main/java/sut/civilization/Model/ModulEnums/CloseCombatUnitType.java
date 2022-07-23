@@ -41,6 +41,7 @@ public enum CloseCombatUnitType {
     public final int turns;
     public final int hp;
     public final String imageAddress;
+    public UnitActions[] actions;
     CloseCombatUnitType(String name, int cost, int combatStrength, int MP, ResourceType resourceType, TechnologyType technologyType, int turns, int hp) {
         this.name = name;
         this.cost = cost;
@@ -51,5 +52,7 @@ public enum CloseCombatUnitType {
         this.turns = turns;
         this.hp = hp;
         this.imageAddress = "/sut/civilization/Images/units/" + name + ".png";
+        this.actions = new UnitActions[]{UnitActions.MOVE, UnitActions.ATTACK, UnitActions.FORTIFY, UnitActions.ALERT,
+                UnitActions.FORTIFY_UNTIL_HEAL, UnitActions.SLEEP, UnitActions.WAKE, UnitActions.DELETE};
     }
 }

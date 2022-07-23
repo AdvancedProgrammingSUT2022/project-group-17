@@ -23,3 +23,39 @@ Button {
     -fx-background-color: rgb(33, 33, 33);
     -fx-text-fill: white;
 }
+
+.infoColumns {
+    -fx-pref-width: 150;
+    -fx-pref-height: 100;
+    -fx-alignment: center;
+    -fx-text-fill: white;
+}
+
+.infoBoldColumn {
+    -fx-pref-width: 250;
+    -fx-pref-height: 100;
+    -fx-alignment: center;
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.infoList {
+    -fx-background-radius: 20;
+    -fx-background-color: #212121;
+}
+
+.header {
+    -fx-text-fill: white;
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-label-padding: 10;
+    -fx-alignment: center;
+}
+
+.thinVBox {
+    -fx-background-color: #212121;
+    -fx-pref-width: 50;
+    -fx-min-height: 230;
+    -fx-alignment: top-center;
+}

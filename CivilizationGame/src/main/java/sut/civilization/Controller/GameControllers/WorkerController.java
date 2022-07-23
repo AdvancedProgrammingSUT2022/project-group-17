@@ -15,8 +15,8 @@ import java.util.regex.Matcher;
 
 public class WorkerController extends GameController {
 
-    public String setWorkerToBuildImprovement(Matcher matcher) {
-        String name = matcher.group("name");
+    public static String setWorkerToBuildImprovement(String name) {
+//        String name = matcher.group("name");
         ImprovementType toBeBuiltImprovement = null;
         for (ImprovementType improvementType : ImprovementType.values()) {
             if (improvementType.name.equalsIgnoreCase(name))
@@ -58,7 +58,7 @@ public class WorkerController extends GameController {
         return "The Worker is now working!\nThe improvement will be ready in " + improvementType.initialTurns + " turns";
     }
 
-    private String setWorkerToBuildRoad(ImprovementType improvementType) {
+    private static String setWorkerToBuildRoad(ImprovementType improvementType) {
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes")) {
             if ((Game.instance.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getLandFeature() == null &&
@@ -157,7 +157,7 @@ public class WorkerController extends GameController {
         return "There isn't any route here!";
     }
 
-    public String setWorkerToRepair() {
+    public static String setWorkerToRepair() {
         if (Game.instance.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getImprovement() != null) {
             if (Game.instance.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getImprovement().isBroken()) {
                 selectedCivilizedUnit.setWaitingForCommand(false);
@@ -171,7 +171,7 @@ public class WorkerController extends GameController {
     }
 
 
-    private String setWorkerToBuildNonResourcedImprovement(ImprovementType improvementType) {
+    private static String setWorkerToBuildNonResourcedImprovement(ImprovementType improvementType) {
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes") &&
                 (message = isLandSuitable(improvementType)).equals("yes")) {
@@ -180,7 +180,7 @@ public class WorkerController extends GameController {
         return message;
     }
 
-    private String setWorkerToBuildResourcedImprovement(ImprovementType improvementType) {
+    private static String setWorkerToBuildResourcedImprovement(ImprovementType improvementType) {
         String message;
         if ((message = canGenerallyBuildImprovement(improvementType)).equals("yes") &&
                 (message = hasResourceOfImprovement(improvementType,selectedCivilizedUnit)).equals("yes")) {

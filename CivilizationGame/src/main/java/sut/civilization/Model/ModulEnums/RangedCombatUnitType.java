@@ -28,6 +28,7 @@ public enum RangedCombatUnitType {
     public final int hp;
     public final boolean isSiege;
     public final String imageAddress;
+    public UnitActions[] actions;
 
     RangedCombatUnitType(String name, int cost, int combatStrength, int rangedStrength, int range, int MP,
                          ResourceType resourceType, TechnologyType technologyType, int turns, int hp, boolean isSiege) {
@@ -43,5 +44,7 @@ public enum RangedCombatUnitType {
         this.hp = hp;
         this.isSiege = isSiege;
         this.imageAddress = "/sut/civilization/Images/units/" + name + ".png";
+        this.actions = new UnitActions[]{UnitActions.MOVE, UnitActions.RANGED_ATTACK, UnitActions.FORTIFY,
+                UnitActions.ALERT, UnitActions.FORTIFY_UNTIL_HEAL, UnitActions.SLEEP, UnitActions.WAKE, UnitActions.DELETE};
     }
 }

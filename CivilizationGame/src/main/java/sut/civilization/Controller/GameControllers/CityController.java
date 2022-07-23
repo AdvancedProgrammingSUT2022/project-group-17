@@ -15,12 +15,14 @@ import static sut.civilization.Model.Classes.Pair.isValid;
 
 public class CityController extends GameController {
 
-    public String buildCity(Matcher matcher){
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
-        String name = matcher.group("name");
+    public static String buildCity(String name){
+//        int x = Integer.parseInt(matcher.group("x"));
+//        int y = Integer.parseInt(matcher.group("y"));
+//        String name = matcher.group("name");
         if (currentTurnUser.getNation().getCities().size() > 0 && (selectedCivilizedUnit == null || !selectedCivilizedUnit.getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)))
             return "You need to select a settler first";
+        int x = selectedCivilizedUnit.getLocation().x;
+        int y = selectedCivilizedUnit.getLocation().y;
         Pair<Integer,Integer> main = new Pair<Integer,Integer>(x, y);
         if (isCityBuildable(main)){
             Land mainLand = Game.instance.map[x][y];
@@ -32,7 +34,7 @@ public class CityController extends GameController {
 
             Pair<Integer, Integer>[] neighbors = new Pair[6];
             for (int i = 0; i < 6; i++)
-                neighbors[i] = landController.getNeighborIndex(main, i);
+                neighbors[i] = LandController.getNeighborIndex(main, i);
             for (int i = 0; i < 6; i++) {
                 if (isValid(neighbors[i]))
                     Game.instance.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
@@ -46,19 +48,19 @@ public class CityController extends GameController {
         return "Can't build a city here";
     }
 
-    public boolean isCityBuildable(Pair<Integer,Integer> main){
+    public static boolean isCityBuildable(Pair<Integer, Integer> main){
         if (!Game.instance.map[main.x][main.y].getLandType().isWalkable)
             return false;
 
         Pair<Integer,Integer>[] neighbors = new Pair[6];
         for (int i = 0; i < 6; i++)
-            neighbors[i] = landController.getNeighborIndex(main, i);
+            neighbors[i] = LandController.getNeighborIndex(main, i);
 
         for (int i = 0; i < 6; i++) {
             if (isValid(neighbors[i])){
                 Pair<Integer,Integer>[] neighbors2 = new Pair[6];
                 for (int j = 0; j < 6; j++)
-                    neighbors2[j] = landController.getNeighborIndex(neighbors[i], j);
+                    neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
 
                 for (int j = 0; j < 6; j++) {
                     if (isValid(neighbors2[j])){

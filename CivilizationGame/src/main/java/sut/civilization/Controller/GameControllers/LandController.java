@@ -176,7 +176,7 @@ public class LandController extends Controller {
 
     }
 
-    public Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
+    public static Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
         if (coordinate.y % 2 == 0) {
             switch (position) {
                 case 0:
@@ -212,7 +212,7 @@ public class LandController extends Controller {
     }
 
 
-    public boolean areNeighbors(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
+    public static boolean areNeighbors(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
         for (int i = 0; i < 6; i++) {
             if (land2.equals(getNeighborIndex(land1, i)))
                 return true;
@@ -220,7 +220,7 @@ public class LandController extends Controller {
         return false;
     }
 
-    public int getIndex(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
+    public static int getIndex(Pair<Integer, Integer> land1, Pair<Integer, Integer> land2) {
         for (int i = 0; i < 6; i++) {
             if (land2.equals(getNeighborIndex(land1, i)))
                 return i;
@@ -229,11 +229,11 @@ public class LandController extends Controller {
     }
 
 
-    public Land[][] mapInitializer() {
-        Land[][] map = new Land[20][20];
+    public static Land[][] mapInitializer() {
+        Land[][] map = new Land[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
         Random random = new Random(Double.doubleToLongBits(Math.random()));
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
 
                 LandType landtype;
                 switch (random.nextInt(8)) {
@@ -268,8 +268,8 @@ public class LandController extends Controller {
             }
         }
 
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 ResourceType[] availableResources = map[i][j].getLandType().resourceTypes;
                 LandFeatureType[] landFeatureTypes = map[i][j].getLandType().landFeatureTypes;
                 int randomInt;
@@ -298,42 +298,70 @@ public class LandController extends Controller {
             }
         }
 
-        int i = 0;
-        for (RangedCombatUnitType rangedCombatUnitType: RangedCombatUnitType.values()) {
-            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.SETTLER, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
-            RangedCombatUnit rangedCombatUnit = new RangedCombatUnit(rangedCombatUnitType, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
-            map[civilizedUnit.getLocation().x][civilizedUnit.getLocation().y].setCivilizedUnit(civilizedUnit);
-            map[rangedCombatUnit.getLocation().x][rangedCombatUnit.getLocation().y].setCombatUnit(rangedCombatUnit);
-            GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
-            GameController.getCurrentTurnUser().getNation().getUnits().add(rangedCombatUnit);
-            i++;
-            if (i == 10) break;
-        }
 
-        City city = new City(GameController.getCurrentTurnUser().getNation(), "Mashhad", map[2][2]);
-        GameController.getCurrentTurnUser().getNation().getCities().add(city);
-        map[2][2].setOwnerCity(city);
-        city.setCitizens(77);
-        city.setFoodGrowth(15);
-        city.setProductionGrowth(25);
-        city.setCoinGrowth(80);
 
-        GameController.getCurrentTurnUser().getNation().getFriends().add(new Nation(NationType.PERSIA));
-        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
-        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.EGYPT));
 
-        GameController.getCurrentTurnUser().getNation().setInProgressTechnology(TechnologyType.BRONZE_WORKING);
-        for (TechnologyType technologyType : TechnologyType.values()) {
-            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
-        }
-        for (ResourceType resourceType: ResourceType.values()) {
-            GameController.getCurrentTurnUser().getNation().addResource(resourceType);
-        }
+        CivilizedUnit settler1 = new CivilizedUnit(
+                CivilizedUnitType.WORKER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
+        );
+//        CivilizedUnit settler2 = new CivilizedUnit(
+//                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(4, 4)
+//        );
+        map[settler1.getLocation().x][settler1.getLocation().y].setCivilizedUnit(settler1);
+//        map[settler2.getLocation().x][settler2.getLocation().y].setCivilizedUnit(settler2);
+        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(settler1);
+//        Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(settler2);
 
-        GameController.getCurrentTurnUser().getNation().getCities().get(0).setInProgressBuilding(new Building(BuildingType.BANK));
+//        RangedCombatUnit archer = new RangedCombatUnit(
+//                RangedCombatUnitType.ARCHER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
+//        );
+//        CloseCombatUnit warrior = new CloseCombatUnit(
+//                CloseCombatUnitType.WARRIOR, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(3, 2)
+//        );
+//        map[archer.getLocation().x][archer.getLocation().y].setCombatUnit(archer);
+//        map[warrior.getLocation().x][warrior.getLocation().y].setCombatUnit(warrior);
+//        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(archer);
+//        Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(warrior);
 
-        for (int i1 = 0; i1 < 20; i1++) {
-            for (int j = 0; j < 20; j++) {
+
+//        int i = 2;
+//        for (RangedCombatUnitType rangedCombatUnitType: RangedCombatUnitType.values()) {
+//            CivilizedUnit civilizedUnit = new CivilizedUnit(CivilizedUnitType.WORKER, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
+//            RangedCombatUnit rangedCombatUnit = new RangedCombatUnit(rangedCombatUnitType, GameController.getCurrentTurnUser().getNation(), new Pair<>(i, i));
+//            map[civilizedUnit.getLocation().x][civilizedUnit.getLocation().y].setCivilizedUnit(civilizedUnit);
+//            map[rangedCombatUnit.getLocation().x][rangedCombatUnit.getLocation().y].setCombatUnit(rangedCombatUnit);
+//            GameController.getCurrentTurnUser().getNation().getUnits().add(civilizedUnit);
+//            GameController.getCurrentTurnUser().getNation().getUnits().add(rangedCombatUnit);
+//            i++;
+//            if (i == 4) break;
+//        }
+
+//        City city = new City(GameController.getCurrentTurnUser().getNation(), "Mashhad", map[2][2]);
+//        GameController.getCurrentTurnUser().getNation().getCities().add(city);
+//        map[2][2].setOwnerCity(city);
+//        city.setCitizens(77);
+//        city.setFoodGrowth(15);
+//        city.setProductionGrowth(25);
+//        city.setCoinGrowth(80);
+
+//        GameController.getCurrentTurnUser().getNation().getFriends().add(new Nation(NationType.PERSIA));
+//        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.INCA));
+//        GameController.getCurrentTurnUser().getNation().getEnemies().add(new Nation(NationType.EGYPT));
+
+//        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.AGRICULTURE);
+//        GameController.getCurrentTurnUser().getNation().addTechnology(TechnologyType.ANIMAL_HUSBANDRY);
+//        GameController.getCurrentTurnUser().getNation().setInProgressTechnology(TechnologyType.BRONZE_WORKING);
+//        for (TechnologyType technologyType : TechnologyType.values()) {
+//            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
+//        }
+//        for (ResourceType resourceType: ResourceType.values()) {
+//            GameController.getCurrentTurnUser().getNation().addResource(resourceType);
+//        }
+
+//        GameController.getCurrentTurnUser().getNation().getCities().get(0).setInProgressBuilding(new Building(BuildingType.BANK));
+
+        for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 Land land = map[i1][j];
                 int chance = new Random().nextInt(10);
                 if (chance <= 1)
@@ -344,11 +372,11 @@ public class LandController extends Controller {
         return map;
     }
 
-    public Land getLandByCoordinates(int x, int y) {
+    public static Land getLandByCoordinates(int x, int y) {
         return Game.instance.map[x][y];
     }
 
-    public int getLandNumber(Land land) {
+    public static int getLandNumber(Land land) {
         int num = -1;
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
@@ -359,7 +387,7 @@ public class LandController extends Controller {
         return num;
     }
 
-    public void initializeDistances() {
+    public static void initializeDistances() {
         for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
             for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
                 for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {
@@ -386,7 +414,7 @@ public class LandController extends Controller {
         }
     }
 
-    public void updateDistances() {
+    public static void updateDistances() {
         for (int i1 = 0; i1 < Consts.MAP_SIZE.amount.x; i1++) {
             for (int j1 = 0; j1 < Consts.MAP_SIZE.amount.y; j1++) {
                 for (int i2 = 0; i2 < Consts.MAP_SIZE.amount.x; i2++) {

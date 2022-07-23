@@ -1,5 +1,8 @@
 .root{
-    -fx-background-color: #590000;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top;
+    -fx-background-size: cover;
+    -fx-background-image: url("/sut/civilization/Images/BackGround/background4.png");
 }
 
 

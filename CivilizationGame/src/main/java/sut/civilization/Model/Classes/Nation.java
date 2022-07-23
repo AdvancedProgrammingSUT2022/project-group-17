@@ -40,7 +40,7 @@ public class Nation {
         this.nationType = nationType;
 
         initializeTechnologies();
-        initializeNextTechnologies();
+//        initializeNextTechnologies();
         initializeResourceCellar();
         initializeBuildings();
         this.getHappiness().setBalance(100);
