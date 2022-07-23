@@ -9,7 +9,6 @@ import sut.civilization.Model.ModulEnums.ResourceType;
 import sut.civilization.Model.ModulEnums.TechnologyType;
 import sut.civilization.Model.ModulEnums.CivilizedUnitType;
 import sut.civilization.Model.ModulEnums.UnitStatus;
-import sut.civilization.View.Graphical.GamePlayController;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -230,15 +229,18 @@ public class GameController extends Controller {
         new LandController().printMap(Game.instance.map);
     }
 
-    private static boolean isReadyForNextTurn() {
+    private static String isReadyForNextTurn() {
         for (Unit unit : currentTurnUser.getNation().getUnits())
             if (unit.isWaitingForCommand())
-                return false;
-        return true;
+                return "unit";
+        if (currentTurnUser.getNation().getInProgressTechnology() == null)
+            return "tech";
+        return "ready";
     }
 
     public static String nextPlayerTurn() {
-        if (isReadyForNextTurn()) {
+        String readyState = isReadyForNextTurn();
+        if (readyState.equals("ready")) {
             selectedCity = null;
             selectedCivilizedUnit = null;
             selectedCombatUnit = null;
@@ -247,11 +249,11 @@ public class GameController extends Controller {
             if (Game.instance.getSubTurn() == Game.instance.getPlayersInGame().size()) {
                 nextGameTurn();
                 Game.instance.setSubTurn(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
-                GamePlayController.getInstance().updateWholeMap();
                 return "next game turn: " + currentTurnUser.getUsername();
             }
-            GamePlayController.getInstance().updateWholeMap();
             return "next player turn!: " + currentTurnUser.getUsername();
+        } else if (readyState.equals("tech")) {
+            return "Select a technology to research!";
         }
         return "Order all your units first!";
     }
@@ -305,11 +307,11 @@ public class GameController extends Controller {
 
             //Create Unit => for in cities
             for (City city : userNation.getCities()) {
-                if (city.hasAnInProgressUnit()) {
-                    if (city.getNextUnitTurns() == 0) {
-                        UnitController.unitCreate(city);
+                if (city.hasAnInProgressProduct()) {
+                    if (city.getNextProductTurns() == 0) {
+                        UnitController.ProductCreate(city);
                     }
-                    city.setNextUnitTurns(city.getNextUnitTurns() - 1);
+                    city.setNextProductTurns(city.getNextProductTurns() - 1);
                 }
 
                 //production of unemployed
@@ -361,7 +363,8 @@ public class GameController extends Controller {
         }
 
         LandController.updateDistances();
-//        LandController.printMap(Game.instance.map);
+//        GamePlayController.getInstance().updateWholeMap();
+//        GamePlayController.getInstance().updateTechnologyBox();
     }
 
     private static void checkFortifying(Unit unit) {

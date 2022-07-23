@@ -18,7 +18,7 @@
                   <VBox.margin>
                      <Insets top="10.0" />
                   </VBox.margin></Label>
-                    <ChoiceBox fx:id="nations1" prefHeight="39.0" prefWidth="511.0" />
+                    <ChoiceBox fx:id="myNation" prefHeight="39.0" prefWidth="511.0" />
                 </VBox>
                 <ScrollPane fx:id="scrollPane">
                <HBox.margin>

@@ -11,7 +11,6 @@ import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.User;
 import sut.civilization.Model.ModulEnums.NationType;
-import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,20 +18,20 @@ import java.util.HashMap;
 public class GameMenuController {
     private final sut.civilization.Controller.GameControllers.GameController gameController = new sut.civilization.Controller.GameControllers.GameController();
     public Label chooseNation1;
-    public ChoiceBox nations1;
+    public ChoiceBox myNation;
     public ScrollPane scrollPane;
 
     public ArrayList<String> opponents = new ArrayList<>();
     public HashMap<String, ChoiceBox> selectedNations = new HashMap<>();
 
 
-    public void mainMenu(MouseEvent mouseEvent) {
+    public void mainMenu() {
         Game.instance.changeScene(Menus.MAIN_MENU);
     }
 
     public void startGame(MouseEvent mouseEvent) {
         if (canGameStart()){
-            int nation_one = Integer.parseInt(String.valueOf(nations1.getValue().toString().charAt(0)));
+            int nation_one = Integer.parseInt(String.valueOf(myNation.getValue().toString().charAt(0)));
             Game.instance.getPlayersInGame().add(Game.instance.getLoggedInUser());
             sut.civilization.Controller.GameControllers.GameController.setCurrentTurnUser(Game.instance.getLoggedInUser());
             gameController.chooseNation(nation_one, 0);
@@ -79,7 +78,7 @@ public class GameMenuController {
         }
         for (int i = 0; i < 9; i++) {
             Label label = new Label(nations[i]);
-            nations1.getItems().add(label.getText());
+            myNation.getItems().add(label.getText());
         }
 
 

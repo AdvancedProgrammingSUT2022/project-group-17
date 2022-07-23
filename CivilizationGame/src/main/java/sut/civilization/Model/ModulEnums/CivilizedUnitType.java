@@ -5,7 +5,7 @@ import sut.civilization.Model.Classes.Unit;
 import java.util.ArrayList;
 
 public enum CivilizedUnitType {
-    SETTLER("Settler", 89, 100, null, null, 0, 10,
+    SETTLER("Settler", 89, 2, null, null, 0, 10,
             new UnitActions[]{UnitActions.MOVE, UnitActions.FOUND_CITY, UnitActions.SLEEP,
                     UnitActions.WAKE, UnitActions.DELETE}),
     WORKER("Worker", 70, 2, null, null, 0, 10,

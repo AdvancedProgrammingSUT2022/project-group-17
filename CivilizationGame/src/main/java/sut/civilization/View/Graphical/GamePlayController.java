@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -26,7 +23,6 @@ import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static javafx.scene.paint.Color.WHITE;
@@ -36,11 +32,15 @@ public class GamePlayController extends ViewController {
     private ScrollPane mapScrollPane;
     private final static LandGraphical[][] graphicalMap = new LandGraphical[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
     public AnchorPane root;
-    private Popup infoPopup = new Popup();
-    private Popup unitPopup = new Popup();
-    private Popup cityPopup = new Popup();
-    public Label inProgressTechnologyName;
-    public ImageView inProgressTechnologyImage;
+    private final Popup infoPopup = new Popup();
+    private final Popup unitPopup = new Popup();
+    private final Popup cityPopup = new Popup();
+    public Label inProgressTechnologyName = new Label();
+    public ImageView inProgressTechnologyImage = new ImageView();
+    public ProgressBar technologyProgressBar = new ProgressBar();
+    public Label goldInfo;
+    public Label scienceInfo;
+    public Label happinessInfo;
     private static GamePlayController gamePlayController;
 
     public static GamePlayController getInstance() {
@@ -71,6 +71,8 @@ public class GamePlayController extends ViewController {
         mapScrollPane.setMaxWidth(Consts.SCREEN_SIZE.amount.y);
 
         updateTechnologyBox();
+
+        updateCurrencyBar();
 
         infoPopup.setHideOnEscape(false);
     }
@@ -188,7 +190,7 @@ public class GamePlayController extends ViewController {
         i = 0;
         for (Nation nation : GameController.getCurrentTurnUser().getNation().getEnemies()) {
             ImageView avatar = new ImageView(new Image(
-                    Civilization.class.getResourceAsStream(nation.getNationType().nationImageAddress)
+                    Objects.requireNonNull(Civilization.class.getResourceAsStream(nation.getNationType().nationImageAddress))
             ));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
@@ -319,6 +321,7 @@ public class GamePlayController extends ViewController {
         actionsScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         actionsScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         actionsScrollPane.setStyle("-fx-background-color: #212121; -fx-background-radius: 0 30 0 0;");
+        actionsScrollPane.setPrefHeight(230);
 
         actionsAndImprovementsHBox.getChildren().add(actionsScrollPane);
 
@@ -340,8 +343,8 @@ public class GamePlayController extends ViewController {
         unitPopup.hide();
         VBox unitActions = new VBox();
         HBox actionsAndImprovementsHBox = new HBox();
-        Unit civilizedUnit = GameController.getSelectedCivilizedUnit();
-        CivilizedUnitType civilizedUnitType = ((CivilizedUnit) civilizedUnit).getCivilizedUnitType();
+        CivilizedUnit civilizedUnit = GameController.getSelectedCivilizedUnit();
+        CivilizedUnitType civilizedUnitType = civilizedUnit.getCivilizedUnitType();
 
         ImageView unitImage = new ImageView(new Image(
                 Objects.requireNonNull(Civilization.class.getResourceAsStream(civilizedUnitType.imageAddress))
@@ -356,7 +359,7 @@ public class GamePlayController extends ViewController {
         unitMovement.setTextFill(WHITE);
         unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
 
-        for (UnitActions action : ((CivilizedUnit) civilizedUnit).getCivilizedUnitType().actions) {
+        for (UnitActions action : civilizedUnit.getCivilizedUnitType().actions) {
             ImageView actionImage = new ImageView(action.image);
 
             handleCommonActions(action, civilizedUnit, unitMovement, 0, actionImage);
@@ -450,7 +453,17 @@ public class GamePlayController extends ViewController {
     private void handleCloseCombatUnitActions(UnitActions action, ImageView actionImage) {
         if (action == UnitActions.ATTACK) {
             actionImage.setOnMouseClicked(mouseEvent -> {
-                //TODO
+                for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+                    for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                        if (Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
+                            int finalI = i;
+                            int finalJ = j;
+                            graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
+                                String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
+                            });
+                        }
+                    }
+                }
             });
         }
     }
@@ -490,9 +503,7 @@ public class GamePlayController extends ViewController {
                 });
                 break;
             case MOVE:
-                actionImage.setOnMousePressed(mouseEvent -> {
-                    unitMove(unitMovement, unit, selection);
-                });
+                actionImage.setOnMousePressed(mouseEvent -> unitMove(unitMovement, unit, selection));
                 break;
         }
     }
@@ -523,8 +534,6 @@ public class GamePlayController extends ViewController {
 
 
     public void showTechnologyPanel() {
-        ArrayList<TechnologyType> allTechnologies = new ArrayList<>();
-        ArrayList<Pair<Pair<Double, Double>, Pair<Double, Double>>> pairs = new ArrayList<>();
         HBox[] eachFloor = new HBox[12];
         VBox[] eachTechnology = new VBox[46];
         for (int i = 0; i < 12; i++) {
@@ -537,8 +546,6 @@ public class GamePlayController extends ViewController {
         }
         int i = 0;
         for (TechnologyType technologyType : TechnologyType.values()) {
-
-            allTechnologies.add(technologyType);
             ImageView technologyImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(technologyType.imageAddress))));
             HBox technologyImageHBox = new HBox(technologyImage);
             Label name = new Label(technologyType.name);
@@ -551,19 +558,18 @@ public class GamePlayController extends ViewController {
                 technologyImageHBox.setStyle("-fx-background-color: blue; -fx-background-radius: 100;");
             } else if (GameController.getCurrentTurnUser().getNation().getNextTechnologies().contains(technologyType)) {
                 technologyImageHBox.setStyle("-fx-background-radius: 100;");
-                if (GameController.getCurrentTurnUser().getNation().getInProgressTechnology() == null) {
-                    technologyImage.setOnMouseClicked(mouseEvent -> {
-                        String message = TechnologyController.addTechnology(technologyType.name);
-                        showPopUp(Game.instance.getCurrentScene().getWindow(), message);
-                        if (message.equals("Technology added successfully")) {
-                            technologyImageHBox.setStyle("-fx-background-color: blue; -fx-background-radius: 100;");
-                            inProgressTechnologyName.setText(technologyType.name);
-                            inProgressTechnologyImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
-                                    technologyType.imageAddress
-                            ))));
-                        }
-                    });
-                }
+                technologyImage.setOnMouseClicked(mouseEvent -> {
+                    String message = TechnologyController.addTechnology(technologyType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    if (message.equals("Technology added successfully")) {
+                        technologyImageHBox.setStyle("-fx-background-color: blue; -fx-background-radius: 100;");
+                        for (VBox vBox : eachTechnology)
+                            if (vBox.getChildren().get(0).getStyle().equals(technologyImageHBox.getStyle()) &&
+                                    vBox.getChildren().get(0) != technologyImageHBox)
+                                vBox.getChildren().get(0).setStyle(null);
+                        updateTechnologyBox();
+                    }
+                });
             } else if (!GameController.getCurrentTurnUser().getNation().getTechnologies().get(technologyType)) {
                 technologyImage.setEffect(colorAdjust);
             } else {
@@ -600,7 +606,7 @@ public class GamePlayController extends ViewController {
 
         VBox wholeTechTree = new VBox(eachFloor);
         wholeTechTree.setPrefHeight(700);
-        wholeTechTree.setPadding(new Insets(0,50,0,50));
+        wholeTechTree.setPadding(new Insets(0, 50, 0, 50));
         wholeTechTree.getStyleClass().add("infoList");
         wholeTechTree.setAlignment(Pos.CENTER);
 
@@ -657,6 +663,7 @@ public class GamePlayController extends ViewController {
         wholeCurrenciesInfosVBox.setPadding(new Insets(10, 20, 20, 10));
         wholeCurrenciesInfosVBox.setLayoutX(0);
         wholeCurrenciesInfosVBox.setLayoutY(30);
+        wholeCurrenciesInfosVBox.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
         cityPopup.getContent().add(wholeCurrenciesInfosVBox);
     }
@@ -739,6 +746,7 @@ public class GamePlayController extends ViewController {
         wholeProduct.setAlignment(Pos.CENTER);
         wholeProduct.setPrefSize(380, 230);
         wholeProduct.setLayoutY(538);
+        wholeProduct.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
         cityPopup.getContent().add(wholeProduct);
 
@@ -746,9 +754,9 @@ public class GamePlayController extends ViewController {
         // product buttons
         Button purchaseButton = new Button("Purchase");
         Button setProductButton = new Button("Set/Change Product");
-        setProductButton.setOnMouseClicked(mouseEvent -> {
-            showListOfCreatableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance);
-        });
+        setProductButton.setOnMouseClicked(mouseEvent ->
+                showListOfCreatableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance)
+        );
 
         HBox productButtons = new HBox(purchaseButton, setProductButton);
         productButtons.setLayoutY(498);
@@ -786,12 +794,10 @@ public class GamePlayController extends ViewController {
                 eachUnit.setAlignment(Pos.CENTER_LEFT);
                 eachUnit.setPrefWidth(300);
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
-                    CivilizedUnit civilizedUnit = new CivilizedUnit(
-                            civilizedUnitType,
-                            GameController.getCurrentTurnUser().getNation(),
-                            new Pair<>(city.getMainLand().getI(), city.getMainLand().getJ())
-                    );
-                    city.setInProgressCivilizedUnit(civilizedUnit);
+                    String message = UnitController.productStartCreation("civilized unit", civilizedUnitType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    CivilizedUnit civilizedUnit = city.getInProgressCivilizedUnit();
+
                     productImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                             civilizedUnit.getCivilizedUnitType().imageAddress
                     ))));
@@ -823,12 +829,10 @@ public class GamePlayController extends ViewController {
                 eachUnit.setAlignment(Pos.CENTER_LEFT);
                 eachUnit.setPrefWidth(300);
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
-                    CloseCombatUnit closeCombatUnit = new CloseCombatUnit(
-                            closeCombatUnitType,
-                            GameController.getCurrentTurnUser().getNation(),
-                            new Pair<>(city.getMainLand().getI(), city.getMainLand().getJ())
-                    );
-                    city.setInProgressCloseCombatUnit(closeCombatUnit);
+                    String message = UnitController.productStartCreation("close combat unit", closeCombatUnitType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    CloseCombatUnit closeCombatUnit = city.getInProgressCloseCombatUnit();
+
                     productImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                             closeCombatUnit.getCloseCombatUnitType().imageAddress
                     ))));
@@ -860,12 +864,10 @@ public class GamePlayController extends ViewController {
                 eachUnit.setAlignment(Pos.CENTER_LEFT);
                 eachUnit.setPrefWidth(300);
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
-                    RangedCombatUnit rangedCombatUnit = new RangedCombatUnit(
-                            rangedCombatUnitType,
-                            GameController.getCurrentTurnUser().getNation(),
-                            new Pair<>(city.getMainLand().getI(), city.getMainLand().getJ())
-                    );
-                    city.setInProgressRangedCombatUnit(rangedCombatUnit);
+                    String message = UnitController.productStartCreation("ranged combat unit", rangedCombatUnitType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    RangedCombatUnit rangedCombatUnit = city.getInProgressRangedCombatUnit();
+
                     productImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                             rangedCombatUnit.getRangedCombatUnitType().imageAddress
                     ))));
@@ -884,8 +886,9 @@ public class GamePlayController extends ViewController {
         listOfAvailableProducts.getChildren().add(buildingsHeader);
 
         for (BuildingType buildingType : BuildingType.values()) {
-            if (buildingType.technologyType == null ||
-                    GameController.getCurrentTurnUser().getNation().getTechnologies().get(buildingType.technologyType).equals(true)) {
+            if ((buildingType.technologyType == null ||
+                    GameController.getCurrentTurnUser().getNation().getTechnologies().get(buildingType.technologyType).equals(true)) &&
+            !city.getBuildings().contains(buildingType)) {
                 ImageView buildingImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(buildingType.imageAddress))));
                 buildingImage.setFitWidth(50);
                 buildingImage.setFitHeight(50);
@@ -900,8 +903,10 @@ public class GamePlayController extends ViewController {
                 eachBuilding.setAlignment(Pos.CENTER_LEFT);
                 eachBuilding.setPrefWidth(300);
                 eachBuilding.setOnMouseClicked(mouseEvent1 -> {
-                    Building building = new Building(buildingType);
-                    city.setInProgressBuilding(building);
+                    String message = UnitController.productStartCreation("building", buildingType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    Building building = city.getInProgressBuilding();
+
                     productImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                             building.getBuildingType().imageAddress
                     ))));
@@ -921,6 +926,7 @@ public class GamePlayController extends ViewController {
         scrollPane.setLayoutY(30);
         scrollPane.setMaxHeight(738);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
         cityPopup.getContent().add(scrollPane);
     }
@@ -941,6 +947,7 @@ public class GamePlayController extends ViewController {
         cityName.setPrefWidth(350);
         cityName.setLayoutX(508);
         cityName.setLayoutY(75);
+        cityName.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
         cityPopup.getContent().add(cityName);
 
@@ -1047,12 +1054,24 @@ public class GamePlayController extends ViewController {
             inProgressTechnologyImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                     inProgressTechnology.imageAddress
             ))));
+            technologyProgressBar.setProgress(1 - ((double) GameController.getCurrentTurnUser().getNation().getTechnologyTurns() /
+                    (double) inProgressTechnology.turns));
         } else {
             inProgressTechnologyName.setText("No technology");
             inProgressTechnologyImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                     "/sut/civilization/Images/productBorder.png"
             ))));
+            technologyProgressBar.setProgress(0);
         }
+    }
+
+    private void updateCurrencyBar() {
+        Currency coin = GameController.getCurrentTurnUser().getNation().getCoin();
+        Currency science = GameController.getCurrentTurnUser().getNation().getScience();
+        Currency happiness = GameController.getCurrentTurnUser().getNation().getHappiness();
+        goldInfo.setText(String.format("%d (%+d)", coin.getBalance(), coin.getGrowthRate()));
+        scienceInfo.setText(String.format("%+d", science.getBalance()));
+        happinessInfo.setText(String.valueOf(happiness.getBalance()));
     }
 
     public void lightenRoot() {
@@ -1128,6 +1147,10 @@ public class GamePlayController extends ViewController {
 //        System.out.println(new Gson().toJson(Game.instance));
         String message = GameController.nextPlayerTurn();
         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+
+        updateWholeMap();
+        updateTechnologyBox();
+        updateCurrencyBar();
     }
 
 
