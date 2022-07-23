@@ -347,7 +347,6 @@ public class UnitController extends GameController {
                     unitDeath(target);
                 }
             }else if (target instanceof RangedCombatUnit){
-                combatUnit.setHp(combatUnit.getHp() - ((RangedCombatUnit) target).getCombatStrength());
                 target.setHp(target.getHp() - combatUnit.getCombatStrength());
                 if (combatUnit.getHp() <= 0){
                     unitDeath(combatUnit);
@@ -372,7 +371,6 @@ public class UnitController extends GameController {
                     unitDeath(target);
                 }
             }else if (target instanceof RangedCombatUnit){
-                combatUnit.setHp(combatUnit.getHp() - ((RangedCombatUnit) target).getCombatStrength());
                 target.setHp(target.getHp() - ((RangedCombatUnit) combatUnit).getRangedStrength());
                 if (combatUnit.getHp() <= 0){
                     unitDeath(combatUnit);
