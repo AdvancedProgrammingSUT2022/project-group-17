@@ -398,7 +398,7 @@ public class GameController extends Controller {
         }
 
         if (!unit.getPath().equals("")) {
-            while (unit.getMP() > 0)
+            while (unit.getMP() > 0 && !unit.getPath().equals("") && unit.getPath() != null)
                 UnitController.unitGoForward(unit);
         } else {
             if (unit.getUnitStatus() == UnitStatus.MOVING) unit.setUnitStatus(UnitStatus.AWAKE);

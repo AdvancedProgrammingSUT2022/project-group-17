@@ -128,7 +128,7 @@ public class UnitController extends GameController {
 //            System.out.println(selectedUnit.getPath());
         } else
             return "Unit can't reach there";
-        while (selectedUnit.getMP() > 0)
+        while (selectedUnit.getMP() > 0 && !selectedUnit.getPath().equals("") && selectedUnit.getPath() != null)
             unitGoForward(selectedUnit);
         GamePlayController.getInstance().updateWholeMap();
         return "Unit moved successfully";
@@ -138,7 +138,8 @@ public class UnitController extends GameController {
         String path = unit.getPath();
         int neighbor = 0;
 
-        if (path != null && !path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
+        if (path != null && !path.equals(""))
+            neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
         else {
             System.out.println("path is empty");
             return;
@@ -160,9 +161,9 @@ public class UnitController extends GameController {
 
         unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getMP()));
         if (Game.instance.map[next.x][next.y].getLandFeature() != null)
-            unit.setMP(-Game.instance.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost);
-        if (Game.instance.map[next.x][next.y].getZOC() != null) {
-            if (!Game.instance.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())) {
+            unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost));
+        if (Game.instance.map[next.x][next.y].getZOC() != null){
+            if (!Game.instance.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
                 unit.setMP(0);
             }
         }
