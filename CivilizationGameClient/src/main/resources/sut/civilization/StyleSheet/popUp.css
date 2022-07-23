@@ -1,0 +1,84 @@
+#content {
+    -fx-text-alignment: center;
+    -fx-spacing: 25;
+    -fx-background-color: white;
+    -fx-background-radius: 25;
+    -fx-border-color: #776700;
+    -fx-border-width: 5;
+    -fx-border-radius: 25;
+    -fx-alignment: center;
+    -fx-min-width: 440;
+    -fx-min-height: 450;
+}
+
+#wideContent {
+    -fx-text-alignment: center;
+    -fx-spacing: 25;
+    -fx-background-color: white;
+    -fx-background-radius: 50;
+    -fx-border-color: #776700;
+    -fx-border-radius: 50;
+    -fx-min-width: 1000;
+    -fx-min-height: 500;
+}
+
+#subContent {
+    -fx-text-alignment: center;
+    -fx-spacing: 25;
+    -fx-background-color: white;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-alignment: center;
+    -fx-max-width: 800;
+    -fx-max-height: 30;
+}
+
+.scroll-pane .viewport {
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+}
+
+Label {
+    -fx-font-family: "Segoe Print";
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+Button:hover {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-text-fill: #fdfdfd;
+    -fx-background-color: #776700;
+    -fx-border-color: white;
+
+}
+
+Button {
+    -fx-pref-width: 200;
+    -fx-pref-height: 50;
+    -fx-border-radius: 20;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: #776700;
+    -fx-text-fill: #776700;
+    -fx-font-size: 20;
+}
+
+#sendRequestButton {
+    -fx-pref-width: 300;
+}
+
+#closeButton {
+    -fx-pref-width: 100;
+}

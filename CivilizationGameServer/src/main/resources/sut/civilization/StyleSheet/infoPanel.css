@@ -1,0 +1,8 @@
+.unitInfo {
+    -fx-font-size: 18;
+}
+
+.unitList {
+    -fx-border-color: black;
+    -fx-border-radius: 20;
+}

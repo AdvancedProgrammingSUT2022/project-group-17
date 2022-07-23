@@ -1,0 +1,66 @@
+.root{
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top;
+    -fx-background-size: cover;
+    -fx-background-image: url("/sut/civilization/Images/BackGround/background5.jpg");
+}
+
+.numberIndicator{
+    -fx-border-color: black;
+    -fx-border-radius: 20000;
+    -fx-min-width: 40;
+    -fx-alignment: center;
+}
+
+Label {
+    -fx-font-family: "Segoe Print";
+    -fx-font-size: 20;
+}
+
+.informationContainer{
+    -fx-background-radius: 20;
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-border-color: black;
+    -fx-min-height: 60;
+    -fx-border-radius: 20;
+    -fx-max-width: 800;
+}
+
+.imageView{
+    -fx-border-radius: 50;
+    -fx-border-color: black;
+}
+
+#title{
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(66, 0, 0);
+}
+
+
+Button:hover{
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-text-fill: #fdfdfd;
+    -fx-background-color: rgb(50, 0, 0);
+    -fx-border-color: white;
+
+}
+Button {
+    -fx-pref-width: 100;
+    -fx-pref-height: 30;
+    -fx-border-radius: 10;
+    -fx-background-color: none;
+    -fx-font-family: "Comic Sans MS";
+    -fx-cursor: hand;
+    -fx-border-color: darkred;
+    -fx-text-fill: rgb(50, 0, 0);
+    -fx-font-size: 20;
+}
+
+.onlineUserBorder{
+    -fx-border-color: red;
+}
+
+.onlineUserText{
+    -fx-text-fill: red;
+}
