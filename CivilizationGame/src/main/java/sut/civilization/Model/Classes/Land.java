@@ -63,6 +63,18 @@ public class Land {
             landOwnerNation.getFood().addGrowthRate(this.landFeature.getLandFeatureType().foodGrowth);
         }
     }
+
+    public boolean isACityMainLand() {
+        for (User user : Game.instance.getPlayersInGame()) {
+            for (City city : user.getNation().getCities()) {
+                if (city.getMainLand() == this) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public CivilizedUnit getCivilizedUnit() {
         return civilizedUnit;
     }

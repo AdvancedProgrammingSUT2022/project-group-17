@@ -96,12 +96,14 @@ public class LandGraphical extends Polygon {
             }
         });
 
-        cityImageView.setOnMouseClicked(mouseEvent -> {
-            if (land.getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
-                GameController.setSelectedCity(land.getOwnerCity());
-                GamePlayController.getInstance().showCityPanel();
-            }
-        });
+        if (cityImageView.getOpacity() > 0.6) {
+            cityImageView.setOnMouseClicked(mouseEvent -> {
+                if (land.getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                    GameController.setSelectedCity(land.getOwnerCity());
+                    GamePlayController.getInstance().showCityPanel();
+                }
+            });
+        }
 
 
         if (land.getLandType() != LandType.OCEAN)
@@ -147,6 +149,7 @@ public class LandGraphical extends Polygon {
 
         if (land.getOwnerCity() != null) {
             cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getOwnerCity().getOwnerNation().getNationType().nationImageAddress)).toExternalForm()));
+            if (land != land.getOwnerCity().getMainLand()) cityImageView.setOpacity(0.5);
         } else cityImageView.setImage(null);
 
         if (land.getImprovement() != null) {

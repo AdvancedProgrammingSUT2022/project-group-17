@@ -111,7 +111,9 @@ public class GameMenu extends Menu {
                 System.out.println(output);
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_ATTACK)).matches()) {
-            System.out.println(unitController.unitSetCityTarget(commandMatcher));
+//            System.out.println(unitController.unitSetCityTarget(
+//                    Integer.parseInt(commandMatcher.group("x")), Integer.parseInt(commandMatcher.group("y"))
+//            ));
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()) {
             System.out.println(unitController.productStartCreation(commandMatcher.group("type"), commandMatcher.group("name")));

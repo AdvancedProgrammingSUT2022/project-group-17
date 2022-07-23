@@ -296,11 +296,7 @@ public class GamePlayController extends ViewController {
 
     }
 
-    public void showUnitInfo(Unit unit, Label unitName, Label unitMovement, ImageView unitImage, VBox unitActions, HBox actionsAndImprovementsHBox) {
-
-        Label unitHP = new Label("Health: " + unit.getHp());
-        unitHP.setTextFill(WHITE);
-        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+    public void showUnitInfo(Unit unit, Label unitName, Label unitMovement, Label unitHP, ImageView unitImage, VBox unitActions, HBox actionsAndImprovementsHBox) {
 
         ImageView ex = exCreator();
         ex.setOnMouseClicked(mouseEvent -> {
@@ -359,6 +355,10 @@ public class GamePlayController extends ViewController {
         unitMovement.setTextFill(WHITE);
         unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
 
+        Label unitHP = new Label("Health: " + civilizedUnit.getHp());
+        unitHP.setTextFill(WHITE);
+        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+
         for (UnitActions action : civilizedUnit.getCivilizedUnitType().actions) {
             ImageView actionImage = new ImageView(action.image);
 
@@ -373,7 +373,7 @@ public class GamePlayController extends ViewController {
 
         unitActions.getStyleClass().add("thinVBox");
 
-        showUnitInfo(civilizedUnit, unitName, unitMovement, unitImage, unitActions, actionsAndImprovementsHBox);
+        showUnitInfo(civilizedUnit, unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
 
     }
 
@@ -385,7 +385,8 @@ public class GamePlayController extends ViewController {
 
         ImageView unitImage;
         Label unitName;
-        Label unitMovement;
+        Label unitMovement = new Label("Movement: " + combatUnit.getMP());
+        Label unitHP = new Label("Health: " + combatUnit.getHp());
 
         if (combatUnit instanceof CloseCombatUnit) {
             CloseCombatUnitType closeCombatUnitType = ((CloseCombatUnit) combatUnit).getCloseCombatUnitType();
@@ -393,7 +394,6 @@ public class GamePlayController extends ViewController {
                     Objects.requireNonNull(Civilization.class.getResourceAsStream(closeCombatUnitType.imageAddress))
             ));
             unitName = new Label(closeCombatUnitType.name);
-            unitMovement = new Label("Movement: " + combatUnit.getMP());
             for (UnitActions action : ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().actions) {
                 ImageView actionImage = new ImageView(action.image);
 
@@ -412,7 +412,6 @@ public class GamePlayController extends ViewController {
                     Objects.requireNonNull(Civilization.class.getResourceAsStream(rangedCombatUnitType.imageAddress))
             ));
             unitName = new Label(rangedCombatUnitType.name);
-            unitMovement = new Label("Movement: " + combatUnit.getMP());
             for (UnitActions action : ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().actions) {
                 ImageView actionImage = new ImageView(action.image);
 
@@ -427,6 +426,8 @@ public class GamePlayController extends ViewController {
 
         }
 
+//        unitHP.setText("Health: " + combatUnit.getHp());
+
         unitImage.setFitWidth(180);
         unitImage.setFitHeight(180);
         unitName.getStyleClass().add("header");
@@ -434,9 +435,12 @@ public class GamePlayController extends ViewController {
         unitMovement.setTextFill(WHITE);
         unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
 
+        unitHP.setTextFill(WHITE);
+        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+
         unitActions.getStyleClass().add("thinVBox");
 
-        showUnitInfo(combatUnit, unitName, unitMovement, unitImage, unitActions, actionsAndImprovementsHBox);
+        showUnitInfo(combatUnit, unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
 
     }
 
@@ -455,23 +459,37 @@ public class GamePlayController extends ViewController {
                 actionImage.setOnMouseClicked(mouseEvent -> {
                     for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
                         for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                            if (Game.instance.map[i][j].getCombatUnit() != null) {
-                                if (Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
-                                    int finalI = i;
-                                    int finalJ = j;
-                                    graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
-                                        String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
-                                        showPopUp(Game.instance.getCurrentScene().getWindow(), message);
-                                        updateWholeMap();
-                                        graphicalMap[finalI][finalJ].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent2 -> {
-                                            if (graphicalMap[finalI][finalJ].getLand().getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
-                                                GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
-                                                GameController.setSelectedCivilizedUnit(null);
-                                                GamePlayController.getInstance().showSelectedCombatUnitInfo();
-                                            }
-                                        });
+                            if (Game.instance.map[i][j].getCombatUnit() != null &&
+                                    Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
+                                int finalI = i;
+                                int finalJ = j;
+                                graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
+                                    String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
+                                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                                    updateWholeMap();
+                                    graphicalMap[finalI][finalJ].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent2 -> {
+                                        if (graphicalMap[finalI][finalJ].getLand().getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
+                                            GameController.setSelectedCivilizedUnit(null);
+                                            GamePlayController.getInstance().showSelectedCombatUnitInfo();
+                                        }
                                     });
-                                }
+                                });
+                            }
+                            if (Game.instance.map[i][j].isACityMainLand()) {
+                                int finalI = i;
+                                int finalJ = j;
+                                graphicalMap[i][j].getCityImageView().setOnMouseClicked(mouseEvent1 -> {
+                                    String message = UnitController.unitSetCityTarget(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                                    updateWholeMap();
+                                    graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
+                                        if (Game.instance.map[finalI][finalJ].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCity(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                            GamePlayController.getInstance().showCityPanel();
+                                        }
+                                    });
+                                });
                             }
                         }
                     }
@@ -513,6 +531,7 @@ public class GamePlayController extends ViewController {
                     String message = CityController.buildCity("Tehran");
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                     updateWholeMap();
+                    if (message.equals("City built successfully")) unitPopup.hide();
                 });
                 break;
             case BUILD_IMPROVEMENT:
@@ -751,9 +770,7 @@ public class GamePlayController extends ViewController {
 
         // product buttons
         Button purchaseButton = new Button("Purchase");
-        purchaseButton.setOnMouseClicked(mouseEvent -> {
-            showListOfPurchasableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance);
-        });
+        purchaseButton.setOnMouseClicked(mouseEvent -> showListOfPurchasableProducts(city));
         Button setProductButton = new Button("Set/Change Product");
         setProductButton.setOnMouseClicked(mouseEvent ->
                 showListOfCreatableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance)
@@ -767,8 +784,7 @@ public class GamePlayController extends ViewController {
     }
 
 
-    private void showListOfPurchasableProducts(City city, ImageView productImage, Label productName, Label productCost,
-                                             Label productTurnsLeft, Label productMaintenance) {
+    private void showListOfPurchasableProducts(City city) {
         // top-right box
         Label unitsHeader = new Label("Units:");
         unitsHeader.getStyleClass().add("header");
@@ -800,6 +816,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("civilized unit", civilizedUnitType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -828,6 +846,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("close combat unit", closeCombatUnitType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -856,6 +876,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("ranged combat unit", rangedCombatUnitType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -888,6 +910,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("building", buildingType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -1029,7 +1053,7 @@ public class GamePlayController extends ViewController {
         for (BuildingType buildingType : BuildingType.values()) {
             if ((buildingType.technologyType == null ||
                     GameController.getCurrentTurnUser().getNation().getTechnologies().get(buildingType.technologyType).equals(true)) &&
-            !city.getBuildings().contains(buildingType)) {
+                    !city.getBuildings().contains(buildingType)) {
                 ImageView buildingImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(buildingType.imageAddress))));
                 buildingImage.setFitWidth(50);
                 buildingImage.setFitHeight(50);

@@ -241,13 +241,13 @@ public class UnitController extends GameController {
         return "Select a unit first!";
     }
 
-    public String unitSetCityTarget(Matcher matcher) {
-        int cityX = Integer.parseInt(matcher.group("x"));
-        int cityY = Integer.parseInt(matcher.group("y"));
-        City city = Game.instance.map[cityX][cityY].getOwnerCity();
+    public static String unitSetCityTarget(City city) {
+//        int cityX = Integer.parseInt(matcher.group("x"));
+//        int cityY = Integer.parseInt(matcher.group("y"));
+//        City city = Game.instance.map[cityX][cityY].getOwnerCity();
         if (city != null && selectedCombatUnit != null) {
             if ((selectedCombatUnit instanceof CloseCombatUnit &&
-                    LandController.areNeighbors(new Pair<Integer, Integer>(cityX, cityY), selectedCombatUnit.getLocation()))) {
+                    LandController.areNeighbors(new Pair<>(city.getMainLand().getI(), city.getMainLand().getJ()), selectedCombatUnit.getLocation()))) {
                 if (!selectedCombatUnit.getOwnerNation().equals(city.getOwnerNation())) {
                     selectedCombatUnit.setTargetCity(city);
                 } else {
@@ -310,7 +310,7 @@ public class UnitController extends GameController {
         return "Attack on unit successful";
     }
 
-    public void unitAttackCity(CombatUnit combatUnit) {
+    public static void unitAttackCity(CombatUnit combatUnit) {
         if (combatUnit instanceof CloseCombatUnit) {
             combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
             combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
@@ -428,9 +428,9 @@ public class UnitController extends GameController {
                         return "Not enough coins";
                     }
                     CloseCombatUnit newCloseCombatUnit = new CloseCombatUnit(closeCombatUnitType,
-                            selectedCombatUnit.getOwnerNation(), new Pair<>(x, y));
+                            selectedCity.getOwnerNation(), new Pair<>(x, y));
                     mainLand.setCombatUnit(newCloseCombatUnit);
-                    selectedCombatUnit.getOwnerNation().addUnit(newCloseCombatUnit);
+                    selectedCity.getOwnerNation().addUnit(newCloseCombatUnit);
                     selectedCity.getOwnerNation().getCoin().addBalance(-closeCombatUnitType.cost);
                     return "Close combat unit purchased successfully";
                 }
@@ -447,9 +447,9 @@ public class UnitController extends GameController {
                         return "Not enough coins";
                     }
                     RangedCombatUnit newRangedCombatUnit = new RangedCombatUnit(rangedCombatUnitType,
-                            selectedCombatUnit.getOwnerNation(), new Pair<>(x, y));
+                            selectedCity.getOwnerNation(), new Pair<>(x, y));
                     mainLand.setCombatUnit(newRangedCombatUnit);
-                    selectedCombatUnit.getOwnerNation().addUnit(newRangedCombatUnit);
+                    selectedCity.getOwnerNation().addUnit(newRangedCombatUnit);
                     selectedCity.getOwnerNation().getCoin().addBalance(-rangedCombatUnitType.cost);
                     return "Ranged combat unit purchased successfully";
                 }
