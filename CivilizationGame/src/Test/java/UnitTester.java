@@ -186,14 +186,14 @@
 //    public void PurchaseUnitCivilized(){
 //
 //        commandMatcher = UnitCommands.getMatcher("purchase a Worker unit with type civilized unit",UnitCommands.PURCHASE_UNIT);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Civilized unit purchased successfully",unitController.purchaseUnit(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Civilized unit purchased successfully",unitController.purchaseProduct(commandMatcher));
 //    }
 //
 //    @Test
 //    public void PurchaseUnitCloseCombatUnit(){
 //
 //        commandMatcher = UnitCommands.getMatcher("purchase a Knight unit with type close combat unit",UnitCommands.PURCHASE_UNIT);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Close combat unit purchased successfully",unitController.purchaseUnit(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Close combat unit purchased successfully",unitController.purchaseProduct(commandMatcher));
 //    }
 //
 //    @Test
@@ -201,7 +201,7 @@
 //
 //
 //        commandMatcher = UnitCommands.getMatcher("purchase a Archer unit with type ranged combat unit",UnitCommands.PURCHASE_UNIT);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Ranged combat unit purchased successfully",unitController.purchaseUnit(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Ranged combat unit purchased successfully",unitController.purchaseProduct(commandMatcher));
 //    }
 //
 //    @Test

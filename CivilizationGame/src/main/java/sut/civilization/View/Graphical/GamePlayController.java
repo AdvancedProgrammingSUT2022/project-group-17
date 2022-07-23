@@ -399,7 +399,6 @@ public class GamePlayController extends ViewController {
 
                 handleCommonActions(action, combatUnit, unitMovement, 1, actionImage);
                 handleCombatUnitActions(action, actionImage);
-                handleCloseCombatUnitActions(action, actionImage);
 
                 actionImage.setFitWidth(40);
                 actionImage.setFitHeight(40);
@@ -419,7 +418,6 @@ public class GamePlayController extends ViewController {
 
                 handleCommonActions(action, combatUnit, unitMovement, 1, actionImage);
                 handleCombatUnitActions(action, actionImage);
-                handleRangedCombatUnitActions(action, actionImage);
 
                 actionImage.setFitWidth(40);
                 actionImage.setFitHeight(40);
@@ -442,32 +440,6 @@ public class GamePlayController extends ViewController {
 
     }
 
-    private void handleRangedCombatUnitActions(UnitActions action, ImageView actionImage) {
-        if (action == UnitActions.RANGED_ATTACK) {
-            actionImage.setOnMouseClicked(mouseEvent -> {
-                //TODO
-            });
-        }
-    }
-
-    private void handleCloseCombatUnitActions(UnitActions action, ImageView actionImage) {
-        if (action == UnitActions.ATTACK) {
-            actionImage.setOnMouseClicked(mouseEvent -> {
-                for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
-                    for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                        if (Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
-                            int finalI = i;
-                            int finalJ = j;
-                            graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
-                                String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
-                            });
-                        }
-                    }
-                }
-            });
-        }
-    }
-
     private void handleCombatUnitActions(UnitActions action, ImageView actionImage) {
         switch (action) {
             case FORTIFY:
@@ -478,6 +450,32 @@ public class GamePlayController extends ViewController {
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                 });
                 break;
+            case RANGED_ATTACK:
+            case ATTACK:
+                actionImage.setOnMouseClicked(mouseEvent -> {
+                    for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+                        for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                            if (Game.instance.map[i][j].getCombatUnit() != null) {
+                                if (Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
+                                    int finalI = i;
+                                    int finalJ = j;
+                                    graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
+                                        String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
+                                        showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                                        updateWholeMap();
+                                        graphicalMap[finalI][finalJ].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent2 -> {
+                                            if (graphicalMap[finalI][finalJ].getLand().getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                                GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
+                                                GameController.setSelectedCivilizedUnit(null);
+                                                GamePlayController.getInstance().showSelectedCombatUnitInfo();
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
         }
     }
 
@@ -624,7 +622,7 @@ public class GamePlayController extends ViewController {
 
         int i = 0;
         for (CurrencyType currencyType : CurrencyType.values()) {
-            currenciesIcons[i] = new ImageView(new Image(currencyType.imageAddress));
+            currenciesIcons[i] = new ImageView(currencyType.image);
             VBox.setMargin(currenciesIcons[i], new Insets(5, 5, 5, 5));
             currenciesNames[i] = new Label(currencyType.name);
             currenciesNames[i].setTextFill(currencyType.color);
@@ -753,6 +751,9 @@ public class GamePlayController extends ViewController {
 
         // product buttons
         Button purchaseButton = new Button("Purchase");
+        purchaseButton.setOnMouseClicked(mouseEvent -> {
+            showListOfPurchasableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance);
+        });
         Button setProductButton = new Button("Set/Change Product");
         setProductButton.setOnMouseClicked(mouseEvent ->
                 showListOfCreatableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance)
@@ -764,6 +765,146 @@ public class GamePlayController extends ViewController {
 
         cityPopup.getContent().add(productButtons);
     }
+
+
+    private void showListOfPurchasableProducts(City city, ImageView productImage, Label productName, Label productCost,
+                                             Label productTurnsLeft, Label productMaintenance) {
+        // top-right box
+        Label unitsHeader = new Label("Units:");
+        unitsHeader.getStyleClass().add("header");
+        VBox listOfAvailableProducts = new VBox();
+        listOfAvailableProducts.getChildren().add(unitsHeader);
+
+        for (CivilizedUnitType civilizedUnitType : CivilizedUnitType.values()) {
+            if ((civilizedUnitType.technologyType == null ||
+                    GameController.getCurrentTurnUser().getNation().getTechnologies().get(civilizedUnitType.technologyType).equals(true)) &&
+                    (civilizedUnitType.resourceType == null ||
+                            GameController.getCurrentTurnUser().getNation().getResourceCellar().get(civilizedUnitType.resourceType) > 0)) {
+                ImageView unitImage = new ImageView(new Image(
+                        Objects.requireNonNull(Civilization.class.getResourceAsStream(civilizedUnitType.imageAddress))
+                ));
+                unitImage.setFitWidth(50);
+                unitImage.setFitHeight(50);
+                Label unitName = new Label(civilizedUnitType.name);
+                Label unitCost = new Label(String.valueOf(civilizedUnitType.cost));
+                unitName.setTextFill(WHITE);
+                unitName.setStyle("-fx-label-padding: 0 0 5 0; -fx-font-weight: bold;");
+                unitCost.setTextFill(WHITE);
+                ImageView goldImage = new ImageView(CurrencyType.GOLD.image);
+                HBox costHBox = new HBox(goldImage, unitCost);
+                VBox nameAndCost = new VBox(unitName, costHBox);
+                nameAndCost.setAlignment(Pos.CENTER_LEFT);
+                HBox eachUnit = new HBox(unitImage, nameAndCost);
+                eachUnit.setAlignment(Pos.CENTER_LEFT);
+                eachUnit.setPrefWidth(300);
+                eachUnit.setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.purchaseProduct("civilized unit", civilizedUnitType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                });
+                listOfAvailableProducts.getChildren().add(eachUnit);
+            }
+        }
+
+        for (CloseCombatUnitType closeCombatUnitType : CloseCombatUnitType.values()) {
+            if ((closeCombatUnitType.technologyType == null ||
+                    GameController.getCurrentTurnUser().getNation().getTechnologies().get(closeCombatUnitType.technologyType).equals(true)) &&
+                    (closeCombatUnitType.resourceType == null ||
+                            GameController.getCurrentTurnUser().getNation().getResourceCellar().get(closeCombatUnitType.resourceType) > 0)) {
+                ImageView unitImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(closeCombatUnitType.imageAddress))));
+                unitImage.setFitWidth(50);
+                unitImage.setFitHeight(50);
+                Label unitName = new Label(closeCombatUnitType.name);
+                Label unitCost = new Label(String.valueOf(closeCombatUnitType.cost));
+                unitName.setTextFill(WHITE);
+                unitName.setStyle("-fx-label-padding: 0 0 5 0; -fx-font-weight: bold;");
+                unitCost.setTextFill(WHITE);
+                ImageView goldImage = new ImageView(CurrencyType.GOLD.image);
+                HBox costHBox = new HBox(goldImage, unitCost);
+                VBox nameAndCost = new VBox(unitName, costHBox);
+                nameAndCost.setAlignment(Pos.CENTER_LEFT);
+                HBox eachUnit = new HBox(unitImage, nameAndCost);
+                eachUnit.setAlignment(Pos.CENTER_LEFT);
+                eachUnit.setPrefWidth(300);
+                eachUnit.setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.purchaseProduct("close combat unit", closeCombatUnitType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                });
+                listOfAvailableProducts.getChildren().add(eachUnit);
+            }
+        }
+
+        for (RangedCombatUnitType rangedCombatUnitType : RangedCombatUnitType.values()) {
+            if ((rangedCombatUnitType.technologyType == null ||
+                    GameController.getCurrentTurnUser().getNation().getTechnologies().get(rangedCombatUnitType.technologyType).equals(true)) &&
+                    (rangedCombatUnitType.resourceType == null ||
+                            GameController.getCurrentTurnUser().getNation().getResourceCellar().get(rangedCombatUnitType.resourceType) > 0)) {
+                ImageView unitImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(rangedCombatUnitType.imageAddress))));
+                unitImage.setFitWidth(50);
+                unitImage.setFitHeight(50);
+                Label unitName = new Label(rangedCombatUnitType.name);
+                Label unitCost = new Label(String.valueOf(rangedCombatUnitType.cost));
+                unitName.setTextFill(WHITE);
+                unitName.setStyle("-fx-label-padding: 0 0 5 0; -fx-font-weight: bold;");
+                unitCost.setTextFill(WHITE);
+                ImageView goldImage = new ImageView(CurrencyType.GOLD.image);
+                HBox costHBox = new HBox(goldImage, unitCost);
+                VBox nameAndCost = new VBox(unitName, costHBox);
+                nameAndCost.setAlignment(Pos.CENTER_LEFT);
+                HBox eachUnit = new HBox(unitImage, nameAndCost);
+                eachUnit.setAlignment(Pos.CENTER_LEFT);
+                eachUnit.setPrefWidth(300);
+                eachUnit.setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.purchaseProduct("ranged combat unit", rangedCombatUnitType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                });
+                listOfAvailableProducts.getChildren().add(eachUnit);
+            }
+        }
+
+        Label buildingsHeader = new Label("Buildings:");
+        buildingsHeader.getStyleClass().add("header");
+        listOfAvailableProducts.getChildren().add(new Separator());
+        listOfAvailableProducts.getChildren().add(buildingsHeader);
+
+        for (BuildingType buildingType : BuildingType.values()) {
+            if ((buildingType.technologyType == null ||
+                    GameController.getCurrentTurnUser().getNation().getTechnologies().get(buildingType.technologyType).equals(true)) &&
+                    !city.getBuildings().contains(buildingType)) {
+                ImageView buildingImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(buildingType.imageAddress))));
+                buildingImage.setFitWidth(50);
+                buildingImage.setFitHeight(50);
+                Label buildingName = new Label(buildingType.name);
+                Label buildingCost = new Label(String.valueOf(buildingType.cost));
+                buildingName.setTextFill(WHITE);
+                buildingName.setStyle("-fx-label-padding: 0 0 5 0; -fx-font-weight: bold;");
+                buildingCost.setTextFill(WHITE);
+                ImageView goldImage = new ImageView(CurrencyType.GOLD.image);
+                HBox costHBox = new HBox(goldImage, buildingCost);
+                VBox nameAndCost = new VBox(buildingName, costHBox);
+                nameAndCost.setAlignment(Pos.CENTER_LEFT);
+                HBox eachUnit = new HBox(buildingImage, nameAndCost);
+                eachUnit.setAlignment(Pos.CENTER_LEFT);
+                eachUnit.setPrefWidth(300);
+                eachUnit.setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.purchaseProduct("building", buildingType.name);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                });
+                listOfAvailableProducts.getChildren().add(eachUnit);
+            }
+        }
+
+        listOfAvailableProducts.setStyle("-fx-background-color: #212121;");
+        ScrollPane scrollPane = new ScrollPane(listOfAvailableProducts);
+        scrollPane.setPrefWidth(300);
+        scrollPane.setLayoutX(1066);
+        scrollPane.setLayoutY(30);
+        scrollPane.setMaxHeight(738);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+
+        cityPopup.getContent().add(scrollPane);
+    }
+
 
     private void showListOfCreatableProducts(City city, ImageView productImage, Label productName, Label productCost,
                                              Label productTurnsLeft, Label productMaintenance) {

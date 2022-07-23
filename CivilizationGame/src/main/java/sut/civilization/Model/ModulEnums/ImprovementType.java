@@ -59,6 +59,7 @@ public enum ImprovementType {
     public LandFeatureType[] landFeatureTypes;
     public int initialTurns;
     public String imageAddress;
+    public String onTileImageAddress;
 
     ImprovementType(String name, CurrencyType currency, int amount, ResourceType[] resourcesGiven, TechnologyType technology,
                     LandType[] landTypes, LandFeatureType[] landFeatureTypes, int initialTurns) {
@@ -71,5 +72,6 @@ public enum ImprovementType {
         this.landFeatureTypes = landFeatureTypes;
         this.initialTurns = initialTurns;
         this.imageAddress = "/sut/civilization/Images/improvements/" + name + ".png";
+        this.onTileImageAddress = "/sut/civilization/Images/Icons/ImprovementIcons/" + name + ".png";
     }
 }

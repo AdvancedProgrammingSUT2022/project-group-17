@@ -116,7 +116,7 @@ public class GameMenu extends Menu {
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()) {
             System.out.println(unitController.productStartCreation(commandMatcher.group("type"), commandMatcher.group("name")));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.PURCHASE_UNIT)).matches()){
-            System.out.println(unitController.purchaseUnit(commandMatcher));
+            System.out.println(unitController.purchaseProduct(commandMatcher.group("type"), commandMatcher.group("name")));
 
         } else if ((commandMatcher = TechnologyCommands.getMatcher(input, TechnologyCommands.ADD_TECHNOLOGY)).matches()) {
             System.out.println(TechnologyController.addTechnology(commandMatcher.group("type")));
