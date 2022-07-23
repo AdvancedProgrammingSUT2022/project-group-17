@@ -137,8 +137,12 @@ public class UnitController extends GameController {
         String path = unit.getPath();
         int neighbor = 0;
 
-        if (path != null && !path.equals("")) neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
-        else {System.out.println("path is empty"); return;}
+        if (path != null && !path.equals(""))
+            neighbor = Integer.parseInt(String.valueOf(path.charAt(0)));
+        else {
+            System.out.println("path is empty");
+            return;
+        }
 
         boolean river = Game.instance.map[unit.getLocation().x][unit.getLocation().y].getHasRiver()[neighbor];
         Pair<Integer,Integer> next = landController.getNeighborIndex(unit.getLocation(), neighbor);
