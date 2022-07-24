@@ -12,7 +12,7 @@ public class Unit {
     protected int cost;
     protected int maintenance = 1;
     protected int XP;
-    protected boolean isWaitingForCommand = true;
+//    protected boolean isWaitingForCommand = true;
     protected TechnologyType technologyType;
     protected ResourceType resourceType;
     protected UnitStatus unitStatus;
@@ -72,9 +72,9 @@ public class Unit {
         return path;
     }
 
-    public boolean isWaitingForCommand() {
-        return isWaitingForCommand;
-    }
+//    public boolean isWaitingForCommand() {
+//        return isWaitingForCommand;
+//    }
 
     public int getMP() {
         return MP;
@@ -108,9 +108,9 @@ public class Unit {
         this.hp += amount;
     }
 
-    public void setWaitingForCommand(boolean waitingForCommand) {
-        isWaitingForCommand = waitingForCommand;
-    }
+//    public void setWaitingForCommand(boolean waitingForCommand) {
+//        isWaitingForCommand = waitingForCommand;
+//    }
 
     public void setPath(String path) {
         this.path = path;

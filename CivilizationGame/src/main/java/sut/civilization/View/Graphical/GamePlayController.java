@@ -5,6 +5,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -38,9 +41,9 @@ public class GamePlayController extends ViewController {
     public Label inProgressTechnologyName = new Label();
     public ImageView inProgressTechnologyImage = new ImageView();
     public ProgressBar technologyProgressBar = new ProgressBar();
-    public Label goldInfo;
-    public Label scienceInfo;
-    public Label happinessInfo;
+    public Label goldInfo = new Label();
+    public Label scienceInfo = new Label();
+    public Label happinessInfo = new Label();
     private static GamePlayController gamePlayController;
 
     public static GamePlayController getInstance() {
@@ -296,7 +299,7 @@ public class GamePlayController extends ViewController {
 
     }
 
-    public void showUnitInfo(Unit unit, Label unitName, Label unitMovement, Label unitHP, ImageView unitImage, VBox unitActions, HBox actionsAndImprovementsHBox) {
+    public void showUnitInfo(Label unitName, Label unitMovement, Label unitHP, ImageView unitImage, VBox unitActions, HBox actionsAndImprovementsHBox) {
 
         ImageView ex = exCreator();
         ex.setOnMouseClicked(mouseEvent -> {
@@ -373,7 +376,7 @@ public class GamePlayController extends ViewController {
 
         unitActions.getStyleClass().add("thinVBox");
 
-        showUnitInfo(civilizedUnit, unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
+        showUnitInfo(unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
 
     }
 
@@ -440,7 +443,7 @@ public class GamePlayController extends ViewController {
 
         unitActions.getStyleClass().add("thinVBox");
 
-        showUnitInfo(combatUnit, unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
+        showUnitInfo(unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
 
     }
 
@@ -546,6 +549,11 @@ public class GamePlayController extends ViewController {
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                 });
                 break;
+            case REMOVE_FEATURE:
+                actionImage.setOnMouseClicked(mouseEvent -> {
+                    String message = WorkerController.setWorkerToRemoveFeature();
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                });
         }
     }
 
@@ -1313,10 +1321,21 @@ public class GamePlayController extends ViewController {
         String message = GameController.nextPlayerTurn();
         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
 
+        hideUnitPopup();
         updateWholeMap();
         updateTechnologyBox();
         updateCurrencyBar();
     }
+
+    public void hideUnitPopup() {
+        GameController.setSelectedCivilizedUnit(null);
+        GameController.setSelectedCombatUnit(null);
+        unitPopup.hide();
+    }
+
+//    public static void main(String[] args) {
+//        System.out.println(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+//    }
 
 
 }

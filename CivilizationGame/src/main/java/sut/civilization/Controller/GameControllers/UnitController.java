@@ -112,9 +112,7 @@ public class UnitController extends GameController {
             selectedUnit = selectedCombatUnit;
         else
             selectedUnit = selectedCivilizedUnit;
-//        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
-//        int x = Integer.parseInt(matcher.group("x"));
-//        int y = Integer.parseInt(matcher.group("y"));
+        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
         Land origin = Game.instance.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
         Land dest = Game.instance.map[x][y];
         int originNum = LandController.getLandNumber(origin);
@@ -170,7 +168,7 @@ public class UnitController extends GameController {
         if (river)
             unit.setMP(0);
         unit.setPath(path.substring(1));
-        unit.setWaitingForCommand(false);
+//        unit.setWaitingForCommand(false);
         unit.setUnitStatus(UnitStatus.MOVING);
     }
 
@@ -179,7 +177,7 @@ public class UnitController extends GameController {
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
             if (unit.getUnitStatus() != UnitStatus.WORKING && unit.getUnitStatus() != UnitStatus.SLEEP) {
                 unit.setUnitStatus(UnitStatus.SLEEP);
-                unit.setWaitingForCommand(false);
+//                unit.setWaitingForCommand(false);
                 return "Slept successfully!";
             } else return "can't sleep!";
         }
@@ -196,7 +194,7 @@ public class UnitController extends GameController {
         if (toBeAppliedStatus != null) {
             if (selectedCombatUnit != null) {
                 selectedCombatUnit.setUnitStatus(toBeAppliedStatus);
-                selectedCombatUnit.setWaitingForCommand(false);
+//                selectedCombatUnit.setWaitingForCommand(false);
                 return "Actioned successfully!";
             }
             return "Select a combat unit first!";
@@ -217,7 +215,7 @@ public class UnitController extends GameController {
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
             if (unit.getUnitStatus() == UnitStatus.SLEEP) {
                 unit.setUnitStatus(UnitStatus.AWAKE);
-                unit.setWaitingForCommand(true);
+//                unit.setWaitingForCommand(true);
                 return "Waked successfully!";
             }
             return "This unit isn't asleep!";
@@ -242,10 +240,9 @@ public class UnitController extends GameController {
     }
 
     public static String unitSetCityTarget(City city) {
-//        int cityX = Integer.parseInt(matcher.group("x"));
-//        int cityY = Integer.parseInt(matcher.group("y"));
-//        City city = Game.instance.map[cityX][cityY].getOwnerCity();
         if (city != null && selectedCombatUnit != null) {
+            if (selectedCombatUnit.getUnitStatus() == UnitStatus.ATTACKING)
+                return "The unit has already attacked!";
             if ((selectedCombatUnit instanceof CloseCombatUnit &&
                     LandController.areNeighbors(new Pair<>(city.getMainLand().getI(), city.getMainLand().getJ()), selectedCombatUnit.getLocation()))) {
                 if (!selectedCombatUnit.getOwnerNation().equals(city.getOwnerNation())) {
@@ -272,6 +269,8 @@ public class UnitController extends GameController {
             }
         }
         unitAttackCity(selectedCombatUnit);
+        selectedCombatUnit.setUnitStatus(UnitStatus.ATTACKING);
+//        selectedCombatUnit.setWaitingForCommand(false);
         return "Attack successful";
     }
 
@@ -279,6 +278,8 @@ public class UnitController extends GameController {
 
         if (selectedCombatUnit == null) return "You have to select a combat unit first";
         if (underAttack == null) return "There is no combat unit on this land";
+        if (selectedCombatUnit.getUnitStatus() == UnitStatus.ATTACKING)
+            return "The unit has already attacked!";
 
         if ((selectedCombatUnit instanceof CloseCombatUnit &&
                 LandController.areNeighbors(new Pair<>(underAttack.getLocation().x, underAttack.getLocation().y), selectedCombatUnit.getLocation()))) {
@@ -307,6 +308,8 @@ public class UnitController extends GameController {
         }
 
         unitAttackUnit(selectedCombatUnit);
+        selectedCombatUnit.setUnitStatus(UnitStatus.ATTACKING);
+//        selectedCombatUnit.setWaitingForCommand(false);
         return "Attack on unit successful";
     }
 
