@@ -1,5 +1,6 @@
 package sut.civilization.Controller.GameControllers;
 
+import javafx.scene.shape.Line;
 import sut.civilization.Enums.GameEnums.WorkerWorks;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.Improvement;
@@ -147,7 +148,7 @@ public class WorkerController extends GameController {
                     selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REMOVE_MARSH.turns);
                     break;
             }
-            return "The feature will be removed!";
+            return "The feature will be removed";
         }
         return "There is no feature on this land!";
     }
@@ -158,7 +159,7 @@ public class WorkerController extends GameController {
             selectedCivilizedUnit.setUnitStatus(UnitStatus.WORKING);
             selectedCivilizedUnit.setWorkerWorks(WorkerWorks.REMOVE_ROUTE);
             selectedCivilizedUnit.setTurnsLeft(WorkerWorks.REMOVE_ROUTE.turns);
-            return "The route will be removed!";
+            return "The route will be removed";
         }
         return "There isn't any route here!";
     }

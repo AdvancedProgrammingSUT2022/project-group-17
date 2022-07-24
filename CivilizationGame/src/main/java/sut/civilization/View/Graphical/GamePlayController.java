@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -26,9 +27,11 @@ import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static javafx.scene.paint.Color.WHITE;
+import static javafx.scene.paint.Color.web;
 
 public class GamePlayController extends ViewController {
     @FXML
@@ -275,7 +278,7 @@ public class GamePlayController extends ViewController {
     }
 
 
-    private void scrollPanePopup(VBox vBox) {
+    private void scrollPanePopup(Node node) {
         Window window = Game.instance.getCurrentScene().getWindow();
         ImageView ex = exCreator();
         ex.setOnMouseClicked(mouseEvent -> {
@@ -283,8 +286,9 @@ public class GamePlayController extends ViewController {
             root.setEffect(null);
             root.setDisable(false);
         });
-        ScrollPane scrollPane = new ScrollPane(vBox);
+        ScrollPane scrollPane = new ScrollPane(node);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setMaxHeight(700);
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(scrollPane);
         borderPane.setTop(ex);
@@ -630,12 +634,293 @@ public class GamePlayController extends ViewController {
         }
 
         VBox wholeTechTree = new VBox(eachFloor);
-        wholeTechTree.setPrefHeight(700);
-        wholeTechTree.setPadding(new Insets(0, 50, 0, 50));
-        wholeTechTree.getStyleClass().add("infoList");
+        wholeTechTree.setPadding(new Insets(20, 50, 20, 50));
+        wholeTechTree.setStyle("-fx-background-color: transparent;");
         wholeTechTree.setAlignment(Pos.CENTER);
 
-        scrollPanePopup(wholeTechTree);
+        AnchorPane lineAnchorPane = drawTechnologiesLines();
+
+        StackPane stackPane = new StackPane(lineAnchorPane, wholeTechTree);
+
+        scrollPanePopup(stackPane);
+    }
+
+    private AnchorPane drawTechnologiesLines() {
+        Line[] lines = new Line[63];
+
+        int[] rowNum = new int[]{1, 4, 6, 5, 5, 5, 4, 3, 5, 2, 4, 2};
+        final int eachTechWidth = 188;
+        final int eachTechHeight = 204;
+        final int centerX = 614;
+        int y1 = 114;
+        int y2 = 318;
+        int j = 0;
+
+        for (int i = 0; i < 11; i++) {
+            int x1 = centerX - ((rowNum[i] - 1) * (eachTechWidth / 2));
+            int x2 = centerX - ((rowNum[i + 1] - 1) * (eachTechWidth / 2));
+            if (i == 0) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 1) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= (eachTechWidth / 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth / 2) + eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 2) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= (eachTechWidth * 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth * 3);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 3) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth * 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 4) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += (eachTechWidth * 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 5) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 6) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth * 4);
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 -= (eachTechWidth * 3);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 7) {
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 8) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 9) {
+                x1 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += (eachTechWidth * 2);
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 -= eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+            }
+
+            y1 += eachTechHeight;
+            y2 += eachTechHeight;
+        }
+
+        for (Line line : lines) {
+            line.setStroke(WHITE);
+            line.setStrokeWidth(3);
+        }
+
+        AnchorPane anchorPane = new AnchorPane(lines);
+        anchorPane.setPrefWidth(1228);
+        anchorPane.setPrefHeight(2448);
+        anchorPane.setStyle("-fx-background-color: #212121;");
+
+        return anchorPane;
+
     }
 
     private void showCityInfoBox(City city) {
@@ -1272,6 +1557,16 @@ public class GamePlayController extends ViewController {
                     for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
                         for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
                             graphicalMap[k][l].setOnMouseClicked(null);
+                        }
+                    }
+                });
+                graphicalMap[i][j].getFogOfWarImageView().setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.unitSetPath(finalI, finalJ, selection);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    unitMovement.setText("Movement: " + unit.getMP());
+                    for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
+                        for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
+                            graphicalMap[k][l].getFogOfWarImageView().setOnMouseClicked(null);
                         }
                     }
                 });

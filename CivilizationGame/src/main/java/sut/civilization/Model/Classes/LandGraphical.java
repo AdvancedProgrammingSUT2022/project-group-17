@@ -80,10 +80,10 @@ public class LandGraphical extends Polygon {
         improvementImageView.setX(this.centerCoordinate.x - tileRadius * 0.25);
         improvementImageView.setY(this.centerCoordinate.y + tileRadius * 0.25);
 
-        fogOfWarImageView.setFitWidth(tileRadius * (4 / Math.sqrt(3)));
-        fogOfWarImageView.setFitHeight(tileRadius * 2);
-        fogOfWarImageView.setX(this.centerCoordinate.x - (tileRadius * (2 / Math.sqrt(3))));
-        fogOfWarImageView.setY(this.centerCoordinate.y - tileRadius);
+        fogOfWarImageView.setFitWidth(tileRadius * 2);
+        fogOfWarImageView.setFitHeight(tileRadius * Math.sqrt(3));
+        fogOfWarImageView.setX(this.centerCoordinate.x - (tileRadius ));
+        fogOfWarImageView.setY(this.centerCoordinate.y - (tileRadius * Math.sqrt(3) / 2));
 
         civilizedUnitImageView.x.setOnMouseClicked(mouseEvent -> {
             if (land.getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
@@ -234,6 +234,10 @@ public class LandGraphical extends Polygon {
 
     public ImageView getImprovementImageView() {
         return improvementImageView;
+    }
+
+    public ImageView getFogOfWarImageView() {
+        return fogOfWarImageView;
     }
 
     public Pair<ImageView, ImageView> getCivilizedUnitImageView() {
