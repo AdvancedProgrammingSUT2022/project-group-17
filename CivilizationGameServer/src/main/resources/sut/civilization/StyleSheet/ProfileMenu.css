@@ -1,0 +1,140 @@
+.root{
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+    -fx-background-image: url("/sut/civilization/Images/BackGround/backGround6.jpg");
+}
+
+Label {
+    -fx-font-family: "Segoe Print";
+    -fx-font-size: 13;
+}
+
+Button:hover{
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-text-fill: #fdfdfd;
+    -fx-background-color: rgba(105, 102, 204, 0.58);
+    -fx-border-color: white;
+
+}
+
+Button {
+    -fx-pref-width: 200;
+    -fx-pref-height: 50;
+    -fx-border-radius: 20;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: #0033ff;
+    -fx-text-fill: #0033ff;
+    -fx-font-size: 20;
+}
+
+#backButton:hover{
+    -fx-background-color: #00504d;
+    -fx-cursor: hand;
+    -fx-border-color: #ffffff;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 10;
+}
+
+#backButton{
+    -fx-pref-width: 60;
+    -fx-pref-height: 40;
+    -fx-border-radius: 50;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-border-color: aqua;
+    -fx-text-fill: aqua;
+    -fx-font-size: 10;
+}
+
+.tab {
+    -fx-pref-width: 90;
+    -fx-pref-height: 20;
+    -fx-font-family: "Comic Sans MS";
+    -fx-border-radius: 5;
+    -fx-background-color: transparent;
+    -fx-padding: 0px 0px 8px 10px;
+    -fx-font-size: 13;
+    -fx-cursor: hand;
+
+}
+
+#informationBox{
+    -fx-background-radius: 10;
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-border-color: #310000;
+    -fx-border-radius: 10;
+    -fx-text-fill: #310000;
+    -fx-max-height: 400;
+    -fx-font-size: 30;
+}
+
+PasswordField{
+    -fx-min-width: 300;
+    -fx-pref-height: 35;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-cursor: text;
+    -fx-alignment: center;
+}
+
+TextField{
+    -fx-min-width: 300;
+    -fx-pref-height: 35;
+    -fx-border-radius: 5;
+    -fx-background-color: white;
+    -fx-cursor: text;
+    -fx-alignment: center;
+}
+
+.tab:selected{
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+}
+
+.tab-pane *.tab-header-area *.tab-header-background {
+    -fx-background-radius: 30;
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-alignment: center;
+}
+
+#title{
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-min-width: 200;
+    -fx-border-color: black;
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-font-weight: bolder;
+    -fx-alignment: center;
+    -fx-text-fill: black;
+    -fx-font-size: 40;
+}
+
+ImageView{
+    -fx-cursor: hand;
+    -fx-border-color: black;
+}
+
+.informationText {
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+.ScrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+.ScrollPane{
+    -fx-background-color: transparent;
+}
+
+.Hbox{
+
+    -fx-alignment: center;
+}

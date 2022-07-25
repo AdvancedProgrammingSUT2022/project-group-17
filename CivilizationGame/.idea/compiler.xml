@@ -11,6 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Civilization" target="11" />
       <module name="CivilizationGame" target="11" />
     </bytecodeTargetLevel>
   </component>

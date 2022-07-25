@@ -50,6 +50,8 @@ public class GameMenuController {
             LandController.initializeDistances();
             LandController.updateDistances();
             TechnologyController.updateNextAvailableTechnologies();
+
+            Game.instance.setMap(LandController.mapInitializer());
             Game.instance.changeScene(Menus.GAME_MENU);
         }
     }
