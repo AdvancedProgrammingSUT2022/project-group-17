@@ -361,6 +361,8 @@ public class GameController extends Controller {
             }
         }
 
+        CityController.updateAffordableLands();
+
         LandController.updateDistances();
 //        GamePlayController.getInstance().updateWholeMap();
 //        GamePlayController.getInstance().updateTechnologyBox();

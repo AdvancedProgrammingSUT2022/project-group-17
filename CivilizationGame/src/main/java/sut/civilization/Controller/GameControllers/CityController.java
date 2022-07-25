@@ -1,12 +1,8 @@
 package sut.civilization.Controller.GameControllers;
 
-import sut.civilization.Model.Classes.City;
-import sut.civilization.Model.Classes.Game;
-import sut.civilization.Model.Classes.Land;
+import sut.civilization.Enums.Consts;
+import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.LandType;
-import sut.civilization.Model.Classes.Nation;
-import sut.civilization.Model.Classes.Pair;
-import sut.civilization.Model.Classes.CombatUnit;
 import sut.civilization.Model.ModulEnums.CivilizedUnitType;
 
 import java.util.regex.Matcher;
@@ -191,6 +187,38 @@ public class CityController extends GameController {
 
         return "The specific land is not buyable";
 
+    }
+
+    public static void updateAffordableLands(){
+        for (User user : Game.instance.getPlayersInGame()) {
+            Nation nation = user.getNation();
+            for (City city : nation.getCities()) {
+                for (int x = 0; x < Consts.MAP_SIZE.amount.x; x++){
+                    for (int y = 0; y < Consts.MAP_SIZE.amount.y; y++){
+
+                        Pair<Integer,Integer> landPair = new Pair<Integer,Integer>(x, y);
+                        Pair<Integer,Integer>[] neighbors = new Pair[6];
+                        for (int i = 0 ; i<6 ; i++)
+                            neighbors[i] = LandController.getNeighborIndex(landPair, i);
+
+                        boolean canBuy = false;
+                        for (int i = 0; i < 6; i++) {
+                            if (Pair.isValid(neighbors[i])){
+                                if (Game.instance.map[neighbors[i].x][neighbors[i].y].getOwnerCity() != null && Game.instance.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(city)){
+                                    canBuy = true;
+                                    break;
+                                }
+                            }
+                        }
+                        Land land = Game.instance.map[x][y];
+                        if (city.getOwnerNation().getCoin().getBalance() >= land.getCost()
+                                && canBuy && land.isBuyable()){
+                            city.addAffordableLand(land);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static void cityDeath(City city){
