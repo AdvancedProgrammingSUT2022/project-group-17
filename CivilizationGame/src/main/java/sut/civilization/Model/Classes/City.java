@@ -1,5 +1,6 @@
 package sut.civilization.Model.Classes;
 
+import sut.civilization.Controller.GameControllers.CityController;
 import sut.civilization.Model.ModulEnums.BuildingType;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class City {
     protected int productionGrowth;
     protected int happinessGrowth;
     protected int scienceGrowth;
+    protected ArrayList<Land> affordableLands = new ArrayList<>();
 
     public City(Nation ownerNation, String name, Land mainLand){
         this.citizens = 3;
@@ -39,6 +41,8 @@ public class City {
         this.ownerNation = ownerNation;
         this.name = name;
         this.mainLand = mainLand;
+        
+        CityController.updateAffordableLands();
     }
 
 
@@ -252,5 +256,17 @@ public class City {
 
     public void setMainLand(Land mainLand) {
         this.mainLand = mainLand;
+    }
+
+    public ArrayList<Land> getAffordableLands() {
+        return affordableLands;
+    }
+
+    public void addAffordableLand(Land land){
+        affordableLands.add(land);
+    }
+
+    public void clearAffordableLands(){
+        affordableLands.clear();
     }
 }
