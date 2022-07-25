@@ -112,7 +112,8 @@ public class UnitController extends GameController {
             selectedUnit = selectedCombatUnit;
         else
             selectedUnit = selectedCivilizedUnit;
-        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
+        if (selectedUnit != null &&
+                selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
         Land origin = Game.instance.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
         Land dest = Game.instance.map[x][y];
         int originNum = LandController.getLandNumber(origin);
