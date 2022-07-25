@@ -46,8 +46,6 @@ public class GamePlayController extends ViewController {
     private Popup infoPopup = new Popup();
     private Popup unitPopup = new Popup();
 
-    private Timeline mapUpdater;
-
     public static void updateWholeMap() {
         for (int i = 0; i < LandGraphical.tileCount.x; i++) {
             for (int j = 0; j < LandGraphical.tileCount.y; j++) {
@@ -57,10 +55,6 @@ public class GamePlayController extends ViewController {
     }
 
     public void initialize() {
-        getMapInfo();
-        mapUpdater = new Timeline(new KeyFrame(Duration.millis(1500),actionEvent -> getMapInfo()));
-        mapUpdater.play();
-
         Pane pane = new Pane();
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 10; j++) {

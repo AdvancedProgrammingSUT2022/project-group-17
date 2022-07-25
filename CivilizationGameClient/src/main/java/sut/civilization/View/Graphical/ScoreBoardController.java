@@ -45,7 +45,7 @@ public class ScoreBoardController extends ViewController {
     private void setUp(){
         Request request = new Request("scoreBoard", "updateList");
         Response response = ConnectionController.getInstance().sendRequestToServer(request.toJson());
-        System.out.println(response);
+
         for (User user : Game.instance.getUsers()) {
             user.setOnline(false);
         }
@@ -63,7 +63,6 @@ public class ScoreBoardController extends ViewController {
             }
         }
 
-        System.out.println(scores);
 
         for (User user : Game.instance.getUsers()) {
             if (avatarLocations.get(user.getUsername()) != null)

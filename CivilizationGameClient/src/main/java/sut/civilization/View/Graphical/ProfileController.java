@@ -132,7 +132,7 @@ public class ProfileController extends ViewController {
 
     public void showFriendRequests(MouseEvent mouseEvent) {
         Popup popup = new Popup();
-        popup.setAutoHide(false);
+        popup.setAutoHide(true);
         popup.setAutoFix(true);
         // auto fix ?
 
@@ -253,7 +253,7 @@ public class ProfileController extends ViewController {
         ArrayList<Request> requests = new Gson().fromJson((String) response.getDataToken("requests"),new TypeToken<ArrayList<Request>>(){}.getType());
 
         Popup popup = new Popup();
-        popup.setAutoHide(false);
+        popup.setAutoHide(true);
         popup.setAutoFix(true);
 
         VBox mainVBox = new VBox();
@@ -306,11 +306,32 @@ public class ProfileController extends ViewController {
         closeButton.setText("close");
         closeButton.setOnMouseClicked(mouseEvent1 -> popup.hide());
 
+        TextField textField = new TextField();
+        textField.setPromptText("Search for Users here ...");
+        Button searchButton = new Button("Search");
+        searchButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Request request = new Request("profile","searchPlayer");
+                request.addToken("targetName",textField.getText());
+                textField.setText("");
+
+                Response serverResponse = ConnectionController.getInstance().sendRequestToServer(request.toJson());
+                showPopUp(Game.instance.getCurrentScene().getWindow(),serverResponse.getMessage());
+                if (serverResponse.getStatusCode() == 200)
+                    showUserInformationPopUp(new Gson().fromJson((String) serverResponse.getDataToken("user"),User.class));
+
+            }
+        });
+
+
 
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
         hbox.setSpacing(10);
         hbox.getChildren().add(closeButton);
+        hbox.getChildren().add(textField);
+        hbox.getChildren().add(searchButton);
         mainVBox.getChildren().add(hbox);
         popup.getContent().add(mainVBox);
 

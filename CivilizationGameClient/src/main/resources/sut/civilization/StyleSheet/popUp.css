@@ -13,6 +13,7 @@
 
 #wideContent {
     -fx-text-alignment: center;
+    -fx-alignment: center;
     -fx-spacing: 25;
     -fx-background-color: white;
     -fx-background-radius: 50;
@@ -81,4 +82,16 @@ Button {
 
 #closeButton {
     -fx-pref-width: 100;
+}
+
+TextField{
+    -fx-pref-width: 300;
+    -fx-pref-height: 50;
+    -fx-border-radius: 20;
+    -fx-text-fill: #776700;
+    -fx-border-color: #776700;
+    -fx-background-color: transparent;
+    -fx-cursor: text;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }

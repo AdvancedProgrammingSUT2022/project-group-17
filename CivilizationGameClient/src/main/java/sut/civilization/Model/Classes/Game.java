@@ -106,7 +106,7 @@ public class Game {
         return users;
     }
 
-    public void saveUserListToDatabase() {
+    public void saveUserDatabase() {
         try {
             FileWriter fileWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/Users.json");
             fileWriter.write(new Gson().toJson(Game.instance.getUsers()));
@@ -177,7 +177,6 @@ public class Game {
             e.printStackTrace();
         }
     }
-
 
     public void loadGame(String filename){
         File file = new File("src/main/resources/sut/civilization/DataBase/saves/" + filename);

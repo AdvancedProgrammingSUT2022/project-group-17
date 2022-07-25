@@ -5,6 +5,7 @@ import sut.civilization.Model.Classes.Response;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class ConnectionController {
     private static final ConnectionController instance = new ConnectionController();

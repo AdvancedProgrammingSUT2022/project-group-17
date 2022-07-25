@@ -2,7 +2,6 @@ package sut.civilization;
 
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.Classes.Game;
-import sut.civilization.Model.Classes.Land;
 import sut.civilization.View.NonGraphical.*;
 
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class Main {
             currentMenu = Menu.getMenuName();
         }
 
-        Game.instance.saveUserListToDatabase();
+        Game.instance.saveUserDatabase();
     }
 
     private static void menuInitializer(Menu[] menus, HashMap<String, Integer> menuNumbers){

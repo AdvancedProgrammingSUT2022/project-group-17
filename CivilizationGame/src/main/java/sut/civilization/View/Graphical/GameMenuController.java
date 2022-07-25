@@ -41,10 +41,6 @@ public class GameMenuController {
                 int nationNumber = Integer.parseInt(String.valueOf((selectedNations.get(opponent).getValue().toString().charAt(0))));
                 gameController.chooseNation(nationNumber, i++);
             }
-            for (User user : Game.instance.getPlayersInGame()) {
-                System.out.println(user.getNation().getNationType().name);
-                System.out.println(user.getUsername());
-            }
             Game.instance.setMap(new LandController().mapInitializer());
             Game.instance.changeScene(Menus.GAME_MENU);
         }

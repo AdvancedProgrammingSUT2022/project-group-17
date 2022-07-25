@@ -2,7 +2,6 @@ package sut.civilization.Controller;
 
 import javafx.stage.Stage;
 import sut.civilization.Controller.GameControllers.GameController;
-import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.User;
 import sut.civilization.View.NonGraphical.Menu;
@@ -16,13 +15,18 @@ public class MainController extends Controller{
 
     public String logoutUser() {
         menuChange("login menu");
-        Game.instance.changeScene(Menus.LOGIN_MENU);
         Game.instance.getLoggedInUser().setLastTimeOnline(new Date(System.currentTimeMillis()));
         Game.instance.getLoggedInUser().setOnline(false);
         Game.instance.setLoggedInUser(null);
         return "logged out successful";
     }
 
+    public String logoutUser(User user) {
+        menuChange("login menu");
+        user.setLastTimeOnline(new Date(System.currentTimeMillis()));
+        user.setOnline(false);
+        return "logged out successful";
+    }
     public String playGame(Matcher matcher) {
         ArrayList<String> tokens = new ArrayList<>(Arrays.asList(matcher.group(1).split("\\s*-p\\d+\\s*")));
         tokens.remove(0);
@@ -52,7 +56,7 @@ public class MainController extends Controller{
 
     public void exitGame(){
         logoutUser();
-        Game.instance.saveUserListToDatabase();
+        Game.instance.saveUserDatabase();
         ((Stage) Game.instance.getCurrentScene().getWindow()).close();
     }
 }

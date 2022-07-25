@@ -53,7 +53,7 @@ public class LoginController extends Controller {
         }
 
         Game.instance.addUser(newUser);
-        Game.instance.saveUserListToDatabase();
+        Game.instance.saveUserDatabase();
         Game.instance.setLoggedInUser(newUser);
         return ("user successfully created.");
     }

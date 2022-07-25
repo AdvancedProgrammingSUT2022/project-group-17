@@ -12,8 +12,11 @@ public class ServerDataBase {
     }
 
     public static ServerDataBase getInstance() {
-        if (instance == null)
-            instance = new ServerDataBase();
+        if (instance == null){
+            instance = Game.instance.loadServerDataBase();
+            if (instance == null)
+                instance = new ServerDataBase();
+        }
 
         return instance;
     }

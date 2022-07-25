@@ -20,7 +20,7 @@ import sut.civilization.Model.Classes.User;
 public class ViewController {
     String resultMessage;
 
-    protected void showPopUp(Window window, String resultMessage) {
+    public void showPopUp(Window window, String resultMessage) {
         Popup popup = new Popup();
         Label label = new Label(resultMessage);
 
@@ -71,7 +71,7 @@ public class ViewController {
 
     protected void showUserInformationPopUp(User user) {
         Popup popup = new Popup();
-        popup.setAutoHide(false);
+        popup.setAutoHide(true);
         popup.setAutoFix(true);
         // auto fix ?
 

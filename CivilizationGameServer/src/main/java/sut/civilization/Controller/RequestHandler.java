@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.Classes.*;
+import sut.civilization.Model.ModulEnums.NationType;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,15 +15,12 @@ import java.util.Objects;
 
 public class RequestHandler extends Thread {
     private final Socket clientSocket;
-
     private final Socket serverSideSocket;
-
     private Pair<DataInputStream,DataOutputStream> serverHandleStream;
-
     private Pair<DataInputStream,DataOutputStream> clientHandleStream;
-
     private User ownerUser;
 
+    private HashMap<String,String> isReadyForGame = new HashMap<>();
 
     public RequestHandler(Socket socket,Socket serverSideSocket) {
         this.serverSideSocket = serverSideSocket;
@@ -30,7 +28,7 @@ public class RequestHandler extends Thread {
 
         try {
             clientHandleStream = new Pair<>(new DataInputStream(clientSocket.getInputStream()),new DataOutputStream(clientSocket.getOutputStream()));
-            serverHandleStream = new Pair<>(new DataInputStream(clientSocket.getInputStream()),new DataOutputStream(clientSocket.getOutputStream()));
+            serverHandleStream = new Pair<>(new DataInputStream(serverSideSocket.getInputStream()),new DataOutputStream(serverSideSocket.getOutputStream()));
 
         } catch (IOException e) {
             System.out.println("cannot start connection with : " + socket);
@@ -44,8 +42,8 @@ public class RequestHandler extends Thread {
         while (true) {
             try {
                 if ((response = handleRequest(Request.fromJson(this.listenForRequest()))) != null){
-                    sendResponseToClient(response.toJson());
-                    Game.instance.saveUserListToDatabase();
+                    this.sendResponseToClient(response.toJson());
+                    Game.instance.saveUserDatabase();
                 }
             } catch (IOException e) {
                 ConnectionController.getConnectedUsers().remove(this);
@@ -100,8 +98,7 @@ public class RequestHandler extends Thread {
             case "profile":
                 return profileHandler(request);
             case "game" :
-                this.gameHandler(request);
-                break;
+                return this.gameHandler(request);
             case "server" :
                 this.serverHandler(request);
                 break;
@@ -109,20 +106,71 @@ public class RequestHandler extends Thread {
                 this.scoreBoardHandler(request);
             case "social":
                 return this.socialRequestsHandler(request);
+            case "gameMenu" :
+                return this.gameMenuRequestHandler(request);
         }
+        return null;
+    }
+
+    private Response gameMenuRequestHandler(Request request) {
+        if (request.getHeader().equals("startGameRequest")) {
+            ArrayList<String> users = new Gson().fromJson(request.getToken("users"), new TypeToken<ArrayList<String>>() {
+            }.getType());
+            int temp = 0;
+            Response overAllResponse = new Response("game will start.");
+            ArrayList<RequestHandler> connectedPeopleInGame = new ArrayList<>();
+            ArrayList<User> userArrayList = new ArrayList<>();
+
+            for (String user : users) {
+                userArrayList.add(getUserByName(user));
+                for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
+                    if (connectedUser.ownerUser.getUsername().equals(user) && !connectedUser.ownerUser.getUsername().equals(request.getToken("owner"))) {
+                        connectedPeopleInGame.add(connectedUser);
+                        temp++;
+
+                        Response response = new Response("startGameRequest");
+                        response.addData("users", new Gson().toJson(users));
+                        response.addData("owner",request.getToken("owner"));
+                        connectedUser.sendUpdateToClient(response.toJson());
+                    }
+                }
+            }
+
+            if (temp != users.size() - 1)
+                overAllResponse = new Response("connection with one user in lost!");
+
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            for (RequestHandler requestHandler : connectedPeopleInGame) {
+                if (requestHandler.isReadyForGame.get(request.getToken("owner")) == null || requestHandler.isReadyForGame.get(request.getToken("owner")).equals("no"))
+                    overAllResponse = new Response("at least one user didn't accept!");
+                else {
+                    getUserByName(requestHandler.ownerUser.getUsername()).setNation(new Nation(NationType.getNationByName(request.getToken("nation"))));
+                }
+            }
+
+            if (overAllResponse.getStatusCode() == 200){
+                Game.instance.setPlayersInGame(userArrayList);
+                this.sendMapToAllUsers(users);
+            }
+
+            return overAllResponse;
+        }
+
+        if (request.getHeader().equals("startGameAnswer")) {
+            this.isReadyForGame.put(request.getToken("owner"),request.getToken("answer"));
+        }
+
         return null;
     }
 
     private Response socialRequestsHandler(Request request) {
         if (request.getHeader().equals("addFriendRequest")){
             ServerDataBase.getInstance().addFriendRequest(request.getToken("to"),request);
-            if (getUserByName(request.getToken("to")).isOnline()){
-                Response response = new Response("addFriendRequest");
-                response.addData("to",request.getToken("to"));
-                response.addData("from",request.getToken("from"));
-                Objects.requireNonNull(this.getRequestHandlerByOwner(request.getToken("to"))).sendUpdateToClient(response.toJson());
-            }
-
             return new Response("request sent to " + request.getToken("to"));
         }
 
@@ -135,6 +183,8 @@ public class RequestHandler extends Thread {
 
         if (request.getHeader().equals("answerFriendRequest")) {
             ServerDataBase.getInstance().getAddFriendRequestTree().get(request.getToken("userName")).removeIf(userName -> userName.getToken("to").equals(request.getToken("userName")) && userName.getToken("from").equals(request.getToken("target")));
+            if (ServerDataBase.getInstance().getAddFriendRequestTree().get(request.getToken("userName")).size() == 0)
+                ServerDataBase.getInstance().getAddFriendRequestTree().remove(request.getToken("userName"));
 
             Response response;
 
@@ -175,6 +225,16 @@ public class RequestHandler extends Thread {
 
         if (request.getHeader().equals("updateAvatarLocation")){
             result = profileController.updateAvatarLocation(request.getToken("location"));
+        }
+
+        if (request.getHeader().equals("searchPlayer")){
+            User target = getUserByName(request.getToken("targetName"));
+            if (target.getUsername().equals(""))
+                return new Response("no such user exists!");
+
+            Response response = new Response("user found.");
+            response.addData("user",new Gson().toJson(target));
+            return response;
         }
         return new Response(result);
     }
@@ -217,9 +277,16 @@ public class RequestHandler extends Thread {
         if (request.getHeader().equals("userSetter")) {
             this.setUsers(request);
         }
+
+        if (request.getHeader().equals("userLogout")){
+            Response response = new Response(new MainController().logoutUser(this.ownerUser));
+            if (response.getStatusCode() == 200)
+                this.ownerUser = null;
+            this.sendResponseToClient(response.toJson());
+        }
     }
 
-    private void gameHandler(Request request) {
+    private Response gameHandler(Request request) {
         if (request.getHeader().equals("updateDataBase"))
             this.updateDataBase(request);
 
@@ -229,7 +296,18 @@ public class RequestHandler extends Thread {
         if (request.getHeader().equals("getMap"))
             this.sendMap(getUserByName(request.getToken("userName")),Game.instance.map);
 
+        if (request.getHeader().equals("getOnlineUsers")){
+            ArrayList<User> users = new ArrayList<>();
+            for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
+                if (connectedUser.ownerUser.isOnline())
+                    users.add(connectedUser.ownerUser);
 
+            }
+            Response response = new Response("updateOnlineUsers");
+            response.addData("users",new Gson().toJson(users));
+            return response;
+        }
+        return null;
     }
 
     private void operateStartGameRequest(Request request) {
@@ -238,6 +316,7 @@ public class RequestHandler extends Thread {
         for (String userName : userNames) {
             Game.instance.getPlayersInGame().add(getUserByName(userName));
         }
+
         Game.instance.setSubTurn(0);
         this.sendMapToAllUsers(userNames);
 
@@ -254,9 +333,9 @@ public class RequestHandler extends Thread {
     private void sendMap(User user, Land[][] map) {
 
         Response response = new Response("setMap");
-        response.addData("map",map);
+        response.addData("map",new Gson().toJson(map));
         response.addData("players",new Gson().toJson(Game.instance.getPlayersInGame()));
-        response.addData("subTurn", String.valueOf(Game.instance.getSubTurn()));
+        response.addData("subTurn", Game.instance.getSubTurn());
 
         for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
             if (connectedUser.ownerUser.getUsername().equals(user.getUsername())){
@@ -322,5 +401,9 @@ public class RequestHandler extends Thread {
                 return connectedUser;
         }
         return null;
+    }
+
+    public Socket getServerSideSocket() {
+        return serverSideSocket;
     }
 }

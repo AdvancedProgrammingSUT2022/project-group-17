@@ -15,10 +15,7 @@ import java.util.regex.Matcher;
 public class MainController extends Controller{
 
     public String logoutUser() {
-        menuChange("login menu");
         Game.instance.changeScene(Menus.LOGIN_MENU);
-        Game.instance.getLoggedInUser().setLastTimeOnline(new Date(System.currentTimeMillis()));
-        Game.instance.getLoggedInUser().setOnline(false);
         Game.instance.setLoggedInUser(null);
         return "logged out successful";
     }
@@ -52,7 +49,7 @@ public class MainController extends Controller{
 
     public void exitGame(){
         logoutUser();
-        Game.instance.saveUserListToDatabase();
+        Game.instance.saveUserDatabase();
         ((Stage) Game.instance.getCurrentScene().getWindow()).close();
     }
 }

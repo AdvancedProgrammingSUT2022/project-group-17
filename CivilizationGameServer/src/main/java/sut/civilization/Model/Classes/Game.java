@@ -8,10 +8,12 @@ import javafx.scene.Scene;
 import sut.civilization.Civilization;
 import sut.civilization.Enums.Menus;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -105,11 +107,26 @@ public class Game {
         return users;
     }
 
-    public void saveUserListToDatabase() {
+    public ServerDataBase loadServerDataBase() {
+        String json = null;
+        try {
+            json = new String(Files.readAllBytes(Paths.get("src/main/resources/sut/civilization/DataBase/ServerDatabase.json")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Gson().fromJson(json,ServerDataBase.class);
+    }
+
+    public void saveUserDatabase() {
         try {
             FileWriter fileWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/Users.json");
             fileWriter.write(new Gson().toJson(Game.instance.getUsers()));
             fileWriter.close();
+            if (ServerDataBase.getInstance() != null){
+                FileWriter secondWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/ServerDatabase.json");
+                secondWriter.write(new Gson().toJson(ServerDataBase.getInstance()));
+                secondWriter.close();
+            }
         } catch (IOException exception) {
             System.out.println("cannot write user list to dataBase mate :(\nthe stack trace is in below :");
             exception.printStackTrace();
