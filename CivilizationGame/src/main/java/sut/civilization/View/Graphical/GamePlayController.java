@@ -1216,14 +1216,27 @@ public class GamePlayController extends ViewController {
 
         listOfAvailableProducts.setStyle("-fx-background-color: #212121;");
         ScrollPane scrollPane = new ScrollPane(listOfAvailableProducts);
-        scrollPane.setPrefWidth(300);
-        scrollPane.setLayoutX(1066);
-        scrollPane.setLayoutY(30);
-        scrollPane.setMaxHeight(738);
+//        scrollPane.setPrefWidth(300);
+//        scrollPane.setLayoutX(1066);
+//        scrollPane.setLayoutY(30);
+//        scrollPane.setMaxHeight(738);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
-        cityPopup.getContent().add(scrollPane);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(scrollPane);
+        borderPane.setCenter(scrollPane);
+        borderPane.setPrefWidth(300);
+        borderPane.setLayoutX(1066);
+        borderPane.setLayoutY(10);
+        borderPane.setMaxHeight(738);
+        ImageView ex = exCreator();
+        ex.setOnMouseClicked(mouseEvent -> {
+            cityPopup.getContent().remove(cityPopup.getContent().size() - 1);
+        });
+        borderPane.setTop(ex);
+
+        cityPopup.getContent().add(borderPane);
     }
 
 
@@ -1383,11 +1396,52 @@ public class GamePlayController extends ViewController {
 
         listOfAvailableProducts.setStyle("-fx-background-color: #212121;");
         ScrollPane scrollPane = new ScrollPane(listOfAvailableProducts);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(scrollPane);
+        borderPane.setPrefWidth(300);
+        borderPane.setLayoutX(1066);
+        borderPane.setLayoutY(10);
+        borderPane.setMaxHeight(738);
+        ImageView ex = exCreator();
+        ex.setOnMouseClicked(mouseEvent -> {
+            cityPopup.getContent().remove(cityPopup.getContent().size() - 1);
+        });
+        borderPane.setTop(ex);
+
+        cityPopup.getContent().add(borderPane);
+    }
+
+    public void showListOfBuildings(City city) {
+        VBox listOfBuildings = new VBox();
+        Label buildingsHeader = new Label("Buildings:");
+        buildingsHeader.getStyleClass().add("header");
+        listOfBuildings.getChildren().add(buildingsHeader);
+
+        for (BuildingType buildingType : BuildingType.values()) {
+            if (city.getBuildings().contains(buildingType)) {
+                ImageView buildingImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(buildingType.imageAddress))));
+                buildingImage.setFitWidth(50);
+                buildingImage.setFitHeight(50);
+                Label buildingName = new Label(buildingType.name);
+                buildingName.setTextFill(WHITE);
+                buildingName.setStyle("-fx-label-padding: 0 0 5 0; -fx-font-weight: bold;");
+                HBox eachBuilding = new HBox(buildingImage, buildingName);
+                eachBuilding.setAlignment(Pos.CENTER_LEFT);
+                eachBuilding.setPrefWidth(300);
+                listOfBuildings.getChildren().add(eachBuilding);
+            }
+        }
+
+        listOfBuildings.setStyle("-fx-background-color: #212121;");
+        ScrollPane scrollPane = new ScrollPane(listOfBuildings);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPrefWidth(300);
         scrollPane.setLayoutX(1066);
         scrollPane.setLayoutY(30);
         scrollPane.setMaxHeight(738);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
         cityPopup.getContent().add(scrollPane);
@@ -1413,6 +1467,8 @@ public class GamePlayController extends ViewController {
 
         cityPopup.getContent().add(cityName);
 
+        //right-box: list of buildings
+        showListOfBuildings(city);
 
         //bottom-left box
         showProductBox(city);
