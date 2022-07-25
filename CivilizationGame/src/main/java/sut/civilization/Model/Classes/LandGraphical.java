@@ -1,5 +1,6 @@
 package sut.civilization.Model.Classes;
 
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -126,12 +127,16 @@ public class LandGraphical extends Polygon {
     public void updateMap() {
         LandController.updateLandVisibility();
 
+        StringBuilder landInfo = new StringBuilder(land.getLandType().name + " at (" + land.getI() + " , " + land.getJ() + ")");
+
         if (land.getLandFeature() != null) {
             landFeatureImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/tiles/" + land.getLandFeature().landFeatureType.name + ".png")).toExternalForm()));
+            landInfo.append("\nFeature: ").append(land.getLandFeature().getLandFeatureType().name);
         } else landFeatureImageView.setImage(null);
 
         if (land.getResource() != null) {
             resourceImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/ResourceIcons/" + land.getResource().resourceType.name + ".png")).toExternalForm()));
+            landInfo.append("\nResource: ").append(land.getResource().getResourceType().name);
         } else resourceImageView.setImage(null);
 
         if (land.getCombatUnit() != null) {
@@ -152,6 +157,7 @@ public class LandGraphical extends Polygon {
 
         if (land.getOwnerCity() != null) {
             cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getOwnerCity().getOwnerNation().getNationType().nationImageAddress)).toExternalForm()));
+            landInfo.append("\nCity: ").append(land.getOwnerCity().name);
             if (land != land.getOwnerCity().getMainLand()) {
                 cityImageView.setOpacity(0.5);
                 cityImageView.setOnMouseClicked(null);
@@ -160,6 +166,7 @@ public class LandGraphical extends Polygon {
 
         if (land.getImprovement() != null) {
             improvementImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(land.getImprovement().getImprovementType().onTileImageAddress))));
+            landInfo.append("\nImprovement: ").append(land.getImprovement().getImprovementType().name);
         } else improvementImageView.setImage(null);
 
         if (land.getVisibility() == 1) fogOfWarImageView.setOpacity(0.7);
@@ -168,6 +175,10 @@ public class LandGraphical extends Polygon {
                     "/sut/civilization/Images/tiles/fog.png"
             ))));
         } else fogOfWarImageView.setImage(null);
+
+        Tooltip tooltip = new Tooltip(landInfo.toString());
+        Tooltip.install(this, tooltip);
+        Tooltip.install(landFeatureImageView, tooltip);
 
     }
 

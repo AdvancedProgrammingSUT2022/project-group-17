@@ -4,6 +4,8 @@ import javafx.scene.shape.Polygon;
 import sut.civilization.Model.ModulEnums.ImprovementType;
 import sut.civilization.Model.ModulEnums.LandType;
 
+import java.util.ArrayList;
+
 public class Land {
 
     protected Improvement improvement;
@@ -17,10 +19,11 @@ public class Land {
     protected boolean isCityCenter;
     protected CivilizedUnit civilizedUnit = null;
     protected CombatUnit combatUnit = null;
-    protected boolean isBuyable = true;
+    protected boolean isBuyable;
 
     protected boolean isAPartOfPath = false;
     protected LandType landType;
+    protected ArrayList<Nation> seerNations = new ArrayList<>();
     protected int visibility = 2;
     // 0 -> fog of war
     // 1 -> shadow (unknown)
@@ -74,6 +77,14 @@ public class Land {
             }
         }
         return false;
+    }
+
+    public ArrayList<Nation> getSeerNations() {
+        return seerNations;
+    }
+
+    public void addSeerNation(Nation seerNation) {
+        this.seerNations.add(seerNation);
     }
 
     public CivilizedUnit getCivilizedUnit() {

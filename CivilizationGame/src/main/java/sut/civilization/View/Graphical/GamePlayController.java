@@ -28,6 +28,7 @@ import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static javafx.scene.paint.Color.WHITE;
@@ -579,6 +580,9 @@ public class GamePlayController extends ViewController {
             HBox technologyImageHBox = new HBox(technologyImage);
             Label name = new Label(technologyType.name);
             name.setTextFill(WHITE);
+            name.setStyle("-fx-label-padding: 0 0 20 0;");
+            Tooltip.install(technologyImage, new Tooltip(technologyType.name + "\nCost: " + technologyType.cost +
+                    "\nTurns: " + technologyType.turns + "\nFathers:\n" + Arrays.toString(technologyType.fathers)));
             eachTechnology[i].getChildren().add(technologyImageHBox);
             eachTechnology[i].getChildren().add(name);
             ColorAdjust colorAdjust = new ColorAdjust();
@@ -650,10 +654,10 @@ public class GamePlayController extends ViewController {
 
         int[] rowNum = new int[]{1, 4, 6, 5, 5, 5, 4, 3, 5, 2, 4, 2};
         final int eachTechWidth = 188;
-        final int eachTechHeight = 204;
+        final int eachTechHeight = 224;
         final int centerX = 614;
         int y1 = 114;
-        int y2 = 318;
+        int y2 = 114 + eachTechHeight;
         int j = 0;
 
         for (int i = 0; i < 11; i++) {
@@ -911,7 +915,7 @@ public class GamePlayController extends ViewController {
 
         for (Line line : lines) {
             line.setStroke(WHITE);
-            line.setStrokeWidth(3);
+            line.setStrokeWidth(2);
         }
 
         AnchorPane anchorPane = new AnchorPane(lines);
@@ -1567,6 +1571,16 @@ public class GamePlayController extends ViewController {
                     for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
                         for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
                             graphicalMap[k][l].getFogOfWarImageView().setOnMouseClicked(null);
+                        }
+                    }
+                });
+                graphicalMap[i][j].getLandFeatureImageView().setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.unitSetPath(finalI, finalJ, selection);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    unitMovement.setText("Movement: " + unit.getMP());
+                    for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
+                        for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
+                            graphicalMap[k][l].getLandFeatureImageView().setOnMouseClicked(null);
                         }
                     }
                 });
