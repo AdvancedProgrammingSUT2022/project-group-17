@@ -265,4 +265,8 @@ public class City {
     public void addAffordableLand(Land land){
         affordableLands.add(land);
     }
+
+    public void clearAffordableLands(){
+        affordableLands.clear();
+    }
 }

@@ -193,6 +193,7 @@ public class CityController extends GameController {
         for (User user : Game.instance.getPlayersInGame()) {
             Nation nation = user.getNation();
             for (City city : nation.getCities()) {
+                city.clearAffordableLands();
                 for (int x = 0; x < Consts.MAP_SIZE.amount.x; x++){
                     for (int y = 0; y < Consts.MAP_SIZE.amount.y; y++){
 
