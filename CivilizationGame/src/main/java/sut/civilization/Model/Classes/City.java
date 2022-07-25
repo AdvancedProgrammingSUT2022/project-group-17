@@ -41,8 +41,6 @@ public class City {
         this.ownerNation = ownerNation;
         this.name = name;
         this.mainLand = mainLand;
-        
-        CityController.updateAffordableLands();
     }
 
 

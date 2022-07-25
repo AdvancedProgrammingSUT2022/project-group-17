@@ -400,9 +400,13 @@ public class LandController extends Controller {
 //        for (TechnologyType technologyType : TechnologyType.values()) {
 //            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
 //        }
-//        for (ResourceType resourceType: ResourceType.values()) {
-//            GameController.getCurrentTurnUser().getNation().addResource(resourceType);
-//        }
+        for (ResourceType resourceType: ResourceType.values()) {
+            Random random1 = new Random();
+            for (int i = 0; i < random1.nextInt(5); i++) {
+                GameController.getCurrentTurnUser().getNation().addResource(resourceType);
+                Game.instance.getPlayersInGame().get(1).getNation().addResource(resourceType);
+            }
+        }
 
 //        GameController.getCurrentTurnUser().getNation().getCities().get(0).setInProgressBuilding(new Building(BuildingType.BANK));
 

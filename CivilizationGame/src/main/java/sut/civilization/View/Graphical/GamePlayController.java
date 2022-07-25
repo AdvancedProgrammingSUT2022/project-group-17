@@ -218,31 +218,113 @@ public class GamePlayController extends ViewController {
         scrollPanePopup(allNationsVBox);
     }
 
+    public void showDiplomacyPanel(Nation nation) {
+        Label diplomacyWith = new Label("Diplomacy with " + nation.getNationType().name);
+        diplomacyWith.getStyleClass().add("header");
+        ImageView hisLeaderImage = new ImageView(new Image(
+                Objects.requireNonNull(Civilization.class.getResourceAsStream(nation.getNationType().leaderImageAddress))
+        ));
+        hisLeaderImage.setFitWidth(100);
+        hisLeaderImage.setFitHeight(100);
+        ImageView myLeaderImage = new ImageView(new Image(
+                Objects.requireNonNull(Civilization.class.getResourceAsStream(GameController.getCurrentTurnUser().getNation().getNationType().leaderImageAddress))
+        ));
+        myLeaderImage.setFitWidth(100);
+        myLeaderImage.setFitHeight(100);
+
+        VBox mySuppliesVBox = new VBox();
+        for (ResourceType resourceType : ResourceType.values()) {
+            if (GameController.getCurrentTurnUser().getNation().getResourceCellar().get(resourceType) > 0) {
+                ImageView resourceImage = new ImageView(resourceType.image);
+                resourceImage.setFitWidth(40);
+                resourceImage.setFitHeight(40);
+                Label resourceName = new Label(resourceType.name);
+                Label resourceNumber = new Label(String.valueOf(
+                        GameController.getCurrentTurnUser().getNation().getResourceCellar().get(resourceType)
+                ));
+                resourceName.setStyle("-fx-label-padding: 0 10 0 0;");
+                resourceNumber.setStyle("-fx-label-padding: 0 10 0 0;");
+                HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber);
+                eachResource.setAlignment(Pos.CENTER_LEFT);
+                mySuppliesVBox.getChildren().add(eachResource);
+            }
+        }
+        ScrollPane mySuppliesScrollPane = new ScrollPane(mySuppliesVBox);
+        mySuppliesVBox.setPrefHeight(300);
+        mySuppliesVBox.setPrefWidth(200);
+        VBox myVBox = new VBox(myLeaderImage, mySuppliesScrollPane);
+        myVBox.setMaxHeight(500);
+        myVBox.setAlignment(Pos.CENTER);
+
+        VBox hisSuppliesVBox = new VBox();
+        for (ResourceType resourceType : ResourceType.values()) {
+            if (nation.getResourceCellar().get(resourceType) > 0) {
+                ImageView resourceImage = new ImageView(resourceType.image);
+                resourceImage.setFitWidth(40);
+                resourceImage.setFitHeight(40);
+                Label resourceName = new Label(resourceType.name);
+                Label resourceNumber = new Label(String.valueOf(
+                        nation.getResourceCellar().get(resourceType)
+                ));
+                resourceName.setStyle("-fx-label-padding: 0 10 0 0;");
+                resourceNumber.setStyle("-fx-label-padding: 0 10 0 0;");
+                HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber);
+                eachResource.setAlignment(Pos.CENTER_LEFT);
+                hisSuppliesVBox.getChildren().add(eachResource);
+            }
+        }
+        ScrollPane hisSuppliesScrollPane = new ScrollPane(hisSuppliesVBox);
+        hisSuppliesVBox.setPrefHeight(300);
+        hisSuppliesVBox.setPrefWidth(200);
+        VBox hisVBox = new VBox(hisLeaderImage, hisSuppliesScrollPane);
+        hisVBox.setMaxHeight(500);
+        hisVBox.setAlignment(Pos.CENTER);
+
+        HBox tradesHBox = new HBox(myVBox, hisVBox);
+        tradesHBox.setAlignment(Pos.CENTER);
+
+        Button declareWarButton = new Button("Declare War!");
+        Button peaceButton = new Button("Peace");
+        VBox wholeDiplomacy = new VBox(diplomacyWith, tradesHBox, declareWarButton, peaceButton);
+        wholeDiplomacy.setAlignment(Pos.TOP_CENTER);
+        wholeDiplomacy.setMaxHeight(700);
+        wholeDiplomacy.getStyleClass().add("infoList");
+
+        infoPopup.hide();
+        scrollPanePopup(wholeDiplomacy);
+    }
+
     public void showDemographics() {
         int nationNumber = Game.instance.getPlayersInGame().size();
         HBox[] eachNationHBox = new HBox[nationNumber];
         int i = 0;
         for (User user : Game.instance.getPlayersInGame()) {
-            ImageView avatar = new ImageView(new Image(user.getNation().getNationType().leaderImageAddress));
+            Nation nation = user.getNation();
+            ImageView avatar = new ImageView(new Image(nation.getNationType().leaderImageAddress));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
-            Label nationName = new Label(user.getNation().getNationType().name);
+            Label nationName = new Label(nation.getNationType().name);
             nationName.getStyleClass().add("infoBoldColumn");
             int population = 0;
             int landNum = 0;
-            for (City city : user.getNation().getCities()) {
+            for (City city : nation.getCities()) {
                 population += city.getCitizens();
                 landNum += city.getLands().size();
             }
             Label Population = new Label("Population: " + population);
             Population.getStyleClass().add("infoColumns");
-            Label units = new Label("units: " + user.getNation().getUnits().size());
+            Label units = new Label("units: " + nation.getUnits().size());
             units.getStyleClass().add("infoColumns");
             Label lands = new Label("lands: " + landNum);
             lands.getStyleClass().add("infoColumns");
             eachNationHBox[i] = new HBox(avatar, nationName, Population, units, lands);
             eachNationHBox[i].setPrefHeight(100);
             eachNationHBox[i].setAlignment(Pos.CENTER_LEFT);
+            if (nation != GameController.getCurrentTurnUser().getNation()) {
+                eachNationHBox[i].setOnMouseClicked(mouseEvent -> {
+                    showDiplomacyPanel(nation);
+                });
+            }
 
             i++;
         }
