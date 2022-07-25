@@ -1,0 +1,50 @@
+
+Button {
+    -fx-background-color: white;
+    -fx-padding: 25;
+    -fx-background-insets: 15;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-background-color: gray;
+}
+
+ImageView {
+    -fx-cursor: hand;
+}
+
+.messageBox {
+    -fx-border-color: blue;
+    -fx-border-radius: 40;
+    -fx-padding: 15 20 15 30;
+    -fx-background-color: #66aadd;
+    -fx-background-radius: 40;
+}
+
+.name {
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}
+
+.message {
+    -fx-label-padding: 10 0 0 0;
+    -fx-max-width: 280;
+    -fx-wrap-text: true;
+}
+
+.time {
+    -fx-label-padding: 10 0 0 240;
+    -fx-font-size: 10;
+}
+
+.avatar {
+    -fx-width: 80;
+    -fx-height: 80;
+    -fx-padding: 10;
+}
+
+.chatPreview {
+    -fx-max-width: 120;
+    -fx-label-padding: 10;
+}
