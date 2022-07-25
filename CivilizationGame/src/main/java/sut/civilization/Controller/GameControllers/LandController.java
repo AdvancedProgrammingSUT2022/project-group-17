@@ -15,8 +15,8 @@ public class LandController extends Controller {
     public void printMap(Land[][] map) {
         updateLandVisibility();
 
-        int column = 5;
-        int row = 10;
+        int column = 4;
+        int row = 4;
 
         for (int k = 0; k < row; k++) {
             for (int i = 0; i < 6; i++) {
@@ -140,73 +140,121 @@ public class LandController extends Controller {
         }
     }
 
-    public ArrayList<Pair<Integer, Integer>> getAllNeighborsIndexes(Pair<Integer, Integer> coordinate) {
+    public static ArrayList<Pair<Integer, Integer>> getAllNeighborsIndexes(Pair<Integer, Integer> coordinate) {
         ArrayList<Pair<Integer, Integer>> neighborPairs = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            neighborPairs.add(getNeighborIndex(new Pair<Integer, Integer>(coordinate.x, coordinate.y), i));
+            neighborPairs.add(getNeighborIndex(new Pair<>(coordinate.x, coordinate.y), i));
         }
 
         return neighborPairs;
     }
 
-    private void updateLandVisibility() {
+    public static void updateLandVisibility() {
+        //FIXME Fix it, Ravan!
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.instance.map[i][j].getVisibility() == 2) {
+                if (Game.instance.map[i][j].getVisibility() == 2 &&
+                        Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation())) {
                     Game.instance.map[i][j].setVisibility(1);
                 }
+//                else {
+//                    Game.instance.map[i][j].setVisibility(0);
+//                }
             }
         }
 
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.instance.map[i][j].getCivilizedUnit() != null || Game.instance.map[i][j].getCombatUnit() != null || Game.instance.map[i][j].getOwnerCity() != null) {
-                    lightNeighbors(new Pair<Integer, Integer>(i, j));
+                if ((Game.instance.map[i][j].getCivilizedUnit() != null && Game.instance.map[i][j].getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
+                        (Game.instance.map[i][j].getCombatUnit() != null && Game.instance.map[i][j].getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
+                        (Game.instance.map[i][j].getOwnerCity() != null && Game.instance.map[i][j].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation())) {
+                    lightNeighbors(new Pair<>(i, j));
                     Game.instance.map[i][j].setVisibility(2);
+                    Game.instance.map[i][j].addSeerNation(GameController.getCurrentTurnUser().getNation());
+                } else if (Game.instance.map[i][j].getVisibility() != 1 ||
+                        (Game.instance.map[i][j].getVisibility() == 1 && !Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation()))) {
+                    Game.instance.map[i][j].setVisibility(0);
                 }
             }
         }
     }
 
-    private void lightNeighbors(Pair<Integer, Integer> coordinate) {
+    private static void lightNeighbors(Pair<Integer, Integer> coordinate) {
         for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(coordinate)) {
-            if (Pair.isValid(pair) && !Game.instance.map[pair.x][pair.y].getLandType().name.equals(LandType.MOUNTAIN.name))
+            if (Pair.isValid(pair) && Game.instance.map[pair.x][pair.y].getLandType() != LandType.MOUNTAIN) {
                 Game.instance.map[pair.x][pair.y].setVisibility(2);
+                Game.instance.map[pair.x][pair.y].addSeerNation(GameController.getCurrentTurnUser().getNation());
+            }
         }
 
     }
 
     public static Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
         if (coordinate.y % 2 == 0) {
-            switch (position) {
-                case 0:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
-                case 1:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y + 1);
-                case 2:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
-                case 3:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
-                case 4:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
-                case 5:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y - 1);
+            if (coordinate.x % 2 == 0) {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y - 1);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y + 1);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y + 1);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                }
             }
         } else {
-            switch (position) {
-                case 0:
-                    return new Pair<Integer, Integer>(coordinate.x - 1, coordinate.y);
-                case 1:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y + 1);
-                case 2:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y - 1);
-                case 3:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y);
-                case 4:
-                    return new Pair<Integer, Integer>(coordinate.x + 1, coordinate.y + 1);
-                case 5:
-                    return new Pair<Integer, Integer>(coordinate.x, coordinate.y - 1);
+            if (coordinate.x % 2 == 0) {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y - 1);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y + 1);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y + 1);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                }
             }
+
         }
         return null;
     }
@@ -299,18 +347,16 @@ public class LandController extends Controller {
         }
 
 
-
-
         CivilizedUnit settler1 = new CivilizedUnit(
-                CivilizedUnitType.WORKER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
+                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 3)
         );
-//        CivilizedUnit settler2 = new CivilizedUnit(
-//                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(4, 4)
-//        );
+        CivilizedUnit settler2 = new CivilizedUnit(
+                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(5, 6)
+        );
         map[settler1.getLocation().x][settler1.getLocation().y].setCivilizedUnit(settler1);
-//        map[settler2.getLocation().x][settler2.getLocation().y].setCivilizedUnit(settler2);
+        map[settler2.getLocation().x][settler2.getLocation().y].setCivilizedUnit(settler2);
         Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(settler1);
-//        Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(settler2);
+        Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(settler2);
 
 //        RangedCombatUnit archer = new RangedCombatUnit(
 //                RangedCombatUnitType.ARCHER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)

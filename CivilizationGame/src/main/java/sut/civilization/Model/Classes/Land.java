@@ -4,6 +4,8 @@ import javafx.scene.shape.Polygon;
 import sut.civilization.Model.ModulEnums.ImprovementType;
 import sut.civilization.Model.ModulEnums.LandType;
 
+import java.util.ArrayList;
+
 public class Land {
 
     protected Improvement improvement;
@@ -17,10 +19,11 @@ public class Land {
     protected boolean isCityCenter;
     protected CivilizedUnit civilizedUnit = null;
     protected CombatUnit combatUnit = null;
-    protected boolean isBuyable = true;
+    protected boolean isBuyable;
 
     protected boolean isAPartOfPath = false;
     protected LandType landType;
+    protected ArrayList<Nation> seerNations = new ArrayList<>();
     protected int visibility = 2;
     // 0 -> fog of war
     // 1 -> shadow (unknown)
@@ -48,6 +51,7 @@ public class Land {
         this.j = j;
         this.ruin = null;
         this.isBuyable = true;
+        this.visibility = 0;
     }
 
     public void addGrowthToLandOwner(){
@@ -63,6 +67,26 @@ public class Land {
             landOwnerNation.getFood().addGrowthRate(this.landFeature.getLandFeatureType().foodGrowth);
         }
     }
+
+    public boolean isACityMainLand() {
+        for (User user : Game.instance.getPlayersInGame()) {
+            for (City city : user.getNation().getCities()) {
+                if (city.getMainLand() == this) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Nation> getSeerNations() {
+        return seerNations;
+    }
+
+    public void addSeerNation(Nation seerNation) {
+        this.seerNations.add(seerNation);
+    }
+
     public CivilizedUnit getCivilizedUnit() {
         return civilizedUnit;
     }

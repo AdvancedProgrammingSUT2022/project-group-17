@@ -231,10 +231,16 @@ public class GameController extends Controller {
 
     private static String isReadyForNextTurn() {
         for (Unit unit : currentTurnUser.getNation().getUnits())
-            if (unit.isWaitingForCommand())
+            if (unit.getUnitStatus().isWaitingForCommand)
                 return "unit";
         if (currentTurnUser.getNation().getInProgressTechnology() == null)
             return "tech";
+        for (City city : currentTurnUser.getNation().getCities()) {
+            if (city.getInProgressBuilding() == null && city.getInProgressRangedCombatUnit() == null &&
+            city.getInProgressCloseCombatUnit() == null && city.getInProgressCivilizedUnit() == null) {
+                return "production";
+            }
+        }
         return "ready";
     }
 
@@ -253,20 +259,23 @@ public class GameController extends Controller {
 
     public static String nextPlayerTurn() {
         String readyState = isReadyForNextTurn();
-        if (readyState.equals("ready")) {
-            selectedCity = null;
-            selectedCivilizedUnit = null;
-            selectedCombatUnit = null;
-            Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
-            currentTurnUser = Game.instance.getPlayersInGame().get(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
-            if (Game.instance.getSubTurn() == Game.instance.getPlayersInGame().size()) {
-                nextGameTurn();
-                Game.instance.setSubTurn(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
-                return "next game turn: " + currentTurnUser.getUsername();
-            }
-            return "next player turn!: " + currentTurnUser.getUsername();
-        } else if (readyState.equals("tech")) {
-            return "Select a technology to research!";
+        switch (readyState) {
+            case "ready":
+                selectedCity = null;
+                selectedCivilizedUnit = null;
+                selectedCombatUnit = null;
+                Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
+                currentTurnUser = Game.instance.getPlayersInGame().get(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
+                if (Game.instance.getSubTurn() == Game.instance.getPlayersInGame().size()) {
+                    nextGameTurn();
+                    Game.instance.setSubTurn(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
+                    return "next game turn: " + currentTurnUser.getUsername();
+                }
+                return "next player turn!: " + currentTurnUser.getUsername();
+            case "tech":
+                return "Select a technology to research!";
+            case "production":
+                return "Choose production of your cities!";
         }
         return "Order all your units first!";
     }
@@ -280,10 +289,10 @@ public class GameController extends Controller {
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 Game.instance.map[i][j].setZOC(null);
-                Pair<Integer,Integer>[] neighbors = new Pair[6];
+                Pair<Integer, Integer>[] neighbors = new Pair[6];
                 for (int k = 0; k < 6; k++) {
-                    neighbors[k] = LandController.getNeighborIndex(new Pair<Integer,Integer>(i, j), k);
-                    if (Pair.isValid(new Pair<Integer,Integer>(neighbors[k].x, neighbors[k].y)) &&
+                    neighbors[k] = LandController.getNeighborIndex(new Pair<Integer, Integer>(i, j), k);
+                    if (Pair.isValid(new Pair<>(neighbors[k].x, neighbors[k].y)) &&
                             Game.instance.map[neighbors[k].x][neighbors[k].y].getCombatUnit() != null)
                         Game.instance.map[i][j].setZOC(Game.instance.map[neighbors[k].x][neighbors[k].y].getCombatUnit());
                 }
@@ -296,7 +305,7 @@ public class GameController extends Controller {
                 if (unit instanceof RangedCombatUnit) {
                     if (((RangedCombatUnit) unit).getRangedCombatUnitType() != null && ((RangedCombatUnit) unit).getRangedCombatUnitType().isSiege) {
                         if (unit.getTargetCity() != null) {
-                            unitController.unitAttackCity((CombatUnit) unit);
+                            UnitController.unitAttackCity((CombatUnit) unit);
                         }
                     }
                 }
@@ -306,7 +315,7 @@ public class GameController extends Controller {
 
                 checkFortifying(unit);
 
-                setUnitWaitingForCommand(unit);
+//                setUnitWaitingForCommand(unit);
                 //maintenance cost for units
                 userNation.getCoin().addBalance(-unit.getMaintenance());
             }
@@ -392,18 +401,18 @@ public class GameController extends Controller {
                 unit.addHp(1);
             else {
                 unit.setUnitStatus(UnitStatus.AWAKE);
-                unit.setWaitingForCommand(true);
+//                unit.setWaitingForCommand(true);
             }
         }
     }
 
-    private static void setUnitWaitingForCommand(Unit unit) {
-        if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
-                unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HEAL && unit.getUnitStatus() != UnitStatus.SLEEP &&
-                unit.getUnitStatus() != UnitStatus.FORTIFY) {
-            unit.setWaitingForCommand(true);
-        }
-    }
+//    private static void setUnitWaitingForCommand(Unit unit) {
+//        if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
+//                unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HEAL && unit.getUnitStatus() != UnitStatus.SLEEP &&
+//                unit.getUnitStatus() != UnitStatus.FORTIFY) {
+//            unit.setWaitingForCommand(true);
+//        }
+//    }
 
     public static void nextTurnUnitMove(Unit unit) {
         if (unit instanceof CivilizedUnit) {
@@ -419,10 +428,13 @@ public class GameController extends Controller {
                 UnitController.unitGoForward(unit);
         } else {
             if (unit.getUnitStatus() == UnitStatus.MOVING) unit.setUnitStatus(UnitStatus.AWAKE);
-            if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
-                    unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HEAL && unit.getUnitStatus() != UnitStatus.SLEEP &&
-                    unit.getUnitStatus() != UnitStatus.FORTIFY)
-                unit.setWaitingForCommand(true);
+            if (unit.getUnitStatus() == UnitStatus.ALERT || unit.getUnitStatus() == UnitStatus.ATTACKING)
+                unit.setUnitStatus(UnitStatus.AWAKE);
+//            if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
+//                    unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HEAL && unit.getUnitStatus() != UnitStatus.SLEEP &&
+//                    unit.getUnitStatus() != UnitStatus.FORTIFY && unit.getUnitStatus() != UnitStatus.ALERT &&
+//                    unit.getUnitStatus() != UnitStatus.ATTACKING)
+//                unit.setWaitingForCommand(true);
         }
     }
 
@@ -430,21 +442,21 @@ public class GameController extends Controller {
         if (unit instanceof CivilizedUnit &&
                 ((CivilizedUnit) unit).getCivilizedUnitType() == CivilizedUnitType.WORKER) {
             if (unit.getUnitStatus() == UnitStatus.WORKING) {
-                if (((CivilizedUnit) unit).getTurnsLeft() != 0) {
-                    ((CivilizedUnit) unit).decreaseTurnsLeft(1);
+                if (unit.getTurnsLeft() != 0) {
+                    unit.decreaseTurnsLeft(1);
                 } else {
                     if (((CivilizedUnit) unit).getImprovementType() != null) {
                         WorkerController.workerBuildImprovement(((CivilizedUnit) unit));
                         System.out.println(((CivilizedUnit) unit).getImprovementType().name + " was built!");
                         ((CivilizedUnit) unit).setImprovementType(null);
                         unit.setUnitStatus(UnitStatus.AWAKE);
-                        unit.setWaitingForCommand(true);
+//                        unit.setWaitingForCommand(true);
                     } else if (((CivilizedUnit) unit).getWorkerWorks() != null) {
                         WorkerController.workerWork(((CivilizedUnit) unit));
                         System.out.println(((CivilizedUnit) unit).getWorkerWorks().toString() + " was done!");
                         ((CivilizedUnit) unit).setWorkerWorks(null);
                         unit.setUnitStatus(UnitStatus.AWAKE);
-                        unit.setWaitingForCommand(false);
+//                        unit.setWaitingForCommand(false);
                     } else System.out.println("ERROR!");
                 }
             }

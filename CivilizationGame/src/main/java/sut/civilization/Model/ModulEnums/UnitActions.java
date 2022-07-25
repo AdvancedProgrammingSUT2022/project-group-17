@@ -15,6 +15,7 @@ public enum UnitActions {
     FOUND_CITY(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Found City.png"))),
     FORTIFY(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Fortify.png"))),
     BUILD_IMPROVEMENT(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Build Improvement.png"))),
+    REMOVE_FEATURE(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Remove Feature.png"))),
     ALERT(new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/unitActions/Alert.png")))
     ;
 

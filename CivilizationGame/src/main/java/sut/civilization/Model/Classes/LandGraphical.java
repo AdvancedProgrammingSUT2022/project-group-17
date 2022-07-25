@@ -1,14 +1,14 @@
 package sut.civilization.Model.Classes;
 
-import javafx.event.EventHandler;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import sut.civilization.Civilization;
 import sut.civilization.Controller.GameControllers.GameController;
+import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.ModulEnums.LandType;
 import sut.civilization.View.Graphical.GamePlayController;
 
@@ -28,8 +28,8 @@ public class LandGraphical extends Polygon {
     private Pair<ImageView, ImageView> civilizedUnitImageView = new Pair<>(new ImageView(), new ImageView());
     private Pair<ImageView, ImageView> combatUnitImageView = new Pair<>(new ImageView(), new ImageView());
     private ImageView improvementImageView = new ImageView();
-
     private ImageView cityImageView = new ImageView();
+    private ImageView fogOfWarImageView = new ImageView();
 
     public LandGraphical(Pair<Integer, Integer> coordinate, Pane pane) {
 
@@ -81,6 +81,11 @@ public class LandGraphical extends Polygon {
         improvementImageView.setX(this.centerCoordinate.x - tileRadius * 0.25);
         improvementImageView.setY(this.centerCoordinate.y + tileRadius * 0.25);
 
+        fogOfWarImageView.setFitWidth(tileRadius * 2);
+        fogOfWarImageView.setFitHeight(tileRadius * Math.sqrt(3));
+        fogOfWarImageView.setX(this.centerCoordinate.x - (tileRadius ));
+        fogOfWarImageView.setY(this.centerCoordinate.y - (tileRadius * Math.sqrt(3) / 2));
+
         civilizedUnitImageView.x.setOnMouseClicked(mouseEvent -> {
             if (land.getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
                 GameController.setSelectedCivilizedUnit(land.getCivilizedUnit());
@@ -115,18 +120,23 @@ public class LandGraphical extends Polygon {
         pane.getChildren().add(combatUnitImageView.y);
         pane.getChildren().add(combatUnitImageView.x);
         pane.getChildren().add(improvementImageView);
-
         pane.getChildren().add(cityImageView);
+        pane.getChildren().add(fogOfWarImageView);
     }
 
     public void updateMap() {
+        LandController.updateLandVisibility();
+
+        StringBuilder landInfo = new StringBuilder(land.getLandType().name + " at (" + land.getI() + " , " + land.getJ() + ")");
 
         if (land.getLandFeature() != null) {
             landFeatureImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/tiles/" + land.getLandFeature().landFeatureType.name + ".png")).toExternalForm()));
+            landInfo.append("\nFeature: ").append(land.getLandFeature().getLandFeatureType().name);
         } else landFeatureImageView.setImage(null);
 
         if (land.getResource() != null) {
             resourceImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource("Images/Icons/ResourceIcons/" + land.getResource().resourceType.name + ".png")).toExternalForm()));
+            landInfo.append("\nResource: ").append(land.getResource().getResourceType().name);
         } else resourceImageView.setImage(null);
 
         if (land.getCombatUnit() != null) {
@@ -147,14 +157,30 @@ public class LandGraphical extends Polygon {
 
         if (land.getOwnerCity() != null) {
             cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getOwnerCity().getOwnerNation().getNationType().nationImageAddress)).toExternalForm()));
+            landInfo.append("\nCity: ").append(land.getOwnerCity().name);
+            if (land != land.getOwnerCity().getMainLand()) {
+                cityImageView.setOpacity(0.5);
+                cityImageView.setOnMouseClicked(null);
+            }
         } else cityImageView.setImage(null);
 
         if (land.getImprovement() != null) {
             improvementImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(land.getImprovement().getImprovementType().onTileImageAddress))));
+            landInfo.append("\nImprovement: ").append(land.getImprovement().getImprovementType().name);
         } else improvementImageView.setImage(null);
 
-    }
+        if (land.getVisibility() == 1) fogOfWarImageView.setOpacity(0.7);
+        if (land.getVisibility() == 0 || land.getVisibility() == 1) {
+            fogOfWarImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
+                    "/sut/civilization/Images/tiles/fog.png"
+            ))));
+        } else fogOfWarImageView.setImage(null);
 
+        Tooltip tooltip = new Tooltip(landInfo.toString());
+        Tooltip.install(this, tooltip);
+        Tooltip.install(landFeatureImageView, tooltip);
+
+    }
 
     private void showSelectDialog() {
 
@@ -219,6 +245,10 @@ public class LandGraphical extends Polygon {
 
     public ImageView getImprovementImageView() {
         return improvementImageView;
+    }
+
+    public ImageView getFogOfWarImageView() {
+        return fogOfWarImageView;
     }
 
     public Pair<ImageView, ImageView> getCivilizedUnitImageView() {

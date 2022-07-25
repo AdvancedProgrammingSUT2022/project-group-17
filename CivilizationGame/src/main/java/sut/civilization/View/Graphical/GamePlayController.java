@@ -5,6 +5,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -12,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -23,9 +27,12 @@ import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static javafx.scene.paint.Color.WHITE;
+import static javafx.scene.paint.Color.web;
 
 public class GamePlayController extends ViewController {
     @FXML
@@ -38,9 +45,9 @@ public class GamePlayController extends ViewController {
     public Label inProgressTechnologyName = new Label();
     public ImageView inProgressTechnologyImage = new ImageView();
     public ProgressBar technologyProgressBar = new ProgressBar();
-    public Label goldInfo;
-    public Label scienceInfo;
-    public Label happinessInfo;
+    public Label goldInfo = new Label();
+    public Label scienceInfo = new Label();
+    public Label happinessInfo = new Label();
     private static GamePlayController gamePlayController;
 
     public static GamePlayController getInstance() {
@@ -272,7 +279,7 @@ public class GamePlayController extends ViewController {
     }
 
 
-    private void scrollPanePopup(VBox vBox) {
+    private void scrollPanePopup(Node node) {
         Window window = Game.instance.getCurrentScene().getWindow();
         ImageView ex = exCreator();
         ex.setOnMouseClicked(mouseEvent -> {
@@ -280,8 +287,9 @@ public class GamePlayController extends ViewController {
             root.setEffect(null);
             root.setDisable(false);
         });
-        ScrollPane scrollPane = new ScrollPane(vBox);
+        ScrollPane scrollPane = new ScrollPane(node);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setMaxHeight(700);
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(scrollPane);
         borderPane.setTop(ex);
@@ -296,11 +304,7 @@ public class GamePlayController extends ViewController {
 
     }
 
-    public void showUnitInfo(Unit unit, Label unitName, Label unitMovement, ImageView unitImage, VBox unitActions, HBox actionsAndImprovementsHBox) {
-
-        Label unitHP = new Label("Health: " + unit.getHp());
-        unitHP.setTextFill(WHITE);
-        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+    public void showUnitInfo(Label unitName, Label unitMovement, Label unitHP, ImageView unitImage, VBox unitActions, HBox actionsAndImprovementsHBox) {
 
         ImageView ex = exCreator();
         ex.setOnMouseClicked(mouseEvent -> {
@@ -359,6 +363,10 @@ public class GamePlayController extends ViewController {
         unitMovement.setTextFill(WHITE);
         unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
 
+        Label unitHP = new Label("Health: " + civilizedUnit.getHp());
+        unitHP.setTextFill(WHITE);
+        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+
         for (UnitActions action : civilizedUnit.getCivilizedUnitType().actions) {
             ImageView actionImage = new ImageView(action.image);
 
@@ -373,7 +381,7 @@ public class GamePlayController extends ViewController {
 
         unitActions.getStyleClass().add("thinVBox");
 
-        showUnitInfo(civilizedUnit, unitName, unitMovement, unitImage, unitActions, actionsAndImprovementsHBox);
+        showUnitInfo(unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
 
     }
 
@@ -385,7 +393,8 @@ public class GamePlayController extends ViewController {
 
         ImageView unitImage;
         Label unitName;
-        Label unitMovement;
+        Label unitMovement = new Label("Movement: " + combatUnit.getMP());
+        Label unitHP = new Label("Health: " + combatUnit.getHp());
 
         if (combatUnit instanceof CloseCombatUnit) {
             CloseCombatUnitType closeCombatUnitType = ((CloseCombatUnit) combatUnit).getCloseCombatUnitType();
@@ -393,7 +402,6 @@ public class GamePlayController extends ViewController {
                     Objects.requireNonNull(Civilization.class.getResourceAsStream(closeCombatUnitType.imageAddress))
             ));
             unitName = new Label(closeCombatUnitType.name);
-            unitMovement = new Label("Movement: " + combatUnit.getMP());
             for (UnitActions action : ((CloseCombatUnit) combatUnit).getCloseCombatUnitType().actions) {
                 ImageView actionImage = new ImageView(action.image);
 
@@ -412,7 +420,6 @@ public class GamePlayController extends ViewController {
                     Objects.requireNonNull(Civilization.class.getResourceAsStream(rangedCombatUnitType.imageAddress))
             ));
             unitName = new Label(rangedCombatUnitType.name);
-            unitMovement = new Label("Movement: " + combatUnit.getMP());
             for (UnitActions action : ((RangedCombatUnit) combatUnit).getRangedCombatUnitType().actions) {
                 ImageView actionImage = new ImageView(action.image);
 
@@ -427,6 +434,8 @@ public class GamePlayController extends ViewController {
 
         }
 
+//        unitHP.setText("Health: " + combatUnit.getHp());
+
         unitImage.setFitWidth(180);
         unitImage.setFitHeight(180);
         unitName.getStyleClass().add("header");
@@ -434,9 +443,12 @@ public class GamePlayController extends ViewController {
         unitMovement.setTextFill(WHITE);
         unitMovement.setStyle("-fx-label-padding: 10 0 0 30");
 
+        unitHP.setTextFill(WHITE);
+        unitHP.setStyle("-fx-label-padding: 10 0 0 30");
+
         unitActions.getStyleClass().add("thinVBox");
 
-        showUnitInfo(combatUnit, unitName, unitMovement, unitImage, unitActions, actionsAndImprovementsHBox);
+        showUnitInfo(unitName, unitMovement, unitHP, unitImage, unitActions, actionsAndImprovementsHBox);
 
     }
 
@@ -455,23 +467,37 @@ public class GamePlayController extends ViewController {
                 actionImage.setOnMouseClicked(mouseEvent -> {
                     for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
                         for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                            if (Game.instance.map[i][j].getCombatUnit() != null) {
-                                if (Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
-                                    int finalI = i;
-                                    int finalJ = j;
-                                    graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
-                                        String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
-                                        showPopUp(Game.instance.getCurrentScene().getWindow(), message);
-                                        updateWholeMap();
-                                        graphicalMap[finalI][finalJ].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent2 -> {
-                                            if (graphicalMap[finalI][finalJ].getLand().getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
-                                                GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
-                                                GameController.setSelectedCivilizedUnit(null);
-                                                GamePlayController.getInstance().showSelectedCombatUnitInfo();
-                                            }
-                                        });
+                            if (Game.instance.map[i][j].getCombatUnit() != null &&
+                                    Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
+                                int finalI = i;
+                                int finalJ = j;
+                                graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
+                                    String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
+                                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                                    updateWholeMap();
+                                    graphicalMap[finalI][finalJ].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent2 -> {
+                                        if (graphicalMap[finalI][finalJ].getLand().getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
+                                            GameController.setSelectedCivilizedUnit(null);
+                                            GamePlayController.getInstance().showSelectedCombatUnitInfo();
+                                        }
                                     });
-                                }
+                                });
+                            }
+                            if (Game.instance.map[i][j].isACityMainLand()) {
+                                int finalI = i;
+                                int finalJ = j;
+                                graphicalMap[i][j].getCityImageView().setOnMouseClicked(mouseEvent1 -> {
+                                    String message = UnitController.unitSetCityTarget(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                                    updateWholeMap();
+                                    graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
+                                        if (Game.instance.map[finalI][finalJ].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCity(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                            GamePlayController.getInstance().showCityPanel();
+                                        }
+                                    });
+                                });
                             }
                         }
                     }
@@ -513,6 +539,7 @@ public class GamePlayController extends ViewController {
                     String message = CityController.buildCity("Tehran");
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                     updateWholeMap();
+                    if (message.equals("City built successfully")) unitPopup.hide();
                 });
                 break;
             case BUILD_IMPROVEMENT:
@@ -527,6 +554,11 @@ public class GamePlayController extends ViewController {
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                 });
                 break;
+            case REMOVE_FEATURE:
+                actionImage.setOnMouseClicked(mouseEvent -> {
+                    String message = WorkerController.setWorkerToRemoveFeature();
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                });
         }
     }
 
@@ -548,6 +580,9 @@ public class GamePlayController extends ViewController {
             HBox technologyImageHBox = new HBox(technologyImage);
             Label name = new Label(technologyType.name);
             name.setTextFill(WHITE);
+            name.setStyle("-fx-label-padding: 0 0 20 0;");
+            Tooltip.install(technologyImage, new Tooltip(technologyType.name + "\nCost: " + technologyType.cost +
+                    "\nTurns: " + technologyType.turns + "\nFathers:\n" + Arrays.toString(technologyType.fathers)));
             eachTechnology[i].getChildren().add(technologyImageHBox);
             eachTechnology[i].getChildren().add(name);
             ColorAdjust colorAdjust = new ColorAdjust();
@@ -603,12 +638,293 @@ public class GamePlayController extends ViewController {
         }
 
         VBox wholeTechTree = new VBox(eachFloor);
-        wholeTechTree.setPrefHeight(700);
-        wholeTechTree.setPadding(new Insets(0, 50, 0, 50));
-        wholeTechTree.getStyleClass().add("infoList");
+        wholeTechTree.setPadding(new Insets(20, 50, 20, 50));
+        wholeTechTree.setStyle("-fx-background-color: transparent;");
         wholeTechTree.setAlignment(Pos.CENTER);
 
-        scrollPanePopup(wholeTechTree);
+        AnchorPane lineAnchorPane = drawTechnologiesLines();
+
+        StackPane stackPane = new StackPane(lineAnchorPane, wholeTechTree);
+
+        scrollPanePopup(stackPane);
+    }
+
+    private AnchorPane drawTechnologiesLines() {
+        Line[] lines = new Line[63];
+
+        int[] rowNum = new int[]{1, 4, 6, 5, 5, 5, 4, 3, 5, 2, 4, 2};
+        final int eachTechWidth = 188;
+        final int eachTechHeight = 224;
+        final int centerX = 614;
+        int y1 = 114;
+        int y2 = 114 + eachTechHeight;
+        int j = 0;
+
+        for (int i = 0; i < 11; i++) {
+            int x1 = centerX - ((rowNum[i] - 1) * (eachTechWidth / 2));
+            int x2 = centerX - ((rowNum[i + 1] - 1) * (eachTechWidth / 2));
+            if (i == 0) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 1) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= (eachTechWidth / 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth / 2) + eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 2) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= (eachTechWidth * 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth * 3);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 3) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth * 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 4) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += (eachTechWidth * 2);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 5) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 6) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 += (eachTechWidth * 4);
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 -= (eachTechWidth * 3);
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 7) {
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 8) {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2 + eachTechHeight);
+                j++;
+                x2 -= eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else if (i == 9) {
+                x1 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += (eachTechWidth * 2);
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 -= eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+            } else {
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+                j++;
+                x2 += eachTechWidth;
+                x1 += eachTechWidth;
+
+                lines[j] = new Line(x1, y1, x2, y2);
+            }
+
+            y1 += eachTechHeight;
+            y2 += eachTechHeight;
+        }
+
+        for (Line line : lines) {
+            line.setStroke(WHITE);
+            line.setStrokeWidth(2);
+        }
+
+        AnchorPane anchorPane = new AnchorPane(lines);
+        anchorPane.setPrefWidth(1228);
+        anchorPane.setPrefHeight(2448);
+        anchorPane.setStyle("-fx-background-color: #212121;");
+
+        return anchorPane;
+
     }
 
     private void showCityInfoBox(City city) {
@@ -751,9 +1067,7 @@ public class GamePlayController extends ViewController {
 
         // product buttons
         Button purchaseButton = new Button("Purchase");
-        purchaseButton.setOnMouseClicked(mouseEvent -> {
-            showListOfPurchasableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance);
-        });
+        purchaseButton.setOnMouseClicked(mouseEvent -> showListOfPurchasableProducts(city));
         Button setProductButton = new Button("Set/Change Product");
         setProductButton.setOnMouseClicked(mouseEvent ->
                 showListOfCreatableProducts(city, productImage, productName, productCost, productTurnsLeft, productMaintenance)
@@ -767,8 +1081,7 @@ public class GamePlayController extends ViewController {
     }
 
 
-    private void showListOfPurchasableProducts(City city, ImageView productImage, Label productName, Label productCost,
-                                             Label productTurnsLeft, Label productMaintenance) {
+    private void showListOfPurchasableProducts(City city) {
         // top-right box
         Label unitsHeader = new Label("Units:");
         unitsHeader.getStyleClass().add("header");
@@ -800,6 +1113,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("civilized unit", civilizedUnitType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -828,6 +1143,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("close combat unit", closeCombatUnitType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -856,6 +1173,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("ranged combat unit", rangedCombatUnitType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -888,6 +1207,8 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("building", buildingType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    updateWholeMap();
+                    updateCurrencyBar();
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -895,14 +1216,27 @@ public class GamePlayController extends ViewController {
 
         listOfAvailableProducts.setStyle("-fx-background-color: #212121;");
         ScrollPane scrollPane = new ScrollPane(listOfAvailableProducts);
-        scrollPane.setPrefWidth(300);
-        scrollPane.setLayoutX(1066);
-        scrollPane.setLayoutY(30);
-        scrollPane.setMaxHeight(738);
+//        scrollPane.setPrefWidth(300);
+//        scrollPane.setLayoutX(1066);
+//        scrollPane.setLayoutY(30);
+//        scrollPane.setMaxHeight(738);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
-        cityPopup.getContent().add(scrollPane);
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(scrollPane);
+        borderPane.setCenter(scrollPane);
+        borderPane.setPrefWidth(300);
+        borderPane.setLayoutX(1066);
+        borderPane.setLayoutY(10);
+        borderPane.setMaxHeight(738);
+        ImageView ex = exCreator();
+        ex.setOnMouseClicked(mouseEvent -> {
+            cityPopup.getContent().remove(cityPopup.getContent().size() - 1);
+        });
+        borderPane.setTop(ex);
+
+        cityPopup.getContent().add(borderPane);
     }
 
 
@@ -1029,7 +1363,7 @@ public class GamePlayController extends ViewController {
         for (BuildingType buildingType : BuildingType.values()) {
             if ((buildingType.technologyType == null ||
                     GameController.getCurrentTurnUser().getNation().getTechnologies().get(buildingType.technologyType).equals(true)) &&
-            !city.getBuildings().contains(buildingType)) {
+                    !city.getBuildings().contains(buildingType)) {
                 ImageView buildingImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(buildingType.imageAddress))));
                 buildingImage.setFitWidth(50);
                 buildingImage.setFitHeight(50);
@@ -1062,11 +1396,52 @@ public class GamePlayController extends ViewController {
 
         listOfAvailableProducts.setStyle("-fx-background-color: #212121;");
         ScrollPane scrollPane = new ScrollPane(listOfAvailableProducts);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(scrollPane);
+        borderPane.setPrefWidth(300);
+        borderPane.setLayoutX(1066);
+        borderPane.setLayoutY(10);
+        borderPane.setMaxHeight(738);
+        ImageView ex = exCreator();
+        ex.setOnMouseClicked(mouseEvent -> {
+            cityPopup.getContent().remove(cityPopup.getContent().size() - 1);
+        });
+        borderPane.setTop(ex);
+
+        cityPopup.getContent().add(borderPane);
+    }
+
+    public void showListOfBuildings(City city) {
+        VBox listOfBuildings = new VBox();
+        Label buildingsHeader = new Label("Buildings:");
+        buildingsHeader.getStyleClass().add("header");
+        listOfBuildings.getChildren().add(buildingsHeader);
+
+        for (BuildingType buildingType : BuildingType.values()) {
+            if (city.getBuildings().contains(buildingType)) {
+                ImageView buildingImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(buildingType.imageAddress))));
+                buildingImage.setFitWidth(50);
+                buildingImage.setFitHeight(50);
+                Label buildingName = new Label(buildingType.name);
+                buildingName.setTextFill(WHITE);
+                buildingName.setStyle("-fx-label-padding: 0 0 5 0; -fx-font-weight: bold;");
+                HBox eachBuilding = new HBox(buildingImage, buildingName);
+                eachBuilding.setAlignment(Pos.CENTER_LEFT);
+                eachBuilding.setPrefWidth(300);
+                listOfBuildings.getChildren().add(eachBuilding);
+            }
+        }
+
+        listOfBuildings.setStyle("-fx-background-color: #212121;");
+        ScrollPane scrollPane = new ScrollPane(listOfBuildings);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPrefWidth(300);
         scrollPane.setLayoutX(1066);
         scrollPane.setLayoutY(30);
         scrollPane.setMaxHeight(738);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
 
         cityPopup.getContent().add(scrollPane);
@@ -1092,6 +1467,8 @@ public class GamePlayController extends ViewController {
 
         cityPopup.getContent().add(cityName);
 
+        //right-box: list of buildings
+        showListOfBuildings(city);
 
         //bottom-left box
         showProductBox(city);
@@ -1243,6 +1620,26 @@ public class GamePlayController extends ViewController {
                         }
                     }
                 });
+                graphicalMap[i][j].getFogOfWarImageView().setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.unitSetPath(finalI, finalJ, selection);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    unitMovement.setText("Movement: " + unit.getMP());
+                    for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
+                        for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
+                            graphicalMap[k][l].getFogOfWarImageView().setOnMouseClicked(null);
+                        }
+                    }
+                });
+                graphicalMap[i][j].getLandFeatureImageView().setOnMouseClicked(mouseEvent1 -> {
+                    String message = UnitController.unitSetPath(finalI, finalJ, selection);
+                    showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                    unitMovement.setText("Movement: " + unit.getMP());
+                    for (int k = 0; k < Consts.MAP_SIZE.amount.x; k++) {
+                        for (int l = 0; l < Consts.MAP_SIZE.amount.y; l++) {
+                            graphicalMap[k][l].getLandFeatureImageView().setOnMouseClicked(null);
+                        }
+                    }
+                });
             }
         }
     }
@@ -1289,10 +1686,21 @@ public class GamePlayController extends ViewController {
         String message = GameController.nextPlayerTurn();
         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
 
+        hideUnitPopup();
         updateWholeMap();
         updateTechnologyBox();
         updateCurrencyBar();
     }
+
+    public void hideUnitPopup() {
+        GameController.setSelectedCivilizedUnit(null);
+        GameController.setSelectedCombatUnit(null);
+        unitPopup.hide();
+    }
+
+//    public static void main(String[] args) {
+//        System.out.println(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+//    }
 
 
 }

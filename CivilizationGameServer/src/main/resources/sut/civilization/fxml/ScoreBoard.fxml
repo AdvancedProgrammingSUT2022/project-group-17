@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/ScoreBoard.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.ScoreBoardController">
+   <center>
+      <VBox fx:id="scoreBoardTable" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10" stylesheets="@../StyleSheet/ScoreBoard.css" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <top>
+      <BorderPane prefHeight="33.0" prefWidth="1080.0" BorderPane.alignment="CENTER">
+         <center>
+            <Label id="title" text="Score Board" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </Label>
+         </center>
+         <left>
+            <Button mnemonicParsing="false" text="back" BorderPane.alignment="CENTER" onMouseClicked="#backToMainMenu" alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="10.0" top="10.0"/>
+               </BorderPane.margin>
+            </Button>
+         </left>
+      </BorderPane>
+   </top>
+</BorderPane>

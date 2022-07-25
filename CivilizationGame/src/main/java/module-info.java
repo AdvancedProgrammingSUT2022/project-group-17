@@ -4,6 +4,8 @@ open module sut.civilization {
     requires javafx.controls;
     requires javafx.graphics;
     requires com.google.gson;
+    requires java.datatransfer;
+    requires java.desktop;
 
     exports sut.civilization.Model.Classes;
 
