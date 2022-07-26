@@ -7,12 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Civilization" />
-        <module name="CivilizationGame" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Civilization" target="11" />
-      <module name="CivilizationGame" target="11" />
+      <module name="CivilizationGame" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
