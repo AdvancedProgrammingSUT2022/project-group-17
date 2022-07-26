@@ -20,6 +20,7 @@ public class Nation {
     protected HashMap<ResourceType,Integer> resourceCellar = new HashMap<>();
     protected HashMap<TechnologyType,Boolean> technologies = new HashMap<>();
     protected HashMap<BuildingType,Boolean> buildings = new HashMap<>();
+    protected HashMap<String, String> trade = new HashMap<>();
 
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
@@ -34,6 +35,8 @@ public class Nation {
 
     protected TechnologyType inProgressTechnology = null;
     protected int technologyTurns;
+
+    protected ArrayList<Nation> nationsAtWar = new ArrayList<>();
 
 
     public Nation (NationType nationType){
@@ -229,5 +232,25 @@ public class Nation {
 
     public void resetNextTechnologies(){
         this.nextTechnologies.clear();
+    }
+
+    public ArrayList<Nation> getNationsAtWar() {
+        return nationsAtWar;
+    }
+
+    public void addAtWarNation(Nation nation){
+        nationsAtWar.add(nation);
+    }
+
+    public void removeAtWarNation(Nation nation){
+        nationsAtWar.remove(nation);
+    }
+
+    public HashMap<String, String> getTrade() {
+        return trade;
+    }
+
+    public void putTrade(String key, String value){
+        trade.put(key, value);
     }
 }

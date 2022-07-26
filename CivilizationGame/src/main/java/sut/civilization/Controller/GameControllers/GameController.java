@@ -89,6 +89,14 @@ public class GameController extends Controller {
         Game.instance.getPlayersInGame().get(playerNum).setNation(nation);
     }
 
+    public static ResourceType getResourceType(String name){
+        for (ResourceType resourceType : ResourceType.values()) {
+            if (resourceType.name.equals(name))
+                return resourceType;
+        }
+        return null;
+    }
+
     public ArrayList<String> showResearches() {
         ArrayList<String> output = new ArrayList<>();
         output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s technologies:");
