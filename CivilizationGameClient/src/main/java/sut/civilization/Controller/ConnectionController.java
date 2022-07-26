@@ -18,8 +18,9 @@ public class ConnectionController {
 
     public void initConnection() {
         try {
+            //192.168.204.133
             this.clientSocket = new Socket("localhost",7090);
-            this.serverReaderSocket = new Socket("localHost",7090);
+            this.serverReaderSocket = new Socket("localhost",7090);
 
             this.clientHandleStream = new Pair<>(new DataInputStream(clientSocket.getInputStream()),new DataOutputStream(clientSocket.getOutputStream()));
 

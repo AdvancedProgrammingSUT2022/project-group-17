@@ -14,6 +14,7 @@ public class CivilizedUnit extends Unit {
         super(civilizedUnitType.name, civilizedUnitType.cost, civilizedUnitType.MP, civilizedUnitType.resourceType,
                 civilizedUnitType.technologyType, civilizedUnitType.hp,ownerNation, location);
         this.civilizedUnitType = civilizedUnitType;
+        turnsLeft = civilizedUnitType.turns;
     }
 
     public CivilizedUnitType getCivilizedUnitType() {

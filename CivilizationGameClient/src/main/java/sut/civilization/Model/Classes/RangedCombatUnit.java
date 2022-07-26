@@ -11,6 +11,7 @@ public class RangedCombatUnit extends CombatUnit {
                 rangedCombatUnitType.hp,ownerNation, location);
         this.rangedStrength = rangedCombatUnitType.rangedStrength;
         this.rangedCombatUnitType = rangedCombatUnitType;
+        turnsLeft = rangedCombatUnitType.turns;
     }
 
     public int getCombatStrength() {
