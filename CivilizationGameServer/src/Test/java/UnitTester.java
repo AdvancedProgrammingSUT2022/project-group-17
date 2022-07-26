@@ -186,14 +186,14 @@
 //    public void PurchaseUnitCivilized(){
 //
 //        commandMatcher = UnitCommands.getMatcher("purchase a Worker unit with type civilized unit",UnitCommands.PURCHASE_UNIT);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Civilized unit purchased successfully",unitController.purchaseUnit(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Civilized unit purchased successfully",unitController.purchaseProduct(commandMatcher));
 //    }
 //
 //    @Test
 //    public void PurchaseUnitCloseCombatUnit(){
 //
 //        commandMatcher = UnitCommands.getMatcher("purchase a Knight unit with type close combat unit",UnitCommands.PURCHASE_UNIT);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Close combat unit purchased successfully",unitController.purchaseUnit(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Close combat unit purchased successfully",unitController.purchaseProduct(commandMatcher));
 //    }
 //
 //    @Test
@@ -201,14 +201,14 @@
 //
 //
 //        commandMatcher = UnitCommands.getMatcher("purchase a Archer unit with type ranged combat unit",UnitCommands.PURCHASE_UNIT);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Ranged combat unit purchased successfully",unitController.purchaseUnit(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Ranged combat unit purchased successfully",unitController.purchaseProduct(commandMatcher));
 //    }
 //
 //    @Test
 //    public void CreateUnitCivilized(){
 //
 //        commandMatcher = UnitCommands.getMatcher("create a Worker unit with type civilized unit",UnitCommands.CREATE_UNIT);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Civilized unit is set for creation successfully",unitController.unitStartCreation(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Civilized unit is set for creation successfully",unitController.productStartCreation(commandMatcher));
 //        city.setHasAnInProgressUnit(false);
 //    }
 //
@@ -218,7 +218,7 @@
 //        commandMatcher = UnitCommands.getMatcher("create a Knight unit with type close combat unit",UnitCommands.CREATE_UNIT);
 //        nation.addResource(ResourceType.HORSE);
 //        nation.addTechnology(TechnologyType.CHIVALRY);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Close combat unit is set for creation successfully",unitController.unitStartCreation(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Close combat unit is set for creation successfully",unitController.productStartCreation(commandMatcher));
 //        city.setHasAnInProgressUnit(false);
 //
 //    }
@@ -228,7 +228,7 @@
 //
 //        commandMatcher = UnitCommands.getMatcher("create a Archer unit with type ranged combat unit",UnitCommands.CREATE_UNIT);
 //        nation.addTechnology(TechnologyType.ARCHERY);
-//        if (commandMatcher.matches()) Assertions.assertEquals("Ranged combat unit is set for creation successfully",unitController.unitStartCreation(commandMatcher));
+//        if (commandMatcher.matches()) Assertions.assertEquals("Ranged combat unit is set for creation successfully",unitController.productStartCreation(commandMatcher));
 //        city.setHasAnInProgressUnit(false);
 //
 //    }
@@ -236,7 +236,7 @@
 //    public void CreateUnitPlacingInMap(){
 //        city.setInProgressCivilizedUnit(CivilizedUnitType.WORKER);
 //        city.setInProgressCloseCombatUnit(CloseCombatUnitType.KNIGHT);
-//        UnitController.unitCreate(city);
+//        UnitController.ProductCreate(city);
 //        LandController.printMap(Game.instance.map);
 //        Assertions.assertEquals(CloseCombatUnitType.KNIGHT.name+CivilizedUnitType.WORKER.name,Game.instance.map[2][3].getCombatUnit().getName() + Game.instance.map[2][3].getCivilizedUnit().getName());
 //

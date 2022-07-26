@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sut.civilization.Controller.ConnectionController;
@@ -38,7 +39,6 @@ public class Civilization extends Application {
         });
         stage.setTitle("Civilization V");
         stage.show();
-
     }
 
     public static void main(String[] args) {

@@ -1,13 +1,9 @@
 package sut.civilization.Transitions;
 
-import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import sut.civilization.Model.Classes.Game;

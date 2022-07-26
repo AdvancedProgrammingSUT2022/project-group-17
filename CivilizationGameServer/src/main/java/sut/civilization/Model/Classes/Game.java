@@ -2,20 +2,20 @@ package sut.civilization.Model.Classes;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import sut.civilization.Civilization;
 import sut.civilization.Enums.Menus;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Scanner;
 
 
 public class Game {
@@ -92,12 +92,11 @@ public class Game {
     public ArrayList<User> readUserListFromDatabase() {
         String json = null;
         try {
-            json = new String(Files.readAllBytes(Paths.get("src/main/resources/sut/civilization/DataBase/Users.json")));
+            json = new String(Files.readAllBytes(Paths.get("src/main/resources/sut/civilization/DataBase/Users.xml")));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        users = new Gson().fromJson(json, new TypeToken<ArrayList<User>>() {
-        }.getType());
+        users = (ArrayList<User>) new XStream().fromXML(json);
         if (users == null) return new ArrayList<>();
 
         for (User user : users) {
@@ -107,24 +106,14 @@ public class Game {
         return users;
     }
 
-    public ServerDataBase loadServerDataBase() {
-        String json = null;
-        try {
-            json = new String(Files.readAllBytes(Paths.get("src/main/resources/sut/civilization/DataBase/ServerDatabase.json")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new Gson().fromJson(json,ServerDataBase.class);
-    }
-
     public void saveUserDatabase() {
         try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/Users.json");
-            fileWriter.write(new Gson().toJson(Game.instance.getUsers()));
+            FileWriter fileWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/Users.xml");
+            fileWriter.write(new XStream().toXML(Game.instance.getUsers()));
             fileWriter.close();
             if (ServerDataBase.getInstance() != null){
-                FileWriter secondWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/ServerDatabase.json");
-                secondWriter.write(new Gson().toJson(ServerDataBase.getInstance()));
+                FileWriter secondWriter = new FileWriter("src/main/resources/sut/civilization/DataBase/ServerDatabase.xml");
+                secondWriter.write(new XStream().toXML(ServerDataBase.getInstance()));
                 secondWriter.close();
             }
         } catch (IOException exception) {
@@ -180,5 +169,38 @@ public class Game {
         Game.instance.fxmlLoader = fxmlLoader;
     }
 
+    public void saveGame(){
+        try{
+            File directory = new File("src/main/resources/sut/civilization/DataBase/saves");
+            FileOutputStream file = new FileOutputStream("src/main/resources/sut/civilization/DataBase/saves/gameSave" + Objects.requireNonNull(directory.list()).length+ ".json");
+            DataOutputStream dataOutputStream = new DataOutputStream(file);
+            dataOutputStream.writeBytes(new XStream().toXML(Game.instance));
+            dataOutputStream.flush();
 
+        } catch (Exception e) {
+            System.out.println("cannot save game !");
+            e.printStackTrace();
+        }
+    }
+
+    public void loadGame(String filename){
+        File file = new File("src/main/resources/sut/civilization/DataBase/saves/" + filename);
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Game.instance = (Game) new XStream().fromXML(scanner.nextLine());
+    }
+
+    public ServerDataBase loadServerDataBase() {
+        String json = null;
+        try {
+            json = new String(Files.readAllBytes(Paths.get("src/main/resources/sut/civilization/DataBase/ServerDatabase.xml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return (ServerDataBase) new XStream().fromXML(json);
+    }
 }

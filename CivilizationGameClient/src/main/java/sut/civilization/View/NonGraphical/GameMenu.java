@@ -50,11 +50,11 @@ public class GameMenu extends Menu {
         } else if ((commandMatcher = GameCommands.getMatcher(input, GameCommands.SELECT_CITY)).matches()) {
             System.out.println(gameController.selectCity(commandMatcher));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CIVILIZED_UNIT_MOVE_TO)).matches()){
-            System.out.println(unitController.unitSetPath(commandMatcher, 0));
+            System.out.println(UnitController.unitSetPath(Integer.parseInt(commandMatcher.group("x")), Integer.parseInt(commandMatcher.group("y")), 0));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.COMBAT_UNIT_MOVE_TO)).matches()){
-            System.out.println(unitController.unitSetPath(commandMatcher, 1));
+            System.out.println(UnitController.unitSetPath(Integer.parseInt(commandMatcher.group("x")), Integer.parseInt(commandMatcher.group("y")), 1));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUILD_CITY)).matches()) {
-            System.out.println(cityController.buildCity(commandMatcher));
+            System.out.println(cityController.buildCity(commandMatcher.group("name")));
         } else if ((commandMatcher = CityCommands.getMatcher(input, CityCommands.BUY_LAND)).matches()) {
             System.out.println(cityController.cityBuyLand(commandMatcher));
         } else if((commandMatcher = CityCommands.getMatcher(input, CityCommands.SEND_CITIZEN)).matches()){
@@ -70,10 +70,10 @@ public class GameMenu extends Menu {
 
             // Improvements
         } else if ((commandMatcher = WorkerCommands.getMatcher(input, WorkerCommands.BUILD_IMPROVEMENT)).matches()) {
-            System.out.println(workerController.setWorkerToBuildImprovement(commandMatcher));
+            System.out.println(WorkerController.setWorkerToBuildImprovement(commandMatcher.group("name")));
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.REPAIR_IMPROVEMENT).matches()) {
-            System.out.println(workerController.setWorkerToRepair());
+            System.out.println(WorkerController.setWorkerToRepair());
 
         } else if (WorkerCommands.getMatcher(input, WorkerCommands.REMOVE_FEATURE).matches()) {
             System.out.println(workerController.setWorkerToRemoveFeature());
@@ -111,15 +111,17 @@ public class GameMenu extends Menu {
                 System.out.println(output);
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.UNIT_ATTACK)).matches()) {
-            System.out.println(unitController.unitSetCityTarget(commandMatcher));
+//            System.out.println(unitController.unitSetCityTarget(
+//                    Integer.parseInt(commandMatcher.group("x")), Integer.parseInt(commandMatcher.group("y"))
+//            ));
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.CREATE_UNIT)).matches()) {
-            System.out.println(unitController.unitStartCreation(commandMatcher));
+            System.out.println(unitController.productStartCreation(commandMatcher.group("type"), commandMatcher.group("name")));
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.PURCHASE_UNIT)).matches()){
-            System.out.println(unitController.purchaseUnit(commandMatcher));
+            System.out.println(unitController.purchaseProduct(commandMatcher.group("type"), commandMatcher.group("name")));
 
         } else if ((commandMatcher = TechnologyCommands.getMatcher(input, TechnologyCommands.ADD_TECHNOLOGY)).matches()) {
-            System.out.println(technologyController.addTechnology(commandMatcher));
+            System.out.println(TechnologyController.addTechnology(commandMatcher.group("type")));
 
         } else if (UnitCommands.getMatcher(input, UnitCommands.UNIT_SLEEP).matches()) {
             System.out.println(unitController.unitSleep());
@@ -128,7 +130,7 @@ public class GameMenu extends Menu {
             System.out.println(unitController.unitWake());
 
         } else if ((commandMatcher = UnitCommands.getMatcher(input, UnitCommands.COMBAT_UNIT_ACTION)).matches()) {
-            System.out.println(unitController.combatUnitAction(commandMatcher));
+            System.out.println(unitController.combatUnitAction(commandMatcher.group("action")));
 
         } else if (UnitCommands.getMatcher(input, UnitCommands.UNIT_DELETE).matches()) {
             System.out.println(unitController.unitDelete());

@@ -1,7 +1,5 @@
 package sut.civilization.Model.ModulEnums;
 
-import sut.civilization.Model.Classes.Nation;
-
 public enum NationType {
     FRANCE("France","Napoleon"),
     MAYA("Maya", "Pacal"),
@@ -31,5 +29,12 @@ public enum NationType {
                 return value;
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "NationType{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

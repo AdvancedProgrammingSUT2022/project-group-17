@@ -1,19 +1,16 @@
 package sut.civilization.View.Graphical;
 
+import com.thoughtworks.xstream.XStream;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import sut.civilization.Controller.ConnectionController;
 import sut.civilization.Enums.Menus;
@@ -51,10 +48,11 @@ public class ScoreBoardController extends ViewController {
         }
 
         User temp;
-        ArrayList<String> userNames = (ArrayList<String>) response.getDataToken("userNames");
-        Map<String, String> avatarLocations = (Map <String,String>) response.getDataToken("avatarLocations");
-        Map<String, Double> scores = (Map<String,Double>) response.getDataToken("scores");
-        Map<String, Double> lastWins = (Map<String,Double>) response.getDataToken("lastWins");
+        ArrayList<String> userNames = (ArrayList<String>) new XStream().fromXML((String) response.getDataToken("userNames"));
+        HashMap<String, String> avatarLocations = (HashMap<String,String>) new XStream().fromXML((String) response.getDataToken("avatarLocations"));
+        HashMap<String, Integer> scores = (HashMap<String,Integer>) new XStream().fromXML((String) response.getDataToken("scores"));
+        HashMap<String, Long> lastWins = (HashMap<String,Long>) new XStream().fromXML((String) response.getDataToken("lastWins"));
+
         if (userNames != null) {
             for (String userName : userNames) {
                 if ((temp = getUserByName(userName)) != null) {
@@ -63,19 +61,16 @@ public class ScoreBoardController extends ViewController {
             }
         }
 
-
         for (User user : Game.instance.getUsers()) {
             if (avatarLocations.get(user.getUsername()) != null)
                 user.setAvatarLocation(avatarLocations.get(user.getUsername()));
 
             if (scores.get(user.getUsername()) != null){
-                int kooft = (int) Math.floor(scores.get(user.getUsername()));
-                user.setScore(kooft);
+                user.setScore( scores.get(user.getUsername()));
             }
 
             if (lastWins.get(user.getUsername()) != null){
-                int kooft = (int) Math.floor(lastWins.get(user.getUsername()));
-                user.setLastWinTime(kooft);
+                user.setLastWinTime(lastWins.get(user.getUsername()));
 
             }
         }

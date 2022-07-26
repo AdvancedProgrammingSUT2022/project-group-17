@@ -1,12 +1,8 @@
 package sut.civilization.Controller.GameControllers;
 
-import sut.civilization.Model.Classes.City;
-import sut.civilization.Model.Classes.Game;
-import sut.civilization.Model.Classes.Land;
+import sut.civilization.Enums.Consts;
+import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.LandType;
-import sut.civilization.Model.Classes.Nation;
-import sut.civilization.Model.Classes.Pair;
-import sut.civilization.Model.Classes.CombatUnit;
 import sut.civilization.Model.ModulEnums.CivilizedUnitType;
 
 import java.util.regex.Matcher;
@@ -15,24 +11,26 @@ import static sut.civilization.Model.Classes.Pair.isValid;
 
 public class CityController extends GameController {
 
-    public String buildCity(Matcher matcher){
-        int x = Integer.parseInt(matcher.group("x"));
-        int y = Integer.parseInt(matcher.group("y"));
-        String name = matcher.group("name");
+    public static String buildCity(String name){
+//        int x = Integer.parseInt(matcher.group("x"));
+//        int y = Integer.parseInt(matcher.group("y"));
+//        String name = matcher.group("name");
         if (currentTurnUser.getNation().getCities().size() > 0 && (selectedCivilizedUnit == null || !selectedCivilizedUnit.getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)))
             return "You need to select a settler first";
+        int x = selectedCivilizedUnit.getLocation().x;
+        int y = selectedCivilizedUnit.getLocation().y;
         Pair<Integer,Integer> main = new Pair<Integer,Integer>(x, y);
         if (isCityBuildable(main)){
-            City city = new City(currentTurnUser.getNation().getNationType(), name);
-            currentTurnUser.getNation().addCity(city);
             Land mainLand = Game.instance.map[x][y];
+            City city = new City(currentTurnUser.getNation(), name, mainLand);
+            currentTurnUser.getNation().addCity(city);
             mainLand.setCityCenter(true);
             mainLand.setOwnerCity(city);
             city.setMainLand(mainLand);
 
             Pair<Integer, Integer>[] neighbors = new Pair[6];
             for (int i = 0; i < 6; i++)
-                neighbors[i] = landController.getNeighborIndex(main, i);
+                neighbors[i] = LandController.getNeighborIndex(main, i);
             for (int i = 0; i < 6; i++) {
                 if (isValid(neighbors[i]))
                     Game.instance.map[neighbors[i].x][neighbors[i].y].setOwnerCity(city);
@@ -46,19 +44,19 @@ public class CityController extends GameController {
         return "Can't build a city here";
     }
 
-    public boolean isCityBuildable(Pair<Integer,Integer> main){
+    public static boolean isCityBuildable(Pair<Integer, Integer> main){
         if (!Game.instance.map[main.x][main.y].getLandType().isWalkable)
             return false;
 
         Pair<Integer,Integer>[] neighbors = new Pair[6];
         for (int i = 0; i < 6; i++)
-            neighbors[i] = landController.getNeighborIndex(main, i);
+            neighbors[i] = LandController.getNeighborIndex(main, i);
 
         for (int i = 0; i < 6; i++) {
             if (isValid(neighbors[i])){
                 Pair<Integer,Integer>[] neighbors2 = new Pair[6];
                 for (int j = 0; j < 6; j++)
-                    neighbors2[j] = landController.getNeighborIndex(neighbors[i], j);
+                    neighbors2[j] = LandController.getNeighborIndex(neighbors[i], j);
 
                 for (int j = 0; j < 6; j++) {
                     if (isValid(neighbors2[j])){
@@ -191,6 +189,39 @@ public class CityController extends GameController {
 
     }
 
+    public static void updateAffordableLands(){
+//        for (User user : Game.instance.getPlayersInGame()) {
+//            Nation nation = user.getNation();
+//            for (City city : nation.getCities()) {
+//                city.clearAffordableLands();
+//                for (int x = 0; x < Consts.MAP_SIZE.amount.x; x++){
+//                    for (int y = 0; y < Consts.MAP_SIZE.amount.y; y++){
+//
+//                        Pair<Integer,Integer> landPair = new Pair<Integer,Integer>(x, y);
+//                        Pair<Integer,Integer>[] neighbors = new Pair[6];
+//                        for (int i = 0 ; i<6 ; i++)
+//                            neighbors[i] = LandController.getNeighborIndex(landPair, i);
+//
+//                        boolean canBuy = false;
+//                        for (int i = 0; i < 6; i++) {
+//                            if (Pair.isValid(neighbors[i])){
+//                                if (Game.instance.map[neighbors[i].x][neighbors[i].y].getOwnerCity() != null && Game.instance.map[neighbors[i].x][neighbors[i].y].getOwnerCity().equals(city)){
+//                                    canBuy = true;
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                        Land land = Game.instance.map[x][y];
+//                        if (city.getOwnerNation().getCoin().getBalance() >= land.getCost()
+//                                && canBuy && land.isBuyable()){
+//                            city.addAffordableLand(land);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+
     public static void cityDeath(City city){
         Nation nation = city.getOwnerNation();
         nation.removeCity(city);
@@ -208,7 +239,7 @@ public class CityController extends GameController {
 
     public static void cityTakeOver(City city, Nation nextNation){
         Nation previousNation = city.getOwnerNation();
-        city.setOwnerNation(nextNation.getNationType());
+        city.setOwnerNation(nextNation);
         previousNation.removeCity(city);
         nextNation.getHappiness().addBalance(-10);
     }

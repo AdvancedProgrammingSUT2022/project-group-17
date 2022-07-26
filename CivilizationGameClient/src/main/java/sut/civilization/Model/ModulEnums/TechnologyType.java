@@ -13,22 +13,22 @@ public enum TechnologyType {
     ARCHERY("Archery", 35, new TechnologyType[]{AGRICULTURE}, null, null, null),
     MINING("Mining", 35, new TechnologyType[]{AGRICULTURE}, null, null, null),
     //3
-    BRONZE_WORKING("Bronze Working", 55, new TechnologyType[]{MINING}, null, null, null),
+    WRITING("Writing", 55, new TechnologyType[]{POTTERY}, null, null, null),
     CALENDAR("Calendar", 70, new TechnologyType[]{POTTERY}, null, null, null),
-    MASONRY("Masonry", 55, new TechnologyType[]{MINING}, null, null, null),
     THE_WHEEL("The Wheel", 55, new TechnologyType[]{ANIMAL_HUSBANDRY}, null, null, null),
     TRAPPING("Trapping", 55, new TechnologyType[]{ANIMAL_HUSBANDRY}, null, null, null),
-    WRITING("Writing", 55, new TechnologyType[]{POTTERY}, null, null, null),
+    MASONRY("Masonry", 55, new TechnologyType[]{MINING}, null, null, null),
+    BRONZE_WORKING("Bronze Working", 55, new TechnologyType[]{MINING}, null, null, null),
     //4
-    CONSTRUCTION("Construction", 100, new TechnologyType[]{MASONRY}, null, null, null),
-    HORSEBACK_RIDING("Horseback Riding", 100, new TechnologyType[]{THE_WHEEL}, null, null, null),
-    IRON_WORKING("Iron Working", 150, new TechnologyType[]{BRONZE_WORKING}, null, null, null),
-    MATHEMATICS("Mathematics", 100, new TechnologyType[]{THE_WHEEL, ARCHERY}, null, null, null),
     PHILOSOPHY("Philosophy", 100, new TechnologyType[]{WRITING}, null, null, null),
+    HORSEBACK_RIDING("Horseback Riding", 100, new TechnologyType[]{THE_WHEEL}, null, null, null),
+    MATHEMATICS("Mathematics", 100, new TechnologyType[]{THE_WHEEL, ARCHERY}, null, null, null),
+    CONSTRUCTION("Construction", 100, new TechnologyType[]{MASONRY}, null, null, null),
+    IRON_WORKING("Iron Working", 150, new TechnologyType[]{BRONZE_WORKING}, null, null, null),
     //5
     CIVIL_SERVICE("Civil Service", 400, new TechnologyType[]{PHILOSOPHY, TRAPPING}, null, null, null),
-    CURRENCY("Currency", 250, new TechnologyType[]{MATHEMATICS}, null, null, null),
     THEOLOGY("Theology", 250, new TechnologyType[]{CALENDAR, PHILOSOPHY}, null, null, null),
+    CURRENCY("Currency", 250, new TechnologyType[]{MATHEMATICS}, null, null, null),
     ENGINEERING("Engineering", 250, new TechnologyType[]{MATHEMATICS, CONSTRUCTION}, null, null, null),
     METAL_CASTING("Metal Casting", 240, new TechnologyType[]{IRON_WORKING}, null, null, null),
     //6
@@ -38,18 +38,18 @@ public enum TechnologyType {
     PHYSICS("Physics", 440, new TechnologyType[]{ENGINEERING, METAL_CASTING}, null, null, null),
     STEEL("Steel", 440, new TechnologyType[]{METAL_CASTING}, null, null, null),
     //7
-    ACOUSTICS("Acoustics", 650, new TechnologyType[]{EDUCATION}, null, null, null),
     BANKING("Banking", 650, new TechnologyType[]{EDUCATION, CHIVALRY}, null, null, null),
-    GUNPOWDER("Gunpowder", 680, new TechnologyType[]{PHYSICS, STEEL}, null, null, null),
+    ACOUSTICS("Acoustics", 650, new TechnologyType[]{EDUCATION}, null, null, null),
     PRINTING_PRESS("Printing Press", 650, new TechnologyType[]{MACHINERY, PHYSICS}, null, null, null),
+    GUNPOWDER("Gunpowder", 680, new TechnologyType[]{PHYSICS, STEEL}, null, null, null),
     //8
     ECONOMICS("Economics", 900, new TechnologyType[]{BANKING, PRINTING_PRESS}, null, null, null),
     CHEMISTRY("Chemistry", 900, new TechnologyType[]{GUNPOWDER}, null, null, null),
     METALLURGY("Metallurgy", 900, new TechnologyType[]{GUNPOWDER}, null, null, null),
     //9
     ARCHAEOLOGY("Archaeology", 1300, new TechnologyType[]{ACOUSTICS}, null, null, null),
-    FERTILIZER("Fertilizer", 1300, new TechnologyType[]{CHEMISTRY}, null, null, null),
     MILITARY_SCIENCE("Military Science", 1300, new TechnologyType[]{ECONOMICS, CHEMISTRY}, null, null, null),
+    FERTILIZER("Fertilizer", 1300, new TechnologyType[]{CHEMISTRY}, null, null, null),
     RIFLING("Rifling", 1425, new TechnologyType[]{METALLURGY}, null, null, null),
     SCIENTIFIC_THEORY("Scientific Theory", 1300, new TechnologyType[]{ACOUSTICS}, null, null, null),
     //10

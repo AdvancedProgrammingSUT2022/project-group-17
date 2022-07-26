@@ -2,11 +2,10 @@ package sut.civilization.Model.Classes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ServerDataBase {
     private static ServerDataBase instance;
-    private final HashMap<String, ArrayList<Request>> addFriendRequestTree;
+    private HashMap<String, ArrayList<Request>> addFriendRequestTree;
     private ServerDataBase(){
         this.addFriendRequestTree = new HashMap<>();
     }
@@ -22,6 +21,8 @@ public class ServerDataBase {
     }
 
     public HashMap<String, ArrayList<Request>> getAddFriendRequestTree() {
+        if (this.addFriendRequestTree == null) this.addFriendRequestTree = new HashMap<>();
+
         return addFriendRequestTree;
     }
     public void addFriendRequest(String userName,Request request) {

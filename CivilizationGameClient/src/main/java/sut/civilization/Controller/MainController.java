@@ -9,7 +9,6 @@ import sut.civilization.View.NonGraphical.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.regex.Matcher;
 
 public class MainController extends Controller{

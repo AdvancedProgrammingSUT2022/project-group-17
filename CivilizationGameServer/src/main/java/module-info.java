@@ -4,6 +4,9 @@ open module sut.civilization {
     requires javafx.controls;
     requires javafx.graphics;
     requires com.google.gson;
+    requires java.datatransfer;
+    requires java.desktop;
+    requires xstream;
 
     exports sut.civilization.Model.Classes;
 
@@ -18,4 +21,5 @@ open module sut.civilization {
     exports sut.civilization.Enums;
 
     exports sut.civilization;
+
 }

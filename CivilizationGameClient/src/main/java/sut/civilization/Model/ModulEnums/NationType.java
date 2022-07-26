@@ -22,4 +22,19 @@ public enum NationType {
         this.nationImageAddress = "/sut/civilization/Images/nations/" + name + ".png";
         this.leaderImageAddress = "/sut/civilization/Images/nations/" + leaderName + ".png";
     }
+
+    public static NationType getNationTypeByName(String name){
+        for (NationType value : NationType.values()) {
+            if (value.name.equals(name))
+                return value;
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "NationType{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

@@ -18,6 +18,8 @@ public class User {
 
     private ArrayList<String> friendsUserNames;
 
+
+
     public User(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
@@ -28,11 +30,13 @@ public class User {
         this.avatarLocation = "sut/civilization/Images/Avatars/(2).png";
         this.chats = new ArrayList<>();
         this.friendsUserNames = new ArrayList<>();
+
     }
 
     public boolean isOnline() {
         return isOnline;
     }
+
     public void setOnline(boolean online) {
         isOnline = online;
     }
@@ -51,6 +55,15 @@ public class User {
 
     public void setLastTimeOnline(Date lastTimeOnline) {
         this.lastTimeOnline = lastTimeOnline;
+    }
+
+    public ArrayList<String> getFriendsUserNames() {
+        if (friendsUserNames == null) friendsUserNames = new ArrayList<>();
+        return friendsUserNames;
+    }
+
+    public void setFriendsUserNames(ArrayList<String> friendsUserNames) {
+        this.friendsUserNames = friendsUserNames;
     }
 
     public long getLastWinTime() {
@@ -106,26 +119,16 @@ public class User {
         return nation;
     }
 
-    public void setChats(ArrayList<Chat> chats) {
-        this.chats = chats;
-    }
-
-    public ArrayList<String> getFriendsUserNames() {
-        return friendsUserNames;
-    }
-
-    public void setFriendsUserNames(ArrayList<String> friendsUserNames) {
-        this.friendsUserNames = friendsUserNames;
-    }
-
     public void setScore(int score) {
         this.score = score;
     }
 
     @Override
-    //you can change this as you wish
     public String toString() {
-        return nickname + " : " + score;
+        return "User{" +
+                "username='" + username + '\'' +
+                ", nation=" + nation +
+                '}';
     }
 
     @Override

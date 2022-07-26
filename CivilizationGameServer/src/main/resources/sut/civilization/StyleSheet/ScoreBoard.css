@@ -29,6 +29,7 @@ Label {
 .imageView{
     -fx-border-radius: 50;
     -fx-border-color: black;
+    -fx-cursor: hand;
 }
 
 #title{
