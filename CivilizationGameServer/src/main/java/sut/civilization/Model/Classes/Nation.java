@@ -9,6 +9,7 @@ import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Nation {
 
@@ -20,6 +21,7 @@ public class Nation {
     protected HashMap<ResourceType,Integer> resourceCellar = new HashMap<>();
     protected HashMap<TechnologyType,Boolean> technologies = new HashMap<>();
     protected HashMap<BuildingType,Boolean> buildings = new HashMap<>();
+    protected HashMap<String, String> trade = new HashMap<>();
 
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
@@ -46,6 +48,9 @@ public class Nation {
         this.getHappiness().setBalance(100);
         this.getCoin().setBalance(100);
         this.getScience().setBalance(200);
+        //FixMe please delete the fallowing two lines :
+        this.resourceCellar.put(ResourceType.BANANA,10);
+        this.resourceCellar.put(ResourceType.IRON,10);
     }
 
     public void initializeTechnologies() {
@@ -139,12 +144,20 @@ public class Nation {
         this.capital = capital;
     }
 
-    public void setFriends(ArrayList<Nation> friends) {
-        this.friends = friends;
+    public void addFriend(Nation friend) {
+        this.friends.add(friend);
     }
 
-    public void setEnemies(ArrayList<Nation> enemies) {
-        this.enemies = enemies;
+    public void removeFriend(Nation friend) {
+        this.friends.remove(friend);
+    }
+
+    public void addEnemy(Nation enemy) {
+        this.enemies.add(enemy);
+    }
+
+    public void removeEnemy(Nation enemy) {
+        this.enemies.remove(enemy);
     }
 
     public void setNationType(NationType nationType) {
@@ -232,6 +245,14 @@ public class Nation {
         this.nextTechnologies.clear();
     }
 
+    public HashMap<String, String> getTrade() {
+        return trade;
+    }
+
+    public void putTrade(String key, String value){
+        trade.put(key, value);
+    }
+
     @Override
     public String toString() {
         return "Nation{" +
@@ -240,9 +261,11 @@ public class Nation {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        Nation target = (Nation) obj;
-
-        return target.getNationType().name.equals(this.nationType.name);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Nation nation = (Nation) o;
+        return nationType.name.equals(nation.nationType.name);
     }
+
 }

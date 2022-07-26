@@ -292,7 +292,7 @@ public class RequestHandler extends Thread {
         if (request.getHeader().equals("getOnlineUsers")){
             ArrayList<User> users = new ArrayList<>();
             for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
-                if (connectedUser.ownerUser.isOnline())
+                if (connectedUser.ownerUser != null && connectedUser.ownerUser.isOnline())
                     users.add(connectedUser.ownerUser);
 
             }

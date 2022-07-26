@@ -21,10 +21,6 @@ public class User {
     public enum GameState {NA, WIN, LOSE}
     private GameState gameState = GameState.NA;
 
-
-
-
-
     public User(String username, String password, String nickname) {
         this.username = username;
         this.password = password;

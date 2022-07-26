@@ -33,6 +33,9 @@ public class NationController extends GameController {
 
     public static String sendTradeRequest(ResourceType resourceType, int amount, Nation nation2) {
         Nation nation1 = currentTurnUser.getNation();
+        System.out.println("nation 1 : " + nation1);
+        System.out.println("nation 2 : " + nation2);
+
         if (nation2.getTrade().containsKey("nation"))
             return "This nation is already trading with a nation";
         if (nation1.getResourceCellar().get(resourceType) < amount)
