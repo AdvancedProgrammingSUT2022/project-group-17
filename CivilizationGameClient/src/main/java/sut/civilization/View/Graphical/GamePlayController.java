@@ -87,7 +87,7 @@ public class GamePlayController extends ViewController {
 
         updateTechnologyBox();
         updateCurrencyBar();
-        infoPopup.setHideOnEscape(false);
+//        infoPopup.setHideOnEscape(false);
     }
 
     public void showInfoPanel(HBox[] eachUnitHBox) {
