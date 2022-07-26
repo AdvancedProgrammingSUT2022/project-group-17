@@ -18,10 +18,8 @@ import java.util.regex.Matcher;
 public class WorkerController extends GameController {
 
     public static String setWorkerToBuildImprovement(String name) {
-
         if (Game.instance.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getOwnerCity() == null
-                || Game.instance.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getOwnerCity().getOwnerNation() !=
-                GameController.getCurrentTurnUser().getNation())
+                || !Game.instance.map[selectedCivilizedUnit.getLocation().x][selectedCivilizedUnit.getLocation().y].getOwnerCity().getOwnerNation().equals(GameController.getCurrentTurnUser().getNation()))
             return "You should work in your cities' lands";
 //        String name = matcher.group("name");
         ImprovementType toBeBuiltImprovement = null;

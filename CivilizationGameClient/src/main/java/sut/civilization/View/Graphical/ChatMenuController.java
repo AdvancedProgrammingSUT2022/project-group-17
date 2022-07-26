@@ -91,7 +91,7 @@ public class ChatMenuController extends ViewController {
         allChats.getChildren().clear();
         int i = 0;
         for (User user : Game.instance.getUsers()){
-            if (user.getUsername().startsWith(search.getText()) && user != Game.instance.getLoggedInUser()) {
+            if (user.getUsername().startsWith(search.getText()) && user.equals(Game.instance.getLoggedInUser())) {
                 listAChatByUser(user, i);
                 i += 2;
             }
@@ -142,7 +142,7 @@ public class ChatMenuController extends ViewController {
             name = new Label(((ChatRoom) chat).getName());
         } else {
             image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png"));
-            if (chat.getUsers().get(0) == Game.instance.getLoggedInUser()) name = new Label(chat.getUsers().get(1).getUsername());
+            if (chat.getUsers().get(0).equals(Game.instance.getLoggedInUser())) name = new Label(chat.getUsers().get(1).getUsername());
             else name = new Label(chat.getUsers().get(0).getUsername());
         }
         ImageView avatar = new ImageView(image);
@@ -276,7 +276,7 @@ public class ChatMenuController extends ViewController {
             selectedMembersForGroup.clear();
             int i = 0;
             for (User user : Game.instance.getUsers()){
-                if (user.getUsername().startsWith(groupSearch.getText()) && user != Game.instance.getLoggedInUser()) {
+                if (user.getUsername().startsWith(groupSearch.getText()) && user.equals(Game.instance.getLoggedInUser())) {
                     searchMemberForGroup(user, groupMemberList, i);
                     i += 2;
                 }

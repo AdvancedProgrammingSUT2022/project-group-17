@@ -607,7 +607,7 @@ public class GamePlayController extends ViewController {
                         technologyImageHBox.setStyle("-fx-background-color: blue; -fx-background-radius: 100;");
                         for (VBox vBox : eachTechnology)
                             if (vBox.getChildren().get(0).getStyle().equals(technologyImageHBox.getStyle()) &&
-                                    vBox.getChildren().get(0) != technologyImageHBox)
+                                    !vBox.getChildren().get(0).equals(technologyImageHBox))
                                 vBox.getChildren().get(0).setStyle(null);
                         updateTechnologyBox();
                     }

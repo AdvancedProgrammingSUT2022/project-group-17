@@ -1,10 +1,8 @@
 package sut.civilization.Model.Classes;
 
-import javafx.scene.shape.Polygon;
-import sut.civilization.Model.ModulEnums.ImprovementType;
 import sut.civilization.Model.ModulEnums.LandType;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
 public class Land {
 
@@ -53,8 +51,8 @@ public class Land {
         this.visibility = 2;
     }
 
-    public void addGrowthToLandOwner(){
-        if (this.ownerCity != null && this.hasCitizen()){
+    public void addGrowthToLandOwner() {
+        if (this.ownerCity != null && this.hasCitizen()) {
             Nation landOwnerNation = this.ownerCity.getOwnerNation();
 
             landOwnerNation.getCoin().addGrowthRate(this.coinGrowth);
@@ -81,13 +79,17 @@ public class Land {
     public CivilizedUnit getCivilizedUnit() {
         for (User user : Game.instance.getPlayersInGame()) {
             for (Unit unit : user.getNation().getUnits()) {
-                if (unit.getLocation().x.equals(this.i) && unit.getLocation().y.equals(this.j) && unit instanceof CivilizedUnit){
+                if (unit.getLocation().x.equals(this.i) && unit.getLocation().y.equals(this.j) && unit instanceof CivilizedUnit) {
                     return (CivilizedUnit) unit;
                 }
             }
         }
 
         return null;
+    }
+
+    public void setCivilizedUnit(CivilizedUnit civilizedUnit) {
+        this.civilizedUnit = civilizedUnit;
     }
 
     public int getMP() {
@@ -102,24 +104,32 @@ public class Land {
         return improvement;
     }
 
+    public void setImprovement(Improvement improvement) {
+        this.improvement = improvement;
+    }
+
     public Improvement getRoute() {
         return route;
+    }
+
+    public void setRoute(Improvement route) {
+        this.route = route;
     }
 
     public boolean isCityCenter() {
         return isCityCenter;
     }
 
-    public void setRiver(int index, boolean value){
+    public void setCityCenter(boolean cityCenter) {
+        isCityCenter = cityCenter;
+    }
+
+    public void setRiver(int index, boolean value) {
         this.hasRiver[index] = value;
     }
 
     public boolean isBuyable() {
         return isBuyable;
-    }
-
-    public void setImprovement(Improvement improvement) {
-        this.improvement = improvement;
     }
 
     public LandFeature getLandFeature() {
@@ -131,6 +141,12 @@ public class Land {
     }
 
     public City getOwnerCity() {
+        for (User user : Game.instance.getPlayersInGame()) {
+            for (City city : user.getNation().getCities()) {
+                if (city.mainLand.getJ() == this.getJ() && city.mainLand.getI() == this.getI())
+                    return city;
+            }
+        }
         return ownerCity;
     }
 
@@ -138,14 +154,10 @@ public class Land {
         this.ownerCity = ownerCity;
     }
 
-    public void setCivilizedUnit(CivilizedUnit civilizedUnit) {
-        this.civilizedUnit = civilizedUnit;
-    }
-
     public CombatUnit getCombatUnit() {
         for (User user : Game.instance.getPlayersInGame()) {
             for (Unit unit : user.getNation().getUnits()) {
-                if (unit.getLocation().x.equals(this.i) && unit.getLocation().y.equals(this.j) && unit instanceof CombatUnit){
+                if (unit.getLocation().x.equals(this.i) && unit.getLocation().y.equals(this.j) && unit instanceof CombatUnit) {
                     return (CombatUnit) unit;
                 }
             }
@@ -160,6 +172,10 @@ public class Land {
 
     public boolean isAPartOfPath() {
         return isAPartOfPath;
+    }
+
+    public void setAPartOfPath(boolean APartOfPath) {
+        isAPartOfPath = APartOfPath;
     }
 
     public LandType getLandType() {
@@ -186,24 +202,12 @@ public class Land {
         this.hasRiver = hasRiver;
     }
 
-    public void setRoute(Improvement route) {
-        this.route = route;
-    }
-
     public Resource getResource() {
         return resource;
     }
 
     public void setResource(Resource resource) {
         this.resource = resource;
-    }
-
-    public void setAPartOfPath(boolean APartOfPath) {
-        isAPartOfPath = APartOfPath;
-    }
-
-    public void setCityCenter(boolean cityCenter) {
-        isCityCenter = cityCenter;
     }
 
     public void addFoodGrowth(int amount) {
@@ -243,12 +247,12 @@ public class Land {
         return i;
     }
 
-    public int getJ() {
-        return j;
-    }
-
     public void setI(int i) {
         this.i = i;
+    }
+
+    public int getJ() {
+        return j;
     }
 
     public void setJ(int j) {
@@ -261,5 +265,19 @@ public class Land {
 
     public void setRuin(Ruin ruin) {
         this.ruin = ruin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Land land = (Land) o;
+        return i == land.i && j == land.j;
+    }
+
+    @Override
+    public String toString() {
+        return "Land{= (" + i + "," + j + ")," +
+        "landType= " + landType + " }";
     }
 }

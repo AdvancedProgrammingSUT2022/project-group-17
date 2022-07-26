@@ -52,4 +52,11 @@ public enum LandType {
         this.resourceTypes = resourceTypes;
         this.isWalkable = isWalkable;
     }
+
+    @Override
+    public String toString() {
+        return "LandType{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

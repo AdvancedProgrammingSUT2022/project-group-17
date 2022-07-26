@@ -269,4 +269,11 @@ public class City {
     public void clearAffordableLands(){
         affordableLands.clear();
     }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "lands=" + lands +
+                '}';
+    }
 }

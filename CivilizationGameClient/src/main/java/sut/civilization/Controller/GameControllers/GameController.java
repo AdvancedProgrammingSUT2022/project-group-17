@@ -119,7 +119,7 @@ public class GameController extends Controller {
         output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s cities:");
         int i = 1;
         for (City city : currentTurnUser.getNation().getCities()) {
-            if (city == currentTurnUser.getNation().getCapital()) output.add("(*Capital) ");
+            if (city.equals(currentTurnUser.getNation().getCapital())) output.add("(*Capital) ");
             output.add(String.format("%d- %s\tArea Size: %d\tPopulation: %d", i, city.getName(), city.getLands().size(), city.getCitizens()));
             i++;
         }
@@ -373,10 +373,10 @@ public class GameController extends Controller {
     }
 
     private static void checkFortifying(Unit unit) {
-        if (unit.getUnitStatus() == UnitStatus.FORTIFY) {
+        if (unit.getUnitStatus().equals(UnitStatus.FORTIFY)) {
             if (unit.getHp() < 10)
                 unit.addHp(1);
-        } else if (unit.getUnitStatus() == UnitStatus.FORTIFY_UNTIL_HEAL) {
+        } else if (unit.getUnitStatus().equals(UnitStatus.FORTIFY_UNTIL_HEAL)) {
             if (unit.getHp() < 10)
                 unit.addHp(1);
             else {
@@ -407,8 +407,8 @@ public class GameController extends Controller {
             while (unit.getMP() > 0 && !unit.getPath().equals("") && unit.getPath() != null)
                 UnitController.unitGoForward(unit);
         } else {
-            if (unit.getUnitStatus() == UnitStatus.MOVING) unit.setUnitStatus(UnitStatus.AWAKE);
-            if (unit.getUnitStatus() == UnitStatus.ALERT || unit.getUnitStatus() == UnitStatus.ATTACKING)
+            if (unit.getUnitStatus().equals(UnitStatus.MOVING)) unit.setUnitStatus(UnitStatus.AWAKE);
+            if (unit.getUnitStatus().equals(UnitStatus.ALERT) || unit.getUnitStatus().equals(UnitStatus.ATTACKING))
                 unit.setUnitStatus(UnitStatus.AWAKE);
 //            if (unit.getUnitStatus() != UnitStatus.MOVING && unit.getUnitStatus() != UnitStatus.WORKING &&
 //                    unit.getUnitStatus() != UnitStatus.FORTIFY_UNTIL_HEAL && unit.getUnitStatus() != UnitStatus.SLEEP &&

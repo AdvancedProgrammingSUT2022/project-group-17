@@ -117,7 +117,7 @@ public class UnitController extends GameController {
         if (selectedUnit == null)
             return "select a unit first!";
 
-        if (selectedUnit.getUnitStatus() == UnitStatus.WORKING) return "The unit is busy now!";
+        if (selectedUnit.getUnitStatus().equals(UnitStatus.WORKING)) return "The unit is busy now!";
         Land origin = Game.instance.map[selectedUnit.getLocation().x][selectedUnit.getLocation().y];
         Land dest = Game.instance.map[x][y];
         int originNum = LandController.getLandNumber(origin);
@@ -182,7 +182,7 @@ public class UnitController extends GameController {
     public static String unitSleep() {
         Unit unit;
         if ((unit = selectedCivilizedUnit) != null || (unit = selectedCombatUnit) != null) {
-            if (unit.getUnitStatus() != UnitStatus.WORKING && unit.getUnitStatus() != UnitStatus.SLEEP) {
+            if (!unit.getUnitStatus().equals(UnitStatus.WORKING) && !unit.getUnitStatus().equals(UnitStatus.SLEEP)) {
                 unit.setUnitStatus(UnitStatus.SLEEP);
 //                unit.setWaitingForCommand(false);
                 return "Slept successfully!";

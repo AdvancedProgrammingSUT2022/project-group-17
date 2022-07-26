@@ -109,7 +109,7 @@ public class LandGraphical extends Polygon {
         });
 
 
-        if (land.getLandType() != LandType.OCEAN)
+        if (!land.getLandType().equals(LandType.OCEAN))
             pane.getChildren().add(this);
 
 
@@ -159,7 +159,7 @@ public class LandGraphical extends Polygon {
         if (land.getOwnerCity() != null) {
             cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getOwnerCity().getOwnerNation().getNationType().nationImageAddress)).toExternalForm()));
             landInfo.append("\nCity: ").append(land.getOwnerCity().name);
-            if (land != land.getOwnerCity().getMainLand()) {
+            if (!land.equals(land.getOwnerCity().getMainLand())) {
                 cityImageView.setOpacity(0.5);
                 cityImageView.setOnMouseClicked(null);
             }
