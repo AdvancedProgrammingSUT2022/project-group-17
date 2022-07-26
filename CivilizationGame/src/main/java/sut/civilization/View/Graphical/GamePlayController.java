@@ -240,22 +240,24 @@ public class GamePlayController extends ViewController {
                 resourceImage.setFitHeight(40);
                 Label resourceName = new Label(resourceType.name);
                 resourceName.setTextFill(WHITE);
+                resourceName.setPrefWidth(70);
                 Label resourceNumber = new Label(String.valueOf(
                         GameController.getCurrentTurnUser().getNation().getResourceCellar().get(resourceType)
                 ));
+                resourceNumber.setPrefWidth(50);
                 resourceNumber.setTextFill(WHITE);
                 resourceName.setStyle("-fx-label-padding: 0 10 0 0;");
                 resourceNumber.setStyle("-fx-label-padding: 0 10 0 0;");
                 TextField numberTextField = new TextField();
-                numberTextField.setPrefWidth(100);
-                HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber);
+                numberTextField.setPrefWidth(50);
+                HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber, numberTextField);
                 eachResource.setAlignment(Pos.CENTER_LEFT);
                 mySuppliesVBox.getChildren().add(eachResource);
             }
         }
         ScrollPane mySuppliesScrollPane = new ScrollPane(mySuppliesVBox);
         mySuppliesVBox.setPrefHeight(300);
-        mySuppliesVBox.setPrefWidth(200);
+        mySuppliesVBox.setPrefWidth(300);
         VBox myVBox = new VBox(myLeaderImage, mySuppliesScrollPane);
         myVBox.setMaxHeight(500);
         myVBox.setAlignment(Pos.CENTER);
