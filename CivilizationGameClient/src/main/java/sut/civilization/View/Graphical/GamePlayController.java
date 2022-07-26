@@ -1,6 +1,7 @@
 package sut.civilization.View.Graphical;
 
 import com.thoughtworks.xstream.XStream;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -1154,8 +1155,13 @@ public class GamePlayController extends ViewController {
                 eachUnit.setOnMouseClicked(mouseEvent1 -> {
                     String message = UnitController.purchaseProduct("civilized unit", civilizedUnitType.name);
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
-                    updateWholeMap();
-                    updateCurrencyBar();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateCurrencyBar();
+                            updateWholeMap();
+                        }
+                    });
                 });
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
@@ -1612,14 +1618,14 @@ public class GamePlayController extends ViewController {
         TechnologyType inProgressTechnology = null;
 
         if (getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation() != null)
-            inProgressTechnology = GameController.getCurrentTurnUser().getNation().getInProgressTechnology();
+            inProgressTechnology = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getInProgressTechnology();
 
         if (inProgressTechnology != null) {
             inProgressTechnologyName.setText(inProgressTechnology.name);
             inProgressTechnologyImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                     inProgressTechnology.imageAddress
             ))));
-            technologyProgressBar.setProgress(1 - ((double) GameController.getCurrentTurnUser().getNation().getTechnologyTurns() /
+            technologyProgressBar.setProgress(1 - ((double) getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getTechnologyTurns() /
                     (double) inProgressTechnology.turns));
         } else {
             inProgressTechnologyName.setText("No technology");
