@@ -10,7 +10,7 @@ public class CloseCombatUnit extends CombatUnit {
                 closeCombatUnitType.resourceType, closeCombatUnitType.technologyType, closeCombatUnitType.turns,
                 closeCombatUnitType.hp,ownerNation, location);
         this.closeCombatUnitType = closeCombatUnitType;
-
+        turnsLeft = closeCombatUnitType.turns;
     }
 
     public int getCombatStrength() {

@@ -11,6 +11,7 @@ public class Building {
 
     public Building(BuildingType buildingType){
         this.buildingType = buildingType;
+        turnsLeft = buildingType.initialTurns;
     }
 
     public BuildingType getBuildingType() {
