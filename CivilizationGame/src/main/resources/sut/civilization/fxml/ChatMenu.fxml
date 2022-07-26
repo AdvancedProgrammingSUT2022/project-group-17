@@ -6,33 +6,40 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="wholeBorderPane" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/ChatMenu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sut.civilization.View.Graphical.ChatMenuController">
+<BorderPane fx:id="wholeBorderPane" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../StyleSheet/ChatMenu.css"
+            xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sut.civilization.View.Graphical.ChatMenuController">
     <center>
-        <VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" BorderPane.alignment="BOTTOM_CENTER">
+        <VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity"
+              BorderPane.alignment="BOTTOM_CENTER">
             <children>
-            <VBox prefHeight="100.0" prefWidth="729.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </VBox>
-            <ScrollPane fx:id="messagesScrollPane" fitToWidth="true" hbarPolicy="NEVER" maxHeight="500.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="729.0" vvalue="1.0">
-               <content>
-                      <VBox fx:id="allMessages" alignment="BOTTOM_RIGHT" prefWidth="0.0" />
-               </content>
-            </ScrollPane>
+                <VBox prefHeight="100.0" prefWidth="729.0">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </VBox>
+                <ScrollPane fx:id="messagesScrollPane" fitToWidth="true" hbarPolicy="NEVER" maxHeight="500.0"
+                            nodeOrientation="RIGHT_TO_LEFT" prefWidth="729.0" vvalue="1.0">
+                    <content>
+                        <VBox fx:id="allMessages" alignment="BOTTOM_RIGHT" prefWidth="0.0"/>
+                    </content>
+                </ScrollPane>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                     <children>
-                  <TextArea fx:id="messageInput" maxHeight="-Infinity" minHeight="-Infinity" onKeyPressed="#sendByEnter" prefHeight="61.0" prefWidth="614.0" promptText="Write your message here..." wrapText="true">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="10.0" right="10.0" top="40.0" />
-                     </HBox.margin>
-                  </TextArea>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true">
+                        <TextArea fx:id="messageInput" maxHeight="-Infinity" minHeight="-Infinity"
+                                  onKeyPressed="#sendByEnter" prefHeight="61.0" prefWidth="614.0"
+                                  promptText="Write your message here..." wrapText="true">
                             <HBox.margin>
-                                <Insets left="20.0" top="20.0" />
+                                <Insets bottom="20.0" left="10.0" right="10.0" top="40.0"/>
+                            </HBox.margin>
+                        </TextArea>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#send" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <HBox.margin>
+                                <Insets left="20.0" top="20.0"/>
                             </HBox.margin>
                             <image>
-                                <Image url="@../Images/otherIcons/send.png" />
+                                <Image url="@../Images/otherIcons/send.png"/>
                             </image>
                         </ImageView>
                     </children>
@@ -44,37 +51,41 @@
         <HBox maxHeight="-Infinity" prefHeight="720.0" prefWidth="327.0">
             <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="58.0" style="border: black;">
                 <HBox.margin>
-                    <Insets />
+                    <Insets/>
                 </HBox.margin>
                 <children>
-                    <ImageView fitHeight="62.0" fitWidth="55.0" onMouseClicked="#BackToMainMenu" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="62.0" fitWidth="55.0" onMouseClicked="#BackToMainMenu" pickOnBounds="true"
+                               preserveRatio="true">
                         <image>
-                            <Image url="@../Images/otherIcons/back.png" />
+                            <Image url="@../Images/otherIcons/back.png"/>
                         </image>
                         <VBox.margin>
-                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                         </VBox.margin>
                     </ImageView>
-                    <Separator prefWidth="200.0" />
-                    <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#newGroup" pickOnBounds="true" preserveRatio="true">
+                    <Separator prefWidth="200.0"/>
+                    <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#newGroup"
+                               pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@../Images/otherIcons/public.png" />
+                            <Image url="@../Images/otherIcons/public.png"/>
                         </image>
                         <VBox.margin>
-                            <Insets left="5.0" right="5.0" top="5.0" />
+                            <Insets left="5.0" right="5.0" top="5.0"/>
                         </VBox.margin>
                     </ImageView>
-               <Label onMouseClicked="#newGroup" style="-fx-font-weight: bold;" text="New Group" textFill="#4219ab">
-                  <font>
-                     <Font size="9.0" />
-                  </font>
-               </Label>
-                    <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="10.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+                    <Label onMouseClicked="#newGroup" style="-fx-font-weight: bold;" text="New Group"
+                           textFill="#4219ab">
+                        <font>
+                            <Font size="9.0"/>
+                        </font>
+                    </Label>
+                    <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="10.0" layoutY="68.0" pickOnBounds="true"
+                               preserveRatio="true">
                         <image>
-                            <Image url="@../Images/otherIcons/global.png" />
+                            <Image url="@../Images/otherIcons/global.png"/>
                         </image>
                         <VBox.margin>
-                            <Insets left="5.0" right="5.0" top="5.0" />
+                            <Insets left="5.0" right="5.0" top="5.0"/>
                         </VBox.margin>
                     </ImageView>
                 </children>
@@ -84,15 +95,16 @@
                     <children>
                         <TextField fx:id="search" prefHeight="36.0" prefWidth="180.0" promptText="Search...">
                             <HBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </HBox.margin>
                         </TextField>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#search" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#search" pickOnBounds="true"
+                                   preserveRatio="true">
                             <HBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </HBox.margin>
                             <image>
-                                <Image url="@../Images/otherIcons/search.png" />
+                                <Image url="@../Images/otherIcons/search.png"/>
                             </image>
                         </ImageView>
                     </children>

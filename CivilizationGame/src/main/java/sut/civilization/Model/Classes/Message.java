@@ -31,4 +31,8 @@ public class Message {
     public boolean isSeen() {
         return isSeen;
     }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
 }
