@@ -244,6 +244,12 @@ public class CityController extends GameController {
         nextNation.getHappiness().addBalance(-10);
     }
 
+    public static void cityBecomeColony(City city, Nation nextNation){
+        Nation previousNation = city.getOwnerNation();
+        city.setOwnerNation(nextNation);
+        previousNation.removeCity(city);
+    }
+
     public String cityShowBanner(){
         if (selectedCity == null)
             return "You have to select a city first";

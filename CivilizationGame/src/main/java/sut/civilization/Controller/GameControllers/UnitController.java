@@ -325,10 +325,17 @@ public class UnitController extends GameController {
         if (combatUnit.getHp() <= 0) {
             unitDeath(combatUnit);
         }
-        if (combatUnit.getTargetCity().getHP() <= 0) {
-            CityController.cityDeath(combatUnit.getTargetCity());
-        }
         combatUnit.setTargetCity(null);
+    }
+
+    //TODO use this function in view
+    public static void decideCityFate(City city, CombatUnit combatUnit, int choice){
+        if (choice == 1)
+            CityController.cityDeath(city);
+        if (choice == 2)
+            CityController.cityTakeOver(city, combatUnit.getOwnerNation());
+        if (choice == 3)
+            CityController.cityBecomeColony(city, combatUnit.getOwnerNation());
     }
 
     public static void unitAttackUnit(CombatUnit combatUnit) {
