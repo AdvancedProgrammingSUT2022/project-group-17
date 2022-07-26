@@ -1282,9 +1282,9 @@ public class GamePlayController extends ViewController {
                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                     CivilizedUnit civilizedUnit = city.getInProgressCivilizedUnit();
 
-                    productImage.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
+                    productImage.setImage(new Image((Objects.requireNonNull(Civilization.class.getResourceAsStream(
                             civilizedUnit.getCivilizedUnitType().imageAddress
-                    ))));
+                    )))));
                     productName.setText(civilizedUnit.getCivilizedUnitType().name);
                     productTurnsLeft.setText(civilizedUnit.getTurnsLeft() + " Turns left...");
                     productCost.setText("Cost: " + civilizedUnit.getCivilizedUnitType().cost);
@@ -1570,7 +1570,6 @@ public class GamePlayController extends ViewController {
         return "Select a unit first!";
     }
 
-
     public void updateWholeMap() {
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
@@ -1582,7 +1581,7 @@ public class GamePlayController extends ViewController {
     public void updateTechnologyBox() {
         TechnologyType inProgressTechnology = null;
 
-        if (GameController.getCurrentTurnUser().getNation() != null)
+        if (getUserByName(Game.instance.getLoggedInUser().getUsername()).getNation() != null)
             inProgressTechnology = GameController.getCurrentTurnUser().getNation().getInProgressTechnology();
 
         if (inProgressTechnology != null) {
@@ -1600,11 +1599,10 @@ public class GamePlayController extends ViewController {
             technologyProgressBar.setProgress(0);
         }
     }
-
     public void updateCurrencyBar() {
-        Currency coin = GameController.getCurrentTurnUser().getNation().getCoin();
-        Currency science = GameController.getCurrentTurnUser().getNation().getScience();
-        Currency happiness = GameController.getCurrentTurnUser().getNation().getHappiness();
+        Currency coin = getUserByName(Game.instance.getLoggedInUser().getUsername()).getNation().getCoin();
+        Currency science = getUserByName(Game.instance.getLoggedInUser().getUsername()).getNation().getScience();
+        Currency happiness = getUserByName(Game.instance.getLoggedInUser().getUsername()).getNation().getHappiness();
         goldInfo.setText(String.format("%d (%+d)", coin.getBalance(), coin.getGrowthRate()));
         scienceInfo.setText(String.format("%+d", science.getBalance()));
         happinessInfo.setText(String.valueOf(happiness.getBalance()));
@@ -1703,18 +1701,19 @@ public class GamePlayController extends ViewController {
         String message = GameController.nextPlayerTurn();
         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
         if (!message.startsWith("next")) return;
-
         Game.instance.saveGame("autoSave");
+
+        hideUnitPopup();
+        updateTechnologyBox();
+        updateCurrencyBar();
+
         Request request = new Request("game","serverUpdateDataBase");
         request.addToken("map",new XStream().toXML(Game.instance.map));
         request.addToken("players",new XStream().toXML(Game.instance.getPlayersInGame()));
         request.addToken("subTurn",String.valueOf(Game.instance.getSubTurn()));
         ConnectionController.getInstance().sendUpdateToServer(request.toJson());
 
-        hideUnitPopup();
         updateWholeMap();
-        updateTechnologyBox();
-        updateCurrencyBar();
     }
 
     public void hideUnitPopup() {
