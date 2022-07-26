@@ -174,35 +174,70 @@ public class LandController extends Controller {
 
     public static Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
         if (coordinate.y % 2 == 0) {
-            switch (position) {
-                case 0:
-                    return new Pair<>(coordinate.x, coordinate.y - 1);
-                case 1:
-                    return new Pair<>(coordinate.x + 1, coordinate.y - 1);
-                case 2:
-                    return new Pair<>(coordinate.x + 1, coordinate.y);
-                case 3:
-                    return new Pair<>(coordinate.x, coordinate.y + 1);
-                case 4:
-                    return new Pair<>(coordinate.x - 1, coordinate.y);
-                case 5:
-                    return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+            if (coordinate.x % 2 == 0) {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y - 1);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y + 1);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y + 1);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                }
             }
         } else {
-            switch (position) {
-                case 0:
-                    return new Pair<>(coordinate.x, coordinate.y - 1);
-                case 1:
-                    return new Pair<>(coordinate.x + 1, coordinate.y);
-                case 2:
-                    return new Pair<>(coordinate.x + 1, coordinate.y + 1);
-                case 3:
-                    return new Pair<>(coordinate.x, coordinate.y + 1);
-                case 4:
-                    return new Pair<>(coordinate.x - 1, coordinate.y + 1);
-                case 5:
-                    return new Pair<>(coordinate.x - 1, coordinate.y);
+            if (coordinate.x % 2 == 0) {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y - 1);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y + 1);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y + 1);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                }
             }
+
         }
         return null;
     }

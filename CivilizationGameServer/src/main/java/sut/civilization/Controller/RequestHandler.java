@@ -391,4 +391,12 @@ public class RequestHandler extends Thread {
     public Socket getServerSideSocket() {
         return serverSideSocket;
     }
+
+    public User getOwnerUser() {
+        return ownerUser;
+    }
+
+    public void setOwnerUser(User ownerUser) {
+        this.ownerUser = ownerUser;
+    }
 }

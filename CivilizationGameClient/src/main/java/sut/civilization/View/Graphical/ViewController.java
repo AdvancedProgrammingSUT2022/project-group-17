@@ -135,4 +135,15 @@ public class ViewController {
         popup.show(window);
 
     }
+
+    public User getPlayer(String name){
+        if (Game.instance.getPlayersInGame() != null)
+            return null;
+
+        for (User user : Game.instance.getPlayersInGame()) {
+            if (user.getUsername().equals(name))
+                return user;
+        }
+        return null;
+    }
 }

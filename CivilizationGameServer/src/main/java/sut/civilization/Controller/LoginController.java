@@ -105,6 +105,11 @@ public class LoginController extends Controller {
             return ("incorrect password!");
         }
 
+        for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
+            if (connectedUser.getOwnerUser() != null && connectedUser.getOwnerUser().getUsername().equals(userinfo.getUsername()))
+                return ("already a user with this username is login to server!");
+        }
+
         Game.instance.setLoggedInUser(user);
         user.setOnline(true);
         return ("welcome " + user.getNickname() + ".");
