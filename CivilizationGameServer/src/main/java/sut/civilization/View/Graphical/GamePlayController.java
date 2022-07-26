@@ -5,9 +5,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -27,28 +24,26 @@ import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 import static javafx.scene.paint.Color.WHITE;
-import static javafx.scene.paint.Color.web;
 
 public class GamePlayController extends ViewController {
-    @FXML
-    private ScrollPane mapScrollPane;
     private final static LandGraphical[][] graphicalMap = new LandGraphical[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
-    public AnchorPane root;
+    private static GamePlayController gamePlayController;
     private final Popup infoPopup = new Popup();
     private final Popup unitPopup = new Popup();
     private final Popup cityPopup = new Popup();
+    public AnchorPane root;
     public Label inProgressTechnologyName = new Label();
     public ImageView inProgressTechnologyImage = new ImageView();
     public ProgressBar technologyProgressBar = new ProgressBar();
     public Label goldInfo = new Label();
     public Label scienceInfo = new Label();
     public Label happinessInfo = new Label();
-    private static GamePlayController gamePlayController;
+    @FXML
+    private ScrollPane mapScrollPane;
 
     public static GamePlayController getInstance() {
         if (gamePlayController == null)
@@ -81,7 +76,7 @@ public class GamePlayController extends ViewController {
 
         updateCurrencyBar();
 
-        infoPopup.setHideOnEscape(false);
+        infoPopup.setHideOnEscape(true);
     }
 
     public void showInfoPanel(HBox[] eachUnitHBox) {

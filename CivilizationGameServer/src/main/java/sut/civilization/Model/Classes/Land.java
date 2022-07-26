@@ -23,7 +23,7 @@ public class Land {
 
     protected boolean isAPartOfPath = false;
     protected LandType landType;
-    protected int visibility = 2;
+    protected int visibility;
     // 0 -> fog of war
     // 1 -> shadow (unknown)
     // 2 -> visible (shown)
@@ -70,7 +70,7 @@ public class Land {
     public boolean isACityMainLand() {
         for (User user : Game.instance.getPlayersInGame()) {
             for (City city : user.getNation().getCities()) {
-                if (city.getMainLand() == this) {
+                if (city.getMainLand().equals(this)) {
                     return true;
                 }
             }

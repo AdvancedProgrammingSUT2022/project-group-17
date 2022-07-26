@@ -18,7 +18,8 @@ public class User {
 
     private ArrayList<String> friendsUserNames;
 
-
+    public enum GameState {NA, WIN, LOSE}
+    private GameState gameState = GameState.NA;
 
     public User(String username, String password, String nickname) {
         this.username = username;
@@ -138,5 +139,14 @@ public class User {
         User user = (User) o;
         return Objects.equals(username, user.username);
     }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
 
 }

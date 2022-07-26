@@ -293,7 +293,7 @@ public class UnitController extends GameController {
         } else if (selectedCombatUnit instanceof RangedCombatUnit) {
             int unitNum = LandController.getLandNumber(Game.instance.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
             int underAttackNum = LandController.getLandNumber(Game.instance.map[underAttack.getLocation().x][underAttack.getLocation().y]);
-            if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.instance.dist[unitNum][underAttackNum]) {
+            if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range >= Game.instance.dist[unitNum][underAttackNum]) {
                 if (!selectedCombatUnit.getOwnerNation().equals(underAttack.getOwnerNation())) {
                     selectedCombatUnit.setTargetUnit(underAttack);
                 } else {

@@ -68,7 +68,7 @@ public class Land {
     public boolean isACityMainLand() {
         for (User user : Game.instance.getPlayersInGame()) {
             for (City city : user.getNation().getCities()) {
-                if (city.getMainLand() == this) {
+                if (city.getMainLand().equals(this)) {
                     return true;
                 }
             }
