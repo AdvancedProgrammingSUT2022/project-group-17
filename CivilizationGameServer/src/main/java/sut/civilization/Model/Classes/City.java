@@ -34,9 +34,9 @@ public class City {
 
     public City(Nation ownerNation, String name, Land mainLand){
         this.citizens = 3;
-        this.HP = 100;
-        this.combatStrength = 20;
-        this.rangedStrength = 10;
+        this.HP = 3;
+        this.combatStrength = 1;
+        this.rangedStrength = 1;
         this.level = 1;
         this.ownerNation = ownerNation;
         this.name = name;

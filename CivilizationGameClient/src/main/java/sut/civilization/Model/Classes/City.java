@@ -4,6 +4,7 @@ import sut.civilization.Controller.GameControllers.CityController;
 import sut.civilization.Model.ModulEnums.BuildingType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class City {
     protected String name;
@@ -274,5 +275,18 @@ public class City {
         return "City{" +
                 "lands=" + lands +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return mainLand.equals(city.mainLand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mainLand);
     }
 }

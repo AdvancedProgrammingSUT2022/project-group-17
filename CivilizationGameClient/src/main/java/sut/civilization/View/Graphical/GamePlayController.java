@@ -491,6 +491,12 @@ public class GamePlayController extends ViewController {
                                             GamePlayController.getInstance().showSelectedCombatUnitInfo();
                                         }
                                     });
+                                    graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
+                                        if (Game.instance.map[finalI][finalJ].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCity(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                            GamePlayController.getInstance().showCityPanel();
+                                        }
+                                    });
                                 });
                             }
                             if (Game.instance.map[i][j].isACityMainLand()) {
@@ -534,6 +540,13 @@ public class GamePlayController extends ViewController {
                                         if (city.getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
                                             GameController.setSelectedCity(city);
                                             GamePlayController.getInstance().showCityPanel();
+                                        }
+                                    });
+                                    graphicalMap[finalI][finalJ].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent2 -> {
+                                        if (graphicalMap[finalI][finalJ].getLand().getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
+                                            GameController.setSelectedCivilizedUnit(null);
+                                            GamePlayController.getInstance().showSelectedCombatUnitInfo();
                                         }
                                     });
                                 });
@@ -1737,7 +1750,8 @@ public class GamePlayController extends ViewController {
         String message = GameController.nextPlayerTurn();
         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
         if (!message.startsWith("next")) return;
-        Game.instance.saveGame("autoSave");
+        //FIXME autosave !
+//        Game.instance.saveGame("autoSave");
 
         hideUnitPopup();
         updateTechnologyBox();

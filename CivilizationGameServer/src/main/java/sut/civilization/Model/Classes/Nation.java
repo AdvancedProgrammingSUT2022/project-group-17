@@ -46,7 +46,7 @@ public class Nation {
         initializeResourceCellar();
         initializeBuildings();
         this.getHappiness().setBalance(100);
-        this.getCoin().setBalance(100);
+        this.getCoin().setBalance(10000);
         this.getScience().setBalance(200);
         //FixMe please delete the fallowing two lines :
         this.resourceCellar.put(ResourceType.BANANA,10);
