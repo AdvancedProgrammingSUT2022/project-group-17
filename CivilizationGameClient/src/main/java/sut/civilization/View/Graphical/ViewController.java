@@ -137,7 +137,7 @@ public class ViewController {
     }
 
     public User getPlayer(String name){
-        if (Game.instance.getPlayersInGame() != null)
+        if (Game.instance.getPlayersInGame() == null)
             return null;
 
         for (User user : Game.instance.getPlayersInGame()) {

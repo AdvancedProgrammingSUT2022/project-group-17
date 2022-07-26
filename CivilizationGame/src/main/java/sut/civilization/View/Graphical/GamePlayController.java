@@ -1157,7 +1157,7 @@ public class GamePlayController extends ViewController {
                     building.getBuildingType().imageAddress
             ))));
             productName.setText(building.getBuildingType().name);
-            productTurnsLeft.setText(building.getTurnsLeft() + productTurnsLeft.getText());
+            productTurnsLeft.setText(city.getNextProductTurns() + productTurnsLeft.getText());
             productCost.setText(productCost.getText() + building.getBuildingType().cost);
             productMaintenance.setText(productMaintenance.getText() + building.getBuildingType().maintenance);
 
@@ -1167,7 +1167,7 @@ public class GamePlayController extends ViewController {
                     civilizedUnit.getCivilizedUnitType().imageAddress
             ))));
             productName.setText(civilizedUnit.getCivilizedUnitType().name);
-            productTurnsLeft.setText(civilizedUnit.getTurnsLeft() + productTurnsLeft.getText());
+            productTurnsLeft.setText(city.getNextProductTurns() + productTurnsLeft.getText());
             productCost.setText(productCost.getText() + civilizedUnit.getCivilizedUnitType().cost);
             productMaintenance.setText("Movement: " + civilizedUnit.getCivilizedUnitType().MP);
 
@@ -1177,7 +1177,7 @@ public class GamePlayController extends ViewController {
                     closeCombatUnit.getCloseCombatUnitType().imageAddress
             ))));
             productName.setText(closeCombatUnit.getCloseCombatUnitType().name);
-            productTurnsLeft.setText(closeCombatUnit.getTurnsLeft() + productTurnsLeft.getText());
+            productTurnsLeft.setText(city.getNextProductTurns() + productTurnsLeft.getText());
             productCost.setText(productCost.getText() + closeCombatUnit.getCloseCombatUnitType().cost);
             productMaintenance.setText("Movement: " + closeCombatUnit.getCloseCombatUnitType().MP);
 
@@ -1187,7 +1187,7 @@ public class GamePlayController extends ViewController {
                     rangedCombatUnit.getRangedCombatUnitType().imageAddress
             ))));
             productName.setText(rangedCombatUnit.getRangedCombatUnitType().name);
-            productTurnsLeft.setText(rangedCombatUnit.getTurnsLeft() + productTurnsLeft.getText());
+            productTurnsLeft.setText(city.getNextProductTurns() + productTurnsLeft.getText());
             productCost.setText(productCost.getText() + rangedCombatUnit.getRangedCombatUnitType().cost);
             productMaintenance.setText("Movement: " + rangedCombatUnit.getRangedCombatUnitType().MP);
 
@@ -1436,7 +1436,7 @@ public class GamePlayController extends ViewController {
                             civilizedUnit.getCivilizedUnitType().imageAddress
                     ))));
                     productName.setText(civilizedUnit.getCivilizedUnitType().name);
-                    productTurnsLeft.setText(civilizedUnit.getTurnsLeft() + " Turns left...");
+                    productTurnsLeft.setText(city.getNextProductTurns() + " Turns left...");
                     productCost.setText("Cost: " + civilizedUnit.getCivilizedUnitType().cost);
                     productMaintenance.setText("Maintenance: " + civilizedUnit.getCivilizedUnitType().MP);
                 });
@@ -1471,7 +1471,7 @@ public class GamePlayController extends ViewController {
                             closeCombatUnit.getCloseCombatUnitType().imageAddress
                     ))));
                     productName.setText(closeCombatUnit.getCloseCombatUnitType().name);
-                    productTurnsLeft.setText(closeCombatUnit.getTurnsLeft() + " Turns left...");
+                    productTurnsLeft.setText(city.getNextProductTurns() + " Turns left...");
                     productCost.setText("Cost: " + closeCombatUnit.getCloseCombatUnitType().cost);
                     productMaintenance.setText("Maintenance: " + closeCombatUnit.getCloseCombatUnitType().MP);
                 });
@@ -1506,7 +1506,7 @@ public class GamePlayController extends ViewController {
                             rangedCombatUnit.getRangedCombatUnitType().imageAddress
                     ))));
                     productName.setText(rangedCombatUnit.getRangedCombatUnitType().name);
-                    productTurnsLeft.setText(rangedCombatUnit.getTurnsLeft() + " Turns left...");
+                    productTurnsLeft.setText(city.getNextProductTurns() + " Turns left...");
                     productCost.setText("Cost: " + rangedCombatUnit.getRangedCombatUnitType().cost);
                     productMaintenance.setText("Maintenance: " + rangedCombatUnit.getRangedCombatUnitType().MP);
                 });
@@ -1545,7 +1545,7 @@ public class GamePlayController extends ViewController {
                             building.getBuildingType().imageAddress
                     ))));
                     productName.setText(building.getBuildingType().name);
-                    productTurnsLeft.setText(building.getTurnsLeft() + " Turns left...");
+                    productTurnsLeft.setText(city.getNextProductTurns() + " Turns left...");
                     productCost.setText("Cost: " + building.getBuildingType().cost);
                     productMaintenance.setText("Maintenance: " + building.getBuildingType().maintenance);
                 });
