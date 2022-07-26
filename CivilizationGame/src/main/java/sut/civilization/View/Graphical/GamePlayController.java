@@ -625,10 +625,9 @@ public class GamePlayController extends ViewController {
                                     if (city.getHP() <= 0) {
                                         Button destroyCity = new Button("Destroy city");
                                         destroyCity.setOnMouseClicked(mouseEvent2 -> {
-//                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 1);
-                                            cityDeath(city);
+                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 1);
+                                            updateWholeMap();
                                             infoPopup.hide();
-                                            System.out.println("ahh");
                                         });
                                         VBox.setMargin(destroyCity, new Insets(5));
                                         Button takeOverCity = new Button("Take over city");
@@ -650,6 +649,7 @@ public class GamePlayController extends ViewController {
                                         vBox.setPadding(new Insets(20));
 
                                         scrollPanePopup(vBox);
+                                        ((BorderPane)infoPopup.getContent().get(0)).setTop(null);
                                     }
                                     updateWholeMap();
                                     graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
@@ -1853,26 +1853,6 @@ public class GamePlayController extends ViewController {
         GameController.setSelectedCivilizedUnit(null);
         GameController.setSelectedCombatUnit(null);
         unitPopup.hide();
-    }
-
-    public void cityDeath(City city){
-        Nation nation = city.getOwnerNation();
-        city.getImprovements().clear();
-        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
-            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.instance.map[i][j].getOwnerCity() != null &&
-                        Game.instance.map[i][j].getOwnerCity().equals(city)) {
-                    Game.instance.map[i][j].setOwnerCity(null);
-                    Game.instance.map[i][j].setImprovement(null);
-                    Game.instance.map[i][j].setCityCenter(false);
-                }
-            }
-        }
-        nation.removeCity(city);
-        city.getLands().clear();
-        city.setOwnerNation(null);
-        System.gc();
-        updateWholeMap();
     }
 
 //    public static void main(String[] args) {

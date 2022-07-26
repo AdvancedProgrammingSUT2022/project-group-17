@@ -156,7 +156,6 @@ public class LandGraphical extends Polygon {
         }
 
         if (land.getOwnerCity() != null) {
-            System.out.println(cityImageView);
             cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getOwnerCity().getOwnerNation().getNationType().nationImageAddress)).toExternalForm()));
             landInfo.append("\nCity: ").append(land.getOwnerCity().name);
             if (land != land.getOwnerCity().getMainLand()) {
