@@ -239,11 +239,15 @@ public class GamePlayController extends ViewController {
                 resourceImage.setFitWidth(40);
                 resourceImage.setFitHeight(40);
                 Label resourceName = new Label(resourceType.name);
+                resourceName.setTextFill(WHITE);
                 Label resourceNumber = new Label(String.valueOf(
                         GameController.getCurrentTurnUser().getNation().getResourceCellar().get(resourceType)
                 ));
+                resourceNumber.setTextFill(WHITE);
                 resourceName.setStyle("-fx-label-padding: 0 10 0 0;");
                 resourceNumber.setStyle("-fx-label-padding: 0 10 0 0;");
+                TextField numberTextField = new TextField();
+                numberTextField.setPrefWidth(100);
                 HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber);
                 eachResource.setAlignment(Pos.CENTER_LEFT);
                 mySuppliesVBox.getChildren().add(eachResource);
@@ -256,36 +260,37 @@ public class GamePlayController extends ViewController {
         myVBox.setMaxHeight(500);
         myVBox.setAlignment(Pos.CENTER);
 
-        VBox hisSuppliesVBox = new VBox();
-        for (ResourceType resourceType : ResourceType.values()) {
-            if (nation.getResourceCellar().get(resourceType) > 0) {
-                ImageView resourceImage = new ImageView(resourceType.image);
-                resourceImage.setFitWidth(40);
-                resourceImage.setFitHeight(40);
-                Label resourceName = new Label(resourceType.name);
-                Label resourceNumber = new Label(String.valueOf(
-                        nation.getResourceCellar().get(resourceType)
-                ));
-                resourceName.setStyle("-fx-label-padding: 0 10 0 0;");
-                resourceNumber.setStyle("-fx-label-padding: 0 10 0 0;");
-                HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber);
-                eachResource.setAlignment(Pos.CENTER_LEFT);
-                hisSuppliesVBox.getChildren().add(eachResource);
-            }
-        }
-        ScrollPane hisSuppliesScrollPane = new ScrollPane(hisSuppliesVBox);
-        hisSuppliesVBox.setPrefHeight(300);
-        hisSuppliesVBox.setPrefWidth(200);
-        VBox hisVBox = new VBox(hisLeaderImage, hisSuppliesScrollPane);
-        hisVBox.setMaxHeight(500);
-        hisVBox.setAlignment(Pos.CENTER);
+//        VBox hisSuppliesVBox = new VBox();
+//        for (ResourceType resourceType : ResourceType.values()) {
+//            if (nation.getResourceCellar().get(resourceType) > 0) {
+//                ImageView resourceImage = new ImageView(resourceType.image);
+//                resourceImage.setFitWidth(40);
+//                resourceImage.setFitHeight(40);
+//                Label resourceName = new Label(resourceType.name);
+//                Label resourceNumber = new Label(String.valueOf(
+//                        nation.getResourceCellar().get(resourceType)
+//                ));
+//                resourceName.setStyle("-fx-label-padding: 0 10 0 0;");
+//                resourceNumber.setStyle("-fx-label-padding: 0 10 0 0;");
+//                HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber);
+//                eachResource.setAlignment(Pos.CENTER_LEFT);
+//                hisSuppliesVBox.getChildren().add(eachResource);
+//            }
+//        }
+//        ScrollPane hisSuppliesScrollPane = new ScrollPane(hisSuppliesVBox);
+//        hisSuppliesVBox.setPrefHeight(300);
+//        hisSuppliesVBox.setPrefWidth(200);
+//        VBox hisVBox = new VBox(hisLeaderImage, hisSuppliesScrollPane);
+//        hisVBox.setMaxHeight(500);
+//        hisVBox.setAlignment(Pos.CENTER);
 
-        HBox tradesHBox = new HBox(myVBox, hisVBox);
+        HBox tradesHBox = new HBox(myVBox);
         tradesHBox.setAlignment(Pos.CENTER);
 
+        Button demandButton = new Button("Demand");
         Button declareWarButton = new Button("Declare War!");
         Button peaceButton = new Button("Peace");
-        VBox wholeDiplomacy = new VBox(diplomacyWith, tradesHBox, declareWarButton, peaceButton);
+        VBox wholeDiplomacy = new VBox(diplomacyWith, tradesHBox, demandButton, declareWarButton, peaceButton);
         wholeDiplomacy.setAlignment(Pos.TOP_CENTER);
         wholeDiplomacy.setMaxHeight(700);
         wholeDiplomacy.getStyleClass().add("infoList");
