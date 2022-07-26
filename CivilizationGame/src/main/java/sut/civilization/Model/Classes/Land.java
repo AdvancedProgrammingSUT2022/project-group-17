@@ -115,7 +115,7 @@ public class Land {
         this.hasRiver[index] = value;
     }
 
-    public boolean isBuyable() {
+    public boolean    isBuyable() {
         return isBuyable;
     }
 
