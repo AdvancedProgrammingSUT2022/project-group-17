@@ -2,25 +2,30 @@ package sut.civilization.View.Graphical;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import sut.civilization.Civilization;
 import sut.civilization.Controller.ConnectionController;
+import sut.civilization.Controller.GameControllers.CityController;
 import sut.civilization.Controller.GameControllers.LandController;
+import sut.civilization.Controller.GameControllers.TechnologyController;
 import sut.civilization.Enums.Menus;
-import sut.civilization.Model.Classes.Game;
-import sut.civilization.Model.Classes.Request;
-import sut.civilization.Model.Classes.Response;
-import sut.civilization.Model.Classes.User;
+import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.NationType;
 import sut.civilization.Transitions.LoadingTransition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class GameMenuController {
     private final sut.civilization.Controller.GameControllers.GameController gameController = new sut.civilization.Controller.GameControllers.GameController();
@@ -42,9 +47,9 @@ public class GameMenuController {
             userNames.add(0,Game.instance.getLoggedInUser().getUsername());
 
             Request request = new Request("gameMenu","startGameRequest");
-            request.addToken("users",new Gson().toJson(userNames));
+            request.addToken("users",new XStream().toXML(userNames));
             request.addToken("owner",Game.instance.getLoggedInUser().getUsername());
-
+            request.addToken("nation", Objects.requireNonNull(NationType.getNationTypeByName(nations1.getValue())).name);
 
             final Response[] response = new Response[1];
             response[0] = new Response(404,"not accepted!");
@@ -64,30 +69,13 @@ public class GameMenuController {
                         new ViewController().showPopUp(Game.instance.getCurrentScene().getWindow(),response[0].getMessage());
                         return;
                     }
-
-                    Game.instance.getPlayersInGame().add(Game.instance.getLoggedInUser());
-                    sut.civilization.Controller.GameControllers.GameController.setCurrentTurnUser(Game.instance.getLoggedInUser());
-                    gameController.chooseNation(Integer.parseInt(String.valueOf(nations1.getValue().charAt(0))), 0);
-
-                    int i = 1;
-                    for (String opponent : opponents) {
-                        Game.instance.getPlayersInGame().add(gameController.getUserByName(opponent));
-                        gameController.chooseNation(0, i++);
-                    }
-
                     while (Game.instance.map == null) {
                         System.out.println("map is null");
                     }
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            Game.instance.changeScene(Menus.GAME_MENU);
-                        }
-                    });
-                }
-            }, 13000);
-            loadingTransition.play();
 
+                }
+            }, 15000);
+            loadingTransition.play();
         }
     }
 
@@ -100,17 +88,10 @@ public class GameMenuController {
     }
 
     public void initialize(){
-        String[] nations = new String[9];
         int j = 0;
         for (NationType nationType : NationType.values()) {
-            nations[j] = j + "- " + nationType.name;
-            j++;
+            nations1.getItems().add(nationType.name);
         }
-        for (int i = 0; i < 9; i++) {
-            Label label = new Label(nations[i]);
-            nations1.getItems().add(label.getText());
-        }
-
 
         HBox hBox = new HBox();
         VBox usernames = new VBox();
@@ -126,7 +107,7 @@ public class GameMenuController {
         usernames.setPrefHeight(50);
         Request request = new Request("game","getOnlineUsers");
         Response response = ConnectionController.getInstance().sendRequestToServer(request.toJson());
-        ArrayList<User> onlineUsers = new Gson().fromJson((String) response.getDataToken("users"),new TypeToken<ArrayList<User>>(){}.getType());
+        ArrayList<User> onlineUsers = (ArrayList<User>) new XStream().fromXML((String) response.getDataToken("users"));
 
         for (User user : onlineUsers) {
             if (user.getUsername().equals(Game.instance.getLoggedInUser().getUsername()))

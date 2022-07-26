@@ -1,12 +1,16 @@
 package sut.civilization.Model.Classes;
 
 import javafx.scene.shape.Polygon;
+import sut.civilization.Model.ModulEnums.ImprovementType;
 import sut.civilization.Model.ModulEnums.LandType;
+
+import java.util.ArrayList;
 
 public class Land {
 
     protected Improvement improvement;
     protected Improvement route;
+    protected Ruin ruin;
     protected LandFeature landFeature;
     protected CombatUnit ZOC;
 
@@ -15,7 +19,7 @@ public class Land {
     protected boolean isCityCenter;
     protected CivilizedUnit civilizedUnit = null;
     protected CombatUnit combatUnit = null;
-    protected boolean isBuyable = true;
+    protected boolean isBuyable;
 
     protected boolean isAPartOfPath = false;
     protected LandType landType;
@@ -32,14 +36,21 @@ public class Land {
     //TODO assign land's movement cost it's landType movement cost when initializing map
     protected int movementCost;
     protected boolean hasCitizen;
+    protected int i;
+    protected int j;
 
 
-    public Land(LandType landType, int cost) {
+    public Land(LandType landType, int cost, int i, int j) {
         this.landType = landType;
         this.foodGrowth = landType.foodGrowth;
         this.cost = cost;
         this.landFeature = null;
         this.improvement = null;
+        this.i = i;
+        this.j = j;
+        this.ruin = null;
+        this.isBuyable = true;
+        this.visibility = 2;
     }
 
     public void addGrowthToLandOwner(){
@@ -55,8 +66,28 @@ public class Land {
             landOwnerNation.getFood().addGrowthRate(this.landFeature.getLandFeatureType().foodGrowth);
         }
     }
+
+    public boolean isACityMainLand() {
+        for (User user : Game.instance.getPlayersInGame()) {
+            for (City city : user.getNation().getCities()) {
+                if (city.getMainLand() == this) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public CivilizedUnit getCivilizedUnit() {
-        return civilizedUnit;
+        for (User user : Game.instance.getPlayersInGame()) {
+            for (Unit unit : user.getNation().getUnits()) {
+                if (unit.getLocation().x.equals(this.i) && unit.getLocation().y.equals(this.j) && unit instanceof CivilizedUnit){
+                    return (CivilizedUnit) unit;
+                }
+            }
+        }
+
+        return null;
     }
 
     public int getMP() {
@@ -112,7 +143,15 @@ public class Land {
     }
 
     public CombatUnit getCombatUnit() {
-        return combatUnit;
+        for (User user : Game.instance.getPlayersInGame()) {
+            for (Unit unit : user.getNation().getUnits()) {
+                if (unit.getLocation().x.equals(this.i) && unit.getLocation().y.equals(this.j) && unit instanceof CombatUnit){
+                    return (CombatUnit) unit;
+                }
+            }
+        }
+
+        return null;
     }
 
     public void setCombatUnit(CombatUnit combatUnit) {
@@ -197,5 +236,30 @@ public class Land {
 
     public void setZOC(CombatUnit ZOC) {
         this.ZOC = ZOC;
+    }
+
+
+    public int getI() {
+        return i;
+    }
+
+    public int getJ() {
+        return j;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public void setJ(int j) {
+        this.j = j;
+    }
+
+    public Ruin getRuin() {
+        return ruin;
+    }
+
+    public void setRuin(Ruin ruin) {
+        this.ruin = ruin;
     }
 }

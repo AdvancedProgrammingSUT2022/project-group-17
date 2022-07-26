@@ -1,9 +1,7 @@
 package sut.civilization.View.Graphical;
 
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import sut.civilization.Controller.ConnectionController;
-import sut.civilization.Controller.GameControllers.GameController;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.Game;
 import sut.civilization.Model.Classes.Request;

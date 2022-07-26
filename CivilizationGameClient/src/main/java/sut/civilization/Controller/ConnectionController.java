@@ -3,9 +3,10 @@ package sut.civilization.Controller;
 import sut.civilization.Model.Classes.Pair;
 import sut.civilization.Model.Classes.Response;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class ConnectionController {
     private static final ConnectionController instance = new ConnectionController();
@@ -17,8 +18,8 @@ public class ConnectionController {
 
     public void initConnection() {
         try {
-            this.clientSocket = new Socket("localhost",7080);
-            this.serverReaderSocket = new Socket("localHost",7080);
+            this.clientSocket = new Socket("localhost",7090);
+            this.serverReaderSocket = new Socket("localHost",7090);
 
             this.clientHandleStream = new Pair<>(new DataInputStream(clientSocket.getInputStream()),new DataOutputStream(clientSocket.getOutputStream()));
 

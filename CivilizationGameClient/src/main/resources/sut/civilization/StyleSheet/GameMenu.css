@@ -1,5 +1,8 @@
 .root{
-    -fx-background-color: #590000;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top;
+    -fx-background-size: cover;
+    -fx-background-image: url("/sut/civilization/Images/BackGround/background4.png");
 }
 
 
@@ -61,7 +64,6 @@ Label{
     -fx-min-width: 500px;
     -fx-alignment: center;
     -fx-font-weight: bold;
-    -fx-font-family: "Segoe Print";
 }
 
 .Error {
@@ -70,34 +72,4 @@ Label{
 
 Separator{
     -fx-max-height: 500px;
-}
-
-#title{
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-min-width: 200;
-    -fx-border-color: black;
-    -fx-background-color: rgba(255, 255, 255, 0.3);
-    -fx-font-weight: bolder;
-    -fx-alignment: center;
-    -fx-text-fill: black;
-    -fx-font-size: 40;
-}
-
-
-.ScrollPane .viewport {
-    -fx-background-color: transparent;
-}
-
-.ScrollPane{
-    -fx-background-color: transparent;
-}
-
-#content {
-    -fx-text-alignment: center;
-    -fx-spacing: 25;
-    -fx-background-color: transparent;
-    -fx-background-radius: 25;
-    -fx-border-radius: 25;
-    -fx-alignment: center;
 }

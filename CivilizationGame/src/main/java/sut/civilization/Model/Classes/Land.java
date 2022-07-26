@@ -51,7 +51,7 @@ public class Land {
         this.j = j;
         this.ruin = null;
         this.isBuyable = true;
-        this.visibility = 0;
+        this.visibility = 2;
     }
 
     public void addGrowthToLandOwner(){

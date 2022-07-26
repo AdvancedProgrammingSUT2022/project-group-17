@@ -1,5 +1,6 @@
 package sut.civilization.Model.Classes;
 
+import sut.civilization.Controller.GameControllers.TechnologyController;
 import sut.civilization.Model.ModulEnums.BuildingType;
 import sut.civilization.Model.ModulEnums.NationType;
 import sut.civilization.Model.ModulEnums.CurrencyType;
@@ -8,6 +9,7 @@ import sut.civilization.Model.ModulEnums.TechnologyType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Nation {
 
@@ -23,6 +25,7 @@ public class Nation {
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
     protected ArrayList<Unit> units = new ArrayList<>();
+    protected ArrayList<TechnologyType> nextTechnologies = new ArrayList<>();
 
     protected Currency coin = new Currency(CurrencyType.GOLD);
     protected Currency food = new Currency(CurrencyType.FOOD);
@@ -38,6 +41,7 @@ public class Nation {
         this.nationType = nationType;
 
         initializeTechnologies();
+//        initializeNextTechnologies();
         initializeResourceCellar();
         initializeBuildings();
         this.getHappiness().setBalance(100);
@@ -48,6 +52,12 @@ public class Nation {
         for (TechnologyType technologyType : TechnologyType.values()) {
             this.technologies.put(technologyType,false);
         }
+
+        this.technologies.put(TechnologyType.AGRICULTURE, true);
+    }
+
+    public void initializeNextTechnologies(){
+        TechnologyController.updateNextAvailableTechnologies();
     }
 
     private void initializeResourceCellar() {
@@ -198,6 +208,10 @@ public class Nation {
         return technologyTurns;
     }
 
+    public ArrayList<TechnologyType> getNextTechnologies() {
+        return nextTechnologies;
+    }
+
     public void setInProgressTechnology(TechnologyType inProgressTechnology) {
         this.inProgressTechnology = inProgressTechnology;
     }
@@ -208,5 +222,28 @@ public class Nation {
 
     public void addCity(City city){
         this.cities.add(city);
+    }
+
+    public void addNextTechnology(TechnologyType technologyType){
+        this.nextTechnologies.add(technologyType);
+    }
+
+    public void resetNextTechnologies(){
+        this.nextTechnologies.clear();
+    }
+
+    @Override
+    public String toString() {
+        return "Nation{" +
+                "nationType=" + nationType +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Nation nation = (Nation) o;
+        return nationType.name.equals(nation.nationType.name);
     }
 }

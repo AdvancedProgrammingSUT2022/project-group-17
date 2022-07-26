@@ -125,7 +125,7 @@ public class LandGraphical extends Polygon {
     }
 
     public void updateMap() {
-        LandController.updateLandVisibility();
+//        LandController.updateLandVisibility();
 
         StringBuilder landInfo = new StringBuilder(land.getLandType().name + " at (" + land.getI() + " , " + land.getJ() + ")");
 
@@ -164,7 +164,6 @@ public class LandGraphical extends Polygon {
             }
         } else {
             cityImageView.setImage(null);
-            System.out.println("hooloo");
         }
 
         if (land.getImprovement() != null) {

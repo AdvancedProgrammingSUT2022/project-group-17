@@ -224,16 +224,20 @@ public class CityController extends GameController {
 
     public static void cityDeath(City city){
         Nation nation = city.getOwnerNation();
-        nation.removeCity(city);
         city.getImprovements().clear();
-        for (Land land : city.getLands()) {
-            land.setOwnerCity(null);
-            land.setImprovement(null);
-            land.setCityCenter(false);
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if (Game.instance.map[i][j].getOwnerCity() != null &&
+                        Game.instance.map[i][j].getOwnerCity().equals(city)) {
+                    Game.instance.map[i][j].setOwnerCity(null);
+                    Game.instance.map[i][j].setImprovement(null);
+                    Game.instance.map[i][j].setCityCenter(false);
+                }
+            }
         }
+        nation.removeCity(city);
         city.getLands().clear();
         city.setOwnerNation(null);
-        city = null;
         System.gc();
     }
 

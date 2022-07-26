@@ -2,6 +2,7 @@ package sut.civilization.View.Graphical;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
@@ -25,7 +26,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class ProfileController extends ViewController {
 
@@ -157,7 +157,7 @@ public class ProfileController extends ViewController {
         Request sentRequest = new Request("social", "sendFriendRequests");
         sentRequest.addToken("userName", Game.instance.getLoggedInUser().getUsername());
         Response response = ConnectionController.getInstance().sendRequestToServer(sentRequest.toJson());
-        ArrayList<Request> requests = new Gson().fromJson((String) response.getDataToken("requests"),new TypeToken<ArrayList<Request>>(){}.getType());
+        ArrayList<Request> requests = (ArrayList<Request>) new XStream().fromXML((String) response.getDataToken("requests"));
         ServerDataBase.getInstance().setFriendRequest(Game.instance.getLoggedInUser().getUsername(), requests);
 
         if (requests != null) {
@@ -250,7 +250,7 @@ public class ProfileController extends ViewController {
         Request sentRequest = new Request("social", "sendWaitingRequests");
         sentRequest.addToken("userName", Game.instance.getLoggedInUser().getUsername());
         Response response = ConnectionController.getInstance().sendRequestToServer(sentRequest.toJson());
-        ArrayList<Request> requests = new Gson().fromJson((String) response.getDataToken("requests"),new TypeToken<ArrayList<Request>>(){}.getType());
+        ArrayList<Request> requests = (ArrayList<Request>) new XStream().fromXML((String) response.getDataToken("requests"));
 
         Popup popup = new Popup();
         popup.setAutoHide(true);
@@ -319,7 +319,7 @@ public class ProfileController extends ViewController {
                 Response serverResponse = ConnectionController.getInstance().sendRequestToServer(request.toJson());
                 showPopUp(Game.instance.getCurrentScene().getWindow(),serverResponse.getMessage());
                 if (serverResponse.getStatusCode() == 200)
-                    showUserInformationPopUp(new Gson().fromJson((String) serverResponse.getDataToken("user"),User.class));
+                    showUserInformationPopUp((User) new XStream().fromXML((String) serverResponse.getDataToken("user")));
 
             }
         });

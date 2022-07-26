@@ -2,16 +2,18 @@ package sut.civilization.Controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.NationType;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class RequestHandler extends Thread {
     private final Socket clientSocket;
@@ -114,13 +116,12 @@ public class RequestHandler extends Thread {
 
     private Response gameMenuRequestHandler(Request request) {
         if (request.getHeader().equals("startGameRequest")) {
-            ArrayList<String> users = new Gson().fromJson(request.getToken("users"), new TypeToken<ArrayList<String>>() {
-            }.getType());
+            ArrayList<String> users = (ArrayList<String>) new XStream().fromXML(request.getToken("users"));
             int temp = 0;
             Response overAllResponse = new Response("game will start.");
             ArrayList<RequestHandler> connectedPeopleInGame = new ArrayList<>();
             ArrayList<User> userArrayList = new ArrayList<>();
-
+            getUserByName(request.getToken("owner")).setNation(new Nation(NationType.getNationByName(request.getToken("nation"))));
             for (String user : users) {
                 userArrayList.add(getUserByName(user));
                 for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
@@ -129,7 +130,7 @@ public class RequestHandler extends Thread {
                         temp++;
 
                         Response response = new Response("startGameRequest");
-                        response.addData("users", new Gson().toJson(users));
+                        response.addData("users", new XStream().toXML(users));
                         response.addData("owner",request.getToken("owner"));
                         connectedUser.sendUpdateToClient(response.toJson());
                     }
@@ -148,11 +149,8 @@ public class RequestHandler extends Thread {
             for (RequestHandler requestHandler : connectedPeopleInGame) {
                 if (requestHandler.isReadyForGame.get(request.getToken("owner")) == null || requestHandler.isReadyForGame.get(request.getToken("owner")).equals("no"))
                     overAllResponse = new Response("at least one user didn't accept!");
-                else {
-                    getUserByName(requestHandler.ownerUser.getUsername()).setNation(new Nation(NationType.getNationByName(request.getToken("nation"))));
-                }
             }
-
+            System.out.println(userArrayList);
             if (overAllResponse.getStatusCode() == 200){
                 Game.instance.setPlayersInGame(userArrayList);
                 this.sendMapToAllUsers(users);
@@ -163,6 +161,7 @@ public class RequestHandler extends Thread {
 
         if (request.getHeader().equals("startGameAnswer")) {
             this.isReadyForGame.put(request.getToken("owner"),request.getToken("answer"));
+            getUserByName(this.ownerUser.getUsername()).setNation(new Nation(NationType.getNationByName(request.getToken("nation"))));
         }
 
         return null;
@@ -177,7 +176,7 @@ public class RequestHandler extends Thread {
         if (request.getHeader().equals("sendFriendRequests")){
             Response response = new Response("updateFriendRequestList");
             HashMap<String,ArrayList<Request>> requests = ServerDataBase.getInstance().getAddFriendRequestTree();
-            response.addData("requests",new Gson().toJson(requests.get(request.getToken("userName"))));
+            response.addData("requests",new XStream().toXML(requests.get(request.getToken("userName"))));
             return response;
         }
 
@@ -206,12 +205,11 @@ public class RequestHandler extends Thread {
             }
 
             Response response = new Response("updatingWaitingRequests");
-            response.addData("requests",new Gson().toJson(requests));
+            response.addData("requests",new XStream().toXML(requests));
             return response;
         }
         return null;
     }
-
     private Response profileHandler(Request request) {
         ProfileController profileController = new ProfileController();
         Game.instance.setLoggedInUser(getUserByName(request.getToken("userName")));
@@ -233,12 +231,11 @@ public class RequestHandler extends Thread {
                 return new Response("no such user exists!");
 
             Response response = new Response("user found.");
-            response.addData("user",new Gson().toJson(target));
+            response.addData("user",new XStream().toXML(target));
             return response;
         }
         return new Response(result);
     }
-
     private void scoreBoardHandler(Request request) {
 
         if (request.getHeader().equals("updateList")) {
@@ -255,24 +252,24 @@ public class RequestHandler extends Thread {
                 userNames.add(connectedUser.ownerUser.getUsername());
                 connectedUser.ownerUser.setOnline(true);
             }
-            Map<String,String> avatarLocations = new HashMap<>();
-            Map<String,Integer> scores = new HashMap<>();
-            Map<String,Long> lastWins = new HashMap<>();
+
+            HashMap<String,String> avatarLocations = new HashMap<>();
+            HashMap<String,Integer> scores = new HashMap<>();
+            HashMap<String,Long> lastWins = new HashMap<>();
 
             for (User user : Game.instance.getUsers()) {
                 avatarLocations.put(user.getUsername(),user.getAvatarLocation());
                 scores.put(user.getUsername(),user.getScore());
                 lastWins.put(user.getUsername(),user.getLastWinTime());
             }
-            response.addData("avatarLocations",avatarLocations);
-            response.addData("scores",scores);
-            response.addData("lastWins",lastWins);
+            response.addData("avatarLocations",new XStream().toXML(avatarLocations));
+            response.addData("scores",new XStream().toXML(scores));
+            response.addData("lastWins",new XStream().toXML(lastWins));
 
-            response.addData("userNames",userNames);
+            response.addData("userNames",new XStream().toXML(userNames));
             this.sendResponseToClient(response.toJson());
         }
     }
-
     private void serverHandler(Request request) {
         if (request.getHeader().equals("userSetter")) {
             this.setUsers(request);
@@ -285,13 +282,9 @@ public class RequestHandler extends Thread {
             this.sendResponseToClient(response.toJson());
         }
     }
-
     private Response gameHandler(Request request) {
-        if (request.getHeader().equals("updateDataBase"))
+        if (request.getHeader().equals("serverUpdateDataBase"))
             this.updateDataBase(request);
-
-        if (request.getHeader().equals("startGameRequest"))
-            this.operateStartGameRequest(request);
 
         if (request.getHeader().equals("getMap"))
             this.sendMap(getUserByName(request.getToken("userName")),Game.instance.map);
@@ -304,26 +297,14 @@ public class RequestHandler extends Thread {
 
             }
             Response response = new Response("updateOnlineUsers");
-            response.addData("users",new Gson().toJson(users));
+            response.addData("users",new XStream().toXML(users));
             return response;
         }
+
         return null;
     }
-
-    private void operateStartGameRequest(Request request) {
-        ArrayList<String> userNames = new Gson().fromJson(request.getToken("users"), new TypeToken<ArrayList<String>>(){}.getType());
-
-        for (String userName : userNames) {
-            Game.instance.getPlayersInGame().add(getUserByName(userName));
-        }
-
-        Game.instance.setSubTurn(0);
-        this.sendMapToAllUsers(userNames);
-
-    }
-
     private void sendMapToAllUsers(ArrayList<String> userNames) {
-        Game.instance.map = new LandController().mapInitializer();
+        Game.instance.map = LandController.mapInitializer();
 
         for (String userName : userNames) {
             this.sendMap(getUserByName(userName),Game.instance.map);
@@ -333,8 +314,10 @@ public class RequestHandler extends Thread {
     private void sendMap(User user, Land[][] map) {
 
         Response response = new Response("setMap");
-        response.addData("map",new Gson().toJson(map));
-        response.addData("players",new Gson().toJson(Game.instance.getPlayersInGame()));
+        XStream xStream = new XStream();
+
+        response.addData("map",xStream.toXML(map));
+        response.addData("players",xStream.toXML(Game.instance.getPlayersInGame()));
         response.addData("subTurn", Game.instance.getSubTurn());
 
         for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
@@ -347,7 +330,6 @@ public class RequestHandler extends Thread {
     private void setUsers(Request request) {
         this.ownerUser = this.getUserByName(request.getToken("userName"));
         this.ownerUser.setOnline(true);
-
     }
 
     private User getUserByName(String userName) {
@@ -360,10 +342,13 @@ public class RequestHandler extends Thread {
     }
 
     private void updateDataBase(Request request) {
-        Game.instance = new Gson().fromJson(request.getToken("dataBase"),Game.class);
-        Response response = new Response( "updateDataBase");
-        response.addData("map",new Gson().toJson(Game.instance.map));
-        response.addData("players",new Gson().toJson(Game.instance.getPlayersInGame()));
+        Game.instance.map = (Land[][]) new XStream().fromXML(request.getToken("map"));
+        Game.instance.setPlayersInGame((ArrayList<User>) new XStream().fromXML(request.getToken("players")));
+        Game.instance.setSubTurn(Integer.parseInt(request.getToken("subTurn")));
+
+        Response response = new Response( "clientUpdateDataBase");
+        response.addData("map",new XStream().toXML(Game.instance.map));
+        response.addData("players",new XStream().toXML(Game.instance.getPlayersInGame()));
         response.addData("subTurn", String.valueOf(Game.instance.getSubTurn()));
 
         for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {

@@ -631,18 +631,25 @@ public class GamePlayController extends ViewController {
                                         });
                                         VBox.setMargin(destroyCity, new Insets(5));
                                         Button takeOverCity = new Button("Take over city");
-                                        takeOverCity.setOnMouseClicked(mouseEvent2 ->
-                                                UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 2));
+                                        takeOverCity.setOnMouseClicked(mouseEvent2 -> {
+                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 2);
+                                            updateWholeMap();
+                                            infoPopup.hide();
+                                        });
                                         VBox.setMargin(takeOverCity, new Insets(5));
                                         Button annexCity = new Button("Annex city");
-                                        annexCity.setOnMouseClicked(mouseEvent2 ->
-                                                UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 3));
+                                        annexCity.setOnMouseClicked(mouseEvent2 -> {
+                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 3);
+                                            updateWholeMap();
+                                            infoPopup.hide();
+                                        });
                                         VBox.setMargin(annexCity, new Insets(5));
 
                                         VBox vBox = new VBox(destroyCity, takeOverCity, annexCity);
                                         vBox.setPadding(new Insets(20));
 
                                         scrollPanePopup(vBox);
+                                        ((BorderPane)infoPopup.getContent().get(0)).setTop(null);
                                     }
                                     updateWholeMap();
                                     graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {

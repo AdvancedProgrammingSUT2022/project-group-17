@@ -7,7 +7,7 @@ public class CombatUnit extends Unit {
 
     public CombatUnit(String name, int cost, int combatStrength, int MP, ResourceType resourceType,
                       TechnologyType technologyType, int turns, int hp, Nation ownerNation, Pair<Integer,Integer> location) {
-        super(name, cost, MP, resourceType, technologyType, turns, hp,ownerNation, location);
+        super(name, cost, MP, resourceType, technologyType, hp,ownerNation, location);
         this.combatStrength = combatStrength;
     }
 

@@ -15,7 +15,9 @@ public class User {
     private Date lastTimeOnline;
     private long lastWinTime;
     private ArrayList<Chat> chats;
+
     private ArrayList<String> friendsUserNames;
+
 
 
     public User(String username, String password, String nickname) {
@@ -25,9 +27,10 @@ public class User {
         this.score = 0;
         this.lastWinTime = 0;
         this.isOnline = false;
-        this.avatarLocation = "sut/civilization/Images/Avatars/ (2).png";
+        this.avatarLocation = "sut/civilization/Images/Avatars/(2).png";
         this.chats = new ArrayList<>();
         this.friendsUserNames = new ArrayList<>();
+
     }
 
     public boolean isOnline() {
@@ -53,6 +56,7 @@ public class User {
     public void setLastTimeOnline(Date lastTimeOnline) {
         this.lastTimeOnline = lastTimeOnline;
     }
+
     public ArrayList<String> getFriendsUserNames() {
         if (friendsUserNames == null) friendsUserNames = new ArrayList<>();
         return friendsUserNames;
@@ -61,6 +65,7 @@ public class User {
     public void setFriendsUserNames(ArrayList<String> friendsUserNames) {
         this.friendsUserNames = friendsUserNames;
     }
+
     public long getLastWinTime() {
         return lastWinTime;
     }
@@ -118,12 +123,14 @@ public class User {
         this.score = score;
     }
 
-    @Override
     //you can change this as you wish
+    @Override
     public String toString() {
-        return nickname + " : " + score;
+        return "User{" +
+                "username='" + username + '\'' +
+                ", nation=" + nation +
+                '}';
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,6 +2,7 @@ package sut.civilization.Controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,7 +13,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
+import sut.civilization.Controller.GameControllers.CityController;
 import sut.civilization.Controller.GameControllers.GameController;
+import sut.civilization.Controller.GameControllers.LandController;
+import sut.civilization.Controller.GameControllers.TechnologyController;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.NationType;
@@ -24,8 +28,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
 
 public class ConnectionListener extends Thread {
     private final Pair<DataInputStream, DataOutputStream> serverHandleStream;
@@ -71,35 +73,54 @@ public class ConnectionListener extends Thread {
             return;
         }
         if (updateResponse.getMessage().equals("setMap")) {
-            Game.instance.map = new Gson().fromJson((String) updateResponse.getDataToken("map"), Land[][].class);
-            Game.instance.setPlayersInGame(new Gson().fromJson((String) updateResponse.getDataToken("players"), new TypeToken<ArrayList<User>>() {
-            }.getType()));
-
-            GameController.setCurrentTurnUser(Game.instance.getPlayersInGame().get(0));
-
+            XStream xStream = new XStream();
+            Game.instance.setPlayersInGame((ArrayList<User>) xStream.fromXML((String) updateResponse.getDataToken("players")));
             int temp = (int) Math.floor((Double) updateResponse.getDataToken("subTurn"));
-
             Game.instance.setSubTurn(temp);
+            GameController.setCurrentTurnUser(Game.instance.getPlayersInGame().get(temp));
+            Game.instance.map = (Land[][]) xStream.fromXML((String) updateResponse.getDataToken("map"));
 
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     Game.instance.changeScene(Menus.GAME_MENU);
+                    Game.instance.getCurrentScene().getRoot().setDisable(!Game.instance.getPlayersInGame().get(Game.instance.getSubTurn()).getUsername().equals(Game.instance.getLoggedInUser().getUsername()));
                 }
             });
         }
 
         if (updateResponse.getMessage().equals("startGameRequest")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ConnectionListener.this.showGameRequestPopUp((ArrayList<String>) new XStream().fromXML((String) updateResponse.getDataToken("users")), updateResponse);
+                }
+            });
+        }
+
+        if (updateResponse.getMessage().equals("clientUpdateDataBase")){
+            XStream xStream = new XStream();
+
+            Game.instance.setPlayersInGame((ArrayList<User>) xStream.fromXML((String) updateResponse.getDataToken("players")));
+            Game.instance.setSubTurn(Integer.parseInt((String) updateResponse.getDataToken("subTurn")) % Game.instance.getPlayersInGame().size());
+            GameController.setCurrentTurnUser(Game.instance.getPlayersInGame().get(Game.instance.getSubTurn()));
+            Game.instance.map = (Land[][]) xStream.fromXML((String) updateResponse.getDataToken("map"));
+
+            System.out.println("sub turn : " + Game.instance.getSubTurn());
+            System.out.println("players in game : " + Game.instance.getPlayersInGame());
+            System.out.println("current turn user " + GameController.getCurrentTurnUser());
 
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    ConnectionListener.this.showGameRequestPopUp(new Gson().fromJson((String) updateResponse.getDataToken("users"), new TypeToken<ArrayList<String>>() {
-                    }.getType()), updateResponse);
+                    Game.instance.getCurrentScene().getRoot().setDisable(!Game.instance.getPlayersInGame().get(Game.instance.getSubTurn()).getUsername().equals(Game.instance.getLoggedInUser().getUsername()));
+                    GamePlayController.getInstance().updateWholeMap();
+                    GamePlayController.getInstance().hideUnitPopup();
+                    GamePlayController.getInstance().updateWholeMap();
+                    GamePlayController.getInstance().updateTechnologyBox();
+                    GamePlayController.getInstance().updateCurrencyBar();
                 }
             });
-
-
         }
     }
 
