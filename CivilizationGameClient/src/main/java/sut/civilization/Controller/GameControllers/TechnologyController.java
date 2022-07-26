@@ -17,12 +17,16 @@ public class TechnologyController extends GameController {
                 if (technologyType.fathers != null){
                     for (TechnologyType father : technologyType.fathers) {
                         if (!nation.hasTechnology(father)){
-                            return "You don't have the required technologies";
+                            return "You don't have the required technologies!";
+                        }
+                        if (nation.getScience().getBalance() < 5){
+                            return "You don't have the required amount of science!";
                         }
                     }
                 }
 
                 nation.setInProgressTechnology(technologyType);
+                nation.getScience().addBalance(-5);
                 nation.setTechnologyTurns(technologyType.turns);
                 return "Technology added successfully";
             }
