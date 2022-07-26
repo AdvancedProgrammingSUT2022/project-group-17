@@ -89,6 +89,14 @@ public class GameController extends Controller {
         Game.instance.getPlayersInGame().get(playerNum).setNation(nation);
     }
 
+    public static ResourceType getResourceType(String name){
+        for (ResourceType resourceType : ResourceType.values()) {
+            if (resourceType.name.equals(name))
+                return resourceType;
+        }
+        return null;
+    }
+
     public ArrayList<String> showResearches() {
         ArrayList<String> output = new ArrayList<>();
         output.add("All of " + currentTurnUser.getNation().getNationType().name + "'s technologies:");
@@ -244,6 +252,19 @@ public class GameController extends Controller {
         return "ready";
     }
 
+    public static void checkWinLose(){
+        if (Game.instance.getPlayersInGame().size() == 1){
+            User user = Game.instance.getPlayersInGame().get(0);
+            user.setGameState(User.GameState.WIN);
+        }
+        for (User user : Game.instance.getPlayersInGame()) {
+            Nation nation = user.getNation();
+            if (nation.getCities().size() == 0){
+                user.setGameState(User.GameState.LOSE);
+            }
+        }
+    }
+
     public static String nextPlayerTurn() {
         String readyState = isReadyForNextTurn();
         switch (readyState) {
@@ -373,6 +394,8 @@ public class GameController extends Controller {
         CityController.updateAffordableLands();
 
         LandController.updateDistances();
+        
+        checkWinLose();
 //        GamePlayController.getInstance().updateWholeMap();
 //        GamePlayController.getInstance().updateTechnologyBox();
     }
