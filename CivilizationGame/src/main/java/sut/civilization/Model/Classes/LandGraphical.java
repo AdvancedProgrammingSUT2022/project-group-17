@@ -125,7 +125,7 @@ public class LandGraphical extends Polygon {
     }
 
     public void updateMap() {
-        LandController.updateLandVisibility();
+//        LandController.updateLandVisibility();
 
         StringBuilder landInfo = new StringBuilder(land.getLandType().name + " at (" + land.getI() + " , " + land.getJ() + ")");
 
@@ -156,6 +156,7 @@ public class LandGraphical extends Polygon {
         }
 
         if (land.getOwnerCity() != null) {
+            System.out.println(cityImageView);
             cityImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResource(land.getOwnerCity().getOwnerNation().getNationType().nationImageAddress)).toExternalForm()));
             landInfo.append("\nCity: ").append(land.getOwnerCity().name);
             if (land != land.getOwnerCity().getMainLand()) {
@@ -164,7 +165,6 @@ public class LandGraphical extends Polygon {
             }
         } else {
             cityImageView.setImage(null);
-            System.out.println("hooloo");
         }
 
         if (land.getImprovement() != null) {
