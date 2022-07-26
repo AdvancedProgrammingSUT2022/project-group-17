@@ -1,7 +1,7 @@
 package sut.civilization.Model.ModulEnums;
 
 public enum RangedCombatUnitType {
-    ARCHER("Archer", 70, 4, 6, 2, 2, null,
+    ARCHER("Archer", 70, 4, 6, 10, 2, null,
             TechnologyType.ARCHERY, 10, false),
     CHARIOT_ARCHER("Chariot Archer", 60, 3, 6, 2, 4,
             ResourceType.HORSE, TechnologyType.THE_WHEEL, 10, false),

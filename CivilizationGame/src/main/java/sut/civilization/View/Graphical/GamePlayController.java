@@ -37,7 +37,7 @@ public class GamePlayController extends ViewController {
     @FXML
     private ScrollPane mapScrollPane;
     private final static LandGraphical[][] graphicalMap = new LandGraphical[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
-    public AnchorPane root;
+    public AnchorPane root = new AnchorPane();
     private final Popup infoPopup = new Popup();
     private final Popup unitPopup = new Popup();
     private final Popup cityPopup = new Popup();
@@ -266,7 +266,7 @@ public class GamePlayController extends ViewController {
         demandButton.setOnMouseClicked(mouseEvent -> {
             for (Node child : mySuppliesVBox.getChildren()) {
                 TextField textField;
-                if (!(textField = (TextField)((HBox) child).getChildren().get(3)).getText().equals("")) {
+                if (!(textField = (TextField) ((HBox) child).getChildren().get(3)).getText().equals("")) {
                     for (ResourceType resourceType : ResourceType.values()) {
                         if (((Label) ((HBox) child).getChildren().get(1)).getText().equals(resourceType.name)) {
                             String message = NationController.sendTradeRequest(
@@ -619,12 +619,35 @@ public class GamePlayController extends ViewController {
                                 int finalI = i;
                                 int finalJ = j;
                                 graphicalMap[i][j].getCityImageView().setOnMouseClicked(mouseEvent1 -> {
-                                    String message = UnitController.unitSetCityTarget(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                    City city = Game.instance.map[finalI][finalJ].getOwnerCity();
+                                    String message = UnitController.unitSetCityTarget(city);
                                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                                    if (city.getHP() <= 0) {
+                                        Button destroyCity = new Button("Destroy city");
+                                        destroyCity.setOnMouseClicked(mouseEvent2 -> {
+                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 1);
+                                            updateWholeMap();
+                                            infoPopup.hide();
+                                        });
+                                        VBox.setMargin(destroyCity, new Insets(5));
+                                        Button takeOverCity = new Button("Take over city");
+                                        takeOverCity.setOnMouseClicked(mouseEvent2 ->
+                                                UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 2));
+                                        VBox.setMargin(takeOverCity, new Insets(5));
+                                        Button annexCity = new Button("Annex city");
+                                        annexCity.setOnMouseClicked(mouseEvent2 ->
+                                                UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 3));
+                                        VBox.setMargin(annexCity, new Insets(5));
+
+                                        VBox vBox = new VBox(destroyCity, takeOverCity, annexCity);
+                                        vBox.setPadding(new Insets(20));
+
+                                        scrollPanePopup(vBox);
+                                    }
                                     updateWholeMap();
                                     graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
-                                        if (Game.instance.map[finalI][finalJ].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
-                                            GameController.setSelectedCity(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                        if (city.getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCity(city);
                                             GamePlayController.getInstance().showCityPanel();
                                         }
                                     });

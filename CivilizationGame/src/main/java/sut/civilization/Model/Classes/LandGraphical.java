@@ -162,7 +162,10 @@ public class LandGraphical extends Polygon {
                 cityImageView.setOpacity(0.5);
                 cityImageView.setOnMouseClicked(null);
             }
-        } else cityImageView.setImage(null);
+        } else {
+            cityImageView.setImage(null);
+            System.out.println("hooloo");
+        }
 
         if (land.getImprovement() != null) {
             improvementImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(land.getImprovement().getImprovementType().onTileImageAddress))));

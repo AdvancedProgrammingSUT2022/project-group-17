@@ -5,6 +5,7 @@ import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 import sut.civilization.View.Graphical.GamePlayController;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
@@ -161,8 +162,8 @@ public class UnitController extends GameController {
         unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getMP()));
         if (Game.instance.map[next.x][next.y].getLandFeature() != null)
             unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getLandFeature().getLandFeatureType().movementCost));
-        if (Game.instance.map[next.x][next.y].getZOC() != null){
-            if (!Game.instance.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())){
+        if (Game.instance.map[next.x][next.y].getZOC() != null) {
+            if (!Game.instance.map[next.x][next.y].getZOC().getOwnerNation().equals(unit.getOwnerNation())) {
                 unit.setMP(0);
             }
         }
@@ -254,7 +255,7 @@ public class UnitController extends GameController {
             } else if (selectedCombatUnit instanceof RangedCombatUnit) {
                 int unitNum = LandController.getLandNumber(Game.instance.map[selectedCombatUnit.getLocation().x][selectedCombatUnit.getLocation().y]);
                 int cityNum = LandController.getLandNumber(city.getMainLand());
-                if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range <= Game.instance.dist[unitNum][cityNum]) {
+                if (((RangedCombatUnit) selectedCombatUnit).getRangedCombatUnitType().range >= Game.instance.dist[unitNum][cityNum]) {
                     if (!selectedCombatUnit.getOwnerNation().equals(city.getOwnerNation())) {
                         selectedCombatUnit.setTargetCity(city);
                     } else {
@@ -324,10 +325,17 @@ public class UnitController extends GameController {
         if (combatUnit.getHp() <= 0) {
             unitDeath(combatUnit);
         }
-        if (combatUnit.getTargetCity().getHP() <= 0) {
-            CityController.cityDeath(combatUnit.getTargetCity());
-        }
         combatUnit.setTargetCity(null);
+    }
+
+    //TODO use this function in view
+    public static void decideCityFate(City city, CombatUnit combatUnit, int choice){
+        if (choice == 1)
+            CityController.cityDeath(city);
+        if (choice == 2)
+            CityController.cityTakeOver(city, combatUnit.getOwnerNation());
+        if (choice == 3)
+            CityController.cityBecomeColony(city, combatUnit.getOwnerNation());
     }
 
     public static void unitAttackUnit(CombatUnit combatUnit) {
@@ -342,7 +350,7 @@ public class UnitController extends GameController {
                 if (target.getHp() <= 0) {
                     unitDeath(target);
                 }
-            }else if (target instanceof RangedCombatUnit){
+            } else if (target instanceof RangedCombatUnit) {
                 target.setHp(target.getHp() - combatUnit.getCombatStrength());
                 if (combatUnit.getHp() <= 0) {
                     unitDeath(combatUnit);
@@ -366,7 +374,7 @@ public class UnitController extends GameController {
                 if (target.getHp() <= 0) {
                     unitDeath(target);
                 }
-            }else if (target instanceof RangedCombatUnit){
+            } else if (target instanceof RangedCombatUnit) {
                 target.setHp(target.getHp() - ((RangedCombatUnit) combatUnit).getRangedStrength());
                 if (combatUnit.getHp() <= 0) {
                     unitDeath(combatUnit);
@@ -468,6 +476,7 @@ public class UnitController extends GameController {
                     }
                     selectedCity.addBuilding(buildingType);
                     selectedCity.getOwnerNation().getCoin().addBalance(-buildingType.cost);
+                    checkBuildingEffects(selectedCity, buildingType);
                     return "Building purchased successfully";
                 }
             }
@@ -502,9 +511,7 @@ public class UnitController extends GameController {
                     return "Civilized unit is set for creation successfully";
                 }
             }
-        }
-
-        else if (type.equals("close combat unit")) {
+        } else if (type.equals("close combat unit")) {
             if (selectedCity.getMainLand().getCombatUnit() != null) {
                 return "There is already a combat unit in this location";
             }
@@ -523,9 +530,7 @@ public class UnitController extends GameController {
                     return "Close combat unit is set for creation successfully";
                 }
             }
-        }
-
-        else if (type.equals("ranged combat unit")) {
+        } else if (type.equals("ranged combat unit")) {
             if (selectedCity.getMainLand().getCombatUnit() != null) {
                 return "There is already a combat unit in this location";
             }
@@ -544,9 +549,7 @@ public class UnitController extends GameController {
                     return "Ranged combat unit is set for creation successfully";
                 }
             }
-        }
-
-        else if (type.equals("building")) {
+        } else if (type.equals("building")) {
             for (BuildingType buildingType : BuildingType.values()) {
                 if (buildingType.name.equals(name)) {
                     Building building = new Building(buildingType);
@@ -561,6 +564,78 @@ public class UnitController extends GameController {
         return "invalid command";
     }
 
+    public static void checkBuildingEffects(City city, BuildingType buildingType) {
+        Nation nation = city.getOwnerNation();
+        if (buildingType.equals(BuildingType.GRANARY)) {
+            nation.getFood().addBalance(2);
+        }
+
+        if (buildingType.equals(BuildingType.LIBRARY)) {
+            nation.getScience().addBalance(city.getCitizens() / 2);
+        }
+
+        if (buildingType.equals(BuildingType.WALLS)) {
+            city.setCombatStrength(city.getCombatStrength() + 5);
+        }
+
+        if (buildingType.equals(BuildingType.WATER_MILL)) {
+            nation.getFood().addBalance(2);
+        }
+
+        if (buildingType.equals(BuildingType.BURIAL_TOMB)) {
+            nation.getHappiness().addBalance(2);
+        }
+
+        if (buildingType.equals(BuildingType.CIRCUS)) {
+            nation.getHappiness().addBalance(3);
+        }
+
+        if (buildingType.equals(BuildingType.COLOSSEUM)){
+            nation.getHappiness().addBalance(4);
+        }
+
+        if (buildingType.equals(BuildingType.CASTLE)){
+            city.setCombatStrength(city.getCombatStrength() + 7);
+        }
+
+        if (buildingType.equals(BuildingType.MARKET)){
+            nation.getCoin().addGrowthRate(nation.getCoin().getGrowthRate() / 4);
+        }
+
+        if (buildingType.equals(BuildingType.MINT)){
+
+        }
+
+        if (buildingType.equals(BuildingType.UNIVERSITY)){
+            nation.getScience().addGrowthRate(nation.getScience().getGrowthRate() / 2);
+        }
+
+        if (buildingType.equals(BuildingType.BANK)){
+            nation.getCoin().addGrowthRate(nation.getCoin().getGrowthRate() / 4);
+        }
+
+        if (buildingType.equals(BuildingType.PUBLIC_SCHOOL)){
+            nation.getScience().addGrowthRate(nation.getScience().getGrowthRate() / 2);
+        }
+
+        if (buildingType.equals(BuildingType.SATRAPS_COURT)){
+            nation.getCoin().addGrowthRate(nation.getCoin().getGrowthRate() / 4);
+            nation.getHappiness().addBalance(2);
+        }
+
+        if (buildingType.equals(BuildingType.THEATER)){
+            nation.getHappiness().addBalance(4);
+        }
+
+        if (buildingType.equals(BuildingType.MILITARY_BASE)){
+            city.setCombatStrength(city.getCombatStrength() + 12);
+        }
+
+        if (buildingType.equals(BuildingType.STOCK_EXCHANGE)){
+            nation.getCoin().addGrowthRate(nation.getCoin().getGrowthRate() / 3);
+        }
+    }
+
     public static void ProductCreate(City city) {
 
         if (city.getInProgressCivilizedUnit() != null) {
@@ -568,26 +643,21 @@ public class UnitController extends GameController {
             city.getMainLand().setCivilizedUnit(newCivilizedUnit);
             city.getOwnerNation().addUnit(newCivilizedUnit);
             city.setInProgressCivilizedUnit(null);
-        }
-
-        else if (city.getInProgressCloseCombatUnit() != null) {
+        } else if (city.getInProgressCloseCombatUnit() != null) {
             CloseCombatUnit newCloseCombatUnit = city.getInProgressCloseCombatUnit();
             city.getMainLand().setCombatUnit(newCloseCombatUnit);
             city.getOwnerNation().addUnit(newCloseCombatUnit);
             city.setInProgressCloseCombatUnit(null);
-        }
-
-        else if (city.getInProgressRangedCombatUnit() != null) {
+        } else if (city.getInProgressRangedCombatUnit() != null) {
             RangedCombatUnit newRangedCombatUnit = city.getInProgressRangedCombatUnit();
             city.getMainLand().setCombatUnit(newRangedCombatUnit);
             city.getOwnerNation().addUnit(newRangedCombatUnit);
             city.setInProgressRangedCombatUnit(null);
-        }
-
-        else if (city.getInProgressBuilding() != null) {
+        } else if (city.getInProgressBuilding() != null) {
             Building newBuilding = city.getInProgressBuilding();
             city.addBuilding(newBuilding.getBuildingType());
             city.setInProgressBuilding(null);
+            checkBuildingEffects(city, city.getInProgressBuilding().getBuildingType());
         }
 
         city.setHasAnInProgressProduct(false);
