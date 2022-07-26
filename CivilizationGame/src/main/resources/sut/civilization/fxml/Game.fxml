@@ -28,6 +28,14 @@
     </VBox>
     <HBox alignment="CENTER_RIGHT" layoutX="619.0" prefHeight="30.0" prefWidth="747.0" style="-fx-background-color: #212121;">
         <children>
+         <ImageView fitHeight="20.0" fitWidth="25.0" onMouseClicked="#showTradePanel" pickOnBounds="true" preserveRatio="true">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+            <image>
+               <Image url="@../Images/otherIcons/trade.png" />
+            </image>
+         </ImageView>
             <ImageView fitHeight="28.0" fitWidth="45.0" onMouseClicked="#showDiplomacies" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@../Images/otherIcons/diplomacy.png" />

@@ -191,35 +191,70 @@ public class LandController extends Controller {
 
     public static Pair<Integer, Integer> getNeighborIndex(Pair<Integer, Integer> coordinate, int position) {
         if (coordinate.y % 2 == 0) {
-            switch (position) {
-                case 0:
-                    return new Pair<>(coordinate.x, coordinate.y - 1);
-                case 1:
-                    return new Pair<>(coordinate.x + 1, coordinate.y - 1);
-                case 2:
-                    return new Pair<>(coordinate.x + 1, coordinate.y);
-                case 3:
-                    return new Pair<>(coordinate.x, coordinate.y + 1);
-                case 4:
-                    return new Pair<>(coordinate.x - 1, coordinate.y);
-                case 5:
-                    return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+            if (coordinate.x % 2 == 0) {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y - 1);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y + 1);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y + 1);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                }
             }
         } else {
-            switch (position) {
-                case 0:
-                    return new Pair<>(coordinate.x, coordinate.y - 1);
-                case 1:
-                    return new Pair<>(coordinate.x + 1, coordinate.y);
-                case 2:
-                    return new Pair<>(coordinate.x + 1, coordinate.y + 1);
-                case 3:
-                    return new Pair<>(coordinate.x, coordinate.y + 1);
-                case 4:
-                    return new Pair<>(coordinate.x - 1, coordinate.y + 1);
-                case 5:
-                    return new Pair<>(coordinate.x - 1, coordinate.y);
+            if (coordinate.x % 2 == 0) {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y - 1);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y - 1);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return new Pair<>(coordinate.x, coordinate.y - 1);
+                    case 1:
+                        return new Pair<>(coordinate.x + 1, coordinate.y);
+                    case 2:
+                        return new Pair<>(coordinate.x + 1, coordinate.y + 1);
+                    case 3:
+                        return new Pair<>(coordinate.x, coordinate.y + 1);
+                    case 4:
+                        return new Pair<>(coordinate.x - 1, coordinate.y + 1);
+                    case 5:
+                        return new Pair<>(coordinate.x - 1, coordinate.y);
+                }
             }
+
         }
         return null;
     }
@@ -312,26 +347,26 @@ public class LandController extends Controller {
         }
 
 
-        CivilizedUnit settler1 = new CivilizedUnit(
-                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
-        );
+//        CivilizedUnit settler1 = new CivilizedUnit(
+//                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 3)
+//        );
         CivilizedUnit settler2 = new CivilizedUnit(
-                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(5, 5)
+                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(3, 3)
         );
-        map[settler1.getLocation().x][settler1.getLocation().y].setCivilizedUnit(settler1);
+//        map[settler1.getLocation().x][settler1.getLocation().y].setCivilizedUnit(settler1);
         map[settler2.getLocation().x][settler2.getLocation().y].setCivilizedUnit(settler2);
-        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(settler1);
+//        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(settler1);
         Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(settler2);
 
-//        RangedCombatUnit archer = new RangedCombatUnit(
-//                RangedCombatUnitType.ARCHER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
-//        );
+        RangedCombatUnit archer = new RangedCombatUnit(
+                RangedCombatUnitType.ARCHER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
+        );
 //        CloseCombatUnit warrior = new CloseCombatUnit(
 //                CloseCombatUnitType.WARRIOR, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(3, 2)
 //        );
-//        map[archer.getLocation().x][archer.getLocation().y].setCombatUnit(archer);
+        map[archer.getLocation().x][archer.getLocation().y].setCombatUnit(archer);
 //        map[warrior.getLocation().x][warrior.getLocation().y].setCombatUnit(warrior);
-//        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(archer);
+        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(archer);
 //        Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(warrior);
 
 
@@ -365,9 +400,13 @@ public class LandController extends Controller {
 //        for (TechnologyType technologyType : TechnologyType.values()) {
 //            GameController.getCurrentTurnUser().getNation().addTechnology(technologyType);
 //        }
-//        for (ResourceType resourceType: ResourceType.values()) {
-//            GameController.getCurrentTurnUser().getNation().addResource(resourceType);
-//        }
+        for (ResourceType resourceType: ResourceType.values()) {
+            Random random1 = new Random();
+            for (int i = 0; i < random1.nextInt(5); i++) {
+                GameController.getCurrentTurnUser().getNation().addResource(resourceType);
+                Game.instance.getPlayersInGame().get(1).getNation().addResource(resourceType);
+            }
+        }
 
 //        GameController.getCurrentTurnUser().getNation().getCities().get(0).setInProgressBuilding(new Building(BuildingType.BANK));
 

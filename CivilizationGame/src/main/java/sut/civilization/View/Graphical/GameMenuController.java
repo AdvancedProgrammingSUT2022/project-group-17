@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import sut.civilization.Controller.GameControllers.CityController;
 import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Controller.GameControllers.TechnologyController;
 import sut.civilization.Enums.Menus;
@@ -45,13 +46,14 @@ public class GameMenuController {
 //                System.out.println(user.getNation().getNationType().name);
 //                System.out.println(user.getUsername());
 //            }
+
             Game.instance.setMap(LandController.mapInitializer());
 
             LandController.initializeDistances();
             LandController.updateDistances();
             TechnologyController.updateNextAvailableTechnologies();
+            CityController.updateAffordableLands();
 
-            Game.instance.setMap(LandController.mapInitializer());
             Game.instance.changeScene(Menus.GAME_MENU);
         }
     }

@@ -27,18 +27,17 @@ import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 import static javafx.scene.paint.Color.WHITE;
-import static javafx.scene.paint.Color.web;
 
 public class GamePlayController extends ViewController {
     @FXML
     private ScrollPane mapScrollPane;
     private final static LandGraphical[][] graphicalMap = new LandGraphical[Consts.MAP_SIZE.amount.x][Consts.MAP_SIZE.amount.y];
-    public AnchorPane root;
+    public AnchorPane root = new AnchorPane();
     private final Popup infoPopup = new Popup();
     private final Popup unitPopup = new Popup();
     private final Popup cityPopup = new Popup();
@@ -218,36 +217,168 @@ public class GamePlayController extends ViewController {
         scrollPanePopup(allNationsVBox);
     }
 
+    public void showDiplomacyPanel(Nation nation) {
+        Label diplomacyWith = new Label("Diplomacy with " + nation.getNationType().name);
+        diplomacyWith.getStyleClass().add("header");
+        ImageView hisLeaderImage = new ImageView(new Image(
+                Objects.requireNonNull(Civilization.class.getResourceAsStream(nation.getNationType().leaderImageAddress))
+        ));
+        hisLeaderImage.setFitWidth(100);
+        hisLeaderImage.setFitHeight(100);
+
+        VBox mySuppliesVBox = new VBox();
+        for (ResourceType resourceType : ResourceType.values()) {
+            if (GameController.getCurrentTurnUser().getNation().getResourceCellar().get(resourceType) > 0) {
+                ImageView resourceImage = new ImageView(resourceType.image);
+                resourceImage.setFitWidth(40);
+                resourceImage.setFitHeight(40);
+                Label resourceName = new Label(resourceType.name);
+                resourceName.setTextFill(WHITE);
+                resourceName.setPrefWidth(70);
+                Label resourceNumber = new Label(String.valueOf(
+                        GameController.getCurrentTurnUser().getNation().getResourceCellar().get(resourceType)
+                ));
+                resourceNumber.setPrefWidth(50);
+                resourceNumber.setTextFill(WHITE);
+                resourceName.setStyle("-fx-label-padding: 0 10 0 0;");
+                resourceNumber.setStyle("-fx-label-padding: 0 10 0 0;");
+                TextField numberTextField = new TextField();
+                numberTextField.setPrefWidth(50);
+                HBox eachResource = new HBox(resourceImage, resourceName, resourceNumber, numberTextField);
+                eachResource.setAlignment(Pos.CENTER_LEFT);
+                mySuppliesVBox.getChildren().add(eachResource);
+            }
+        }
+        ScrollPane mySuppliesScrollPane = new ScrollPane(mySuppliesVBox);
+        mySuppliesScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        mySuppliesScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        mySuppliesVBox.setPrefHeight(300);
+        mySuppliesVBox.setPrefWidth(300);
+        VBox myVBox = new VBox(hisLeaderImage, mySuppliesScrollPane);
+        myVBox.setMaxHeight(500);
+        myVBox.setAlignment(Pos.CENTER);
+
+        HBox tradesHBox = new HBox(myVBox);
+        tradesHBox.setAlignment(Pos.CENTER);
+
+        Button demandButton = new Button("Demand");
+        VBox.setMargin(demandButton, new Insets(10));
+        demandButton.setOnMouseClicked(mouseEvent -> {
+            for (Node child : mySuppliesVBox.getChildren()) {
+                TextField textField;
+                if (!(textField = (TextField) ((HBox) child).getChildren().get(3)).getText().equals("")) {
+                    for (ResourceType resourceType : ResourceType.values()) {
+                        if (((Label) ((HBox) child).getChildren().get(1)).getText().equals(resourceType.name)) {
+                            String message = NationController.sendTradeRequest(
+                                    resourceType, Integer.parseInt(textField.getText()), nation);
+                            showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                        }
+                    }
+                }
+            }
+        });
+        Button declareWarButton = new Button("Declare War!");
+        VBox.setMargin(declareWarButton, new Insets(10));
+        declareWarButton.setStyle("-fx-background-color: red;");
+        declareWarButton.setOnMouseClicked(mouseEvent -> {
+            String message = NationController.declareWar(nation);
+            showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+        });
+        Button peaceButton = new Button("Peace");
+        peaceButton.setStyle("-fx-background-color: green;");
+        VBox.setMargin(peaceButton, new Insets(10));
+        peaceButton.setOnMouseClicked(mouseEvent -> {
+            String message = NationController.initiatePeace(nation);
+            showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+        });
+        VBox wholeDiplomacy = new VBox(diplomacyWith, tradesHBox, demandButton, declareWarButton, peaceButton);
+        wholeDiplomacy.setAlignment(Pos.TOP_CENTER);
+        wholeDiplomacy.setMaxHeight(700);
+        wholeDiplomacy.getStyleClass().add("infoList");
+        wholeDiplomacy.setPadding(new Insets(20));
+
+        infoPopup.hide();
+        scrollPanePopup(wholeDiplomacy);
+    }
+
     public void showDemographics() {
         int nationNumber = Game.instance.getPlayersInGame().size();
         HBox[] eachNationHBox = new HBox[nationNumber];
         int i = 0;
         for (User user : Game.instance.getPlayersInGame()) {
-            ImageView avatar = new ImageView(new Image(user.getNation().getNationType().leaderImageAddress));
+            Nation nation = user.getNation();
+            ImageView avatar = new ImageView(new Image(nation.getNationType().leaderImageAddress));
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
-            Label nationName = new Label(user.getNation().getNationType().name);
+            Label nationName = new Label(nation.getNationType().name);
             nationName.getStyleClass().add("infoBoldColumn");
             int population = 0;
             int landNum = 0;
-            for (City city : user.getNation().getCities()) {
+            for (City city : nation.getCities()) {
                 population += city.getCitizens();
                 landNum += city.getLands().size();
             }
             Label Population = new Label("Population: " + population);
             Population.getStyleClass().add("infoColumns");
-            Label units = new Label("units: " + user.getNation().getUnits().size());
+            Label units = new Label("units: " + nation.getUnits().size());
             units.getStyleClass().add("infoColumns");
             Label lands = new Label("lands: " + landNum);
             lands.getStyleClass().add("infoColumns");
             eachNationHBox[i] = new HBox(avatar, nationName, Population, units, lands);
             eachNationHBox[i].setPrefHeight(100);
             eachNationHBox[i].setAlignment(Pos.CENTER_LEFT);
+            if (nation != GameController.getCurrentTurnUser().getNation()) {
+                eachNationHBox[i].setOnMouseClicked(mouseEvent -> showDiplomacyPanel(nation));
+            }
 
             i++;
         }
 
         showInfoPanel(eachNationHBox);
+    }
+
+    public void showTradePanel() {
+        if (!GameController.getCurrentTurnUser().getNation().getTrade().isEmpty()) {
+            HashMap<String, String> trade = GameController.getCurrentTurnUser().getNation().getTrade();
+            ImageView nationImage = new ImageView(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
+                    Objects.requireNonNull(NationController.getNation(trade.get("nation"))).getNationType().nationImageAddress
+            ))));
+            nationImage.setFitWidth(50);
+            nationImage.setFitHeight(50);
+            Label nationName = new Label(trade.get("nation"));
+            nationName.setTextFill(WHITE);
+            nationName.setStyle("-fx-font-size: 18; -fx-label-padding: 10 30 10 10;");
+            Label resourceName = new Label(trade.get("ResourceType"));
+            resourceName.setTextFill(WHITE);
+            resourceName.setStyle("-fx-font-size: 18; -fx-label-padding: 10;");
+            Label resourceAmount = new Label(trade.get("amount"));
+            resourceAmount.setTextFill(WHITE);
+            resourceAmount.setStyle("-fx-font-size: 18; -fx-label-padding: 10;");
+
+            HBox tradesHBox = new HBox(nationImage, nationName, resourceName, resourceAmount);
+            tradesHBox.setAlignment(Pos.CENTER_LEFT);
+            Button accept = new Button("Accept");
+            accept.setStyle("-fx-background-color: green;");
+            accept.setOnMouseClicked(mouseEvent -> {
+                String message = NationController.showTradeRequest(1);
+                showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                updateCurrencyBar();
+            });
+            Button reject = new Button("Reject");
+            reject.setStyle("-fx-background-color: red;");
+            reject.setOnMouseClicked(mouseEvent -> {
+                String message = NationController.showTradeRequest(0);
+                showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+            });
+            HBox buttons = new HBox(accept, reject);
+
+            VBox wholeTrade = new VBox(tradesHBox, buttons);
+            wholeTrade.setAlignment(Pos.TOP_CENTER);
+            wholeTrade.getStyleClass().add("infoList");
+            wholeTrade.setPadding(new Insets(20));
+
+            scrollPanePopup(wholeTrade);
+        }
     }
 
 
@@ -488,12 +619,42 @@ public class GamePlayController extends ViewController {
                                 int finalI = i;
                                 int finalJ = j;
                                 graphicalMap[i][j].getCityImageView().setOnMouseClicked(mouseEvent1 -> {
-                                    String message = UnitController.unitSetCityTarget(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                    City city = Game.instance.map[finalI][finalJ].getOwnerCity();
+                                    String message = UnitController.unitSetCityTarget(city);
                                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
+                                    if (city.getHP() <= 0) {
+                                        Button destroyCity = new Button("Destroy city");
+                                        destroyCity.setOnMouseClicked(mouseEvent2 -> {
+                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 1);
+                                            updateWholeMap();
+                                            infoPopup.hide();
+                                        });
+                                        VBox.setMargin(destroyCity, new Insets(5));
+                                        Button takeOverCity = new Button("Take over city");
+                                        takeOverCity.setOnMouseClicked(mouseEvent2 -> {
+                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 2);
+                                            updateWholeMap();
+                                            infoPopup.hide();
+                                        });
+                                        VBox.setMargin(takeOverCity, new Insets(5));
+                                        Button annexCity = new Button("Annex city");
+                                        annexCity.setOnMouseClicked(mouseEvent2 -> {
+                                            UnitController.decideCityFate(city, GameController.getSelectedCombatUnit(), 3);
+                                            updateWholeMap();
+                                            infoPopup.hide();
+                                        });
+                                        VBox.setMargin(annexCity, new Insets(5));
+
+                                        VBox vBox = new VBox(destroyCity, takeOverCity, annexCity);
+                                        vBox.setPadding(new Insets(20));
+
+                                        scrollPanePopup(vBox);
+                                        ((BorderPane)infoPopup.getContent().get(0)).setTop(null);
+                                    }
                                     updateWholeMap();
                                     graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
-                                        if (Game.instance.map[finalI][finalJ].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
-                                            GameController.setSelectedCity(Game.instance.map[finalI][finalJ].getOwnerCity());
+                                        if (city.getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCity(city);
                                             GamePlayController.getInstance().showCityPanel();
                                         }
                                     });
@@ -1231,9 +1392,7 @@ public class GamePlayController extends ViewController {
         borderPane.setLayoutY(10);
         borderPane.setMaxHeight(738);
         ImageView ex = exCreator();
-        ex.setOnMouseClicked(mouseEvent -> {
-            cityPopup.getContent().remove(cityPopup.getContent().size() - 1);
-        });
+        ex.setOnMouseClicked(mouseEvent -> cityPopup.getContent().remove(cityPopup.getContent().size() - 1));
         borderPane.setTop(ex);
 
         cityPopup.getContent().add(borderPane);
@@ -1406,9 +1565,7 @@ public class GamePlayController extends ViewController {
         borderPane.setLayoutY(10);
         borderPane.setMaxHeight(738);
         ImageView ex = exCreator();
-        ex.setOnMouseClicked(mouseEvent -> {
-            cityPopup.getContent().remove(cityPopup.getContent().size() - 1);
-        });
+        ex.setOnMouseClicked(mouseEvent -> cityPopup.getContent().remove(cityPopup.getContent().size() - 1));
         borderPane.setTop(ex);
 
         cityPopup.getContent().add(borderPane);
