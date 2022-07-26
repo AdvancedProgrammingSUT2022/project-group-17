@@ -1,13 +1,24 @@
 
-Button {
-    -fx-background-color: white;
-    -fx-padding: 25;
-    -fx-background-insets: 15;
-    -fx-cursor: hand;
+Button:hover{
+    -fx-pref-width: 200;
+    -fx-pref-height: 50;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-text-fill: white;
+    -fx-background-color: rgb(102, 204, 204);
+    -fx-border-color: white;
+
 }
 
-Button:hover {
-    -fx-background-color: gray;
+Button {
+    -fx-pref-width: 200;
+    -fx-pref-height: 50;
+    -fx-border-width: 2px;
+    -fx-background-radius: 20;
+    -fx-background-color: white;
+    -fx-text-fill: rgb(102, 204, 204);
+    -fx-cursor: hand;
+    -fx-font-size: 20;
 }
 
 ImageView {
@@ -39,8 +50,8 @@ ImageView {
 }
 
 .avatar {
-    -fx-width: 80;
-    -fx-height: 80;
+    -fx-width: 30;
+    -fx-height: 30;
     -fx-padding: 10;
 }
 

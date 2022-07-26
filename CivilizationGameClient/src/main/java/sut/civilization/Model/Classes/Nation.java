@@ -13,7 +13,6 @@ import java.util.Objects;
 
 public class Nation {
 
-
     protected ArrayList<City> cities = new ArrayList<>();
     protected City capital;
     protected NationType nationType;
@@ -21,6 +20,7 @@ public class Nation {
     protected HashMap<ResourceType,Integer> resourceCellar = new HashMap<>();
     protected HashMap<TechnologyType,Boolean> technologies = new HashMap<>();
     protected HashMap<BuildingType,Boolean> buildings = new HashMap<>();
+    protected HashMap<String, String> trade = new HashMap<>();
 
     protected ArrayList<Nation> friends = new ArrayList<>();
     protected ArrayList<Nation> enemies = new ArrayList<>();
@@ -139,12 +139,20 @@ public class Nation {
         this.capital = capital;
     }
 
-    public void setFriends(ArrayList<Nation> friends) {
-        this.friends = friends;
+    public void addFriend(Nation friend) {
+        this.friends.add(friend);
     }
 
-    public void setEnemies(ArrayList<Nation> enemies) {
-        this.enemies = enemies;
+    public void removeFriend(Nation friend) {
+        this.friends.remove(friend);
+    }
+
+    public void addEnemy(Nation enemy) {
+        this.enemies.add(enemy);
+    }
+
+    public void removeEnemy(Nation enemy) {
+        this.enemies.remove(enemy);
     }
 
     public void setNationType(NationType nationType) {
@@ -232,6 +240,13 @@ public class Nation {
         this.nextTechnologies.clear();
     }
 
+    public HashMap<String, String> getTrade() {
+        return trade;
+    }
+
+    public void putTrade(String key, String value){
+        trade.put(key, value);
+    }
     @Override
     public String toString() {
         return "Nation{" +

@@ -6,30 +6,10 @@
     <score>0</score>
     <nation>
       <cities/>
-      <nationType>FRANCE</nationType>
+      <nationType>EGYPT</nationType>
       <resourceCellar>
         <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>WHEAT</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>JEWEL</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SILVER</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SHEEP</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>COTTON</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>FUR</sut.civilization.Model.ModulEnums.ResourceType>
+          <sut.civilization.Model.ModulEnums.ResourceType>TUSK</sut.civilization.Model.ModulEnums.ResourceType>
           <int>0</int>
         </entry>
         <entry>
@@ -37,39 +17,15 @@
           <int>0</int>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>TUSK</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>HORSE</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>BANANA</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>COAL</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>MARBLE</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SILK</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>GOLD</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SUGAR</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
           <sut.civilization.Model.ModulEnums.ResourceType>DEER</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>FUMIGATION</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>COTTON</sut.civilization.Model.ModulEnums.ResourceType>
           <int>0</int>
         </entry>
         <entry>
@@ -77,53 +33,61 @@
           <int>0</int>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>FUMIGATION</sut.civilization.Model.ModulEnums.ResourceType>
+          <sut.civilization.Model.ModulEnums.ResourceType>SUGAR</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>WHEAT</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>COAL</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>HORSE</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>SHEEP</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>GOLD</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>JEWEL</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>SILK</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>SILVER</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>FUR</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>BANANA</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>MARBLE</sut.civilization.Model.ModulEnums.ResourceType>
           <int>0</int>
         </entry>
       </resourceCellar>
       <technologies>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>HORSEBACK_RIDING</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MILITARY_SCIENCE</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>RAILROAD</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
           <sut.civilization.Model.ModulEnums.TechnologyType>POTTERY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>THEOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>TRAPPING</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>PHILOSOPHY</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CIVIL_SERVICE</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>TELEGRAPH</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CALENDAR</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>WRITING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>REPLACEABLE_PARTS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -131,31 +95,19 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>FERTILIZER</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ACOUSTICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CURRENCY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>RIFLING</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CONSTRUCTION</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>RAILROAD</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MATHEMATICS</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ECONOMICS</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>STEEL</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>PRINTING_PRESS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MASONRY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -167,11 +119,27 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>BIOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CHIVALRY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ENGINEERING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>FERTILIZER</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CONSTRUCTION</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>THE_WHEEL</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MINING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>PHILOSOPHY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -179,11 +147,43 @@
           <boolean>true</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MINING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>SCIENTIFIC_THEORY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>STEAM_POWER</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CHEMISTRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>BRONZE_WORKING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>PRINTING_PRESS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CALENDAR</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CURRENCY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>THEOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>METALLURGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>HORSEBACK_RIDING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>COMBUSTION</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -195,23 +195,23 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>RIFLING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>BIOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>COMBUSTION</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MATHEMATICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CHIVALRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CIVIL_SERVICE</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ARCHERY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>PHYSICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>METALLURGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ENGINEERING</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -219,11 +219,11 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CHEMISTRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>STEEL</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>SCIENTIFIC_THEORY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ECONOMICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -231,11 +231,11 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>DYNAMITE</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>TELEGRAPH</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>BRONZE_WORKING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ARCHERY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -243,11 +243,19 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ACOUSTICS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MILITARY_SCIENCE</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MASONRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>DYNAMITE</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>TRAPPING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>WRITING</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -255,45 +263,29 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>REPLACEABLE_PARTS</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>THE_WHEEL</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>PHYSICS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>STEAM_POWER</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
       </technologies>
       <buildings>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BARRACKS</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>ARSENAL</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>COURTHOUSE</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>GARDEN</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>TEMPLE</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>STABLE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>THEATER</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>HOSPITAL</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BROADCAST_TOWER</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>LIBRARY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>CASTLE</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>MUSEUM</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -301,63 +293,23 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MONUMENT</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>CIRCUS</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>WALLS</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
           <sut.civilization.Model.ModulEnums.BuildingType>UNIVERSITY</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BURIAL_TOMB</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>WORKSHOP</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>STOCK_EXCHANGE</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>ARMORY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MARKET</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>PUBLIC_SCHOOL</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>FACTORY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BANK</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>SATRAPS_COURT</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>COLOSSEUM</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>TEMPLE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
           <sut.civilization.Model.ModulEnums.BuildingType>OPERA_HOUSE</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>GRANARY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>CASTLE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -369,27 +321,11 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>HOSPITAL</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>WORKSHOP</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>GRANARY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MILITARY_ACADEMY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>STABLE</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>GARDEN</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MONASTERY</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>BANK</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -397,15 +333,79 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>ARSENAL</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>MILITARY_ACADEMY</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MUSEUM</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>PUBLIC_SCHOOL</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>FACTORY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>BURIAL_TOMB</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>SATRAPS_COURT</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>WALLS</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>LIBRARY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>COLOSSEUM</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>ARMORY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>MONUMENT</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>THEATER</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>CIRCUS</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>COURTHOUSE</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>MONASTERY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>BROADCAST_TOWER</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
           <sut.civilization.Model.ModulEnums.BuildingType>WATER_MILL</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>BARRACKS</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>MARKET</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>STOCK_EXCHANGE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
       </buildings>
@@ -416,8 +416,8 @@
           <ownerNation reference="../../.."/>
           <name>Settler</name>
           <location>
-            <x class="int">5</x>
-            <y class="int">5</y>
+            <x class="int">2</x>
+            <y class="int">2</y>
           </location>
           <hp>10</hp>
           <MP>2</MP>
@@ -471,30 +471,10 @@
     <score>0</score>
     <nation>
       <cities/>
-      <nationType>EGYPT</nationType>
+      <nationType>FRANCE</nationType>
       <resourceCellar>
         <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>WHEAT</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>JEWEL</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SILVER</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SHEEP</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>COTTON</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>FUR</sut.civilization.Model.ModulEnums.ResourceType>
+          <sut.civilization.Model.ModulEnums.ResourceType>TUSK</sut.civilization.Model.ModulEnums.ResourceType>
           <int>0</int>
         </entry>
         <entry>
@@ -502,39 +482,15 @@
           <int>0</int>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>TUSK</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>HORSE</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>BANANA</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>COAL</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>MARBLE</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SILK</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>GOLD</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>SUGAR</sut.civilization.Model.ModulEnums.ResourceType>
-          <int>0</int>
-        </entry>
-        <entry>
           <sut.civilization.Model.ModulEnums.ResourceType>DEER</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>FUMIGATION</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>COTTON</sut.civilization.Model.ModulEnums.ResourceType>
           <int>0</int>
         </entry>
         <entry>
@@ -542,53 +498,61 @@
           <int>0</int>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.ResourceType>FUMIGATION</sut.civilization.Model.ModulEnums.ResourceType>
+          <sut.civilization.Model.ModulEnums.ResourceType>SUGAR</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>WHEAT</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>COAL</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>HORSE</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>SHEEP</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>GOLD</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>JEWEL</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>SILK</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>SILVER</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>FUR</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>BANANA</sut.civilization.Model.ModulEnums.ResourceType>
+          <int>0</int>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.ResourceType>MARBLE</sut.civilization.Model.ModulEnums.ResourceType>
           <int>0</int>
         </entry>
       </resourceCellar>
       <technologies>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>HORSEBACK_RIDING</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MILITARY_SCIENCE</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>RAILROAD</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
           <sut.civilization.Model.ModulEnums.TechnologyType>POTTERY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>THEOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>TRAPPING</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>PHILOSOPHY</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CIVIL_SERVICE</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>TELEGRAPH</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CALENDAR</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>WRITING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>REPLACEABLE_PARTS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -596,31 +560,19 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>FERTILIZER</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ACOUSTICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CURRENCY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>RIFLING</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CONSTRUCTION</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>RAILROAD</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MATHEMATICS</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ECONOMICS</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>STEEL</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>PRINTING_PRESS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MASONRY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -632,11 +584,27 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>BIOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CHIVALRY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ENGINEERING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>FERTILIZER</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CONSTRUCTION</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>THE_WHEEL</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MINING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>PHILOSOPHY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -644,11 +612,43 @@
           <boolean>true</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MINING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>SCIENTIFIC_THEORY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>STEAM_POWER</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CHEMISTRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>BRONZE_WORKING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>PRINTING_PRESS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CALENDAR</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CURRENCY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>THEOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>METALLURGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>HORSEBACK_RIDING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>COMBUSTION</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -660,23 +660,23 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>RIFLING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>BIOLOGY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>COMBUSTION</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MATHEMATICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CHIVALRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>CIVIL_SERVICE</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ARCHERY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>PHYSICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>METALLURGY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ENGINEERING</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -684,11 +684,11 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>CHEMISTRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>STEEL</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>SCIENTIFIC_THEORY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ECONOMICS</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -696,11 +696,11 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>DYNAMITE</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>TELEGRAPH</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>BRONZE_WORKING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>ARCHERY</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -708,11 +708,19 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>ACOUSTICS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>MILITARY_SCIENCE</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>MASONRY</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>DYNAMITE</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>TRAPPING</sut.civilization.Model.ModulEnums.TechnologyType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.TechnologyType>WRITING</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -720,45 +728,29 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>REPLACEABLE_PARTS</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>THE_WHEEL</sut.civilization.Model.ModulEnums.TechnologyType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.TechnologyType>PHYSICS</sut.civilization.Model.ModulEnums.TechnologyType>
+          <sut.civilization.Model.ModulEnums.TechnologyType>STEAM_POWER</sut.civilization.Model.ModulEnums.TechnologyType>
           <boolean>false</boolean>
         </entry>
       </technologies>
       <buildings>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BARRACKS</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>ARSENAL</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>COURTHOUSE</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>GARDEN</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>TEMPLE</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>STABLE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>THEATER</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>HOSPITAL</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BROADCAST_TOWER</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>LIBRARY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>CASTLE</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>MUSEUM</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -766,63 +758,23 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MONUMENT</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>CIRCUS</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>WALLS</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
           <sut.civilization.Model.ModulEnums.BuildingType>UNIVERSITY</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BURIAL_TOMB</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>WORKSHOP</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>STOCK_EXCHANGE</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>ARMORY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MARKET</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>PUBLIC_SCHOOL</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>FACTORY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>BANK</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>SATRAPS_COURT</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>COLOSSEUM</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>TEMPLE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
           <sut.civilization.Model.ModulEnums.BuildingType>OPERA_HOUSE</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>GRANARY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>CASTLE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -834,27 +786,11 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>HOSPITAL</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>WORKSHOP</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>GRANARY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MILITARY_ACADEMY</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>STABLE</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>GARDEN</sut.civilization.Model.ModulEnums.BuildingType>
-          <boolean>false</boolean>
-        </entry>
-        <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MONASTERY</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>BANK</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
@@ -862,15 +798,79 @@
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>ARSENAL</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>MILITARY_ACADEMY</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
-          <sut.civilization.Model.ModulEnums.BuildingType>MUSEUM</sut.civilization.Model.ModulEnums.BuildingType>
+          <sut.civilization.Model.ModulEnums.BuildingType>PUBLIC_SCHOOL</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>FACTORY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>BURIAL_TOMB</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>SATRAPS_COURT</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>WALLS</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>LIBRARY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>COLOSSEUM</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>ARMORY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>MONUMENT</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>THEATER</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>CIRCUS</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>COURTHOUSE</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>MONASTERY</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>BROADCAST_TOWER</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
         <entry>
           <sut.civilization.Model.ModulEnums.BuildingType>WATER_MILL</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>BARRACKS</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>MARKET</sut.civilization.Model.ModulEnums.BuildingType>
+          <boolean>false</boolean>
+        </entry>
+        <entry>
+          <sut.civilization.Model.ModulEnums.BuildingType>STOCK_EXCHANGE</sut.civilization.Model.ModulEnums.BuildingType>
           <boolean>false</boolean>
         </entry>
       </buildings>
@@ -881,8 +881,8 @@
           <ownerNation reference="../../.."/>
           <name>Settler</name>
           <location>
-            <x class="int">2</x>
-            <y class="int">2</y>
+            <x class="int">5</x>
+            <y class="int">5</y>
           </location>
           <hp>10</hp>
           <MP>2</MP>

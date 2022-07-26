@@ -1,5 +1,10 @@
 package sut.civilization.Model.ModulEnums;
 
+import javafx.scene.image.Image;
+import sut.civilization.Civilization;
+
+import java.util.Objects;
+
 public enum ResourceType {
     BANANA("Bananas", "It's resource Stupid boy ! need no information !", CurrencyType.FOOD, 1),
     COW("Cattle","It's resource Stupid boy ! need no information !", CurrencyType.FOOD, 1),
@@ -19,19 +24,20 @@ public enum ResourceType {
     SILVER("Silver","It's resource Stupid boy ! need no information !", CurrencyType.GOLD, 2),
     SUGAR("Sugar","It's resource Stupid boy ! need no information !", CurrencyType.GOLD, 2),
     WHEAT("Wheat","It's resource Stupid boy ! need no information !", CurrencyType.FOOD, 1),
-
-
-
     ;
     public final String name;
     public final CurrencyType currency;
     public final int amount;
     public final String information;
+    public final Image image;
 
     ResourceType(String name, String information, CurrencyType currency, int amount) {
         this.name = name;
         this.currency = currency;
         this.amount = amount;
         this.information = information;
+        this.image = new Image(Objects.requireNonNull(
+                Civilization.class.getResourceAsStream("/sut/civilization/Images/Icons/ResourceIcons/" + name + ".png")
+        ));
     }
 }
