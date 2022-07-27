@@ -420,6 +420,8 @@ public class ChatMenuController extends ViewController {
         });
 
         cancelButton.setOnMouseClicked(mouseEvent -> {
+            wholeBorderPane.setEffect(null);
+            selectedMembersForGroup.clear();
             createGroupPopup.hide();
         });
 

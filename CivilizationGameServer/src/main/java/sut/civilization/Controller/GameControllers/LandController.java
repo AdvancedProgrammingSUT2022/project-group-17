@@ -151,41 +151,36 @@ public class LandController extends Controller {
 
     public static void updateLandVisibility() {
         //FIXME Fix it, Ravan!
-//        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
-//            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-//                if (Game.instance.map[i][j].getVisibility() == 2 &&
-//                        Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation())) {
-//                    Game.instance.map[i][j].setVisibility(1);
-//                }
-////                else {
-////                    Game.instance.map[i][j].setVisibility(0);
-////                }
-//            }
-//        }
-//
-//        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
-//            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-//                if ((Game.instance.map[i][j].getCivilizedUnit() != null && Game.instance.map[i][j].getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
-//                        (Game.instance.map[i][j].getCombatUnit() != null && Game.instance.map[i][j].getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
-//                        (Game.instance.map[i][j].getOwnerCity() != null && Game.instance.map[i][j].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation())) {
-//                    lightNeighbors(new Pair<>(i, j));
-//                    Game.instance.map[i][j].setVisibility(2);
-//                    Game.instance.map[i][j].addSeerNation(GameController.getCurrentTurnUser().getNation());
-//                } else if (Game.instance.map[i][j].getVisibility() != 1 ||
-//                        (Game.instance.map[i][j].getVisibility() == 1 && !Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation()))) {
-//                    Game.instance.map[i][j].setVisibility(0);
-//                }
-//            }
-//        }
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+//                System.out.println("(" + i + ", " + j + ") " + Game.instance.map[i][j].getSeerNations());
+                Game.instance.map[i][j].setVisibility(0);
+                if (Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation())) {
+                    Game.instance.map[i][j].setVisibility(1);
+                }
+            }
+        }
+
+        for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
+            for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
+                if ((Game.instance.map[i][j].getCivilizedUnit() != null && Game.instance.map[i][j].getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
+                        (Game.instance.map[i][j].getCombatUnit() != null && Game.instance.map[i][j].getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
+                        (Game.instance.map[i][j].getOwnerCity() != null && Game.instance.map[i][j].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation())) {
+                    lightNeighbors(new Pair<>(i, j));
+                    Game.instance.map[i][j].setVisibility(2);
+                    Game.instance.map[i][j].addSeerNation(GameController.getCurrentTurnUser().getNation());
+                }
+            }
+        }
     }
 
     private static void lightNeighbors(Pair<Integer, Integer> coordinate) {
-//        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(coordinate)) {
-//            if (Pair.isValid(pair) && Game.instance.map[pair.x][pair.y].getLandType() != LandType.MOUNTAIN) {
-//                Game.instance.map[pair.x][pair.y].setVisibility(2);
-//                Game.instance.map[pair.x][pair.y].addSeerNation(GameController.getCurrentTurnUser().getNation());
-//            }
-//        }
+        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(coordinate)) {
+            if (Pair.isValid(pair) && Game.instance.map[pair.x][pair.y].getLandType() != LandType.MOUNTAIN) {
+                Game.instance.map[pair.x][pair.y].setVisibility(2);
+                Game.instance.map[pair.x][pair.y].addSeerNation(GameController.getCurrentTurnUser().getNation());
+            }
+        }
 
     }
 
@@ -350,7 +345,8 @@ public class LandController extends Controller {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 Land land = map[i1][j];
                 int chance = new Random().nextInt(10);
-                if (chance <= 1)
+                if (chance <= 1 && !land.getLandType().equals(LandType.OCEAN) && !land.getLandType().equals(LandType.MOUNTAIN) &&
+                        land.getCivilizedUnit() == null)
                     land.setRuin(new Ruin());
             }
         }

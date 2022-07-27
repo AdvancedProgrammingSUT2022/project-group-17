@@ -50,6 +50,8 @@ public class GamePlayController extends ViewController {
     public Label goldInfo = new Label();
     public Label scienceInfo = new Label();
     public Label happinessInfo = new Label();
+    public Label turn = new Label();
+    public Label yearLabel = new Label();
     private static GamePlayController gamePlayController;
 
     public static GamePlayController getInstance() {
@@ -86,7 +88,22 @@ public class GamePlayController extends ViewController {
 
         updateTechnologyBox();
         updateCurrencyBar();
-//        infoPopup.setHideOnEscape(false);
+
+        turn.setText("Turn " + Game.instance.getTurn());
+        yearLabel.setText("AD " + Game.instance.getTurn() * 50);
+
+        infoPopup.setHideOnEscape(true);
+
+        infoPopup.setOnHiding(e -> {
+            Game.instance.getCurrentScene().getRoot().setEffect(null);
+            Game.instance.getCurrentScene().getRoot().setDisable(false);
+        });
+
+
+        infoPopup.setOnHidden(e -> {
+            Game.instance.getCurrentScene().getRoot().setEffect(null);
+            Game.instance.getCurrentScene().getRoot().setDisable(false);
+        });
     }
 
     public void showInfoPanel(HBox[] eachUnitHBox) {
@@ -384,6 +401,7 @@ public class GamePlayController extends ViewController {
 
             actionImage.setFitWidth(40);
             actionImage.setFitHeight(40);
+            Tooltip.install(actionImage, new Tooltip(action.toString()));
             VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
             unitActions.getChildren().add(actionImage);
         }
@@ -419,6 +437,7 @@ public class GamePlayController extends ViewController {
 
                 actionImage.setFitWidth(40);
                 actionImage.setFitHeight(40);
+                Tooltip.install(actionImage, new Tooltip(action.toString()));
                 VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
                 unitActions.getChildren().add(actionImage);
             }
@@ -437,6 +456,7 @@ public class GamePlayController extends ViewController {
 
                 actionImage.setFitWidth(40);
                 actionImage.setFitHeight(40);
+                Tooltip.install(actionImage, new Tooltip(action.toString()));
                 VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
                 unitActions.getChildren().add(actionImage);
             }
@@ -618,8 +638,6 @@ public class GamePlayController extends ViewController {
     public void showTechnologyPanel() {
         HBox[] eachFloor = new HBox[12];
         VBox[] eachTechnology = new VBox[46];
-        TechnologyController.updateNextAvailableTechnologies();
-
         for (int i = 0; i < 12; i++) {
             eachFloor[i] = new HBox();
             eachFloor[i].setAlignment(Pos.CENTER);
@@ -641,8 +659,7 @@ public class GamePlayController extends ViewController {
             eachTechnology[i].getChildren().add(name);
             ColorAdjust colorAdjust = new ColorAdjust();
             colorAdjust.setSaturation(-1);
-
-            if (GameController.getCurrentTurnUser().getNation().getInProgressTechnology() != null && GameController.getCurrentTurnUser().getNation().getInProgressTechnology().equals(technologyType)) {
+            if (GameController.getCurrentTurnUser().getNation().getInProgressTechnology() == technologyType) {
                 technologyImageHBox.setStyle("-fx-background-color: blue; -fx-background-radius: 100;");
             } else if (GameController.getCurrentTurnUser().getNation().getNextTechnologies().contains(technologyType)) {
                 technologyImageHBox.setStyle("-fx-background-radius: 100;");
@@ -653,7 +670,7 @@ public class GamePlayController extends ViewController {
                         technologyImageHBox.setStyle("-fx-background-color: blue; -fx-background-radius: 100;");
                         for (VBox vBox : eachTechnology)
                             if (vBox.getChildren().get(0).getStyle().equals(technologyImageHBox.getStyle()) &&
-                                    !vBox.getChildren().get(0).equals(technologyImageHBox))
+                                    vBox.getChildren().get(0) != technologyImageHBox)
                                 vBox.getChildren().get(0).setStyle(null);
                         updateTechnologyBox();
                     }
@@ -1376,6 +1393,12 @@ public class GamePlayController extends ViewController {
                     productCost.setText("Cost: " + closeCombatUnit.getCloseCombatUnitType().cost);
                     productMaintenance.setText("Maintenance: " + closeCombatUnit.getCloseCombatUnitType().MP);
                 });
+                StringBuilder info = new StringBuilder();
+                if (closeCombatUnitType.resourceType != null)
+                    info.append("Resource required: ").append(closeCombatUnitType.resourceType.name);
+                if (closeCombatUnitType.technologyType != null)
+                    info.append("\nTechnology required: ").append(closeCombatUnitType.technologyType.name);
+                Tooltip.install(eachUnit, new Tooltip(info.toString()));
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
         }
@@ -1411,6 +1434,12 @@ public class GamePlayController extends ViewController {
                     productCost.setText("Cost: " + rangedCombatUnit.getRangedCombatUnitType().cost);
                     productMaintenance.setText("Maintenance: " + rangedCombatUnit.getRangedCombatUnitType().MP);
                 });
+                StringBuilder info = new StringBuilder();
+                if (rangedCombatUnitType.resourceType != null)
+                    info.append("Resource required: ").append(rangedCombatUnitType.resourceType.name);
+                if (rangedCombatUnitType.technologyType != null)
+                    info.append("\nTechnology required: ").append(rangedCombatUnitType.technologyType.name);
+                Tooltip.install(eachUnit, new Tooltip(info.toString()));
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
         }
@@ -1450,6 +1479,10 @@ public class GamePlayController extends ViewController {
                     productCost.setText("Cost: " + building.getBuildingType().cost);
                     productMaintenance.setText("Maintenance: " + building.getBuildingType().maintenance);
                 });
+                StringBuilder info = new StringBuilder();
+                if (buildingType.technologyType != null)
+                    info.append("\nTechnology required: ").append(buildingType.technologyType.name);
+                Tooltip.install(eachBuilding, new Tooltip(info.toString()));
                 listOfAvailableProducts.getChildren().add(eachBuilding);
             }
         }
@@ -1728,6 +1761,7 @@ public class GamePlayController extends ViewController {
                         String message = WorkerController.setWorkerToBuildImprovement(improvementType.name);
                         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                     });
+                    Tooltip.install(improvementImage, new Tooltip(improvementType.name));
                     improvementImage.setFitWidth(40);
                     improvementImage.setFitHeight(40);
                     VBox.setMargin(improvementImage, new Insets(0, 0, 5, 0));
@@ -1762,8 +1796,12 @@ public class GamePlayController extends ViewController {
         request.addToken("players",new XStream().toXML(Game.instance.getPlayersInGame()));
         request.addToken("subTurn",String.valueOf(Game.instance.getSubTurn()));
         ConnectionController.getInstance().sendUpdateToServer(request.toJson());
+        turn.setText("Turn " + Game.instance.getTurn());
+        yearLabel.setText("AD " + Game.instance.getTurn() * 50);
 
         updateWholeMap();
+
+
     }
 
     public void hideUnitPopup() {

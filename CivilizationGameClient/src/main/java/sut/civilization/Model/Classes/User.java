@@ -22,9 +22,7 @@ public class User {
         this.chats = new ArrayList<>(chats);
     }
 
-    public enum GameState {NA, WIN, LOSE}
-    private GameState gameState = GameState.NA;
-
+    private int gameState = 0;
     public User(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
@@ -36,6 +34,10 @@ public class User {
         this.chats = new ArrayList<>();
         this.friendsUserNames = new ArrayList<>();
 
+    }
+
+    public void setGameState(int gameState) {
+        this.gameState = gameState;
     }
 
     public boolean isOnline() {
@@ -144,13 +146,7 @@ public class User {
         return Objects.equals(username, user.username);
     }
 
-    public GameState getGameState() {
+    public int getGameState() {
         return gameState;
     }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-
 }
