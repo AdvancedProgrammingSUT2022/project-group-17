@@ -375,7 +375,9 @@ public class ChatMenuController extends ViewController {
         });
 
         cancelButton.setOnMouseClicked(mouseEvent -> {
+            wholeBorderPane.setEffect(null);
             createGroupPopup.hide();
+            selectedMembersForGroup.clear();
         });
     }
 

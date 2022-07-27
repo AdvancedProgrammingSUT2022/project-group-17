@@ -1,5 +1,7 @@
 package sut.civilization.Model.Classes;
 
+import sut.civilization.Model.ModulEnums.GameState;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -15,8 +17,7 @@ public class User {
     private Date lastTimeOnline;
     private long lastWinTime;
     private ArrayList<Chat> chats;
-    public enum GameState {NA, WIN, LOSE}
-    private GameState gameState = GameState.NA;
+    private int gameState = 0;
 
 
     public User(String username, String password, String nickname) {
@@ -125,11 +126,11 @@ public class User {
         return Objects.equals(username, user.username);
     }
 
-    public GameState getGameState() {
+    public int getGameState() {
         return gameState;
     }
 
-    public void setGameState(GameState gameState) {
+    public void setGameState(int gameState) {
         this.gameState = gameState;
     }
 }
