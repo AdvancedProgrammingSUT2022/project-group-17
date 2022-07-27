@@ -17,6 +17,8 @@ public class User {
     private Date lastTimeOnline;
     private long lastWinTime;
     private ArrayList<Chat> chats;
+
+    private ArrayList<String> friendsUserNames;
     private int gameState = 0;
 
 

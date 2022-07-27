@@ -60,18 +60,12 @@ public class GameMenuController {
     }
 
     public void loadGame(MouseEvent mouseEvent) {
-
+        Game.instance.loadGame(Game.instance.getLoggedInUser().getUsername() + ".xml");
     }
 
     public boolean canGameStart(){
-//        if (nations1.getValue().equals(null)){
-//            System.out.println("ridi");
-//            return false;
-//        }
 
-        if (opponents.size() == 0)
-            return false;
-        return true;
+        return opponents.size() != 0;
     }
 
     public void initialize(){

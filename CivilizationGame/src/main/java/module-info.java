@@ -7,6 +7,7 @@ open module sut.civilization {
     requires com.google.gson;
     requires java.datatransfer;
     requires java.desktop;
+    requires xstream;
 
     exports sut.civilization.Model.Classes;
 

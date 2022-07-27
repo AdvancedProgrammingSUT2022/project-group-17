@@ -6,7 +6,7 @@
     <score>0</score>
     <nation>
       <cities/>
-      <nationType>EGYPT</nationType>
+      <nationType>INDIA</nationType>
       <resourceCellar>
         <entry>
           <sut.civilization.Model.ModulEnums.ResourceType>SHEEP</sut.civilization.Model.ModulEnums.ResourceType>
@@ -522,7 +522,7 @@
     <score>0</score>
     <nation>
       <cities/>
-      <nationType>INCA</nationType>
+      <nationType>AZTEC</nationType>
       <resourceCellar>
         <entry>
           <sut.civilization.Model.ModulEnums.ResourceType>SHEEP</sut.civilization.Model.ModulEnums.ResourceType>
