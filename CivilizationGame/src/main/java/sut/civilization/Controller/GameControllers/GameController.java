@@ -284,15 +284,9 @@ public class GameController extends Controller {
                 if (currentTurnUser.getGameState() == 1) {
                     System.out.println(currentTurnUser.getUsername() + " Lose!");
                     Game.instance.getPlayersInGame().remove(currentTurnUser);
-//                    Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
                 } else Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
+
                 currentTurnUser = Game.instance.getPlayersInGame().get(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
-//                for (User user : Game.instance.getPlayersInGame())
-//                    if (user.getGameState().equals(User.GameState.LOSE)) {
-//                        Game.instance.getPlayersInGame().remove(user);
-//                        System.out.println("deleted:" + user);
-//                        break;
-//                    }
 
                 if (Game.instance.getPlayersInGame().size() == 1) {
                     System.out.println(currentTurnUser.getUsername() + " Win!");
@@ -420,7 +414,6 @@ public class GameController extends Controller {
 
         LandController.updateDistances();
 
-//        checkWinLose();
     }
 
     private static void checkFortifying(Unit unit) {
