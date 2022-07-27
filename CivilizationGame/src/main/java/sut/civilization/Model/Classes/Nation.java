@@ -35,6 +35,7 @@ public class Nation {
 
     protected TechnologyType inProgressTechnology = null;
     protected int technologyTurns;
+    protected int speed = 1;
 
 
     public Nation (NationType nationType){
@@ -46,6 +47,9 @@ public class Nation {
         initializeBuildings();
         this.getHappiness().setBalance(100);
         this.getCoin().setBalance(100);
+        this.getCoin().setGrowthRate(5);
+        this.getScience().setGrowthRate(3);
+        this.getFood().setGrowthRate(5);
     }
 
     public void initializeTechnologies() {
@@ -246,5 +250,13 @@ public class Nation {
 
     public void putTrade(String key, String value){
         trade.put(key, value);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

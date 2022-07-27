@@ -175,7 +175,6 @@ public class ChatMenuController extends ViewController {
             image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/public.png"));
             name = new Label(((ChatRoom) chat).getName());
         } else {
-            image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png"));
             if (chat.getUsers().get(0) == Game.instance.getLoggedInUser()) {
                 name = new Label(chat.getUsers().get(1).getUsername());
                 image = new Image(chat.getUsers().get(1).getAvatarLocation());
@@ -375,7 +374,9 @@ public class ChatMenuController extends ViewController {
         });
 
         cancelButton.setOnMouseClicked(mouseEvent -> {
+            wholeBorderPane.setEffect(null);
             createGroupPopup.hide();
+            selectedMembersForGroup.clear();
         });
     }
 

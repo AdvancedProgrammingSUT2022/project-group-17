@@ -1,5 +1,8 @@
 package sut.civilization.Controller.GameControllers;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.stage.Popup;
 import sut.civilization.Enums.Consts;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
@@ -156,8 +159,22 @@ public class UnitController extends GameController {
         }
         unit.setLocation(next);
 
-        if (Game.instance.map[next.x][next.y].getRuin() != null)
+        if (Game.instance.map[next.x][next.y].getRuin() != null) {
+            Popup retrievedPopup = new Popup();
+            retrievedPopup.setAutoHide(true);
+            Label ruinLabel = new Label("Ruin retrieved!\n" +
+                    "You will get " + Game.instance.map[next.x][next.y].getRuin().getGoldAmount() +
+                    " Gold next turn!");
+            ruinLabel.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+            ruinLabel.getStyleClass().add("header");
+            ruinLabel.setStyle("-fx-background-color: #212121; -fx-background-radius: 10;");
+            ruinLabel.setAlignment(Pos.CENTER);
+            retrievedPopup.getContent().add(ruinLabel);
+            retrievedPopup.show(Game.instance.getCurrentScene().getWindow());
+
             unitRetrieveRuin(unit);
+            GamePlayController.getInstance().updateWholeMap();
+        }
 
         unit.setMP(Math.max(0, unit.getMP() - Game.instance.map[next.x][next.y].getMP()));
         if (Game.instance.map[next.x][next.y].getLandFeature() != null)

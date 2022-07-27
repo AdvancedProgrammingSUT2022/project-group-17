@@ -153,13 +153,11 @@ public class LandController extends Controller {
         //FIXME Fix it, Ravan!
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if (Game.instance.map[i][j].getVisibility() == 2 &&
-                        Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation())) {
+//                System.out.println("(" + i + ", " + j + ") " + Game.instance.map[i][j].getSeerNations());
+                Game.instance.map[i][j].setVisibility(0);
+                if (Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation())) {
                     Game.instance.map[i][j].setVisibility(1);
                 }
-//                else {
-//                    Game.instance.map[i][j].setVisibility(0);
-//                }
             }
         }
 
@@ -171,9 +169,6 @@ public class LandController extends Controller {
                     lightNeighbors(new Pair<>(i, j));
                     Game.instance.map[i][j].setVisibility(2);
                     Game.instance.map[i][j].addSeerNation(GameController.getCurrentTurnUser().getNation());
-                } else if (Game.instance.map[i][j].getVisibility() != 1 ||
-                        (Game.instance.map[i][j].getVisibility() == 1 && !Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation()))) {
-                    Game.instance.map[i][j].setVisibility(0);
                 }
             }
         }
@@ -347,26 +342,37 @@ public class LandController extends Controller {
         }
 
 
-//        CivilizedUnit settler1 = new CivilizedUnit(
-//                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 3)
-//        );
-        CivilizedUnit settler2 = new CivilizedUnit(
-                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(3, 3)
+        Pair<Integer, Integer> unit1Location = new Pair<>(2,3);
+        Pair<Integer, Integer> unit2Location = new Pair<>(4,4);
+        CivilizedUnit settler1 = new CivilizedUnit(
+                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(0).getNation(), unit1Location
         );
-//        map[settler1.getLocation().x][settler1.getLocation().y].setCivilizedUnit(settler1);
+        map[unit1Location.x][unit1Location.y].addSeerNation(Game.instance.getPlayersInGame().get(0).getNation());
+        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(unit1Location)) {
+            map[pair.x][pair.y].addSeerNation(Game.instance.getPlayersInGame().get(0).getNation());
+        }
+
+        CivilizedUnit settler2 = new CivilizedUnit(
+                CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), unit2Location
+        );
+        map[unit2Location.x][unit2Location.y].addSeerNation(Game.instance.getPlayersInGame().get(1).getNation());
+        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(unit2Location)) {
+            map[pair.x][pair.y].addSeerNation(Game.instance.getPlayersInGame().get(1).getNation());
+        }
+        map[settler1.getLocation().x][settler1.getLocation().y].setCivilizedUnit(settler1);
         map[settler2.getLocation().x][settler2.getLocation().y].setCivilizedUnit(settler2);
-//        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(settler1);
+        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(settler1);
         Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(settler2);
 
-        RangedCombatUnit archer = new RangedCombatUnit(
-                RangedCombatUnitType.ARCHER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
-        );
+//        RangedCombatUnit archer = new RangedCombatUnit(
+//                RangedCombatUnitType.ARCHER, Game.instance.getPlayersInGame().get(0).getNation(), new Pair<>(2, 2)
+//        );
 //        CloseCombatUnit warrior = new CloseCombatUnit(
 //                CloseCombatUnitType.WARRIOR, Game.instance.getPlayersInGame().get(1).getNation(), new Pair<>(3, 2)
 //        );
-        map[archer.getLocation().x][archer.getLocation().y].setCombatUnit(archer);
+//        map[archer.getLocation().x][archer.getLocation().y].setCombatUnit(archer);
 //        map[warrior.getLocation().x][warrior.getLocation().y].setCombatUnit(warrior);
-        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(archer);
+//        Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(archer);
 //        Game.instance.getPlayersInGame().get(1).getNation().getUnits().add(warrior);
 
 
@@ -414,7 +420,8 @@ public class LandController extends Controller {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 Land land = map[i1][j];
                 int chance = new Random().nextInt(10);
-                if (chance <= 1)
+                if (chance <= 1 && !land.getLandType().equals(LandType.OCEAN) && !land.getLandType().equals(LandType.MOUNTAIN) &&
+                land.getCivilizedUnit() == null)
                     land.setRuin(new Ruin());
             }
         }

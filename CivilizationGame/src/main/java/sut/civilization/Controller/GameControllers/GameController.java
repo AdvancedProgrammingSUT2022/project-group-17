@@ -1,14 +1,23 @@
 package sut.civilization.Controller.GameControllers;
 
+import javafx.animation.Transition;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import sut.civilization.Controller.Controller;
 import sut.civilization.Enums.Consts;
+import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
-import sut.civilization.Model.ModulEnums.NationType;
-import sut.civilization.Model.ModulEnums.CurrencyType;
-import sut.civilization.Model.ModulEnums.ResourceType;
-import sut.civilization.Model.ModulEnums.TechnologyType;
-import sut.civilization.Model.ModulEnums.CivilizedUnitType;
-import sut.civilization.Model.ModulEnums.UnitStatus;
+import sut.civilization.Model.ModulEnums.*;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -252,28 +261,80 @@ public class GameController extends Controller {
         return "ready";
     }
 
-    public static void checkWinLose(){
-        if (Game.instance.getPlayersInGame().size() == 1){
-            User user = Game.instance.getPlayersInGame().get(0);
-            user.setGameState(User.GameState.WIN);
-        }
-        for (User user : Game.instance.getPlayersInGame()) {
+    public static void checkWinLose(User user){
+//        if (Game.instance.getPlayersInGame().size() == 1){
+//            User user = Game.instance.getPlayersInGame().get(0);
+//            user.setGameState(User.GameState.WIN);
+//        }
+//        for (User user : Game.instance.getPlayersInGame()) {
             Nation nation = user.getNation();
             if (nation.getCities().size() == 0){
-                user.setGameState(User.GameState.LOSE);
+                boolean hasSettler = false;
+                for (Unit unit : nation.getUnits()) {
+                    if (unit instanceof CivilizedUnit &&
+                            ((CivilizedUnit) unit).getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)) {
+                        hasSettler = true;
+                        break;
+                    }
+                }
+                if (!hasSettler) {
+                    user.setGameState(1);
+                    System.out.println("Bakhti!");
+                }
             }
-        }
+//        }
     }
 
     public static String nextPlayerTurn() {
         String readyState = isReadyForNextTurn();
         switch (readyState) {
             case "ready":
+                checkWinLose(currentTurnUser);
                 selectedCity = null;
                 selectedCivilizedUnit = null;
                 selectedCombatUnit = null;
-                Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
+                Popup losePopup = new Popup();
+                if (currentTurnUser.getGameState() == 1) {
+                    losePopup.setAutoHide(true);
+                    Label lose = new Label(currentTurnUser.getUsername() + " Lose!");
+                    lose.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+                    lose.getStyleClass().add("header");
+                    lose.setStyle("-fx-background-color: red; -fx-background-radius: 10;");
+                    losePopup.getContent().add(lose);
+                    losePopup.show(Game.instance.getCurrentScene().getWindow());
+
+                    System.out.println(currentTurnUser.getUsername() + " Lose!");
+                    Game.instance.getPlayersInGame().remove(currentTurnUser);
+                } else Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
+
                 currentTurnUser = Game.instance.getPlayersInGame().get(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
+
+                if (Game.instance.getPlayersInGame().size() == 1) {
+                    losePopup.hide();
+                    Popup winPopup = new Popup();
+                    Label win = new Label(currentTurnUser.getUsername() + " Win!");
+                    win.getStyleClass().add("header");
+                    Button goToMainMenu = new Button("Go to MainMenu");
+                    goToMainMenu.setOnMouseClicked(mouseEvent -> {
+                        //fixme end the game
+                        ((Stage) Game.instance.getCurrentScene().getWindow()).setFullScreen(false);
+                        Game.instance.changeScene(Menus.MAIN_MENU);
+                        winPopup.hide();
+                    });
+                    VBox winVBox = new VBox(win, goToMainMenu);
+                    winVBox.setStyle("-fx-background-color: green; -fx-background-radius: 30;");
+                    winPopup.getContent().add(winVBox);
+                    winVBox.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+                    winVBox.setAlignment(Pos.CENTER);
+                    winVBox.setPadding(new Insets(20));
+                    Light light = new Light.Distant();
+                    light.setColor(new Color(0.4, 0.4, 0.4, 0.5));
+                    Game.instance.getCurrentScene().getRoot().setEffect(new Lighting(light));
+                    Game.instance.getCurrentScene().getRoot().setDisable(true);
+                    winPopup.show(Game.instance.getCurrentScene().getWindow());
+
+                }
+
                 if (Game.instance.getSubTurn() == Game.instance.getPlayersInGame().size()) {
                     nextGameTurn();
                     Game.instance.setSubTurn(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
@@ -371,10 +432,10 @@ public class GameController extends Controller {
             TechnologyController.updateNextAvailableTechnologies();
 
             //reset GrowthRates
-            userNation.getCoin().setGrowthRate(0);
+            userNation.getCoin().setGrowthRate(userNation.getSpeed() * userNation.getCoin().getGrowthRate());
             userNation.getProduction().setGrowthRate(0);
-            userNation.getFood().setGrowthRate(0);
-            userNation.getScience().setGrowthRate(0);
+            userNation.getFood().setGrowthRate(userNation.getSpeed() * userNation.getFood().getGrowthRate());
+            userNation.getScience().setGrowthRate(userNation.getSpeed() * userNation.getScience().getGrowthRate());
             userNation.getHappiness().setGrowthRate(0);
 
             //happiness for luxury resources
@@ -394,10 +455,7 @@ public class GameController extends Controller {
         CityController.updateAffordableLands();
 
         LandController.updateDistances();
-        
-        checkWinLose();
-//        GamePlayController.getInstance().updateWholeMap();
-//        GamePlayController.getInstance().updateTechnologyBox();
+
     }
 
     private static void checkFortifying(Unit unit) {

@@ -47,6 +47,8 @@ public class GamePlayController extends ViewController {
     public Label goldInfo = new Label();
     public Label scienceInfo = new Label();
     public Label happinessInfo = new Label();
+    public Label turn = new Label();
+    public Label yearLabel = new Label();
     private static GamePlayController gamePlayController;
 
     public static GamePlayController getInstance() {
@@ -79,6 +81,9 @@ public class GamePlayController extends ViewController {
         updateTechnologyBox();
 
         updateCurrencyBar();
+
+        turn.setText("Turn " + Game.instance.getTurn());
+        yearLabel.setText("AD " + Game.instance.getTurn() * 50);
 
         infoPopup.setHideOnEscape(false);
     }
@@ -506,6 +511,7 @@ public class GamePlayController extends ViewController {
 
             actionImage.setFitWidth(40);
             actionImage.setFitHeight(40);
+            Tooltip.install(actionImage, new Tooltip(action.toString()));
             VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
             unitActions.getChildren().add(actionImage);
         }
@@ -541,6 +547,7 @@ public class GamePlayController extends ViewController {
 
                 actionImage.setFitWidth(40);
                 actionImage.setFitHeight(40);
+                Tooltip.install(actionImage, new Tooltip(action.toString()));
                 VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
                 unitActions.getChildren().add(actionImage);
             }
@@ -559,6 +566,7 @@ public class GamePlayController extends ViewController {
 
                 actionImage.setFitWidth(40);
                 actionImage.setFitHeight(40);
+                Tooltip.install(actionImage, new Tooltip(action.toString()));
                 VBox.setMargin(actionImage, new Insets(0, 0, 5, 0));
                 unitActions.getChildren().add(actionImage);
             }
@@ -1475,6 +1483,12 @@ public class GamePlayController extends ViewController {
                     productCost.setText("Cost: " + closeCombatUnit.getCloseCombatUnitType().cost);
                     productMaintenance.setText("Maintenance: " + closeCombatUnit.getCloseCombatUnitType().MP);
                 });
+                StringBuilder info = new StringBuilder();
+                if (closeCombatUnitType.resourceType != null)
+                    info.append("Resource required: ").append(closeCombatUnitType.resourceType.name);
+                if (closeCombatUnitType.technologyType != null)
+                    info.append("\nTechnology required: ").append(closeCombatUnitType.technologyType.name);
+                Tooltip.install(eachUnit, new Tooltip(info.toString()));
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
         }
@@ -1510,6 +1524,12 @@ public class GamePlayController extends ViewController {
                     productCost.setText("Cost: " + rangedCombatUnit.getRangedCombatUnitType().cost);
                     productMaintenance.setText("Maintenance: " + rangedCombatUnit.getRangedCombatUnitType().MP);
                 });
+                StringBuilder info = new StringBuilder();
+                if (rangedCombatUnitType.resourceType != null)
+                    info.append("Resource required: ").append(rangedCombatUnitType.resourceType.name);
+                if (rangedCombatUnitType.technologyType != null)
+                    info.append("\nTechnology required: ").append(rangedCombatUnitType.technologyType.name);
+                Tooltip.install(eachUnit, new Tooltip(info.toString()));
                 listOfAvailableProducts.getChildren().add(eachUnit);
             }
         }
@@ -1549,6 +1569,10 @@ public class GamePlayController extends ViewController {
                     productCost.setText("Cost: " + building.getBuildingType().cost);
                     productMaintenance.setText("Maintenance: " + building.getBuildingType().maintenance);
                 });
+                StringBuilder info = new StringBuilder();
+                if (buildingType.technologyType != null)
+                    info.append("\nTechnology required: " + buildingType.technologyType.name);
+                Tooltip.install(eachBuilding, new Tooltip(info.toString()));
                 listOfAvailableProducts.getChildren().add(eachBuilding);
             }
         }
@@ -1665,7 +1689,13 @@ public class GamePlayController extends ViewController {
         Button saveGame = new Button("Save Game");
         //TODO Save button is here, Ravan!
         saveGame.setOnMouseClicked(mouseEvent -> {
-
+//            String temp = Game.instance.saveGame("save");
+//            if (temp != null)
+//                showPopUp(Game.instance.getCurrentScene().getWindow(),"saved as Name " + temp);
+//            else showPopUp(Game.instance.getCurrentScene().getWindow(),"cannot save Game !");
+//            root.setEffect(null);
+//            root.setDisable(false);
+//            infoPopup.hide();
         });
         Button returnToMainMenu = new Button("Return To Main Menu");
         returnToMainMenu.setOnMouseClicked(mouseEvent -> {
@@ -1820,6 +1850,7 @@ public class GamePlayController extends ViewController {
                         String message = WorkerController.setWorkerToBuildImprovement(improvementType.name);
                         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
                     });
+                    Tooltip.install(improvementImage, new Tooltip(improvementType.name));
                     improvementImage.setFitWidth(40);
                     improvementImage.setFitHeight(40);
                     VBox.setMargin(improvementImage, new Insets(0, 0, 5, 0));
@@ -1847,6 +1878,8 @@ public class GamePlayController extends ViewController {
         updateWholeMap();
         updateTechnologyBox();
         updateCurrencyBar();
+        turn.setText("Turn " + Game.instance.getTurn());
+        yearLabel.setText("AD " + Game.instance.getTurn() * 50);
     }
 
     public void hideUnitPopup() {
