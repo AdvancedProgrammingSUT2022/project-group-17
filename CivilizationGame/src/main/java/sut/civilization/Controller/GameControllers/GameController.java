@@ -1,8 +1,21 @@
 package sut.civilization.Controller.GameControllers;
 
+import javafx.animation.Transition;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sut.civilization.Controller.Controller;
 import sut.civilization.Enums.Consts;
+import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
@@ -280,8 +293,16 @@ public class GameController extends Controller {
                 selectedCity = null;
                 selectedCivilizedUnit = null;
                 selectedCombatUnit = null;
-                System.out.println("current: "+currentTurnUser.getGameState());
+                Popup losePopup = new Popup();
                 if (currentTurnUser.getGameState() == 1) {
+                    losePopup.setAutoHide(true);
+                    Label lose = new Label(currentTurnUser.getUsername() + " Lose!");
+                    lose.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+                    lose.getStyleClass().add("header");
+                    lose.setStyle("-fx-background-color: red; -fx-background-radius: 10;");
+                    losePopup.getContent().add(lose);
+                    losePopup.show(Game.instance.getCurrentScene().getWindow());
+
                     System.out.println(currentTurnUser.getUsername() + " Lose!");
                     Game.instance.getPlayersInGame().remove(currentTurnUser);
                 } else Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
@@ -289,8 +310,29 @@ public class GameController extends Controller {
                 currentTurnUser = Game.instance.getPlayersInGame().get(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
 
                 if (Game.instance.getPlayersInGame().size() == 1) {
-                    System.out.println(currentTurnUser.getUsername() + " Win!");
-                    ((Stage) Game.instance.getCurrentScene().getWindow()).close();
+                    losePopup.hide();
+                    Popup winPopup = new Popup();
+                    Label win = new Label(currentTurnUser.getUsername() + " Win!");
+                    win.getStyleClass().add("header");
+                    Button goToMainMenu = new Button("Go to MainMenu");
+                    goToMainMenu.setOnMouseClicked(mouseEvent -> {
+                        //fixme end the game
+                        ((Stage) Game.instance.getCurrentScene().getWindow()).setFullScreen(false);
+                        Game.instance.changeScene(Menus.MAIN_MENU);
+                        winPopup.hide();
+                    });
+                    VBox winVBox = new VBox(win, goToMainMenu);
+                    winVBox.setStyle("-fx-background-color: green; -fx-background-radius: 30;");
+                    winPopup.getContent().add(winVBox);
+                    winVBox.getStylesheets().add("/sut/civilization/StyleSheet/Game.css");
+                    winVBox.setAlignment(Pos.CENTER);
+                    winVBox.setPadding(new Insets(20));
+                    Light light = new Light.Distant();
+                    light.setColor(new Color(0.4, 0.4, 0.4, 0.5));
+                    Game.instance.getCurrentScene().getRoot().setEffect(new Lighting(light));
+                    Game.instance.getCurrentScene().getRoot().setDisable(true);
+                    winPopup.show(Game.instance.getCurrentScene().getWindow());
+
                 }
 
                 if (Game.instance.getSubTurn() == Game.instance.getPlayersInGame().size()) {

@@ -414,7 +414,8 @@ public class LandController extends Controller {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
                 Land land = map[i1][j];
                 int chance = new Random().nextInt(10);
-                if (chance <= 1)
+                if (chance <= 1 && !land.getLandType().equals(LandType.OCEAN) && !land.getLandType().equals(LandType.MOUNTAIN) &&
+                land.getCivilizedUnit() == null)
                     land.setRuin(new Ruin());
             }
         }
