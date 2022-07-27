@@ -17,8 +17,7 @@ public class User {
     private ArrayList<Chat> chats;
 
     private ArrayList<String> friendsUserNames;
-    public enum GameState {NA, WIN, LOSE}
-    private GameState gameState = GameState.NA;
+    private int gameState = 0;
 
 
     public User(String username, String password, String nickname) {
@@ -33,6 +32,12 @@ public class User {
         this.friendsUserNames = new ArrayList<>();
 
     }
+
+    public void setGameState(int gameState) {
+        this.gameState = gameState;
+    }
+
+
 
     public boolean isOnline() {
         return isOnline;
@@ -112,6 +117,10 @@ public class User {
         return nickname;
     }
 
+    public void setChats(ArrayList<Chat> chats) {
+        this.chats = chats;
+    }
+
     public int getScore() {
         return score;
     }
@@ -140,14 +149,7 @@ public class User {
         return Objects.equals(username, user.username);
     }
 
-    public GameState getGameState() {
+    public int getGameState() {
         return gameState;
     }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-
-
 }

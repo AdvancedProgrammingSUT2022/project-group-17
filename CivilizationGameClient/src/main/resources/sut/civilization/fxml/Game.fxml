@@ -76,12 +76,12 @@
                     <Insets right="20.0" />
                 </HBox.margin>
             </ImageView>
-            <Label style="-fx-label-padding: 0 8;" text="Turn 54" textFill="WHITE">
+            <Label fx:id="turn" style="-fx-label-padding: 0 8;" textFill="WHITE">
                 <font>
                     <Font size="9.0" />
                 </font>
             </Label>
-            <Label layoutX="422.0" layoutY="10.0" style="-fx-label-padding: 0 8;" text="4000 BC" textFill="WHITE">
+            <Label fx:id="yearLabel" layoutX="422.0" layoutY="10.0" style="-fx-label-padding: 0 8;" textFill="WHITE">
                 <font>
                     <Font size="9.0" />
                 </font>

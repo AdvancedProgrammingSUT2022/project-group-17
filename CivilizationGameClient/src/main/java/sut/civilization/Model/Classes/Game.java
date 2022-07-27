@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import sut.civilization.Civilization;
+import sut.civilization.Controller.ConnectionController;
 import sut.civilization.Enums.Menus;
 
 import java.io.*;
@@ -28,7 +29,7 @@ public class Game {
     private transient FXMLLoader fxmlLoader;
     private transient Scene currentScene;
     private User loggedInUser;
-    private int turn = 0;
+    private int turn = 1;
     // a number between 0 and players count in order to know witch user have to play
     private int subTurn = 0;
     private ArrayList<User> playersInGame = new ArrayList<>();
@@ -90,15 +91,9 @@ public class Game {
     }
 
     public ArrayList<User> readUserListFromDatabase() {
-        String json = null;
-        try {
-            json = new String(Files.readAllBytes(Paths.get("src/main/resources/sut/civilization/DataBase/Users.xml")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        users = (ArrayList<User>) new XStream().fromXML(json);
-        if (users == null) return new ArrayList<>();
-
+        Request request = new Request("login","getAllUsers");
+        Response response = ConnectionController.getInstance().sendRequestToServer(request.toJson());
+        users = (ArrayList<User>) new XStream().fromXML((String) response.getDataToken("users"));
         for (User user : users) {
             ArrayList<String> avatarLocationTokens = new ArrayList<>(Arrays.asList(user.getAvatarLocation().split("/")));
             user.setAvatarLocation("sut/civilization/Images/Avatars/" + avatarLocationTokens.get(avatarLocationTokens.size() - 1));

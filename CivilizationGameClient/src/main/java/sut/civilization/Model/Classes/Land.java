@@ -2,6 +2,7 @@ package sut.civilization.Model.Classes;
 
 import sut.civilization.Model.ModulEnums.LandType;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Land {
@@ -27,6 +28,9 @@ public class Land {
     // 2 -> visible (shown)
     protected boolean[] hasRiver = new boolean[6];
     protected Resource resource;
+
+    protected ArrayList<Nation> seerNations = new ArrayList<>();
+
     //fixme check this
     protected int foodGrowth = 0;
     protected int productionGrowth = 0;
@@ -48,7 +52,7 @@ public class Land {
         this.j = j;
         this.ruin = null;
         this.isBuyable = true;
-        this.visibility = 2;
+        this.visibility = 0;
     }
 
     public void addGrowthToLandOwner() {
@@ -265,6 +269,15 @@ public class Land {
 
     public void setRuin(Ruin ruin) {
         this.ruin = ruin;
+    }
+
+    public ArrayList<Nation> getSeerNations() {
+        return seerNations;
+    }
+
+    public void addSeerNation(Nation seerNation) {
+        if (!this.seerNations.contains(seerNation))
+            this.seerNations.add(seerNation);
     }
 
     @Override

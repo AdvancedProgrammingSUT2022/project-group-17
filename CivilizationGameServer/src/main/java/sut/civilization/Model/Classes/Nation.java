@@ -36,7 +36,14 @@ public class Nation {
 
     protected TechnologyType inProgressTechnology = null;
     protected int technologyTurns;
+    protected int speed = 1;
+    public int getSpeed() {
+        return speed;
+    }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 
     public Nation (NationType nationType){
         this.nationType = nationType;
@@ -48,6 +55,13 @@ public class Nation {
         this.getHappiness().setBalance(100);
         this.getCoin().setBalance(10000);
         this.getScience().setBalance(200);
+
+        this.getHappiness().setGrowthRate(10);
+        this.getScience().setGrowthRate(10);
+        this.getCoin().setGrowthRate(10);
+        this.getFood().setGrowthRate(10);
+        this.getProduction().setGrowthRate(10);
+
         //FixMe please delete the fallowing two lines :
         this.resourceCellar.put(ResourceType.BANANA,10);
         this.resourceCellar.put(ResourceType.IRON,10);

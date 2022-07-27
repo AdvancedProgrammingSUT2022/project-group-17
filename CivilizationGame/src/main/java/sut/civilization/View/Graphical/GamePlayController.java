@@ -86,6 +86,17 @@ public class GamePlayController extends ViewController {
         yearLabel.setText("AD " + Game.instance.getTurn() * 50);
 
         infoPopup.setHideOnEscape(true);
+
+        infoPopup.setOnHiding(e -> {
+            Game.instance.getCurrentScene().getRoot().setEffect(null);
+            Game.instance.getCurrentScene().getRoot().setDisable(false);
+        });
+
+
+        infoPopup.setOnHidden(e -> {
+            Game.instance.getCurrentScene().getRoot().setEffect(null);
+            Game.instance.getCurrentScene().getRoot().setDisable(false);
+        });
     }
 
     public void showInfoPanel(HBox[] eachUnitHBox) {
@@ -296,6 +307,12 @@ public class GamePlayController extends ViewController {
             String message = NationController.initiatePeace(nation);
             showPopUp(Game.instance.getCurrentScene().getWindow(), message);
         });
+        Button discuss = new Button("Discuss");
+        VBox.setMargin(discuss, new Insets(10));
+        discuss.setOnMouseClicked(mouseEvent -> {
+            Game.instance.changeScene(Menus.CHAT_MENU);
+        });
+
         VBox wholeDiplomacy = new VBox(diplomacyWith, tradesHBox, demandButton, declareWarButton, peaceButton);
         wholeDiplomacy.setAlignment(Pos.TOP_CENTER);
         wholeDiplomacy.setMaxHeight(700);
@@ -1708,7 +1725,20 @@ public class GamePlayController extends ViewController {
         Button exit = new Button("Exit");
         exit.setOnMouseClicked(mouseEvent -> ((Stage) Game.instance.getCurrentScene().getWindow()).close());
 
-        VBox menuVBox = new VBox(continueButton, saveGame, returnToMainMenu, exit);
+        Button plus = new Button("+");
+        plus.setOnMouseClicked(mouseEvent -> {
+            NationController.changeSpeed(1);
+        });
+        plus.setStyle("-fx-pref-width: 50;");
+        Button minus = new Button("-");
+        minus.setOnMouseClicked(mouseEvent -> {
+            NationController.changeSpeed(-1);
+        });
+        minus.setStyle("-fx-pref-width: 50;");
+        HBox plusMinus = new HBox(minus, plus);
+
+        VBox menuVBox = new VBox(continueButton, saveGame, returnToMainMenu, exit, plusMinus);
+        menuVBox.setAlignment(Pos.CENTER);
         menuVBox.getStylesheets().add("/sut/civilization/StyleSheet/LoginMenu.css");
         for (Node child : menuVBox.getChildren()) {
             VBox.setMargin(child, new Insets(0, 0, 20, 0));

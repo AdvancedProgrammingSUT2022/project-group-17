@@ -13,6 +13,7 @@ public class Land {
     protected Ruin ruin;
     protected LandFeature landFeature;
     protected CombatUnit ZOC;
+    protected ArrayList<Nation> seerNations = new ArrayList<>();
 
     protected int cost;
     protected City ownerCity = null;
@@ -66,7 +67,14 @@ public class Land {
             landOwnerNation.getFood().addGrowthRate(this.landFeature.getLandFeatureType().foodGrowth);
         }
     }
+    public ArrayList<Nation> getSeerNations() {
+        return seerNations;
+    }
 
+    public void addSeerNation(Nation seerNation) {
+        if (!this.seerNations.contains(seerNation))
+            this.seerNations.add(seerNation);
+    }
     public boolean isACityMainLand() {
         for (User user : Game.instance.getPlayersInGame()) {
             for (City city : user.getNation().getCities()) {

@@ -1,5 +1,8 @@
 package sut.civilization.View.Graphical;
 
+import com.thoughtworks.xstream.XStream;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
@@ -13,15 +16,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import sut.civilization.Civilization;
-import sut.civilization.Controller.GameControllers.GameController;
+import sut.civilization.Controller.ConnectionController;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class ChatMenuController extends ViewController {
     public BorderPane wholeBorderPane;
@@ -34,17 +37,47 @@ public class ChatMenuController extends ViewController {
     private Chat selectedChat = null;
     private ArrayList<User> selectedMembersForGroup = new ArrayList<>();
 
+    private Timeline updateTimeLine;
 
     public void BackToMainMenu() {
         Game.instance.changeScene(Menus.MAIN_MENU);
+        updateTimeLine.stop();
     }
 
     @FXML
     private void initialize() {
+        updateTimeLine = new Timeline();
+        updateTimeLine.setCycleCount(-1);
+        updateTimeLine.getKeyFrames().add(new KeyFrame(Duration.millis(8000), e -> updateChats()));
+        updateTimeLine.play();
 
-        if (Game.instance.getLoggedInUser().getChats() != null) {
+//        Request request = new Request("chat","updateAllChats");
+//        request.addToken("chats",new XStream().toXML(Game.instance.getLoggedInUser().getChats()));
+//        request.addToken("userName",Game.instance.getLoggedInUser().getUsername());
+//        ConnectionController.getInstance().sendUpdateToServer(request.toJson());
+
+        init();
+    }
+
+    private void updateChats() {
+        Request request = new Request("chat","getChats");
+        request.addToken("userName",Game.instance.getLoggedInUser().getUsername());
+        Response response = ConnectionController.getInstance().sendRequestToServer(request.toJson());
+        Game.instance.getLoggedInUser().setChats((ArrayList<Chat>) new XStream().fromXML((String) response.getDataToken("chats")));
+        init();
+        if (selectedChat != null){
+            selectedChat = getChatByChat(selectedChat);
+            loadMessages(selectedChat);
+        }
+
+    }
+
+    private void init() {
+        if (getUserByName(Game.instance.getLoggedInUser().getUsername()).getChats() != null) {
+            allChats.getChildren().clear();
+            System.out.println(getUserByName(Game.instance.getLoggedInUser().getUsername()).getChats());
             int i = 0;
-            for (Chat chat : Game.instance.getLoggedInUser().getChats()) {
+            for (Chat chat : getUserByName(Game.instance.getLoggedInUser().getUsername()).getChats()) {
                 listAChatByChat(chat, i);
                 i += 2;
             }
@@ -52,67 +85,79 @@ public class ChatMenuController extends ViewController {
     }
 
     public void send() {
-        if (!messageInput.getText().isBlank() && selectedChat != null) {
-            VBox messageBox = new VBox();
-            Label name = new Label(Game.instance.getLoggedInUser().getUsername());
-            name.getStyleClass().add("name");
-            Label messageText = new Label(messageInput.getText());
-            messageText.getStyleClass().add("message");
-            Label time = new Label(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute());
-            time.getStyleClass().add("time");
-            messageBox.getChildren().add(name);
-            messageBox.getChildren().add(messageText);
-            messageBox.getChildren().add(time);
-            messageBox.getStyleClass().add("messageBox");
-            messageBox.setMaxWidth(Region.USE_PREF_SIZE);
-            messageBox.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
-            VBox.setMargin(messageBox, new Insets(10, 0, 0, 0));
+        if (messageInput.getText().isBlank() || selectedChat == null)
+            return;
 
-            ImageView avatar = new ImageView(new Image(Game.instance.getLoggedInUser().getAvatarLocation()));
-            avatar.setFitWidth(60);
-            avatar.setFitHeight(60);
+        VBox messageBox = new VBox();
+        Label name = new Label(Game.instance.getLoggedInUser().getUsername());
+        name.getStyleClass().add("name");
+        Label messageText = new Label(messageInput.getText());
+        messageText.getStyleClass().add("message");
+        Label time = new Label(LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute());
+        time.getStyleClass().add("time");
+        messageBox.getChildren().add(name);
+        messageBox.getChildren().add(messageText);
+        messageBox.getChildren().add(time);
+        messageBox.getStyleClass().add("messageBox");
+        messageBox.setMaxWidth(Region.USE_PREF_SIZE);
+        messageBox.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+        VBox.setMargin(messageBox, new Insets(10, 0, 0, 0));
 
-            HBox messageHBox = new HBox();
-            messageHBox.getChildren().add(messageBox);
-            messageHBox.getChildren().add(avatar);
-            messageHBox.setAlignment(Pos.BOTTOM_RIGHT);
-            messageHBox.setStyle("-fx-padding: 0 0 15 0;");
+        ImageView avatar = new ImageView(new Image(Game.instance.getLoggedInUser().getAvatarLocation()));
+        avatar.setFitWidth(60);
+        avatar.setFitHeight(60);
 
-            allMessages.getChildren().add(messageHBox);
-            messageInput.setText("");
-            messagesScrollPane.setVvalue(1);
+        HBox messageHBox = new HBox();
+        messageHBox.getChildren().add(messageBox);
+        messageHBox.getChildren().add(avatar);
+        messageHBox.setAlignment(Pos.BOTTOM_RIGHT);
+        messageHBox.setStyle("-fx-padding: 0 0 15 0;");
 
-            Message message1 = new Message(Game.instance.getLoggedInUser(), messageText.getText(), time.getText());
-            selectedChat.addMessage(message1);
+        allMessages.getChildren().add(messageHBox);
+        messageInput.setText("");
+        messagesScrollPane.setVvalue(1);
 
-            messageBox.setOnMouseClicked(mouseEvent -> {
-                Popup popup = new Popup();
-                Button delete = new Button("Delete");
-                Button edit = new Button("Edit");
-                VBox vBox = new VBox(delete, edit);
-                delete.setOnMouseClicked(mouseEvent1 -> {
-                    selectedChat.removeMessage(message1);
+        Message message1 = new Message(getUserByName(Game.instance.getLoggedInUser().getUsername()), messageText.getText(), time.getText());
+        selectedChat.addMessage(message1);
+
+        updateThisChat(selectedChat);
+
+        messageBox.setOnMouseClicked(mouseEvent -> {
+            Popup popup = new Popup();
+            Button delete = new Button("Delete");
+            Button edit = new Button("Edit");
+            VBox vBox = new VBox(delete, edit);
+            delete.setOnMouseClicked(mouseEvent1 -> {
+                selectedChat.removeMessage(message1);
+                loadMessages(selectedChat);
+                updateThisChat(selectedChat);
+                popup.hide();
+            });
+
+
+            vBox.getStylesheets().add("/sut/civilization/StyleSheet/ChatMenu.css");
+            popup.getContent().add(vBox);
+            popup.setAutoHide(true);
+            popup.show(Game.instance.getCurrentScene().getWindow());
+            edit.setOnMouseClicked(mouseEvent1 -> {
+                TextField editTextField = new TextField(message1.getMessageText());
+                Button editButton = new Button("Edit");
+                editButton.setOnMouseClicked(mouseEvent2 -> {
+                    message1.setMessageText(editTextField.getText());
                     loadMessages(selectedChat);
+                    updateThisChat(selectedChat);
                     popup.hide();
                 });
-                edit.setOnMouseClicked(mouseEvent1 -> {
-                    TextField editTextField = new TextField(message1.getMessageText());
-                    Button editButton = new Button("Edit");
-                    editButton.setOnMouseClicked(mouseEvent2 -> {
-                        message1.setMessageText(editTextField.getText());
-                        loadMessages(selectedChat);
-                        popup.hide();
-                    });
-                    ((VBox) popup.getContent().get(0)).getChildren().add(editTextField);
-                    ((VBox) popup.getContent().get(0)).getChildren().add(editButton);
-                });
-
-                vBox.getStylesheets().add("/sut/civilization/StyleSheet/ChatMenu.css");
-                popup.getContent().add(vBox);
-                popup.setAutoHide(true);
-                popup.show(Game.instance.getCurrentScene().getWindow());
+                ((VBox) popup.getContent().get(0)).getChildren().add(editTextField);
+                ((VBox) popup.getContent().get(0)).getChildren().add(editButton);
             });
-        }
+        });
+    }
+
+    private void updateThisChat(Chat chat) {
+        Request request = new Request("chat", "updateChat");
+        request.addToken("chat", new XStream().toXML(chat));
+        ConnectionController.getInstance().sendUpdateToServer(request.toJson());
     }
 
     public void sendByEnter(KeyEvent keyEvent) {
@@ -123,7 +168,7 @@ public class ChatMenuController extends ViewController {
         allChats.getChildren().clear();
         int i = 0;
         for (User user : Game.instance.getUsers()) {
-            if (user.getUsername().startsWith(search.getText()) && user != Game.instance.getLoggedInUser()) {
+            if (getUserByName(user.getUsername()).getUsername().startsWith(search.getText()) && !getUserByName(user.getUsername()).equals(Game.instance.getLoggedInUser())) {
                 listAChatByUser(user, i);
                 i += 2;
             }
@@ -134,17 +179,17 @@ public class ChatMenuController extends ViewController {
                 ))));
         searchHBox.getChildren().get(0).setOnMouseClicked(mouseEvent -> {
             allChats.getChildren().clear();
-            initialize();
+            init();
             searchHBox.getChildren().remove(0);
         });
     }
 
     private void listAChatByUser(User user, int i) {
         //fixme avatar
-        ImageView avatar = new ImageView(new Image(user.getAvatarLocation()));
+        ImageView avatar = new ImageView(new Image(getUserByName(user.getUsername()).getAvatarLocation()));
         avatar.setFitWidth(60);
         avatar.setFitHeight(60);
-        Label name = new Label(user.getUsername());
+        Label name = new Label(getUserByName(user.getUsername()).getUsername());
         name.getStyleClass().add("name");
         name.getStyleClass().add("chatPreview");
         //fixme message preview
@@ -164,7 +209,7 @@ public class ChatMenuController extends ViewController {
         allChats.getChildren().add(chatPreview);
         allChats.getChildren().add(new Separator());
 
-        chatPreview.setOnMouseClicked(mouseEvent -> selectChatByUser(user, i));
+        chatPreview.setOnMouseClicked(mouseEvent -> selectChatByUser(getUserByName(user.getUsername()), i));
     }
 
     private void listAChatByChat(Chat chat, int i) {
@@ -176,7 +221,7 @@ public class ChatMenuController extends ViewController {
             name = new Label(((ChatRoom) chat).getName());
         } else {
             image = new Image(Civilization.class.getResourceAsStream("/sut/civilization/Images/otherIcons/user-profile.png"));
-            if (chat.getUsers().get(0) == Game.instance.getLoggedInUser()) {
+            if (chat.getUsers().get(0).equals(Game.instance.getLoggedInUser())) {
                 name = new Label(chat.getUsers().get(1).getUsername());
                 image = new Image(chat.getUsers().get(1).getAvatarLocation());
             } else {
@@ -209,22 +254,21 @@ public class ChatMenuController extends ViewController {
         chatPreview.setOnMouseClicked(mouseEvent -> selectChatByChat(chat, i));
     }
 
-
     private void selectChatByUser(User user, int i) {
         boolean isChatFound = false;
         if (Game.instance.getLoggedInUser().getChats() != null)
             for (Chat chat : Game.instance.getLoggedInUser().getChats())
-                if (chat.getUsers().contains(user) && !(chat instanceof ChatRoom)) {
+                if (chat.getUsers().contains(getUserByName(user.getUsername())) && !(chat instanceof ChatRoom)) {
                     selectedChat = chat;
                     isChatFound = true;
                     loadMessages(selectedChat);
                 }
 
         if (!isChatFound) {
-            ArrayList<User> users = new ArrayList<>(Arrays.asList(Game.instance.getLoggedInUser(), user));
+            ArrayList<User> users = new ArrayList<>(Arrays.asList(Game.instance.getLoggedInUser(), getUserByName(getUserByName(user.getUsername()).getUsername())));
             selectedChat = new Chat(users);
             Game.instance.getLoggedInUser().addChat(selectedChat);
-            user.addChat(selectedChat);
+            getUserByName(getUserByName(user.getUsername()).getUsername()).addChat(selectedChat);
             loadMessages(selectedChat);
         }
 
@@ -233,7 +277,6 @@ public class ChatMenuController extends ViewController {
         allChats.getChildren().get(i).setStyle("-fx-background-color: gray;");
 
     }
-
 
     private void selectChatByChat(Chat chat, int i) {
 
@@ -248,6 +291,7 @@ public class ChatMenuController extends ViewController {
 
     private void loadMessages(Chat chat) {
         allMessages.getChildren().clear();
+
         if (chat.getMessages() != null) {
             for (Message message : chat.getMessages()) {
                 VBox messageBox = new VBox();
@@ -261,7 +305,7 @@ public class ChatMenuController extends ViewController {
                 messageBox.getChildren().add(messageText);
                 messageBox.getChildren().add(time);
                 messageBox.getStyleClass().add("messageBox");
-                if (message.getSender() != Game.instance.getLoggedInUser())
+                if (!message.getSender().equals(Game.instance.getLoggedInUser()))
                     messageBox.setStyle("-fx-background-color: #cbe6f7;");
                 messageBox.setMaxWidth(Region.USE_PREF_SIZE);
                 messageBox.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
@@ -349,8 +393,8 @@ public class ChatMenuController extends ViewController {
             selectedMembersForGroup.clear();
             int i = 0;
             for (User user : Game.instance.getUsers()) {
-                if (user.getUsername().startsWith(groupSearch.getText()) && user != Game.instance.getLoggedInUser()) {
-                    searchMemberForGroup(user, groupMemberList, i);
+                if (user.getUsername().startsWith(groupSearch.getText()) && !user.equals(Game.instance.getLoggedInUser())) {
+                    searchMemberForGroup(getUserByName(user.getUsername()), groupMemberList, i);
                     i += 2;
                 }
             }
@@ -361,13 +405,14 @@ public class ChatMenuController extends ViewController {
                 showPopUp(Game.instance.getCurrentScene().getWindow(), "Select at least one user!");
             else {
                 //TODO name of the group
-                selectedMembersForGroup.add(Game.instance.getLoggedInUser());
+                selectedMembersForGroup.add(getUserByName(Game.instance.getLoggedInUser().getUsername()));
                 ChatRoom chatRoom = new ChatRoom("group", selectedMembersForGroup);
                 for (User user : selectedMembersForGroup)
-                    user.addChat(chatRoom);
+                    getUserByName(user.getUsername()).addChat(chatRoom);
+                updateThisChat(chatRoom);
                 allChats.getChildren().clear();
-                initialize();
-                selectChatByChat(chatRoom, 2 * Game.instance.getLoggedInUser().getChats().size() - 2);
+                init();
+                selectChatByChat(chatRoom, 2 * getUserByName(Game.instance.getLoggedInUser().getUsername()).getChats().size() - 2);
                 wholeBorderPane.setEffect(null);
                 createGroupPopup.hide();
                 selectedMembersForGroup.clear();
@@ -375,8 +420,11 @@ public class ChatMenuController extends ViewController {
         });
 
         cancelButton.setOnMouseClicked(mouseEvent -> {
+            wholeBorderPane.setEffect(null);
+            selectedMembersForGroup.clear();
             createGroupPopup.hide();
         });
+
     }
 
 
@@ -395,14 +443,23 @@ public class ChatMenuController extends ViewController {
         groupMemberList.getChildren().add(new Separator());
 
         memberPreview.setOnMouseClicked(mouseEvent -> {
-            if (selectedMembersForGroup.contains(user)) {
+            if (selectedMembersForGroup.contains(getUserByName(user.getUsername()))) {
                 groupMemberList.getChildren().get(i).setStyle("-fx-background-color: white;");
-                selectedMembersForGroup.remove(user);
+                selectedMembersForGroup.remove(getUserByName(user.getUsername()));
             } else {
                 groupMemberList.getChildren().get(i).setStyle("-fx-background-color: green;");
-                selectedMembersForGroup.add(user);
+                selectedMembersForGroup.add(getUserByName(user.getUsername()));
             }
         });
     }
 
+    private Chat getChatByChat(Chat that) {
+        for (User user : Game.instance.getUsers()) {
+            for (Chat chat : user.getChats()) {
+                if (chat.equals(that))
+                    return chat;
+            }
+        }
+        return null;
+    }
 }

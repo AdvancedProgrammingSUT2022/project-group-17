@@ -31,8 +31,12 @@ public class LandGraphical extends Polygon {
     private ImageView cityImageView = new ImageView();
     private ImageView fogOfWarImageView = new ImageView();
     private ImageView ruinImageView = new ImageView();
+    private ImageView[] riverImageViews = new ImageView[6];
 
     public LandGraphical(Pair<Integer, Integer> coordinate, Pane pane) {
+        for (int i = 0; i < 6; i++) {
+            riverImageViews[i] = new ImageView();
+        }
 
         setCoordinates(coordinate);
 
@@ -92,6 +96,13 @@ public class LandGraphical extends Polygon {
         ruinImageView.setX(this.centerCoordinate.x - tileRadius * 0.25);
         ruinImageView.setY(this.centerCoordinate.y - tileRadius * 0.25);
 
+        for (ImageView riverImageView : riverImageViews) {
+            riverImageView.setFitWidth(tileRadius * 2);
+            riverImageView.setFitHeight(tileRadius * Math.sqrt(3));
+            riverImageView.setX(this.centerCoordinate.x - (tileRadius ));
+            riverImageView.setY(this.centerCoordinate.y - (tileRadius * Math.sqrt(3) / 2));
+        }
+
         civilizedUnitImageView.x.setOnMouseClicked(mouseEvent -> {
             if (land.getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
                 GameController.setSelectedCivilizedUnit(land.getCivilizedUnit());
@@ -128,6 +139,8 @@ public class LandGraphical extends Polygon {
         pane.getChildren().add(improvementImageView);
         pane.getChildren().add(ruinImageView);
         pane.getChildren().add(cityImageView);
+        for (int i = 0; i < 6; i++)
+            pane.getChildren().add(riverImageViews[i]);
         pane.getChildren().add(fogOfWarImageView);
     }
 
@@ -195,6 +208,14 @@ public class LandGraphical extends Polygon {
             fogOfWarImageView.setOpacity(1);
         } else {
             fogOfWarImageView.setImage(null);
+        }
+
+        for (int i = 0; i < 6; i++) {
+            if (land.getHasRiver()[i]) {
+                riverImageViews[i].setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
+                        "/sut/civilization/Images/tiles/River" + i + ".png"
+                ))));
+            } else riverImageViews[i].setImage(null);
         }
 
         Tooltip tooltip = new Tooltip(landInfo.toString());
