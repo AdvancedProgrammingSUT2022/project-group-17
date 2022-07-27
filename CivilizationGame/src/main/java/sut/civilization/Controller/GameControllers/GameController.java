@@ -19,6 +19,7 @@ import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 import sut.civilization.Model.ModulEnums.*;
 
+import javax.print.attribute.standard.RequestingUserName;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
@@ -302,8 +303,6 @@ public class GameController extends Controller {
                     lose.setStyle("-fx-background-color: red; -fx-background-radius: 10;");
                     losePopup.getContent().add(lose);
                     losePopup.show(Game.instance.getCurrentScene().getWindow());
-
-                    System.out.println(currentTurnUser.getUsername() + " Lose!");
                     Game.instance.getPlayersInGame().remove(currentTurnUser);
                 } else Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
 
@@ -315,8 +314,11 @@ public class GameController extends Controller {
                     Label win = new Label(currentTurnUser.getUsername() + " Win!");
                     win.getStyleClass().add("header");
                     Button goToMainMenu = new Button("Go to MainMenu");
+
                     goToMainMenu.setOnMouseClicked(mouseEvent -> {
-                        //fixme end the game
+                        for (User user : Game.instance.getUsers()) {
+                            user.setNation(null);
+                        }
                         ((Stage) Game.instance.getCurrentScene().getWindow()).setFullScreen(false);
                         Game.instance.changeScene(Menus.MAIN_MENU);
                         winPopup.hide();
