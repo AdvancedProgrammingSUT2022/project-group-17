@@ -22,6 +22,7 @@
               <sut.civilization.Model.Classes.Chat reference="../../../.."/>
             </chats>
             <friendsUserNames/>
+            <gameState>0</gameState>
           </sut.civilization.Model.Classes.User>
           <sut.civilization.Model.Classes.User>
             <username>mahdi</username>
@@ -40,6 +41,7 @@
               <sut.civilization.Model.Classes.Chat reference="../../../.."/>
             </chats>
             <friendsUserNames/>
+            <gameState>0</gameState>
           </sut.civilization.Model.Classes.User>
         </users>
         <messages>
@@ -55,6 +57,7 @@
       </sut.civilization.Model.Classes.Chat>
     </chats>
     <friendsUserNames/>
+    <gameState>0</gameState>
   </sut.civilization.Model.Classes.User>
   <sut.civilization.Model.Classes.User>
     <username>mahdi</username>
@@ -79,6 +82,7 @@
               <sut.civilization.Model.Classes.Chat reference="../../../.."/>
             </chats>
             <friendsUserNames/>
+            <gameState>0</gameState>
           </sut.civilization.Model.Classes.User>
           <sut.civilization.Model.Classes.User>
             <username>mahdi</username>
@@ -97,6 +101,7 @@
               <sut.civilization.Model.Classes.Chat reference="../../../.."/>
             </chats>
             <friendsUserNames/>
+            <gameState>0</gameState>
           </sut.civilization.Model.Classes.User>
         </users>
         <messages>
@@ -112,5 +117,6 @@
       </sut.civilization.Model.Classes.Chat>
     </chats>
     <friendsUserNames/>
+    <gameState>0</gameState>
   </sut.civilization.Model.Classes.User>
 </list>
