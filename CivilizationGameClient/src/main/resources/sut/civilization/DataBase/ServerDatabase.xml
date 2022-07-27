@@ -2,7 +2,22 @@
   <addFriendRequestTree>
     <entry>
       <string>hamed</string>
-      <null/>
+      <list>
+        <sut.civilization.Model.Classes.Request>
+          <section>social</section>
+          <header>addFriendRequest</header>
+          <tokens>
+            <entry>
+              <string>from</string>
+              <string>hamed</string>
+            </entry>
+            <entry>
+              <string>to</string>
+              <string>hamed</string>
+            </entry>
+          </tokens>
+        </sut.civilization.Model.Classes.Request>
+      </list>
     </entry>
   </addFriendRequestTree>
 </sut.civilization.Model.Classes.ServerDataBase>

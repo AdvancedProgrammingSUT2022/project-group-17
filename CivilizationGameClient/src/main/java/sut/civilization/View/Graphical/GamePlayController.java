@@ -1617,7 +1617,20 @@ public class GamePlayController extends ViewController {
         Button exit = new Button("Exit");
         exit.setOnMouseClicked(mouseEvent -> ((Stage) Game.instance.getCurrentScene().getWindow()).close());
 
-        VBox menuVBox = new VBox(continueButton, saveGame, returnToMainMenu, exit);
+        Button plus = new Button("+");
+        plus.setOnMouseClicked(mouseEvent -> {
+            NationController.changeSpeed(1);
+        });
+        plus.setStyle("-fx-pref-width: 50;");
+        Button minus = new Button("-");
+        minus.setOnMouseClicked(mouseEvent -> {
+            NationController.changeSpeed(-1);
+        });
+        minus.setStyle("-fx-pref-width: 50;");
+        HBox plusMinus = new HBox(minus, plus);
+
+        VBox menuVBox = new VBox(continueButton, saveGame, returnToMainMenu, exit, plusMinus);
+        menuVBox.setAlignment(Pos.CENTER);
         menuVBox.getStylesheets().add("/sut/civilization/StyleSheet/LoginMenu.css");
         for (Node child : menuVBox.getChildren()) {
             VBox.setMargin(child, new Insets(0, 0, 20, 0));
