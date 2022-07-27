@@ -35,6 +35,7 @@ public class Nation {
 
     protected TechnologyType inProgressTechnology = null;
     protected int technologyTurns;
+    protected int speed = 1;
 
 
     public Nation (NationType nationType){
@@ -249,5 +250,13 @@ public class Nation {
 
     public void putTrade(String key, String value){
         trade.put(key, value);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

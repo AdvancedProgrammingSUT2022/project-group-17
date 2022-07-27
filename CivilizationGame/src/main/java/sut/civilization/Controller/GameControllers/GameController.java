@@ -396,10 +396,10 @@ public class GameController extends Controller {
             TechnologyController.updateNextAvailableTechnologies();
 
             //reset GrowthRates
-            userNation.getCoin().setGrowthRate(0);
+            userNation.getCoin().setGrowthRate(userNation.getSpeed() * userNation.getCoin().getGrowthRate());
             userNation.getProduction().setGrowthRate(0);
-            userNation.getFood().setGrowthRate(0);
-            userNation.getScience().setGrowthRate(0);
+            userNation.getFood().setGrowthRate(userNation.getSpeed() * userNation.getFood().getGrowthRate());
+            userNation.getScience().setGrowthRate(userNation.getSpeed() * userNation.getScience().getGrowthRate());
             userNation.getHappiness().setGrowthRate(0);
 
             //happiness for luxury resources

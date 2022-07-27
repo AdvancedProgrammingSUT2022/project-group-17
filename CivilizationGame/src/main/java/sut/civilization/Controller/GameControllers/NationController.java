@@ -79,5 +79,14 @@ public class NationController extends GameController {
         return null;
     }
 
+    public static void changeSpeed(int amount){
+        for (User user : Game.instance.getPlayersInGame()) {
+            Nation nation = user.getNation();
+            nation.setSpeed(nation.getSpeed() + amount);
+
+        }
+
+    }
+
 
 }
