@@ -249,6 +249,13 @@ public class RequestHandler extends Thread {
             response.addData("requests",new XStream().toXML(requests));
             return response;
         }
+
+        if (request.getHeader().equals("getFriends")){
+            Response response =new Response("....");
+            response.addData("friends",new XStream().toXML(getUserByName(request.getToken("userName")).getFriendsUserNames()));
+            return response;
+        }
+
         return null;
     }
     private Response profileHandler(Request request) {

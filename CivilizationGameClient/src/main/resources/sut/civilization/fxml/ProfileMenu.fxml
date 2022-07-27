@@ -34,15 +34,25 @@
                 </Label>
             </center>
          <right>
-             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
-                 <ImageView fitHeight="68.0" fitWidth="53.0" onMouseClicked="#showFriendRequests" pickOnBounds="true"
-                            preserveRatio="true">
-                     <Image url="@../Images/otherIcons/Quest.png"/>
-                 </ImageView>
-                 <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#showWaitingRequests">
-                     <Image url="@../Images/otherIcons/Present.png"/>
-                 </ImageView>
-             </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="68.0" fitWidth="53.0" onMouseClicked="#showFriendRequests" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/Quest.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="54.0" onMouseClicked="#showWaitingRequests" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/Present.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="54.0" fitWidth="57.0" onMouseClicked="#showFriends" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/otherIcons/Nations.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
          </right>
         </BorderPane>
     </top>

@@ -18,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import sut.civilization.Controller.ConnectionController;
+import sut.civilization.Controller.GameControllers.LandController;
 import sut.civilization.Enums.Menus;
 import sut.civilization.Model.Classes.*;
 
@@ -334,7 +335,6 @@ public class ProfileController extends ViewController {
         hbox.getChildren().add(searchButton);
         mainVBox.getChildren().add(hbox);
         popup.getContent().add(mainVBox);
-
         Window window = Game.instance.getCurrentScene().getWindow();
 
         popup.setAnchorY(window.getY() + window.getHeight() / 2 - 250);
@@ -342,5 +342,39 @@ public class ProfileController extends ViewController {
 
         popup.show(window);
 
+    }
+
+    public void showFriends(MouseEvent mouseEvent) {
+        Request request = new Request("social","getFriends");
+        request.addToken("userName",Game.instance.getLoggedInUser().getUsername());
+        Response response = ConnectionController.getInstance().sendRequestToServer(request.toJson());
+        getUserByName(Game.instance.getLoggedInUser().getUsername()).setFriendsUserNames((ArrayList<String>) new XStream().fromXML((String) response.getDataToken("friends")));
+
+        Popup popup = new Popup();
+        popup.setAutoHide(true);
+        popup.setAutoFix(true);
+
+        VBox mainVBox = new VBox();
+        mainVBox.setId("wideContent");
+        mainVBox.getStylesheets().add("sut/civilization/StyleSheet/popUp.css");
+        mainVBox.setAlignment(Pos.CENTER);
+
+        Label label = new Label(getUserByName(Game.instance.getLoggedInUser().getUsername()).getFriendsUserNames().toString());
+
+        Button closeButton = new Button();
+        closeButton.setId("closeButton");
+        closeButton.setText("close");
+
+        closeButton.setOnMouseClicked(mouseEvent1 -> popup.hide());
+        Window window = Game.instance.getCurrentScene().getWindow();
+
+        mainVBox.getChildren().add(label);
+        mainVBox.getChildren().add(closeButton);
+
+        popup.getContent().add(mainVBox);
+        popup.setAnchorY(window.getY() + window.getHeight() / 2 - 250);
+        popup.setAnchorX(window.getX() + window.getWidth() / 2 - 500);
+
+        popup.show(window);
     }
 }

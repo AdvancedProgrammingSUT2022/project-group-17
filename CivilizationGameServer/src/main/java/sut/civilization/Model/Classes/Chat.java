@@ -50,7 +50,12 @@ public class Chat {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Chat chat = (Chat) o;
-        return Objects.equals(users, chat.users);
+
+        for (User user : this.users) {
+            if (!chat.users.contains(user))
+                return false;
+        }
+        return true;
     }
 
     @Override

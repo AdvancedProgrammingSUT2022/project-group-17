@@ -1,6 +1,7 @@
 package sut.civilization.Model.Classes;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Message {
     private User sender;
@@ -35,4 +36,13 @@ public class Message {
     public void setMessageText(String messageText) {
         this.messageText = messageText;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(messageText, message.messageText);
+    }
+
 }
