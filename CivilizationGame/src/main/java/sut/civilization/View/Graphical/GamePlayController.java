@@ -307,11 +307,11 @@ public class GamePlayController extends ViewController {
             String message = NationController.initiatePeace(nation);
             showPopUp(Game.instance.getCurrentScene().getWindow(), message);
         });
-        Button discuss = new Button("Discuss");
-        VBox.setMargin(discuss, new Insets(10));
-        discuss.setOnMouseClicked(mouseEvent -> {
-            Game.instance.changeScene(Menus.CHAT_MENU);
-        });
+//        Button discuss = new Button("Discuss");
+//        VBox.setMargin(discuss, new Insets(10));
+//        discuss.setOnMouseClicked(mouseEvent -> {
+//            Game.instance.changeScene(Menus.CHAT_MENU);
+//        });
 
         VBox wholeDiplomacy = new VBox(diplomacyWith, tradesHBox, demandButton, declareWarButton, peaceButton);
         wholeDiplomacy.setAlignment(Pos.TOP_CENTER);
