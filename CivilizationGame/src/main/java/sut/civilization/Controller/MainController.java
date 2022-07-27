@@ -52,7 +52,7 @@ public class MainController extends Controller{
 
     public void exitGame(){
         logoutUser();
-        Game.instance.saveUserListToDatabase();
+        Game.instance.saveUserDatabase();
         ((Stage) Game.instance.getCurrentScene().getWindow()).close();
     }
 }

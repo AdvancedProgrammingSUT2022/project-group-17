@@ -80,6 +80,7 @@ public class Land {
     }
 
     public ArrayList<Nation> getSeerNations() {
+        if (seerNations == null) this.seerNations = new ArrayList<>();
         return seerNations;
     }
 

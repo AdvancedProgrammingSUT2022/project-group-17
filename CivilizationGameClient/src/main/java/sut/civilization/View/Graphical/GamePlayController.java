@@ -1663,7 +1663,7 @@ public class GamePlayController extends ViewController {
     public void updateTechnologyBox() {
         TechnologyType inProgressTechnology = null;
 
-        if (getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation() != null)
+        if (getPlayer(Game.instance.getLoggedInUser().getUsername()) != null && getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation() != null)
             inProgressTechnology = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getInProgressTechnology();
 
         if (inProgressTechnology != null) {
@@ -1682,12 +1682,14 @@ public class GamePlayController extends ViewController {
         }
     }
     public void updateCurrencyBar() {
-        Currency coin = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getCoin();
-        Currency science = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getScience();
-        Currency happiness = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getHappiness();
-        goldInfo.setText(String.format("%d (%+d)", coin.getBalance(), coin.getGrowthRate()));
-        scienceInfo.setText(String.format("%+d", science.getBalance()));
-        happinessInfo.setText(String.valueOf(happiness.getBalance()));
+        if (getPlayer(Game.instance.getLoggedInUser().getUsername()) != null){
+            Currency coin = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getCoin();
+            Currency science = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getScience();
+            Currency happiness = getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation().getHappiness();
+            goldInfo.setText(String.format("%d (%+d)", coin.getBalance(), coin.getGrowthRate()));
+            scienceInfo.setText(String.format("%+d", science.getBalance()));
+            happinessInfo.setText(String.valueOf(happiness.getBalance()));
+        }
     }
 
     public void lightenRoot() {

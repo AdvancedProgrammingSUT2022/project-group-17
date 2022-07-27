@@ -32,6 +32,8 @@ public class LandGraphical extends Polygon {
     private ImageView fogOfWarImageView = new ImageView();
     private ImageView ruinImageView = new ImageView();
 
+
+
     public LandGraphical(Pair<Integer, Integer> coordinate, Pane pane) {
 
         setCoordinates(coordinate);

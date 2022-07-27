@@ -155,7 +155,7 @@ public class LandController extends Controller {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
 //                System.out.println("(" + i + ", " + j + ") " + Game.instance.map[i][j].getSeerNations());
                 Game.instance.map[i][j].setVisibility(0);
-                if (Game.instance.map[i][j].getSeerNations().contains(GameController.getCurrentTurnUser().getNation())) {
+                if (Game.instance.map[i][j].getSeerNations().contains(getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation())) {
                     Game.instance.map[i][j].setVisibility(1);
                 }
             }
@@ -163,12 +163,12 @@ public class LandController extends Controller {
 
         for (int i = 0; i < Consts.MAP_SIZE.amount.x; i++) {
             for (int j = 0; j < Consts.MAP_SIZE.amount.y; j++) {
-                if ((Game.instance.map[i][j].getCivilizedUnit() != null && Game.instance.map[i][j].getCivilizedUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
-                        (Game.instance.map[i][j].getCombatUnit() != null && Game.instance.map[i][j].getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) ||
-                        (Game.instance.map[i][j].getOwnerCity() != null && Game.instance.map[i][j].getOwnerCity().getOwnerNation() == GameController.getCurrentTurnUser().getNation())) {
+                if ((Game.instance.map[i][j].getCivilizedUnit() != null && Game.instance.map[i][j].getCivilizedUnit().getOwnerNation().equals(getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation())) ||
+                        (Game.instance.map[i][j].getCombatUnit() != null && Game.instance.map[i][j].getCombatUnit().getOwnerNation().equals(getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation())) ||
+                        (Game.instance.map[i][j].getOwnerCity() != null && Game.instance.map[i][j].getOwnerCity().getOwnerNation().equals(getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation()))) {
                     lightNeighbors(new Pair<>(i, j));
                     Game.instance.map[i][j].setVisibility(2);
-                    Game.instance.map[i][j].addSeerNation(GameController.getCurrentTurnUser().getNation());
+                    Game.instance.map[i][j].addSeerNation(getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation());
                 }
             }
         }
@@ -176,9 +176,9 @@ public class LandController extends Controller {
 
     private static void lightNeighbors(Pair<Integer, Integer> coordinate) {
         for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(coordinate)) {
-            if (Pair.isValid(pair) && Game.instance.map[pair.x][pair.y].getLandType() != LandType.MOUNTAIN) {
+            if (Pair.isValid(pair)) {
                 Game.instance.map[pair.x][pair.y].setVisibility(2);
-                Game.instance.map[pair.x][pair.y].addSeerNation(GameController.getCurrentTurnUser().getNation());
+                Game.instance.map[pair.x][pair.y].addSeerNation(getPlayer(Game.instance.getLoggedInUser().getUsername()).getNation());
             }
         }
 

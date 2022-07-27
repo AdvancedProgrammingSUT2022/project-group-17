@@ -30,7 +30,7 @@ public class Main {
             currentMenu = Menu.getMenuName();
         }
 
-        Game.instance.saveUserListToDatabase();
+        Game.instance.saveUserDatabase();
     }
 
     private static void menuInitializer(Menu[] menus, HashMap<String, Integer> menuNumbers){

@@ -1706,13 +1706,11 @@ public class GamePlayController extends ViewController {
         Button saveGame = new Button("Save Game");
         //TODO Save button is here, Ravan!
         saveGame.setOnMouseClicked(mouseEvent -> {
-//            String temp = Game.instance.saveGame("save");
-//            if (temp != null)
-//                showPopUp(Game.instance.getCurrentScene().getWindow(),"saved as Name " + temp);
-//            else showPopUp(Game.instance.getCurrentScene().getWindow(),"cannot save Game !");
-//            root.setEffect(null);
-//            root.setDisable(false);
-//            infoPopup.hide();
+
+            showPopUp(Game.instance.getCurrentScene().getWindow(),"saved successfully as " + Game.instance.saveGame(Game.instance.getLoggedInUser().getUsername()) + " .");
+            root.setEffect(null);
+            root.setDisable(false);
+            infoPopup.hide();
         });
         Button returnToMainMenu = new Button("Return To Main Menu");
         returnToMainMenu.setOnMouseClicked(mouseEvent -> {
@@ -1900,7 +1898,6 @@ public class GamePlayController extends ViewController {
     }
 
     public void nextTurn() {
-//        System.out.println(new Gson().toJson(Game.instance));
         String message = GameController.nextPlayerTurn();
         showPopUp(Game.instance.getCurrentScene().getWindow(), message);
 
