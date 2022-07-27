@@ -124,8 +124,15 @@ public class ConnectionListener extends Thread {
         }
 
         if (updateResponse.getMessage().startsWith("endGame")) {
-            new ViewController().showPopUp(Game.instance.getCurrentScene().getWindow(),updateResponse.getMessage());
-            Game.instance.changeScene(Menus.MAIN_MENU);
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Game.instance.changeScene(Menus.MAIN_MENU);
+                    new ViewController().showPopUp(Game.instance.getCurrentScene().getWindow(),updateResponse.getMessage());
+
+                }
+            });
         }
     }
 
