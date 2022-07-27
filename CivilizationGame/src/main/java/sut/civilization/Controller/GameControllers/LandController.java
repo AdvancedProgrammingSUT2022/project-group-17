@@ -347,18 +347,18 @@ public class LandController extends Controller {
         CivilizedUnit settler1 = new CivilizedUnit(
                 CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(0).getNation(), unit1Location
         );
-        map[unit1Location.x][unit1Location.y].addSeerNation(Game.instance.getPlayersInGame().get(0).getNation());
-        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(unit1Location)) {
-            map[pair.x][pair.y].addSeerNation(Game.instance.getPlayersInGame().get(0).getNation());
-        }
+//        map[unit1Location.x][unit1Location.y].addSeerNation(Game.instance.getPlayersInGame().get(0).getNation());
+//        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(unit1Location)) {
+//            map[pair.x][pair.y].addSeerNation(Game.instance.getPlayersInGame().get(0).getNation());
+//        }
 
         CivilizedUnit settler2 = new CivilizedUnit(
                 CivilizedUnitType.SETTLER, Game.instance.getPlayersInGame().get(1).getNation(), unit2Location
         );
-        map[unit2Location.x][unit2Location.y].addSeerNation(Game.instance.getPlayersInGame().get(1).getNation());
-        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(unit2Location)) {
-            map[pair.x][pair.y].addSeerNation(Game.instance.getPlayersInGame().get(1).getNation());
-        }
+//        map[unit2Location.x][unit2Location.y].addSeerNation(Game.instance.getPlayersInGame().get(1).getNation());
+//        for (Pair<Integer, Integer> pair : getAllNeighborsIndexes(unit2Location)) {
+//            map[pair.x][pair.y].addSeerNation(Game.instance.getPlayersInGame().get(1).getNation());
+//        }
         map[settler1.getLocation().x][settler1.getLocation().y].setCivilizedUnit(settler1);
         map[settler2.getLocation().x][settler2.getLocation().y].setCivilizedUnit(settler2);
         Game.instance.getPlayersInGame().get(0).getNation().getUnits().add(settler1);

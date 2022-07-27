@@ -85,7 +85,7 @@ public class GamePlayController extends ViewController {
         turn.setText("Turn " + Game.instance.getTurn());
         yearLabel.setText("AD " + Game.instance.getTurn() * 50);
 
-        infoPopup.setHideOnEscape(false);
+        infoPopup.setHideOnEscape(true);
     }
 
     public void showInfoPanel(HBox[] eachUnitHBox) {

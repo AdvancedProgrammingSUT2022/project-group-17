@@ -19,8 +19,8 @@ public class ConnectionController {
     public void initConnection() {
         try {
             //192.168.204.133
-            this.clientSocket = new Socket("192.168.204.133",7090);
-            this.serverReaderSocket = new Socket("192.168.204.133",7090);
+            this.clientSocket = new Socket("192.168.192.121",7090);
+            this.serverReaderSocket = new Socket("192.168.192.121",7090);
 
             this.clientHandleStream = new Pair<>(new DataInputStream(clientSocket.getInputStream()),new DataOutputStream(clientSocket.getOutputStream()));
 
