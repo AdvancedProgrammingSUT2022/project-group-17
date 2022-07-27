@@ -112,6 +112,10 @@ public class User {
         return nickname;
     }
 
+    public void setChats(ArrayList<Chat> chats) {
+        this.chats = chats;
+    }
+
     public int getScore() {
         return score;
     }

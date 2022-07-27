@@ -110,9 +110,50 @@ public class RequestHandler extends Thread {
                 return this.socialRequestsHandler(request);
             case "gameMenu" :
                 return this.gameMenuRequestHandler(request);
+            case "chat" :
+                return this.chatRequestHandler(request);
         }
         return null;
     }
+
+    private Response chatRequestHandler(Request request) {
+        if (request.getHeader().equals("updateChat")) {
+            Chat updateChat = (Chat) new XStream().fromXML(request.getToken("chat"));
+            if (updateChat == null) return null;
+            boolean flag = false;
+
+            for (Chat chat : Game.instance.getLoggedInUser().getChats()) {
+                if (chat.equals(updateChat)){
+                    for (User user : chat.getUsers()) {
+                        getUserByName(user.getUsername()).getChats().remove(chat);
+                        getUserByName(user.getUsername()).getChats().add(updateChat);
+                    }
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                for (User user : updateChat.getUsers()) {
+                    getUserByName(user.getUsername()).getChats().remove(updateChat);
+                    getUserByName(user.getUsername()).getChats().add(updateChat);
+                }
+            }
+        }
+
+        if (request.getHeader().equals("updateAllChats")) {
+            getUserByName(request.getToken("userName")).setChats((ArrayList<Chat>) new XStream().fromXML(request.getToken("chats")));
+        }
+
+        if (request.getHeader().equals("getChats")){
+            Response response = new Response("updateChats");
+            response.addData("chats",new XStream().toXML(getUserByName(request.getToken("userName")).getChats()));
+            return response;
+        }
+
+        return null;
+    }
+
 
     private Response gameMenuRequestHandler(Request request) {
         if (request.getHeader().equals("startGameRequest")) {
@@ -375,6 +416,10 @@ public class RequestHandler extends Thread {
             case ("enterAsGuest") : {
                 response = new Response(loginController.enterAsGuest());
                 break;
+            }
+            case ("getAllUsers") : {
+                response = new Response("...");
+                response.addData("users",new XStream().toXML(Game.instance.getUsers()));
             }
         }
         return response;

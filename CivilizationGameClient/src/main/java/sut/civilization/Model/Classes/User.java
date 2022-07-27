@@ -18,6 +18,10 @@ public class User {
 
     private ArrayList<String> friendsUserNames;
 
+    public void setChats(ArrayList<Chat> chats) {
+        this.chats = new ArrayList<>(chats);
+    }
+
     public enum GameState {NA, WIN, LOSE}
     private GameState gameState = GameState.NA;
 

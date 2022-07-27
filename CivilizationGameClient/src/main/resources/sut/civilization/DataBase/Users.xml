@@ -7,7 +7,53 @@
     <avatarLocation>sut/civilization/Images/Avatars/(3).png</avatarLocation>
     <isOnline>true</isOnline>
     <lastWinTime>0</lastWinTime>
-    <chats/>
+    <chats>
+      <sut.civilization.Model.Classes.Chat>
+        <users>
+          <sut.civilization.Model.Classes.User>
+            <username>hamed</username>
+            <password>1</password>
+            <nickname>saboor</nickname>
+            <score>0</score>
+            <avatarLocation>sut/civilization/Images/Avatars/(3).png</avatarLocation>
+            <isOnline>true</isOnline>
+            <lastWinTime>0</lastWinTime>
+            <chats>
+              <sut.civilization.Model.Classes.Chat reference="../../../.."/>
+            </chats>
+            <friendsUserNames/>
+          </sut.civilization.Model.Classes.User>
+          <sut.civilization.Model.Classes.User>
+            <username>mahdi</username>
+            <password>1</password>
+            <nickname>akbar</nickname>
+            <score>0</score>
+            <avatarLocation>sut/civilization/Images/Avatars/(2).png</avatarLocation>
+            <isOnline>true</isOnline>
+            <lastWinTime>0</lastWinTime>
+            <chats>
+              <sut.civilization.Model.Classes.Chat>
+                <users/>
+                <messages/>
+                <isGroup>false</isGroup>
+              </sut.civilization.Model.Classes.Chat>
+              <sut.civilization.Model.Classes.Chat reference="../../../.."/>
+            </chats>
+            <friendsUserNames/>
+          </sut.civilization.Model.Classes.User>
+        </users>
+        <messages>
+          <sut.civilization.Model.Classes.Message>
+            <sender reference="../../../users/sut.civilization.Model.Classes.User"/>
+            <messageText>salam
+</messageText>
+            <time>17:0</time>
+            <isSeen>false</isSeen>
+          </sut.civilization.Model.Classes.Message>
+        </messages>
+        <isGroup>false</isGroup>
+      </sut.civilization.Model.Classes.Chat>
+    </chats>
     <friendsUserNames/>
   </sut.civilization.Model.Classes.User>
   <sut.civilization.Model.Classes.User>
@@ -15,10 +61,56 @@
     <password>1</password>
     <nickname>akbar</nickname>
     <score>0</score>
-    <avatarLocation>sut/civilization/Images/Avatars/(9).png</avatarLocation>
-    <isOnline>false</isOnline>
+    <avatarLocation>sut/civilization/Images/Avatars/(2).png</avatarLocation>
+    <isOnline>true</isOnline>
     <lastWinTime>0</lastWinTime>
-    <chats/>
+    <chats>
+      <sut.civilization.Model.Classes.Chat>
+        <users>
+          <sut.civilization.Model.Classes.User>
+            <username>hamed</username>
+            <password>1</password>
+            <nickname>saboor</nickname>
+            <score>0</score>
+            <avatarLocation>sut/civilization/Images/Avatars/(3).png</avatarLocation>
+            <isOnline>true</isOnline>
+            <lastWinTime>0</lastWinTime>
+            <chats>
+              <sut.civilization.Model.Classes.Chat reference="../../../.."/>
+            </chats>
+            <friendsUserNames/>
+          </sut.civilization.Model.Classes.User>
+          <sut.civilization.Model.Classes.User>
+            <username>mahdi</username>
+            <password>1</password>
+            <nickname>akbar</nickname>
+            <score>0</score>
+            <avatarLocation>sut/civilization/Images/Avatars/(2).png</avatarLocation>
+            <isOnline>true</isOnline>
+            <lastWinTime>0</lastWinTime>
+            <chats>
+              <sut.civilization.Model.Classes.Chat>
+                <users/>
+                <messages/>
+                <isGroup>false</isGroup>
+              </sut.civilization.Model.Classes.Chat>
+              <sut.civilization.Model.Classes.Chat reference="../../../.."/>
+            </chats>
+            <friendsUserNames/>
+          </sut.civilization.Model.Classes.User>
+        </users>
+        <messages>
+          <sut.civilization.Model.Classes.Message>
+            <sender reference="../../../users/sut.civilization.Model.Classes.User"/>
+            <messageText>salam
+</messageText>
+            <time>17:0</time>
+            <isSeen>false</isSeen>
+          </sut.civilization.Model.Classes.Message>
+        </messages>
+        <isGroup>false</isGroup>
+      </sut.civilization.Model.Classes.Chat>
+    </chats>
     <friendsUserNames/>
   </sut.civilization.Model.Classes.User>
 </list>
