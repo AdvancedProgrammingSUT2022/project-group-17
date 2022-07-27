@@ -342,6 +342,16 @@ public class RequestHandler extends Thread {
             return response;
         }
 
+        if (request.getHeader().equals("endGame")) {
+            Response response = new Response("endGame " + request.getToken("winner") + " has won !");
+            for (User user : Game.instance.getPlayersInGame()) {
+                for (RequestHandler connectedUser : ConnectionController.getConnectedUsers()) {
+                    if (connectedUser.ownerUser.equals(user))
+                        this.sendUpdateToClient(response.toJson());
+                }
+            }
+        }
+
         return null;
     }
     private void sendMapToAllUsers(ArrayList<String> userNames) {

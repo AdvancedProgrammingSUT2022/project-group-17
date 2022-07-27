@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import sut.civilization.Controller.ConnectionController;
 import sut.civilization.Controller.Controller;
 import sut.civilization.Enums.Consts;
 import sut.civilization.Enums.Menus;
@@ -315,6 +316,9 @@ public class GameController extends Controller {
                         ((Stage) Game.instance.getCurrentScene().getWindow()).setFullScreen(false);
                         Game.instance.changeScene(Menus.MAIN_MENU);
                         winPopup.hide();
+                        Request request = new Request("game","endGame");
+                        request.addToken("winner",currentTurnUser.getUsername());
+                        ConnectionController.getInstance().sendUpdateToServer(request.toJson());
                     });
                     VBox winVBox = new VBox(win, goToMainMenu);
                     winVBox.setStyle("-fx-background-color: green; -fx-background-radius: 30;");

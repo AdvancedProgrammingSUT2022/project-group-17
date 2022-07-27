@@ -122,6 +122,11 @@ public class ConnectionListener extends Thread {
                 }
             });
         }
+
+        if (updateResponse.getMessage().startsWith("endGame")) {
+            new ViewController().showPopUp(Game.instance.getCurrentScene().getWindow(),updateResponse.getMessage());
+            Game.instance.changeScene(Menus.MAIN_MENU);
+        }
     }
 
     private void showGameRequestPopUp(ArrayList<String> users,Response updateResponse) {

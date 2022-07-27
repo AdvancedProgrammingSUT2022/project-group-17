@@ -16,12 +16,12 @@ public class Controller {
 
     public static User getPlayer(String name){
         if (Game.instance.getPlayersInGame() == null)
-            return null;
+            return new User("","","");
 
         for (User user : Game.instance.getPlayersInGame()) {
             if (user.getUsername().equals(name))
                 return user;
         }
-        return null;
+        return new User("","","");
     }
 }
