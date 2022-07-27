@@ -627,6 +627,7 @@ public class GamePlayController extends ViewController {
                                     Game.instance.map[i][j].getCombatUnit().getOwnerNation() != GameController.getCurrentTurnUser().getNation()) {
                                 int finalI = i;
                                 int finalJ = j;
+                                City city = Game.instance.map[finalI][finalJ].getOwnerCity();
                                 graphicalMap[i][j].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent1 -> {
                                     String message = UnitController.unitSetCombatUnitTarget(Game.instance.map[finalI][finalJ].getCombatUnit());
                                     showPopUp(Game.instance.getCurrentScene().getWindow(), message);
@@ -636,6 +637,12 @@ public class GamePlayController extends ViewController {
                                             GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
                                             GameController.setSelectedCivilizedUnit(null);
                                             GamePlayController.getInstance().showSelectedCombatUnitInfo();
+                                        }
+                                    });
+                                    graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
+                                        if (city.getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCity(city);
+                                            GamePlayController.getInstance().showCityPanel();
                                         }
                                     });
                                 });
@@ -677,6 +684,13 @@ public class GamePlayController extends ViewController {
                                         ((BorderPane)infoPopup.getContent().get(0)).setTop(null);
                                     }
                                     updateWholeMap();
+                                    graphicalMap[finalI][finalJ].getCombatUnitImageView().x.setOnMouseClicked(mouseEvent2 -> {
+                                        if (graphicalMap[finalI][finalJ].getLand().getCombatUnit().getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
+                                            GameController.setSelectedCombatUnit(graphicalMap[finalI][finalJ].getLand().getCombatUnit());
+                                            GameController.setSelectedCivilizedUnit(null);
+                                            GamePlayController.getInstance().showSelectedCombatUnitInfo();
+                                        }
+                                    });
                                     graphicalMap[finalI][finalJ].getCityImageView().setOnMouseClicked(mouseEvent2 -> {
                                         if (city.getOwnerNation() == GameController.getCurrentTurnUser().getNation()) {
                                             GameController.setSelectedCity(city);

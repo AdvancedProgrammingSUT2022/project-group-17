@@ -333,6 +333,9 @@ public class UnitController extends GameController {
     }
 
     public static void unitAttackCity(CombatUnit combatUnit) {
+        if (combatUnit == null)
+            return;
+
         if (combatUnit instanceof CloseCombatUnit) {
             combatUnit.setHp(combatUnit.getHp() - combatUnit.getTargetCity().getCombatStrength());
             combatUnit.getTargetCity().setHP(combatUnit.getTargetCity().getHP() - combatUnit.getCombatStrength());
@@ -508,9 +511,9 @@ public class UnitController extends GameController {
             return "You have to select a city first";
         }
 
-        if (selectedCity.hasAnInProgressProduct()) {
-            return "The city is already creating a unit";
-        }
+//        if (selectedCity.hasAnInProgressProduct()) {
+//            return "The city is already creating a unit";
+//        }
 
         if (type.equals("civilized unit")) {
             if (selectedCity.getMainLand().getCivilizedUnit() != null) {
