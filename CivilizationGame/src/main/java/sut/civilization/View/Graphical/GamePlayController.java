@@ -1689,7 +1689,13 @@ public class GamePlayController extends ViewController {
         Button saveGame = new Button("Save Game");
         //TODO Save button is here, Ravan!
         saveGame.setOnMouseClicked(mouseEvent -> {
-
+//            String temp = Game.instance.saveGame("save");
+//            if (temp != null)
+//                showPopUp(Game.instance.getCurrentScene().getWindow(),"saved as Name " + temp);
+//            else showPopUp(Game.instance.getCurrentScene().getWindow(),"cannot save Game !");
+//            root.setEffect(null);
+//            root.setDisable(false);
+//            infoPopup.hide();
         });
         Button returnToMainMenu = new Button("Return To Main Menu");
         returnToMainMenu.setOnMouseClicked(mouseEvent -> {

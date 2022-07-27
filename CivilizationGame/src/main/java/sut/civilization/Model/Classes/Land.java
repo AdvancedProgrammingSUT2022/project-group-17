@@ -51,7 +51,7 @@ public class Land {
         this.j = j;
         this.ruin = null;
         this.isBuyable = true;
-        this.visibility = 2;
+        this.visibility = 0;
     }
 
     public void addGrowthToLandOwner(){
@@ -84,7 +84,8 @@ public class Land {
     }
 
     public void addSeerNation(Nation seerNation) {
-        this.seerNations.add(seerNation);
+        if (!this.seerNations.contains(seerNation))
+            this.seerNations.add(seerNation);
     }
 
     public CivilizedUnit getCivilizedUnit() {

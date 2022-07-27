@@ -132,7 +132,7 @@ public class LandGraphical extends Polygon {
     }
 
     public void updateMap() {
-//        LandController.updateLandVisibility();
+        LandController.updateLandVisibility();
 
         StringBuilder landInfo = new StringBuilder(land.getLandType().name + " at (" + land.getI() + " , " + land.getJ() + ")");
 
@@ -182,12 +182,20 @@ public class LandGraphical extends Polygon {
             landInfo.append("\nImprovement: ").append(land.getImprovement().getImprovementType().name);
         } else improvementImageView.setImage(null);
 
-        if (land.getVisibility() == 1) fogOfWarImageView.setOpacity(0.7);
-        if (land.getVisibility() == 0 || land.getVisibility() == 1) {
+        if (land.getVisibility() == 1) {
             fogOfWarImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
                     "/sut/civilization/Images/tiles/fog.png"
             ))));
-        } else fogOfWarImageView.setImage(null);
+            fogOfWarImageView.setOpacity(0.7);
+        }
+        else if (land.getVisibility() == 0) {
+            fogOfWarImageView.setImage(new Image(Objects.requireNonNull(Civilization.class.getResourceAsStream(
+                    "/sut/civilization/Images/tiles/fog.png"
+            ))));
+            fogOfWarImageView.setOpacity(1);
+        } else {
+            fogOfWarImageView.setImage(null);
+        }
 
         Tooltip tooltip = new Tooltip(landInfo.toString());
         Tooltip.install(this, tooltip);

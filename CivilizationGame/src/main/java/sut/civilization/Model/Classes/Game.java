@@ -8,12 +8,12 @@ import javafx.scene.Scene;
 import sut.civilization.Civilization;
 import sut.civilization.Enums.Menus;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class Game {
@@ -114,6 +114,10 @@ public class Game {
             System.out.println("cannot write user list to dataBase mate :(\nthe stack trace is in below :");
             exception.printStackTrace();
         }
+    }
+
+    public String saveGame(String fileName){
+        return "salam";
     }
 
     public Parent loadScene(Menus menu) {
