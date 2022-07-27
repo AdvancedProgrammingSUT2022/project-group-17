@@ -46,6 +46,9 @@ public class Nation {
         initializeBuildings();
         this.getHappiness().setBalance(100);
         this.getCoin().setBalance(100);
+        this.getCoin().setGrowthRate(5);
+        this.getScience().setGrowthRate(3);
+        this.getFood().setGrowthRate(5);
     }
 
     public void initializeTechnologies() {
