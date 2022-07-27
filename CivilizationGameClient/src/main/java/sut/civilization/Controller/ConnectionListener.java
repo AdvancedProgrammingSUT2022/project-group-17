@@ -124,7 +124,6 @@ public class ConnectionListener extends Thread {
         }
 
         if (updateResponse.getMessage().startsWith("endGame")) {
-
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
