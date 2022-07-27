@@ -83,7 +83,6 @@ public class NationController extends GameController {
         for (User user : Game.instance.getPlayersInGame()) {
             Nation nation = user.getNation();
             nation.setSpeed(nation.getSpeed() + amount);
-
         }
 
     }

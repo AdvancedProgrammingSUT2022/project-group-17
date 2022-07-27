@@ -21,6 +21,8 @@ public class User {
     public enum GameState {NA, WIN, LOSE}
     private GameState gameState = GameState.NA;
 
+    private boolean isPlayer = true;
+
     public User(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
@@ -149,4 +151,11 @@ public class User {
     }
 
 
+    public boolean isPlayer() {
+        return isPlayer;
+    }
+
+    public void setPlayer(boolean player) {
+        isPlayer = player;
+    }
 }

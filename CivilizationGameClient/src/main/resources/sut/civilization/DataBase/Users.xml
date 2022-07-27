@@ -9,6 +9,7 @@
     <lastWinTime>0</lastWinTime>
     <chats/>
     <friendsUserNames/>
+    <isPlayer>false</isPlayer>
   </sut.civilization.Model.Classes.User>
   <sut.civilization.Model.Classes.User>
     <username>mahdi</username>
@@ -16,9 +17,10 @@
     <nickname>akbar</nickname>
     <score>0</score>
     <avatarLocation>sut/civilization/Images/Avatars/(9).png</avatarLocation>
-    <isOnline>false</isOnline>
+    <isOnline>true</isOnline>
     <lastWinTime>0</lastWinTime>
     <chats/>
     <friendsUserNames/>
+    <isPlayer>false</isPlayer>
   </sut.civilization.Model.Classes.User>
 </list>
