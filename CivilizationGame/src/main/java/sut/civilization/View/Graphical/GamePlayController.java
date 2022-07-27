@@ -47,6 +47,8 @@ public class GamePlayController extends ViewController {
     public Label goldInfo = new Label();
     public Label scienceInfo = new Label();
     public Label happinessInfo = new Label();
+    public Label turn = new Label();
+    public Label yearLabel = new Label();
     private static GamePlayController gamePlayController;
 
     public static GamePlayController getInstance() {
@@ -79,6 +81,9 @@ public class GamePlayController extends ViewController {
         updateTechnologyBox();
 
         updateCurrencyBar();
+
+        turn.setText("Turn " + Game.instance.getTurn());
+        yearLabel.setText("AD " + Game.instance.getTurn() * 50);
 
         infoPopup.setHideOnEscape(false);
     }
@@ -1847,6 +1852,8 @@ public class GamePlayController extends ViewController {
         updateWholeMap();
         updateTechnologyBox();
         updateCurrencyBar();
+        turn.setText("Turn " + Game.instance.getTurn());
+        yearLabel.setText("AD " + Game.instance.getTurn() * 50);
     }
 
     public void hideUnitPopup() {

@@ -1,14 +1,10 @@
 package sut.civilization.Controller.GameControllers;
 
+import javafx.stage.Stage;
 import sut.civilization.Controller.Controller;
 import sut.civilization.Enums.Consts;
 import sut.civilization.Model.Classes.*;
-import sut.civilization.Model.ModulEnums.NationType;
-import sut.civilization.Model.ModulEnums.CurrencyType;
-import sut.civilization.Model.ModulEnums.ResourceType;
-import sut.civilization.Model.ModulEnums.TechnologyType;
-import sut.civilization.Model.ModulEnums.CivilizedUnitType;
-import sut.civilization.Model.ModulEnums.UnitStatus;
+import sut.civilization.Model.ModulEnums.*;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -252,28 +248,57 @@ public class GameController extends Controller {
         return "ready";
     }
 
-    public static void checkWinLose(){
-        if (Game.instance.getPlayersInGame().size() == 1){
-            User user = Game.instance.getPlayersInGame().get(0);
-            user.setGameState(User.GameState.WIN);
-        }
-        for (User user : Game.instance.getPlayersInGame()) {
+    public static void checkWinLose(User user){
+//        if (Game.instance.getPlayersInGame().size() == 1){
+//            User user = Game.instance.getPlayersInGame().get(0);
+//            user.setGameState(User.GameState.WIN);
+//        }
+//        for (User user : Game.instance.getPlayersInGame()) {
             Nation nation = user.getNation();
             if (nation.getCities().size() == 0){
-                user.setGameState(User.GameState.LOSE);
+                boolean hasSettler = false;
+                for (Unit unit : nation.getUnits()) {
+                    if (unit instanceof CivilizedUnit &&
+                            ((CivilizedUnit) unit).getCivilizedUnitType().equals(CivilizedUnitType.SETTLER)) {
+                        hasSettler = true;
+                        break;
+                    }
+                }
+                if (!hasSettler) {
+                    user.setGameState(1);
+                    System.out.println("Bakhti!");
+                }
             }
-        }
+//        }
     }
 
     public static String nextPlayerTurn() {
         String readyState = isReadyForNextTurn();
         switch (readyState) {
             case "ready":
+                checkWinLose(currentTurnUser);
                 selectedCity = null;
                 selectedCivilizedUnit = null;
                 selectedCombatUnit = null;
-                Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
+                System.out.println("current: "+currentTurnUser.getGameState());
+                if (currentTurnUser.getGameState() == 1) {
+                    System.out.println(currentTurnUser.getUsername() + " Lose!");
+                    Game.instance.getPlayersInGame().remove(currentTurnUser);
+//                    Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
+                } else Game.instance.setSubTurn(Game.instance.getSubTurn() + 1);
                 currentTurnUser = Game.instance.getPlayersInGame().get(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
+//                for (User user : Game.instance.getPlayersInGame())
+//                    if (user.getGameState().equals(User.GameState.LOSE)) {
+//                        Game.instance.getPlayersInGame().remove(user);
+//                        System.out.println("deleted:" + user);
+//                        break;
+//                    }
+
+                if (Game.instance.getPlayersInGame().size() == 1) {
+                    System.out.println(currentTurnUser.getUsername() + " Win!");
+                    ((Stage) Game.instance.getCurrentScene().getWindow()).close();
+                }
+
                 if (Game.instance.getSubTurn() == Game.instance.getPlayersInGame().size()) {
                     nextGameTurn();
                     Game.instance.setSubTurn(Game.instance.getSubTurn() % Game.instance.getPlayersInGame().size());
@@ -394,10 +419,8 @@ public class GameController extends Controller {
         CityController.updateAffordableLands();
 
         LandController.updateDistances();
-        
-        checkWinLose();
-//        GamePlayController.getInstance().updateWholeMap();
-//        GamePlayController.getInstance().updateTechnologyBox();
+
+//        checkWinLose();
     }
 
     private static void checkFortifying(Unit unit) {
