@@ -16,6 +16,7 @@ public class MainController extends Controller{
 
     public String logoutUser() {
         menuChange("login menu");
+        if (Game.instance.getLoggedInUser() == null) return "ah";
         Game.instance.changeScene(Menus.LOGIN_MENU);
         Game.instance.getLoggedInUser().setLastTimeOnline(new Date(System.currentTimeMillis()));
         Game.instance.getLoggedInUser().setOnline(false);
